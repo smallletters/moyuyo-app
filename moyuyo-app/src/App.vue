@@ -29,6 +29,6 @@ export default {
 <style lang="scss">
 @import '@/styles/common.scss';
 
-/* uView Plus 全局样式（可选） */
-/* @import 'uview-plus/index.scss'; */
+/* uView Plus 全局样式 */
+@import 'uview-plus/index.scss';
 </style>

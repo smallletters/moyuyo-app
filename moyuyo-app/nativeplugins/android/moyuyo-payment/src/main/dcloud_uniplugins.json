@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    {
+      "type": "module",
+      "name": "MOYUYO-Payment",
+      "class": "com.moyuyo.plugin.payment.PaymentModule"
+    }
+  ]
+}

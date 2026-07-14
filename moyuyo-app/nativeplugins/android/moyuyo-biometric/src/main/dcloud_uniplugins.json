@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    {
+      "type": "module",
+      "name": "MOYUYO-Biometric",
+      "class": "com.moyuyo.plugin.biometric.BiometricModule"
+    }
+  ]
+}

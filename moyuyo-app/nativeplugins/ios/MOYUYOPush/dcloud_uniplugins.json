@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    {
+      "type": "module",
+      "name": "MOYUYO-Push",
+      "class": "PushModule"
+    }
+  ]
+}

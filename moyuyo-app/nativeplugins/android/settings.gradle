@@ -1,0 +1,30 @@
+/**
+ * Android 原生插件工程设置
+ * 每个插件为一个独立 Gradle 模块
+ */
+pluginManagement {
+  repositories {
+    google()
+    mavenCentral()
+    gradlePluginPortal()
+  }
+}
+
+dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositories {
+    google()
+    mavenCentral()
+  }
+}
+
+rootProject.name = 'moyuyo-plugins'
+
+include ':moyuyo-pethub'
+include ':moyuyo-ar'
+include ':moyuyo-payment'
+include ':moyuyo-auth'
+include ':moyuyo-push'
+include ':moyuyo-camera'
+include ':moyuyo-location'
+include ':moyuyo-biometric'

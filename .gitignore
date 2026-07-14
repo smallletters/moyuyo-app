@@ -35,3 +35,6 @@ Thumbs.db
 # 临时文件
 *.tmp
 *.temp
+
+# Maven 构建产物
+**/target/

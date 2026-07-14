@@ -1,0 +1,32 @@
+/**
+ * 根构建脚本
+ */
+buildscript {
+  ext {
+    compileSdkVersion = 34
+    minSdkVersion = 24
+    targetSdkVersion = 34
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.2.0'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22'
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://artifact.bytedance.com/repository/byte_trident_repo/' }
+  }
+}
+
+tasks.register('clean', Delete) {
+  delete rootProject.layout.buildDirectory
+}
