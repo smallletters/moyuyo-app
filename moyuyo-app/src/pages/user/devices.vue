@@ -13,30 +13,37 @@
       <view class="device-info">
         <text class="device-icon">📱</text>
         <view class="device-meta">
-          <text class="device-name">{{ d.name }} <text v-if="d.isCurrent" class="current-tag">Current</text></text>
+          <text class="device-name">
+            {{ d.name }}
+            <text v-if="d.isCurrent" class="current-tag">Current</text>
+          </text>
           <text class="device-detail">{{ d.model }} · {{ d.location }}</text>
           <text class="device-detail">Last active: {{ d.lastActive }}</text>
         </view>
       </view>
-      <view v-if="!d.isCurrent && d.trusted" class="trust" @click="onUntrust(d)">Trusted · Tap to remove</view>
-      <view v-else-if="!d.isCurrent && !d.trusted" class="trust add" @click="onTrust(d)">Trust this device</view>
+      <view v-if="!d.isCurrent && d.trusted" class="trust" @click="onUntrust(d)">
+        Trusted · Tap to remove
+      </view>
+      <view v-else-if="!d.isCurrent && !d.trusted" class="trust add" @click="onTrust(d)">
+        Trust this device
+      </view>
       <view v-if="!d.isCurrent" class="signout" @click="onSignOut(d)">Sign out</view>
     </view>
   </view>
 </template>
 
 <script>
-import { setStorage, getStorage, STORAGE_KEYS } from '@/utils/storage'
+import { useUserStore } from '@/store'
 
 export default {
-  data() {
-    return {
-      devices: [
-        { id: 1, name: 'iPhone 15 Pro', model: 'iOS 17.5', location: 'New York, US', lastActive: 'Now', isCurrent: true, trusted: true },
-        { id: 2, name: 'MacBook Pro', model: 'Chrome 125', location: 'New York, US', lastActive: '2 hours ago', isCurrent: false, trusted: false },
-        { id: 3, name: 'iPad Air', model: 'iPadOS 17', location: 'Los Angeles, US', lastActive: '3 days ago', isCurrent: false, trusted: false }
-      ]
-    }
+  computed: {
+    userStore() {
+      return useUserStore()
+    },
+    devices() {
+      const stored = this.userStore.deviceList
+      return stored.length > 0 ? stored : defaultDevices
+    },
   },
 
   methods: {
@@ -45,24 +52,51 @@ export default {
         title: `Sign out ${d.name}?`,
         success: (res) => {
           if (res.confirm) {
-            this.devices = this.devices.filter((x) => x.id !== d.id)
-            uni.showToast({ title: 'Signed out', icon: 'success' })
+            this.userStore.removeDevice(d.id)
           }
-        }
+        },
       })
     },
 
     onTrust(d) {
-      d.trusted = true
-      uni.showToast({ title: 'Marked as trusted', icon: 'success' })
+      this.userStore.trustDevice(d.id)
     },
 
     onUntrust(d) {
-      d.trusted = false
-      uni.showToast({ title: 'Trust removed', icon: 'none' })
-    }
-  }
+      this.userStore.untrustDevice(d.id)
+    },
+  },
 }
+
+const defaultDevices = [
+  {
+    id: 1,
+    name: 'iPhone 15 Pro',
+    model: 'iOS 17.5',
+    location: 'New York, US',
+    lastActive: 'Now',
+    isCurrent: true,
+    trusted: true,
+  },
+  {
+    id: 2,
+    name: 'MacBook Pro',
+    model: 'Chrome 125',
+    location: 'New York, US',
+    lastActive: '2 hours ago',
+    isCurrent: false,
+    trusted: false,
+  },
+  {
+    id: 3,
+    name: 'iPad Air',
+    model: 'iPadOS 17',
+    location: 'Los Angeles, US',
+    lastActive: '3 days ago',
+    isCurrent: false,
+    trusted: false,
+  },
+]
 </script>
 
 <style lang="scss" scoped>

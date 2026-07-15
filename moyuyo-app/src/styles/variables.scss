@@ -6,31 +6,31 @@
 
 :root {
   /* ===== 品牌主色 ===== */
-  --color-primary: #DBC98A;          /* Sand Gold 主色（CTA、Logo 主色、卡片高亮） */
-  --color-primary-light: #E8DDB5;    /* 主色浅一档 */
-  --color-primary-dark: #B8A66B;     /* 主色深一档 */
+  --color-primary: #dbc98a; /* Sand Gold 主色（CTA、Logo 主色、卡片高亮） */
+  --color-primary-light: #e8ddb5; /* 主色浅一档 */
+  --color-primary-dark: #b8a66b; /* 主色深一档 */
 
   /* ===== 中性色 ===== */
-  --color-background: #F6F2EE;       /* Linen 背景 */
-  --color-surface: #FFFFFF;          /* 卡片表面 */
-  --color-text: #2E2B29;              /* Charcoal 文字 */
-  --color-text-secondary: #6E6962;    /* 次要文字 */
-  --color-text-tertiary: #9A948C;     /* 三级文字 */
-  --color-divider: #EAE5DD;           /* 分割线 */
+  --color-background: #f6f2ee; /* Linen 背景 */
+  --color-surface: #ffffff; /* 卡片表面 */
+  --color-text: #2e2b29; /* Charcoal 文字 */
+  --color-text-secondary: #6e6962; /* 次要文字 */
+  --color-text-tertiary: #9a948c; /* 三级文字 */
+  --color-divider: #eae5dd; /* 分割线 */
 
   /* ===== 强调色 ===== */
-  --color-accent: #B38A5A;            /* Antique Brass 强调色 */
-  --color-success: #ABB9AD;           /* Sage Mist 成功 */
-  --color-warm: #D9B4B0;              /* Dusty Rose 情感 */
-  --color-warning: #E6B97A;
-  --color-danger: #C96E5F;            /* 错误/删除 */
-  --color-info: #8FA8B6;
+  --color-accent: #b38a5a; /* Antique Brass 强调色 */
+  --color-success: #abb9ad; /* Sage Mist 成功 */
+  --color-warm: #d9b4b0; /* Dusty Rose 情感 */
+  --color-warning: #e6b97a;
+  --color-danger: #c96e5f; /* 错误/删除 */
+  --color-info: #8fa8b6;
 
   /* ===== 4 大产品线色 ===== */
-  --color-care: #DBC98A;              /* Care 洗护：Linen + Sand Gold */
-  --color-gear: #ABB9AD;              /* Gear 出行：Sage Mist */
-  --color-play: #B38A5A;              /* Play 玩具：Antique Brass */
-  --color-home: #D9B4B0;              /* Home 家居：Dusty Rose */
+  --color-care: #dbc98a; /* Care 洗护：Linen + Sand Gold */
+  --color-gear: #abb9ad; /* Gear 出行：Sage Mist */
+  --color-play: #b38a5a; /* Play 玩具：Antique Brass */
+  --color-home: #d9b4b0; /* Home 家居：Dusty Rose */
 
   /* ===== 圆角 ===== */
   --radius-sm: 8rpx;
@@ -49,7 +49,7 @@
   /* ===== 阴影 ===== */
   --shadow-sm: 0 1rpx 4rpx rgba(46, 43, 41, 0.04);
   --shadow-md: 0 4rpx 16rpx rgba(46, 43, 41, 0.06);
-  --shadow-lg: 0 8rpx 24rpx rgba(46, 43, 41, 0.10);
+  --shadow-lg: 0 8rpx 24rpx rgba(46, 43, 41, 0.1);
 
   /* ===== 字号 ===== */
   --font-size-xs: 22rpx;
@@ -72,15 +72,15 @@
 /* ===== 深色模式 ===== */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: #1A1816;
-    --color-surface: #2A2724;
-    --color-text: #F6F2EE;
-    --color-text-secondary: #B8B0A5;
-    --color-text-tertiary: #807A72;
-    --color-divider: #3A3530;
-    --color-primary: #C9B47A;     /* 降低饱和度适配深色 */
-    --color-primary-light: #D9C68F;
-    --color-primary-dark: #A8964F;
+    --color-background: #1a1816;
+    --color-surface: #2a2724;
+    --color-text: #f6f2ee;
+    --color-text-secondary: #b8b0a5;
+    --color-text-tertiary: #807a72;
+    --color-divider: #3a3530;
+    --color-primary: #c9b47a; /* 降低饱和度适配深色 */
+    --color-primary-light: #d9c68f;
+    --color-primary-dark: #a8964f;
     --shadow-sm: 0 1rpx 4rpx rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4rpx 16rpx rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8rpx 24rpx rgba(0, 0, 0, 0.5);
@@ -89,15 +89,15 @@
 
 /* 强制深色模式（用户在设置中切换） */
 .theme-dark {
-  --color-background: #1A1816;
-  --color-surface: #2A2724;
-  --color-text: #F6F2EE;
-  --color-text-secondary: #B8B0A5;
-  --color-text-tertiary: #807A72;
-  --color-divider: #3A3530;
-  --color-primary: #C9B47A;
-  --color-primary-light: #D9C68F;
-  --color-primary-dark: #A8964F;
+  --color-background: #1a1816;
+  --color-surface: #2a2724;
+  --color-text: #f6f2ee;
+  --color-text-secondary: #b8b0a5;
+  --color-text-tertiary: #807a72;
+  --color-divider: #3a3530;
+  --color-primary: #c9b47a;
+  --color-primary-light: #d9c68f;
+  --color-primary-dark: #a8964f;
   --shadow-sm: 0 1rpx 4rpx rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4rpx 16rpx rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8rpx 24rpx rgba(0, 0, 0, 0.5);

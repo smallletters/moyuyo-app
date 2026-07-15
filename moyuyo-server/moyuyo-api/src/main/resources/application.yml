@@ -53,3 +53,15 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
+
+# 支付渠道
+payment:
+  stripe:
+    secret-key: ${STRIPE_SECRET_KEY:sk_test_placeholder}
+    webhook-secret: ${STRIPE_WEBHOOK_SECRET:whsec_placeholder}
+    currency: usd
+  paypal:
+    client-id: ${PAYPAL_CLIENT_ID:placeholder}
+    client-secret: ${PAYPAL_CLIENT_SECRET:placeholder}
+    webhook-id: ${PAYPAL_WEBHOOK_ID:placeholder}
+    mode: sandbox

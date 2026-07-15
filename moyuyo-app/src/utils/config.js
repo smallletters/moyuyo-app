@@ -30,13 +30,13 @@ export const config = {
   oauthClientId: getEnv('VITE_OAUTH_CLIENT_ID', ''),
   oauthClientSecret: getEnv('VITE_OAUTH_CLIENT_SECRET', ''),
   // OAuth 端点（WP OAuth Server 插件）
-  oauthTokenEndpoint: '/api/v1/token',        // POST: grant_type=password 登录
-  oauthUserInfoEndpoint: '/api/v1/userinfo',  // GET: 获取当前用户信息
-  oauthRefreshEndpoint: '/api/v1/token',      // POST: grant_type=refresh_token
+  oauthTokenEndpoint: '/api/v1/token', // POST: grant_type=password 登录
+  oauthUserInfoEndpoint: '/api/v1/userinfo', // GET: 获取当前用户信息
+  oauthRefreshEndpoint: '/api/v1/token', // POST: grant_type=refresh_token
   // 货币
   currency: getEnv('VITE_CURRENCY', 'USD'),
   // 主题
-  themeMode: getEnv('VITE_THEME_MODE', 'system')
+  themeMode: getEnv('VITE_THEME_MODE', 'system'),
 }
 
 // API 版本号
@@ -52,5 +52,5 @@ export const RESPONSE_CODE = {
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
   NOT_FOUND: 404,
-  SERVER_ERROR: 500
+  SERVER_ERROR: 500,
 }

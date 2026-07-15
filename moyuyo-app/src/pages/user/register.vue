@@ -33,7 +33,13 @@
 
       <view class="input-group">
         <text class="input-label">Birthday</text>
-        <picker mode="date" :value="birthday" start="1900-01-01" :end="today" @change="onBirthdayChange">
+        <picker
+          mode="date"
+          :value="birthday"
+          start="1900-01-01"
+          :end="today"
+          @change="onBirthdayChange"
+        >
           <view class="input picker">{{ birthday || 'Select your birthday' }}</view>
         </picker>
       </view>
@@ -44,13 +50,19 @@
           <view class="checkbox" :class="{ checked: agreed.privacy }">
             <text v-if="agreed.privacy">✓</text>
           </view>
-          <text>I agree to the <text class="link">Privacy Policy</text></text>
+          <text>
+            I agree to the
+            <text class="link">Privacy Policy</text>
+          </text>
         </view>
         <view class="agreement" @click="agreed.terms = !agreed.terms">
           <view class="checkbox" :class="{ checked: agreed.terms }">
             <text v-if="agreed.terms">✓</text>
           </view>
-          <text>I agree to the <text class="link">Terms of Service</text></text>
+          <text>
+            I agree to the
+            <text class="link">Terms of Service</text>
+          </text>
         </view>
         <view class="agreement" @click="agreed.marketing = !agreed.marketing">
           <view class="checkbox" :class="{ checked: agreed.marketing }">
@@ -90,8 +102,8 @@ export default {
       agreed: {
         privacy: false,
         terms: false,
-        marketing: false
-      }
+        marketing: false,
+      },
     }
   },
 
@@ -112,7 +124,7 @@ export default {
     },
     userStore() {
       return useUserStore()
-    }
+    },
   },
 
   methods: {
@@ -124,7 +136,7 @@ export default {
         uni.showModal({
           title: 'Sorry',
           content: 'You must be at least 13 years old to register.',
-          showCancel: false
+          showCancel: false,
         })
         this.birthday = ''
       }
@@ -145,7 +157,6 @@ export default {
         return
       }
       try {
-        // 强度校验
         const strongPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(this.password)
         if (!strongPwd) {
           uni.showToast({ title: '密码需含大小写字母+数字', icon: 'none' })
@@ -154,9 +165,8 @@ export default {
         await this.userStore.register({
           email: this.email,
           password: this.password,
-          first_name: this.firstName,
-          last_name: this.lastName,
-          username: this.email
+          nickname: `${this.firstName} ${this.lastName}`.trim(),
+          marketingOptIn: this.agreed.marketing,
         })
         uni.showToast({ title: '注册成功，请登录', icon: 'success' })
         setTimeout(() => uni.navigateBack(), 1000)
@@ -167,8 +177,8 @@ export default {
 
     goLogin() {
       uni.navigateBack()
-    }
-  }
+    },
+  },
 }
 </script>
 

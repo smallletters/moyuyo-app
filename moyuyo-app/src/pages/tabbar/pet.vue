@@ -6,28 +6,25 @@
     </view>
 
     <scroll-view scroll-y class="content">
-      <!-- 3D 互动区（占屏 50%） -->
       <view class="scene" @click="onSceneClick">
         <view class="scene-placeholder">
-          <text class="scene-emoji">{{ currentPet.emoji || '🐕' }}</text>
-          <text class="scene-name">{{ currentPet.name }}</text>
+          <view class="scene-emoji">
+            <text v-if="activePet">{{ activePet.type === 'CAT' ? '🐈' : '🐕' }}</text>
+          </view>
+          <text class="scene-name">{{ activePet?.name || 'No pet' }}</text>
           <text class="scene-tip">Tap to interact</text>
-        </view>
-        <view class="scene-hint">
-          <text>3D 互动场景（WebView + Three.js 占位）</text>
         </view>
       </view>
 
-      <!-- 宠物切换器 -->
       <view class="pet-switcher">
         <view
-          v-for="pet in pets"
+          v-for="pet in petStore.pets"
           :key="pet.id"
           class="pet-chip"
-          :class="{ active: currentPet.id === pet.id }"
-          @click="currentPet = pet"
+          :class="{ active: petStore.currentPet?.id === pet.id }"
+          @click="switchPet(pet)"
         >
-          <text class="pet-emoji">{{ pet.emoji }}</text>
+          <text class="pet-emoji">{{ pet.type === 'CAT' ? '🐈' : '🐕' }}</text>
           <text class="pet-name">{{ pet.name }}</text>
         </view>
         <view class="pet-chip add" @click="goAddPet">
@@ -35,14 +32,8 @@
         </view>
       </view>
 
-      <!-- 护理卡片 -->
       <view class="care-cards">
-        <view
-          v-for="card in careCards"
-          :key="card.id"
-          class="care-card"
-          @click="onCareClick(card)"
-        >
+        <view v-for="card in computedCareCards" :key="card.id" class="care-card" @click="onCareClick(card)">
           <view class="care-icon" :style="{ background: card.bg }">
             <text>{{ card.icon }}</text>
           </view>
@@ -54,16 +45,10 @@
         </view>
       </view>
 
-      <!-- 快捷操作区 -->
       <view class="quick-actions">
         <view class="section-title">Quick Actions</view>
         <view class="action-grid">
-          <view
-            v-for="a in actions"
-            :key="a.id"
-            class="action-item"
-            @click="onActionClick(a)"
-          >
+          <view v-for="a in actions" :key="a.id" class="action-item" @click="onActionClick(a)">
             <text class="action-icon">{{ a.icon }}</text>
             <text class="action-label">{{ a.label }}</text>
           </view>
@@ -74,249 +59,138 @@
 </template>
 
 <script>
+import { usePetStore } from '@/store'
+
 export default {
   data() {
     return {
-      pets: [
-        { id: 1, name: 'MILO', emoji: '🐕', species: 'dog' },
-        { id: 2, name: 'LUNA', emoji: '🐈', species: 'cat' }
-      ],
-      currentPet: { id: 1, name: 'MILO', emoji: '🐕' },
-      careCards: [
-        { id: 'bath', title: 'Bathing', subtitle: 'Next: in 5 days', icon: '🛁', bg: 'rgba(219,201,138,0.15)' },
-        { id: 'vaccine', title: 'Vaccine', subtitle: 'Next: in 30 days', icon: '💉', bg: 'rgba(171,185,173,0.15)' },
-        { id: 'deworm', title: 'Deworming', subtitle: 'Next: in 14 days', icon: '💊', bg: 'rgba(217,180,176,0.15)' },
-        { id: 'checkup', title: 'Checkup', subtitle: 'Next: in 90 days', icon: '🩺', bg: 'rgba(179,138,90,0.15)' }
-      ],
       actions: [
         { id: 'shop', label: 'Buy Supplies', icon: '🛍️' },
         { id: 'share', label: 'Share Pet', icon: '📸' },
         { id: 'calendar', label: 'Health Calendar', icon: '📅' },
-        { id: 'achievement', label: 'Achievements', icon: '🏆' }
-      ]
+        { id: 'achievement', label: 'Achievements', icon: '🏆' },
+      ],
     }
   },
 
+  computed: {
+    petStore() {
+      return usePetStore()
+    },
+    activePet() {
+      return this.petStore.activePet
+    },
+    computedCareCards() {
+      if (!this.activePet) return []
+      const p = this.activePet
+      return [
+        {
+          id: 'bath',
+          title: 'Bathing',
+          subtitle: p.lastBathDate ? `Last: ${p.lastBathDate}` : 'Not recorded',
+          icon: '🛁',
+          bg: 'rgba(219,201,138,0.15)',
+        },
+        {
+          id: 'vaccine',
+          title: 'Vaccine',
+          subtitle: p.lastVaccineDate ? `Last: ${p.lastVaccineDate}` : 'Not recorded',
+          icon: '💉',
+          bg: 'rgba(171,185,173,0.15)',
+        },
+        {
+          id: 'deworm',
+          title: 'Deworming',
+          subtitle: p.lastDewormDate ? `Last: ${p.lastDewormDate}` : 'Not recorded',
+          icon: '💊',
+          bg: 'rgba(217,180,176,0.15)',
+        },
+        {
+          id: 'checkup',
+          title: 'Checkup',
+          subtitle: `Weight: ${p.weightKg || '-'} kg`,
+          icon: '🩺',
+          bg: 'rgba(179,138,90,0.15)',
+        },
+      ]
+    },
+  },
+
+  onShow() {
+    this.petStore.loadPets()
+  },
+
   methods: {
+    switchPet(pet) {
+      this.petStore.currentPet = pet
+    },
+
     onSceneClick() {
-      uni.showToast({ title: `${this.currentPet.name} 很开心见到你!`, icon: 'none' })
-      // 实际项目中：通过 WebView 加载 Three.js 场景或 Lottie 动画
+      if (!this.activePet) return
+      uni.showToast({ title: `${this.activePet.name} is happy to see you!`, icon: 'none' })
     },
 
     onCareClick(card) {
-      uni.showToast({ title: `${card.title} 详情`, icon: 'none' })
+      if (!this.activePet?.id) return
+      uni.navigateTo({ url: `/pages/pet/health?petId=${this.activePet.id}` })
     },
 
     onActionClick(action) {
-      if (action.id === 'shop') {
-        uni.switchTab({ url: '/pages/tabbar/category' })
-      } else if (action.id === 'calendar') {
-        uni.navigateTo({ url: '/pages/pet/health' })
-      } else if (action.id === 'achievement') {
-        uni.navigateTo({ url: '/pages/pet/achievement' })
-      } else {
-        uni.showToast({ title: '敬请期待', icon: 'none' })
+      switch (action.id) {
+        case 'shop':
+          uni.switchTab({ url: '/pages/tabbar/category' })
+          break
+        case 'calendar':
+          if (this.activePet?.id) {
+            uni.navigateTo({ url: `/pages/pet/health?petId=${this.activePet.id}` })
+          }
+          break
+        case 'achievement':
+          if (this.activePet?.id) {
+            uni.navigateTo({ url: `/pages/pet/achievement?petId=${this.activePet.id}` })
+          }
+          break
+        default:
+          uni.showToast({ title: 'Coming soon', icon: 'none' })
       }
     },
 
     goAddPet() {
       uni.navigateTo({ url: '/pages/pet/profile' })
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.pet-hub {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background: var(--color-background);
-}
-
-.header {
-  padding: 32rpx 24rpx 16rpx;
-  background: var(--color-surface);
-  padding-top: calc(32rpx + env(safe-area-inset-top));
-}
-
-.title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text);
-}
-
-.subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
-}
-
-.content {
-  flex: 1;
-}
-
-.scene {
-  margin: 24rpx;
-  height: 50vh;
-  background: linear-gradient(135deg, #F6F2EE 0%, #EAE5DD 100%);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.scene-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16rpx;
-}
-
-.scene-emoji {
-  font-size: 200rpx;
-  filter: drop-shadow(0 8rpx 24rpx rgba(0,0,0,0.1));
-}
-
-.scene-name {
-  font-size: 36rpx;
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-}
-
-.scene-tip {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
-}
-
-.scene-hint {
-  position: absolute;
-  bottom: 16rpx;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 20rpx;
-  color: var(--color-text-tertiary);
-}
-
-.pet-switcher {
-  display: flex;
-  gap: 16rpx;
-  padding: 0 24rpx;
-  overflow-x: auto;
-}
-
-.pet-chip {
-  display: flex;
-  align-items: center;
-  gap: 8rpx;
-  padding: 12rpx 20rpx;
-  background: var(--color-surface);
-  border-radius: var(--radius-pill);
-  flex-shrink: 0;
-}
-
-.pet-chip.active {
-  background: var(--color-primary);
-}
-
-.pet-emoji { font-size: 28rpx; }
-.pet-name { font-size: var(--font-size-sm); }
-
-.pet-chip.add {
-  width: 60rpx;
-  height: 60rpx;
-  padding: 0;
-  border-radius: 50%;
-  justify-content: center;
-}
-
-.pet-add {
-  font-size: 36rpx;
-  color: var(--color-text-tertiary);
-}
-
-.care-cards {
-  padding: 24rpx;
-  display: flex;
-  flex-direction: column;
-  gap: 16rpx;
-}
-
-.care-card {
-  display: flex;
-  align-items: center;
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  padding: 24rpx;
-  gap: 16rpx;
-}
-
-.care-icon {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40rpx;
-}
-
-.care-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.care-title {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-}
-
-.care-subtitle {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-tertiary);
-  margin-top: 4rpx;
-}
-
-.care-arrow {
-  font-size: 40rpx;
-  color: var(--color-text-tertiary);
-}
-
-.quick-actions {
-  padding: 24rpx;
-}
-
-.section-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: 16rpx;
-}
-
-.action-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16rpx;
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  padding: 24rpx;
-}
-
-.action-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8rpx;
-}
-
-.action-icon {
-  font-size: 48rpx;
-}
-
-.action-label {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
-}
+.pet-hub { display: flex; flex-direction: column; height: 100vh; background: var(--color-background); }
+.header { padding: 48rpx 24rpx 16rpx; padding-top: calc(48rpx + env(safe-area-inset-top)); background: var(--color-surface); }
+.title { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); }
+.subtitle { font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-top: 4rpx; }
+.content { flex: 1; }
+.scene { margin: 24rpx; height: 360rpx; border-radius: var(--radius-lg); overflow: hidden; background: linear-gradient(135deg, #2e2b29, #4a4540); display: flex; align-items: center; justify-content: center; }
+.scene-placeholder { text-align: center; color: #f6f2ee; }
+.scene-emoji { font-size: 96rpx; display: block; margin-bottom: 16rpx; }
+.scene-name { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); }
+.scene-tip { font-size: var(--font-size-xs); opacity: 0.5; margin-top: 8rpx; display: block; }
+.pet-switcher { display: flex; gap: 16rpx; padding: 0 24rpx; margin-bottom: 24rpx; flex-wrap: wrap; }
+.pet-chip { display: flex; align-items: center; gap: 8rpx; padding: 12rpx 24rpx; background: var(--color-surface); border-radius: var(--radius-pill); border: 2rpx solid transparent; }
+.pet-chip.active { border-color: var(--color-primary); }
+.pet-emoji { font-size: 32rpx; }
+.pet-name { font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); }
+.pet-chip.add { justify-content: center; width: 72rpx; padding: 12rpx 0; }
+.pet-add { font-size: 32rpx; color: var(--color-text-tertiary); }
+.care-cards { padding: 0 24rpx; display: flex; flex-direction: column; gap: 12rpx; margin-bottom: 24rpx; }
+.care-card { display: flex; align-items: center; background: var(--color-surface); border-radius: var(--radius-md); padding: 20rpx; gap: 16rpx; }
+.care-icon { width: 64rpx; height: 64rpx; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28rpx; }
+.care-info { flex: 1; }
+.care-title { font-size: var(--font-size-base); font-weight: var(--font-weight-medium); }
+.care-subtitle { font-size: var(--font-size-xs); color: var(--color-text-tertiary); margin-top: 4rpx; }
+.care-arrow { font-size: 36rpx; color: var(--color-text-tertiary); }
+.quick-actions { padding: 0 24rpx 32rpx; }
+.section-title { font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); margin-bottom: 16rpx; }
+.action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16rpx; }
+.action-item { display: flex; flex-direction: column; align-items: center; gap: 8rpx; padding: 20rpx 0; background: var(--color-surface); border-radius: var(--radius-md); }
+.action-icon { font-size: 40rpx; }
+.action-label { font-size: var(--font-size-xs); color: var(--color-text-secondary); }
 </style>

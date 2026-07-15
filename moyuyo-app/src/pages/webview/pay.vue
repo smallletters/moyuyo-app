@@ -10,13 +10,7 @@
     </view>
 
     <!-- WebView 加载 WP 支付页 -->
-    <web-view
-      v-if="payUrl"
-      :src="payUrl"
-      @message="onMessage"
-      @load="onLoad"
-      @error="onError"
-    ></web-view>
+    <web-view v-if="payUrl" :src="payUrl" @message="onMessage" @load="onLoad" @error="onError" />
   </view>
 </template>
 
@@ -31,14 +25,14 @@ export default {
       payUrl: '',
       status: 'loading', // loading | success | failed
       statusText: '加载支付页面...',
-      pollTimer: null
+      pollTimer: null,
     }
   },
 
   computed: {
     cartStore() {
       return useCartStore()
-    }
+    },
   },
 
   onLoad(query) {
@@ -77,7 +71,11 @@ export default {
             setTimeout(() => {
               uni.redirectTo({ url: `/pages/order/detail?id=${this.orderId}` })
             }, 1500)
-          } else if (order.status === 'cancelled' || order.status === 'refunded' || order.status === 'failed') {
+          } else if (
+            order.status === 'cancelled' ||
+            order.status === 'refunded' ||
+            order.status === 'failed'
+          ) {
             this.status = 'failed'
             this.statusText = '订单已取消'
             this.stopPolling()
@@ -120,8 +118,8 @@ export default {
     onError(e) {
       this.status = 'failed'
       this.statusText = '加载支付页面失败'
-    }
-  }
+    },
+  },
 }
 </script>
 

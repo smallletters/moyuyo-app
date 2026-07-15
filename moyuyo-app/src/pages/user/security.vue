@@ -7,7 +7,10 @@
       </view>
       <view class="row">
         <text class="label">2-Factor Authentication</text>
-        <switch :checked="tfaEnabled" color="#DBC98A" @change="onToggleTFA" />
+        <view class="tfa-status" @click="goTwoFactor">
+          <text class="tfa-badge" :class="{ enabled: tfaEnabled }">{{ tfaEnabled ? 'ON' : 'OFF' }}</text>
+          <text class="action">Setup ›</text>
+        </view>
       </view>
       <view class="row">
         <text class="label">Trusted Devices</text>
@@ -41,16 +44,26 @@
 </template>
 
 <script>
+import { useUserStore } from '@/store'
+
 export default {
   data() {
     return {
-      tfaEnabled: false,
       socialAccounts: [
         { id: 1, name: 'Apple ID', linked: true },
         { id: 2, name: 'Google', linked: true },
-        { id: 3, name: 'Facebook', linked: false }
-      ]
+        { id: 3, name: 'Facebook', linked: false },
+      ],
     }
+  },
+
+  computed: {
+    userStore() {
+      return useUserStore()
+    },
+    tfaEnabled() {
+      return this.userStore.userInfo?.twoFactorEnabled || false
+    },
   },
 
   methods: {
@@ -59,11 +72,11 @@ export default {
     },
 
     onToggleTFA(e) {
-      this.tfaEnabled = e.detail.value
-      uni.showToast({
-        title: this.tfaEnabled ? '2FA Enabled' : '2FA Disabled',
-        icon: 'none'
-      })
+      this.userStore.toggle2FA(e.detail.value)
+    },
+
+    goTwoFactor() {
+      uni.navigateTo({ url: '/pages/user/two-factor' })
     },
 
     goDevices() {
@@ -84,7 +97,7 @@ export default {
           if (res.confirm) {
             uni.showToast({ title: 'Account scheduled for deletion', icon: 'none' })
           }
-        }
+        },
       })
     },
 
@@ -94,8 +107,8 @@ export default {
         uni.hideLoading()
         uni.showToast({ title: 'Data export will be emailed', icon: 'success' })
       }, 1500)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -140,6 +153,28 @@ export default {
 .action {
   font-size: var(--font-size-sm);
   color: var(--color-primary-dark);
+  margin-left: 8rpx;
+}
+
+.tfa-status {
+  display: flex;
+  align-items: center;
+}
+
+.tfa-badge {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  padding: 4rpx 12rpx;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text-tertiary);
+  border: 1rpx solid var(--color-divider);
+}
+
+.tfa-badge.enabled {
+  background: var(--color-success);
+  color: #fff;
+  border-color: var(--color-success);
 }
 
 .linked {

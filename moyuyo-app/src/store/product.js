@@ -1,40 +1,30 @@
-/**
- * 商品 / 分类状态管理
- */
 import { defineStore } from 'pinia'
 import { productApi } from '@/api'
 
 export const useProductStore = defineStore('product', {
   state: () => ({
-    categoryTree: [],        // 分类树
-    homeBanners: [],         // 首页 Banner
-    homeRecommend: [],       // 首页推荐流
-    searchHistory: []        // 搜索历史
+    categoryTree: [],
+    homeRecommend: [],
+    searchHistory: [],
   }),
 
   actions: {
-    /**
-     * 加载分类树
-     */
     async loadCategoryTree(force = false) {
       if (!force && this.categoryTree.length > 0) return this.categoryTree
-      const list = await productApi.getCategoryList({ per_page: 100 })
+      const list = await productApi.getCategoryList()
       this.categoryTree = list
       return list
     },
 
-    /**
-     * 加载首页数据
-     */
     async loadHomeData() {
-      const [recommend, banners] = await Promise.all([
-        productApi.getProductList({ per_page: 10, orderby: 'popularity' }),
-        // Banner 数据由 WP 后台文章/CPT 管理，此处预留扩展
-        Promise.resolve([])
-      ])
-      this.homeRecommend = recommend
-      this.homeBanners = banners
-      return { recommend, banners }
+      const recommend = await productApi.getProductList({
+        page: 1,
+        size: 10,
+        sortBy: 'sales',
+        sortOrder: 'desc',
+      })
+      this.homeRecommend = recommend?.records || recommend || []
+      return { recommend: this.homeRecommend }
     },
 
     addSearchHistory(keyword) {
@@ -46,6 +36,6 @@ export const useProductStore = defineStore('product', {
 
     clearSearchHistory() {
       this.searchHistory = []
-    }
-  }
+    },
+  },
 })

@@ -72,9 +72,10 @@ export default {
       this.log(`[Payment] 调用 ${method}...`)
       const plugin = usePaymentPlugin()
       const start = Date.now()
-      const res = method === 'pay'
-        ? await plugin.pay('apple_pay', { amount: 19.99, currency: 'USD' })
-        : await plugin.isAvailable('apple_pay')
+      const res =
+        method === 'pay'
+          ? await plugin.pay('apple_pay', { amount: 19.99, currency: 'USD' })
+          : await plugin.isAvailable('apple_pay')
       const cost = Date.now() - start
       this.log(`[Payment] ${method} → ${JSON.stringify(res)} (${cost}ms)`)
     },
@@ -86,8 +87,8 @@ export default {
       const res = await plugin[method]('apple')
       const cost = Date.now() - start
       this.log(`[Auth] ${method} → ${JSON.stringify(res)} (${cost}ms)`)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -100,9 +101,18 @@ export default {
   padding: 0 var(--space-md);
 }
 
-.header { padding: var(--space-lg) 0; }
-.title { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); }
-.sub { font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-xs); }
+.header {
+  padding: var(--space-lg) 0;
+}
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+.sub {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-xs);
+}
 
 .section {
   background: var(--color-surface);
@@ -141,7 +151,10 @@ export default {
   width: 100%;
 }
 
-.log-section { flex: 1; margin-top: var(--space-sm); }
+.log-section {
+  flex: 1;
+  margin-top: var(--space-sm);
+}
 
 .log-box {
   background: #1a1a1a;
@@ -158,5 +171,7 @@ export default {
   word-break: break-all;
 }
 
-.footer { padding: var(--space-md) 0; }
+.footer {
+  padding: var(--space-md) 0;
+}
 </style>

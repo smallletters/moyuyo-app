@@ -23,7 +23,7 @@ export function getCurrentLocation(options = {}) {
           longitude: result.longitude,
           address: result.address,
           country: result.country,
-          city: result.city
+          city: result.city,
         })
       } else {
         reject(new Error(result.message || '定位失败'))
@@ -37,7 +37,7 @@ export function getCurrentLocation(options = {}) {
     uni.getLocation({
       type: 'wgs84',
       success: (res) => resolve({ latitude: res.latitude, longitude: res.longitude }),
-      fail: () => reject(new Error('定位失败，请检查位置权限'))
+      fail: () => reject(new Error('定位失败，请检查位置权限')),
     })
   })
   // #endif
@@ -60,7 +60,7 @@ export function openMapSelector(options = {}) {
           latitude: result.latitude,
           longitude: result.longitude,
           address: result.address,
-          name: result.name
+          name: result.name,
         })
       } else {
         reject(new Error(result.message || '选择地址取消'))

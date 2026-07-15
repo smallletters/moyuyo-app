@@ -4,8 +4,15 @@
       <!-- 收货地址 -->
       <view class="card address-card" @click="onSelectAddress">
         <view v-if="selectedAddress" class="address-selected">
-          <text class="address-name">{{ selectedAddress.first_name }} {{ selectedAddress.last_name }} · {{ selectedAddress.phone }}</text>
-          <text class="address-detail">{{ selectedAddress.address_1 }} {{ selectedAddress.address_2 }} {{ selectedAddress.city }} {{ selectedAddress.state }} {{ selectedAddress.postcode }} {{ selectedAddress.country }}</text>
+          <text class="address-name">
+            {{ selectedAddress.first_name }} {{ selectedAddress.last_name }} ·
+            {{ selectedAddress.phone }}
+          </text>
+          <text class="address-detail">
+            {{ selectedAddress.address_1 }} {{ selectedAddress.address_2 }}
+            {{ selectedAddress.city }} {{ selectedAddress.state }} {{ selectedAddress.postcode }}
+            {{ selectedAddress.country }}
+          </text>
         </view>
         <view v-else class="address-empty">
           <text>+ Add Shipping Address</text>
@@ -80,7 +87,7 @@
         </view>
       </view>
 
-      <view class="bottom-spacer"></view>
+      <view class="bottom-spacer" />
     </scroll-view>
 
     <!-- 提交订单 -->
@@ -96,6 +103,7 @@
 
 <script>
 import { orderApi } from '@/api'
+import { addressApi } from '@/api'
 import { useCartStore } from '@/store'
 import { useUserStore } from '@/store'
 
@@ -104,7 +112,7 @@ export default {
     return {
       selectedAddress: null,
       addressList: [],
-      usePoints: false
+      usePoints: false,
     }
   },
 
@@ -127,7 +135,7 @@ export default {
     },
     total() {
       return Math.max(0, this.subtotal + 5.99 - this.discount - this.pointsDiscount)
-    }
+    },
   },
 
   onLoad() {
@@ -136,10 +144,16 @@ export default {
 
   methods: {
     loadAddress() {
-      // 实际项目应从 /wc/v3/customers/{id} 拉取
-      const saved = uni.getStorageSync('moyuyo_address_list') || []
-      this.addressList = saved
-      this.selectedAddress = saved.find((a) => a.default) || saved[0]
+      addressApi.getAddressList().then((list) => {
+        if (list && list.length > 0) {
+          this.addressList = list
+          this.selectedAddress = list.find((a) => a.isDefault) || list[0]
+        }
+      }).catch(() => {
+        const saved = uni.getStorageSync('moyuyo_address_list') || []
+        this.addressList = saved
+        this.selectedAddress = saved.find((a) => a.default) || saved[0]
+      })
     },
 
     onSelectAddress() {
@@ -155,48 +169,39 @@ export default {
     },
 
     /**
-     * 提交订单：调用 WooCommerce 创建订单 → 跳支付 WebView
+     * 提交订单
      */
     async onSubmit() {
       if (!this.selectedAddress) {
-        uni.showToast({ title: '请选择收货地址', icon: 'none' })
+        uni.showToast({ title: 'Please select shipping address', icon: 'none' })
         return
       }
 
-      uni.showLoading({ title: '提交订单中...', mask: true })
+      uni.showLoading({ title: 'Submitting order...', mask: true })
       try {
         const items = this.cartStore.selectedItems
         const orderData = {
-          payment_method: 'bacs', // 由 WP 后台配置决定
-          payment_method_title: 'Place Order',
-          set_paid: false,
-          status: 'pending',
-          billing: this.formatAddress(this.selectedAddress),
-          shipping: this.formatAddress(this.selectedAddress),
-          line_items: items.map((it) => ({
-            product_id: it.productId,
+          items: items.map((it) => ({
+            skuId: it.skuId || null,
+            productId: it.productId,
             quantity: it.quantity,
-            variation_id: it.variationId || 0
           })),
-          shipping_lines: [
-            { method_id: 'flat_rate', method_title: 'Standard', total: '5.99' }
-          ],
-          coupon_lines: this.cartStore.selectedCoupon
-            ? [{ code: this.cartStore.selectedCoupon.code }]
-            : [],
-          customer_id: this.userStore.userId || 0,
-          meta_data: [
-            { key: '_use_points', value: this.usePoints ? '1' : '0' }
-          ]
+          addressId: this.selectedAddress.id || null,
+          remark: '',
+          couponId: this.cartStore.selectedCoupon?.code || null,
         }
         const order = await orderApi.createOrder(orderData)
         uni.hideLoading()
-        // 跳转到 WebView 支付页（方案A）
-        const payUrl = orderApi.getPayUrl(order.id)
-        uni.navigateTo({ url: `/pages/webview/pay?orderId=${order.id}&url=${encodeURIComponent(payUrl)}` })
+
+        this.cartStore.clear()
+
+        uni.showToast({ title: 'Order placed!', icon: 'success' })
+        setTimeout(() => {
+          uni.navigateTo({ url: `/pages/order/pay?id=${order.id || order}` })
+        }, 1500)
       } catch (e) {
         uni.hideLoading()
-        uni.showToast({ title: '提交失败：' + e.message, icon: 'none' })
+        uni.showToast({ title: 'Submit failed: ' + e.message, icon: 'none' })
       }
     },
 
@@ -211,10 +216,10 @@ export default {
         postcode: addr.postcode || '',
         country: addr.country || 'US',
         email: addr.email || this.userStore.userInfo?.email || '',
-        phone: addr.phone || ''
+        phone: addr.phone || '',
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

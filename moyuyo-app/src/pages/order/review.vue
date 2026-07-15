@@ -16,7 +16,9 @@
               class="star"
               :class="{ filled: (item.rating || 0) >= i }"
               @click="item.rating = i"
-            >★</text>
+            >
+              ★
+            </text>
           </view>
         </view>
         <!-- 标签 -->
@@ -27,7 +29,9 @@
             class="tag-chip"
             :class="{ active: (item.tags || []).includes(tag) }"
             @click="toggleTag(item, tag)"
-          >{{ tag }}</view>
+          >
+            {{ tag }}
+          </view>
         </view>
         <!-- 文字评价 -->
         <textarea
@@ -38,15 +42,13 @@
         />
         <!-- 图片上传 -->
         <view class="images">
-          <view
-            v-for="(img, idx) in (item.images || [])"
-            :key="idx"
-            class="image-preview"
-          >
+          <view v-for="(img, idx) in item.images || []" :key="idx" class="image-preview">
             <image :src="img" mode="aspectFill" />
             <view class="image-remove" @click="removeImage(item, idx)">×</view>
           </view>
-          <view v-if="(item.images || []).length < 9" class="image-add" @click="addImage(item)">+</view>
+          <view v-if="(item.images || []).length < 9" class="image-add" @click="addImage(item)">
+            +
+          </view>
         </view>
       </view>
     </scroll-view>
@@ -58,24 +60,37 @@
 </template>
 
 <script>
-import { productApi } from '@/api'
+import { orderApi, reviewApi } from '@/api'
 
 export default {
   data() {
     return {
       orderId: null,
       orderItems: [],
-      presetTags: ['Great Quality', 'Smells Good', 'Pet Loves It', 'True to Size', 'Fast Delivery']
+      presetTags: ['Great Quality', 'Smells Good', 'Pet Loves It', 'True to Size', 'Fast Delivery'],
     }
   },
 
-  onLoad(query) {
+  async onLoad(query) {
     this.orderId = query.orderId
-    // 实际项目应根据 orderId 拉取订单项
-    this.orderItems = [
-      { id: 1, name: 'MILO Harness', image: { src: 'https://picsum.photos/200?random=1' }, rating: 0, tags: [], content: '', images: [] },
-      { id: 2, name: 'LUNA Care Set', image: { src: 'https://picsum.photos/200?random=2' }, rating: 0, tags: [], content: '', images: [] }
-    ]
+    try {
+      const order = await orderApi.getOrderDetail(this.orderId)
+      if (order && order.items) {
+        this.orderItems = order.items.map((item) => ({
+          id: item.id,
+          productId: item.productId,
+          skuId: item.skuId,
+          name: item.productName,
+          image: { src: item.mainImage || '' },
+          rating: 0,
+          tags: [],
+          content: '',
+          images: [],
+        }))
+      }
+    } catch (e) {
+      console.warn('[review] load order items failed', e)
+    }
   },
 
   methods: {
@@ -97,20 +112,23 @@ export default {
     },
 
     async onSubmit() {
-      // 校验
       for (const item of this.orderItems) {
         if (!item.rating) {
-          uni.showToast({ title: '请为每件商品评分', icon: 'none' })
+          uni.showToast({ title: 'Please rate each item', icon: 'none' })
           return
         }
       }
-      uni.showLoading({ title: '提交中...' })
+      uni.showLoading({ title: 'Submitting...' })
       try {
         for (const item of this.orderItems) {
-          await productApi.submitProductReview({
-            product_id: item.id,
-            review: item.content,
-            rating: item.rating
+          await reviewApi.createReview({
+            productId: item.productId,
+            orderId: this.orderId ? Number(this.orderId) : null,
+            orderItemId: item.id,
+            rating: item.rating,
+            content: item.content,
+            tags: item.tags || [],
+            images: item.images || [],
           })
         }
         uni.hideLoading()
@@ -120,8 +138,8 @@ export default {
         uni.hideLoading()
         uni.showToast({ title: 'Submit failed', icon: 'none' })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

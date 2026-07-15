@@ -20,7 +20,7 @@ export function loginWithApple() {
           userId: result.userId,
           fullName: result.fullName,
           email: result.email,
-          identityToken: result.identityToken
+          identityToken: result.identityToken,
         })
       } else {
         reject(new Error(result.message || 'Apple 登录失败'))
@@ -45,7 +45,7 @@ export function loginWithGoogle() {
           idToken: result.idToken,
           displayName: result.displayName,
           email: result.email,
-          photoUrl: result.photoUrl
+          photoUrl: result.photoUrl,
         })
       } else {
         reject(new Error(result.message || 'Google 登录失败'))
@@ -70,7 +70,7 @@ export function loginWithFacebook() {
           accessToken: result.accessToken,
           userId: result.userId,
           displayName: result.displayName,
-          email: result.email
+          email: result.email,
         })
       } else {
         reject(new Error(result.message || 'Facebook 登录失败'))
@@ -108,4 +108,10 @@ export function logoutFromProvider(provider) {
   // #endif
 }
 
-export default { loginWithApple, loginWithGoogle, loginWithFacebook, isAppInstalled, logoutFromProvider }
+export default {
+  loginWithApple,
+  loginWithGoogle,
+  loginWithFacebook,
+  isAppInstalled,
+  logoutFromProvider,
+}

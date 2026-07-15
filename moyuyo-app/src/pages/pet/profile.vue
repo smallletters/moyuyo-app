@@ -2,212 +2,145 @@
   <view class="pet-profile">
     <view class="header">
       <view class="avatar-section">
-        <view class="avatar">{{ currentPet.emoji || '🐕' }}</view>
-        <text class="name">{{ currentPet.name }}</text>
-        <text class="species">{{ currentPet.species }} · {{ currentPet.breed }}</text>
+        <view class="avatar">{{ pet.type === 'CAT' ? '🐈' : '🐕' }}</view>
+        <text class="name">{{ pet.name }}</text>
+        <text class="species">{{ typeLabel }} · {{ pet.breed || '-' }}</text>
       </view>
     </view>
 
     <view class="info-card card">
       <view class="info-row">
         <text class="label">Birthday</text>
-        <text class="value">{{ currentPet.birthday || 'Unknown' }}</text>
+        <text class="value">{{ pet.birthday || 'Unknown' }}</text>
       </view>
       <view class="info-row">
         <text class="label">Weight</text>
-        <text class="value">{{ currentPet.weight || '--' }} kg</text>
+        <text class="value">{{ pet.weightKg || '-' }} kg</text>
       </view>
       <view class="info-row">
         <text class="label">Gender</text>
-        <text class="value">{{ currentPet.gender || '--' }}</text>
+        <text class="value">{{ pet.gender === 1 ? 'Male' : pet.gender === 2 ? 'Female' : '-' }}</text>
       </view>
     </view>
 
-    <!-- 体重曲线图（占位） -->
     <view class="card weight-card">
-      <text class="card-title">Weight Trend</text>
-      <view class="weight-chart">
-        <text class="chart-placeholder">📈 Weight chart (placeholder)</text>
-      </view>
-    </view>
-
-    <!-- 成长记录时间线 -->
-    <view class="card timeline-card">
       <text class="card-title">Growth Timeline</text>
-      <view v-for="t in timeline" :key="t.id" class="timeline-row">
-        <text class="timeline-date">{{ t.date }}</text>
-        <text class="timeline-event">{{ t.event }}</text>
+      <view v-for="t in growthRecords" :key="t.id" class="timeline-row">
+        <text class="timeline-date">{{ t.recordTime }}</text>
+        <text class="timeline-event">{{ t.title }}</text>
       </view>
+      <view v-if="growthRecords.length === 0" class="empty-timeline">No records yet</view>
     </view>
 
     <view class="bottom-bar safe-area-bottom">
       <view class="btn btn-outline" @click="onEdit">Edit</view>
-      <view class="btn btn-primary" @click="onAddTimeline">+ Add Record</view>
+      <view class="btn btn-primary" @click="onAddRecord">+ Add Record</view>
     </view>
   </view>
 </template>
 
 <script>
+import { petApi } from '@/api'
+
+const TYPE_LABELS = { DOG: 'Dog', CAT: 'Cat', OTHER: 'Other' }
+
 export default {
   data() {
     return {
-      currentPet: {
-        name: 'MILO',
-        emoji: '🐕',
-        species: 'Dog',
-        breed: 'Italian Greyhound',
-        birthday: '2024-03-15',
-        weight: 5.2,
-        gender: 'Male'
-      },
-      timeline: [
-        { id: 1, date: '2026-07-01', event: 'Bathing day' },
-        { id: 2, date: '2026-06-15', event: 'Vaccination: Rabies' },
-        { id: 3, date: '2026-05-20', event: 'First hiking trip' }
-      ]
+      pet: {},
+      growthRecords: [],
     }
   },
 
-  methods: {
-    onEdit() {
-      uni.showToast({ title: '编辑功能开发中', icon: 'none' })
+  computed: {
+    typeLabel() {
+      return TYPE_LABELS[this.pet.type] || this.pet.type || ''
     },
-    onAddTimeline() {
-      uni.showToast({ title: '新增记录功能开发中', icon: 'none' })
-    }
-  }
+  },
+
+  onLoad(query) {
+    this.loadPet(query.id || null)
+  },
+
+  methods: {
+    async loadPet(petId) {
+      if (!petId) {
+        try {
+          const pets = await petApi.getPets()
+          if (pets.length > 0) {
+            this.pet = pets[0]
+            this.loadRecords(this.pet.id)
+          }
+        } catch (e) {
+          console.warn('[pet-profile] load failed', e)
+        }
+        return
+      }
+      try {
+        this.pet = await petApi.getPetDetail(petId)
+        this.loadRecords(petId)
+      } catch (e) {
+        console.warn('[pet-profile] load pet failed', e)
+      }
+    },
+
+    async loadRecords(petId) {
+      try {
+        this.growthRecords = await petApi.getGrowthRecords(petId)
+      } catch (e) {
+        this.growthRecords = []
+      }
+    },
+
+    onEdit() {
+      uni.showToast({ title: 'Edit coming soon', icon: 'none' })
+    },
+
+    onAddRecord() {
+      if (!this.pet?.id) return
+      uni.showModal({
+        title: 'New Record',
+        content: 'Title:',
+        editable: true,
+        success: async (res) => {
+          if (res.confirm && res.content) {
+            try {
+              await petApi.createGrowthRecord(this.pet.id, {
+                petId: this.pet.id,
+                type: 'EXAM',
+                title: res.content,
+                recordTime: new Date().toISOString().split('T')[0],
+              })
+              this.loadRecords(this.pet.id)
+              uni.showToast({ title: 'Added', icon: 'success' })
+            } catch (e) {
+              uni.showToast({ title: 'Failed', icon: 'none' })
+            }
+          }
+        },
+      })
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.pet-profile {
-  min-height: 100vh;
-  background: var(--color-background);
-  padding-bottom: 120rpx;
-}
-
-.header {
-  background: var(--color-surface);
-  padding: 64rpx 24rpx 48rpx;
-  padding-top: calc(64rpx + env(safe-area-inset-top));
-}
-
-.avatar-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12rpx;
-}
-
-.avatar {
-  width: 200rpx;
-  height: 200rpx;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #DBC98A 0%, #B38A5A 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 100rpx;
-  box-shadow: 0 8rpx 24rpx rgba(219, 201, 138, 0.3);
-}
-
-.name {
-  font-size: 40rpx;
-  font-weight: var(--font-weight-bold);
-}
-
-.species {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
-}
-
-.card {
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  margin: 16rpx;
-  padding: 24rpx;
-}
-
-.info-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 16rpx 0;
-  border-bottom: 1rpx solid var(--color-divider);
-}
-
-.info-row:last-child {
-  border-bottom: none;
-}
-
-.label {
-  font-size: var(--font-size-base);
-  color: var(--color-text-secondary);
-}
-
-.value {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-}
-
-.card-title {
-  display: block;
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: 16rpx;
-}
-
-.weight-chart {
-  height: 200rpx;
-  background: var(--color-background);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.chart-placeholder {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
-}
-
-.timeline-row {
-  display: flex;
-  align-items: center;
-  gap: 16rpx;
-  padding: 16rpx 0;
-  border-bottom: 1rpx solid var(--color-divider);
-}
-
-.timeline-row:last-child {
-  border-bottom: none;
-}
-
-.timeline-date {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-tertiary);
-  width: 160rpx;
-}
-
-.timeline-event {
-  flex: 1;
-  font-size: var(--font-size-sm);
-}
-
-.bottom-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  gap: 16rpx;
-  padding: 16rpx 24rpx;
-  background: var(--color-surface);
-  border-top: 1rpx solid var(--color-divider);
-}
-
-.bottom-bar .btn {
-  flex: 1;
-  padding: 24rpx 0;
-  text-align: center;
-}
+.pet-profile { min-height: 100vh; background: var(--color-background); padding-bottom: 120rpx; }
+.header { background: var(--color-surface); padding: 48rpx 24rpx; padding-top: calc(48rpx + env(safe-area-inset-top)); text-align: center; }
+.avatar { font-size: 120rpx; display: block; margin-bottom: 16rpx; }
+.name { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); display: block; }
+.species { font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-top: 4rpx; display: block; }
+.card { margin: 16rpx; padding: 24rpx; background: var(--color-surface); border-radius: var(--radius-md); }
+.info-row { display: flex; justify-content: space-between; padding: 12rpx 0; border-bottom: 1rpx solid var(--color-divider); }
+.info-row:last-child { border-bottom: none; }
+.label { font-size: var(--font-size-sm); color: var(--color-text-tertiary); }
+.value { font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); }
+.card-title { font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); margin-bottom: 16rpx; display: block; }
+.timeline-row { display: flex; gap: 16rpx; padding: 10rpx 0; border-bottom: 1rpx solid var(--color-divider); }
+.timeline-row:last-child { border-bottom: none; }
+.timeline-date { font-size: var(--font-size-xs); color: var(--color-text-tertiary); min-width: 160rpx; }
+.timeline-event { font-size: var(--font-size-sm); }
+.empty-timeline { text-align: center; padding: 24rpx; color: var(--color-text-tertiary); font-size: var(--font-size-sm); }
+.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 16rpx; padding: 16rpx 24rpx; padding-bottom: calc(16rpx + env(safe-area-inset-bottom)); background: var(--color-surface); border-top: 1rpx solid var(--color-divider); }
+.bottom-bar .btn { flex: 1; text-align: center; padding: 20rpx 0; }
 </style>

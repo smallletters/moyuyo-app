@@ -10,7 +10,7 @@
         @click="onTabChange(tab.code)"
       >
         <text>{{ tab.label }}</text>
-        <view v-if="activeTab === tab.code" class="tab-indicator"></view>
+        <view v-if="activeTab === tab.code" class="tab-indicator" />
       </view>
     </view>
 
@@ -42,7 +42,9 @@
                 class="filter-chip"
                 :class="{ active: filter.petType === opt.value }"
                 @click="filter.petType = opt.value"
-              >{{ opt.label }}</view>
+              >
+                {{ opt.label }}
+              </view>
             </view>
           </view>
           <view class="filter-row">
@@ -54,7 +56,9 @@
                 class="filter-chip"
                 :class="{ active: filter.size === opt }"
                 @click="filter.size = opt"
-              >{{ opt }}</view>
+              >
+                {{ opt }}
+              </view>
             </view>
           </view>
           <view class="filter-row">
@@ -66,7 +70,9 @@
                 class="filter-chip"
                 :class="{ active: filter.ip === opt }"
                 @click="filter.ip = opt"
-              >{{ opt }}</view>
+              >
+                {{ opt }}
+              </view>
             </view>
           </view>
         </view>
@@ -79,24 +85,23 @@
             class="sort-item"
             :class="{ active: sortBy === opt.value }"
             @click="sortBy = opt.value"
-          >{{ opt.label }}</view>
+          >
+            {{ opt.label }}
+          </view>
         </view>
 
         <!-- 商品列表 -->
         <view class="product-list">
-          <view
-            v-for="p in products"
-            :key="p.id"
-            class="product-row"
-            @click="goDetail(p.id)"
-          >
+          <view v-for="p in products" :key="p.id" class="product-row" @click="goDetail(p.id)">
             <image :src="p.image" class="product-image" mode="aspectFill" />
             <view class="product-info">
               <text class="product-name">{{ p.name }}</text>
               <text class="product-desc text-ellipsis-2">{{ p.description }}</text>
               <view class="product-bottom">
                 <text class="price">${{ p.price }}</text>
-                <text v-if="p.ip" class="product-ip" :class="`tag-${p.ip.toLowerCase()}`">{{ p.ip }}</text>
+                <text v-if="p.ip" class="product-ip" :class="`tag-${p.ip.toLowerCase()}`">
+                  {{ p.ip }}
+                </text>
               </view>
             </view>
           </view>
@@ -120,34 +125,45 @@ export default {
         { code: 'care', label: 'CARE 洗护' },
         { code: 'gear', label: 'GEAR 出行' },
         { code: 'play', label: 'PLAY 玩具' },
-        { code: 'home', label: 'HOME 家居' }
+        { code: 'home', label: 'HOME 家居' },
       ],
       // 二级分类映射
       subMap: {
         care: [
-          { id: 1, name: '沐浴露' }, { id: 2, name: '护毛素' },
-          { id: 3, name: '干洗喷雾' }, { id: 4, name: '耳部清洁' },
-          { id: 5, name: '眼部清洁' }, { id: 6, name: '护爪膏' }
+          { id: 1, name: '沐浴露' },
+          { id: 2, name: '护毛素' },
+          { id: 3, name: '干洗喷雾' },
+          { id: 4, name: '耳部清洁' },
+          { id: 5, name: '眼部清洁' },
+          { id: 6, name: '护爪膏' },
         ],
         gear: [
-          { id: 11, name: '牵引绳' }, { id: 12, name: '胸背带' },
-          { id: 13, name: '便携水杯' }, { id: 14, name: '出行包' },
-          { id: 15, name: '反光装备' }, { id: 16, name: '车载安全' }
+          { id: 11, name: '牵引绳' },
+          { id: 12, name: '胸背带' },
+          { id: 13, name: '便携水杯' },
+          { id: 14, name: '出行包' },
+          { id: 15, name: '反光装备' },
+          { id: 16, name: '车载安全' },
         ],
         play: [
-          { id: 21, name: '毛绒玩具' }, { id: 22, name: '啃咬玩具' },
-          { id: 23, name: '益智玩具' }, { id: 24, name: '训练用品' }
+          { id: 21, name: '毛绒玩具' },
+          { id: 22, name: '啃咬玩具' },
+          { id: 23, name: '益智玩具' },
+          { id: 24, name: '训练用品' },
         ],
         home: [
-          { id: 31, name: '服饰上衣' }, { id: 32, name: '服饰下装' },
-          { id: 33, name: '窝床' }, { id: 34, name: '垫子' },
-          { id: 35, name: '餐具' }, { id: 36, name: '围巾配饰' }
-        ]
+          { id: 31, name: '服饰上衣' },
+          { id: 32, name: '服饰下装' },
+          { id: 33, name: '窝床' },
+          { id: 34, name: '垫子' },
+          { id: 35, name: '餐具' },
+          { id: 36, name: '围巾配饰' },
+        ],
       },
       petTypes: [
         { value: 'dog', label: 'Dog' },
         { value: 'cat', label: 'Cat' },
-        { value: 'other', label: 'Other' }
+        { value: 'other', label: 'Other' },
       ],
       sizes: ['XS', 'S', 'M', 'L', 'XL'],
       ipOptions: ['MILO', 'LUNA', 'ATLAS', 'OLIVE', 'Classic'],
@@ -157,24 +173,24 @@ export default {
         { value: 'price_asc', label: '价格↑' },
         { value: 'price_desc', label: '价格↓' },
         { value: 'date', label: '新品' },
-        { value: 'rating', label: '好评' }
+        { value: 'rating', label: '好评' },
       ],
       sortBy: 'default',
       filter: {
         petType: '',
         size: '',
-        ip: ''
+        ip: '',
       },
       products: [],
       loading: false,
-      page: 1
+      page: 1,
     }
   },
 
   computed: {
     currentSubs() {
       return this.subMap[this.activeTab] || []
-    }
+    },
   },
 
   onLoad() {
@@ -207,14 +223,14 @@ export default {
           price_asc: 'price',
           price_desc: 'price',
           date: 'date',
-          rating: 'rating'
+          rating: 'rating',
         }
         const order = this.sortBy === 'price_desc' ? 'desc' : 'asc'
         const params = {
           page: this.page,
           per_page: 20,
           orderby: orderbyMap[this.sortBy] || 'menu_order',
-          order
+          order,
         }
         if (this.activeSub) params.category = this.activeSub
         const list = await productApi.getProductList(params)
@@ -224,7 +240,7 @@ export default {
           image: p.images?.[0]?.src || '',
           price: p.price,
           description: p.short_description?.replace(/<[^>]+>/g, '').slice(0, 80) || '',
-          ip: this.detectIP(p)
+          ip: this.detectIP(p),
         }))
         this.products.push(...mapped)
         this.page += 1
@@ -246,8 +262,8 @@ export default {
 
     goDetail(id) {
       uni.navigateTo({ url: `/pages/goods/detail?id=${id}` })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -446,7 +462,8 @@ export default {
   border-radius: var(--radius-pill);
 }
 
-.empty, .loading {
+.empty,
+.loading {
   text-align: center;
   padding: 48rpx 0;
   color: var(--color-text-tertiary);

@@ -3,11 +3,9 @@ package com.moyuyo.dao.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * 用户实体（示例）
- */
 @Data
 @TableName("mo_user")
 public class UserEntity {
@@ -16,8 +14,40 @@ public class UserEntity {
     private Long id;
 
     private String email;
+
+    private String passwordHash;
+
+    private String phone;
+
     private String nickname;
+
     private String avatar;
+
+    private LocalDate birthday;
+
+    private String country;
+
+    private String locale;
+
+    private String timezone;
+
+    private Integer points;
+
+    private Boolean twoFactorEnabled;
+
+    private Boolean emailVerified;
+
+    private Boolean marketingOptIn;
+
+    private Integer status;
+
+    private LocalDateTime lastLoginTime;
+
+    private LocalDateTime deleteScheduledAt;
+
+    private String oauthProvider;
+
+    private String oauthUid;
 
     @TableLogic
     private Integer deleted;

@@ -2,19 +2,15 @@
   <view class="profile">
     <view class="avatar-section">
       <image :src="userStore.userInfo?.avatar || defaultAvatar" class="avatar" />
-      <text class="name">{{ userStore.userInfo?.first_name }} {{ userStore.userInfo?.last_name }}</text>
+      <text class="name">{{ userStore.userInfo?.nickname || 'User' }}</text>
       <text class="email">{{ userStore.userInfo?.email }}</text>
       <view class="btn btn-outline change-avatar">Change Avatar</view>
     </view>
 
     <view class="card">
       <view class="form-row">
-        <text class="label">First Name</text>
-        <input v-model="form.first_name" class="input" />
-      </view>
-      <view class="form-row">
-        <text class="label">Last Name</text>
-        <input v-model="form.last_name" class="input" />
+        <text class="label">Nickname</text>
+        <input v-model="form.nickname" class="input" />
       </view>
       <view class="form-row">
         <text class="label">Email</text>
@@ -26,7 +22,12 @@
       </view>
       <view class="form-row">
         <text class="label">Birthday</text>
-        <picker mode="date" :value="form.birthday" :end="today" @change="form.birthday = $event.detail.value">
+        <picker
+          mode="date"
+          :value="form.birthday"
+          :end="today"
+          @change="form.birthday = $event.detail.value"
+        >
           <view class="input picker">{{ form.birthday || 'Select' }}</view>
         </picker>
       </view>
@@ -46,11 +47,10 @@ export default {
     return {
       defaultAvatar: 'https://i.pravatar.cc/200?img=20',
       form: {
-        first_name: '',
-        last_name: '',
+        nickname: '',
         phone: '',
-        birthday: ''
-      }
+        birthday: '',
+      },
     }
   },
 
@@ -60,14 +60,14 @@ export default {
     },
     userStore() {
       return useUserStore()
-    }
+    },
   },
 
   onLoad() {
     if (this.userStore.userInfo) {
-      this.form.first_name = this.userStore.userInfo.first_name || ''
-      this.form.last_name = this.userStore.userInfo.last_name || ''
-      this.form.phone = this.userStore.userInfo.billing?.phone || ''
+      this.form.nickname = this.userStore.userInfo.nickname || ''
+      this.form.phone = this.userStore.userInfo.phone || ''
+      this.form.birthday = this.userStore.userInfo.birthday || ''
     }
   },
 
@@ -89,10 +89,10 @@ export default {
             await this.userStore.logout()
             uni.reLaunch({ url: '/pages/tabbar/user' })
           }
-        }
+        },
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -177,7 +177,8 @@ export default {
   min-height: 44rpx;
 }
 
-.save-btn, .logout-btn {
+.save-btn,
+.logout-btn {
   margin: 16rpx 24rpx;
   padding: 24rpx 0;
   font-size: var(--font-size-md);

@@ -15,20 +15,24 @@
       >
         <view class="card-body">
           <view class="name-row">
-            <text class="name">{{ addr.first_name }} {{ addr.last_name }}</text>
+            <text class="name">{{ addr.receiver }}</text>
             <text class="phone">{{ addr.phone }}</text>
             <view v-if="addr.isDefault" class="default-tag">Default</view>
           </view>
-          <text class="detail">{{ addr.country }} {{ addr.state }} {{ addr.city }} {{ addr.address_1 }} {{ addr.address_2 }} {{ addr.postcode }}</text>
+          <text class="detail">
+            {{ addr.country }} {{ addr.province }} {{ addr.city }} {{ addr.detail }}
+          </text>
+          <text v-if="addr.zipCode" class="zip">Post: {{ addr.zipCode }}</text>
         </view>
         <view v-if="!fromCheckout" class="actions">
-          <text @click.stop="onSetDefault(addr)" v-if="!addr.isDefault">Set Default</text>
+          <text v-if="!addr.isDefault" @click.stop="onSetDefault(addr)">Set Default</text>
           <text @click.stop="goEdit(addr)">Edit</text>
           <text class="delete" @click.stop="onDelete(addr)">Delete</text>
         </view>
       </view>
 
-      <view v-if="addressList.length === 0" class="empty">
+      <view v-if="loading" class="loading">Loading...</view>
+      <view v-if="!loading && addressList.length === 0" class="empty">
         <text>No addresses yet</text>
         <view class="btn btn-primary" @click="goEdit(null)">Add Address</view>
       </view>
@@ -37,61 +41,77 @@
 </template>
 
 <script>
-import { setStorage, getStorage, STORAGE_KEYS } from '@/utils/storage'
+import { memberApi } from '@/api'
 
 export default {
   data() {
     return {
-      addressList: getStorage(STORAGE_KEYS.ADDRESS_LIST, []),
+      addressList: [],
       selectedId: '',
-      fromCheckout: false
+      fromCheckout: false,
+      loading: false,
     }
   },
 
   onLoad(query) {
     this.fromCheckout = query.from === 'checkout'
+    this.loadAddresses()
   },
 
   methods: {
-    onSelect(addr) {
+    async loadAddresses() {
+      this.loading = true
+      try {
+        this.addressList = await memberApi.getAddressList()
+      } catch (e) {
+        console.warn('[address] load failed', e)
+        this.addressList = []
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async onSelect(addr) {
       if (this.fromCheckout) {
-        // 把选中的地址回传给 checkout（通过 globalData + setStorage）
-        setStorage('moyuyo_selected_address', addr)
+        uni.setStorageSync('moyuyo_selected_address', addr)
         uni.navigateBack()
       } else {
         this.selectedId = addr.id
       }
     },
 
-    onSetDefault(addr) {
-      this.addressList.forEach((a) => (a.isDefault = a.id === addr.id))
-      this.persist()
-      uni.showToast({ title: 'Default updated', icon: 'success' })
+    async onSetDefault(addr) {
+      try {
+        await memberApi.setDefaultAddress(addr.id)
+        this.addressList.forEach((a) => (a.isDefault = a.id === addr.id))
+        uni.showToast({ title: 'Default updated', icon: 'success' })
+      } catch (e) {
+        uni.showToast({ title: 'Failed', icon: 'none' })
+      }
     },
 
     goEdit(addr) {
-      const url = addr
-        ? `/pages/user/address-edit?id=${addr.id}`
-        : '/pages/user/address-edit'
+      const url = addr ? `/pages/user/address-edit?id=${addr.id}` : '/pages/user/address-edit'
       uni.navigateTo({ url })
     },
 
-    onDelete(addr) {
+    async onDelete(addr) {
       uni.showModal({
         title: 'Delete address?',
-        success: (res) => {
+        success: async (res) => {
           if (res.confirm) {
-            this.addressList = this.addressList.filter((a) => a.id !== addr.id)
-            this.persist()
+            try {
+              await memberApi.deleteAddress(addr.id)
+              this.addressList = this.addressList.filter((a) => a.id !== addr.id)
+              uni.showToast({ title: 'Deleted', icon: 'success' })
+            } catch (e) {
+              uni.showToast({ title: 'Delete failed', icon: 'none' })
+            }
           }
-        }
+        },
       })
     },
-
-    persist() {
-      setStorage(STORAGE_KEYS.ADDRESS_LIST, this.addressList)
-    }
-  }
+  },
 }
 </script>
 
@@ -168,6 +188,11 @@ export default {
   line-height: 1.5;
 }
 
+.zip {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
 .actions {
   display: flex;
   gap: 32rpx;
@@ -190,5 +215,12 @@ export default {
   align-items: center;
   gap: 24rpx;
   color: var(--color-text-tertiary);
+}
+
+.loading {
+  text-align: center;
+  padding: 40rpx;
+  color: var(--color-text-tertiary);
+  font-size: 26rpx;
 }
 </style>

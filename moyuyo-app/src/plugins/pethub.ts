@@ -54,6 +54,6 @@ export function usePetHubPlugin(): PetHubPluginProtocol {
     switchScene: (scene: PetScene) => call('switchScene', { scene }),
     playAnimation: (animName: string) => call('playAnimation', { animName }),
     onInteraction: (type: string) => call('onInteraction', { type }),
-    dispose: () => call('dispose')
+    dispose: () => call('dispose'),
   }
 }

@@ -50,6 +50,6 @@ export function useAuthPlugin(): AuthPluginProtocol {
   return {
     login: (provider: AuthProvider) => call('login', { provider }),
     logout: (provider: AuthProvider) => call('logout', { provider }),
-    isAuthorized: (provider: AuthProvider) => call('isAuthorized', { provider })
+    isAuthorized: (provider: AuthProvider) => call('isAuthorized', { provider }),
   }
 }

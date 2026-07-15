@@ -1,10 +1,10 @@
 <template>
-  <view class="detail" v-if="product">
+  <view v-if="product" class="detail">
     <scroll-view scroll-y class="scroll">
       <!-- 主图/视频轮播 -->
       <swiper class="swiper" indicator-dots autoplay circular>
         <swiper-item v-for="(img, i) in product.images" :key="i">
-          <image :src="img.src" class="swiper-image" mode="aspectFill" />
+          <image :src="img.url" class="swiper-image" mode="aspectFill" />
         </swiper-item>
       </swiper>
 
@@ -12,21 +12,28 @@
       <view class="header card">
         <view class="price-row">
           <text class="price-large">${{ product.price }}</text>
-          <text v-if="product.regular_price && product.regular_price > product.price" class="price-original-large">${{ product.regular_price }}</text>
-          <view v-if="product.on_sale" class="sale-tag">SALE</view>
+          <text
+            v-if="product.originalPrice && product.originalPrice > product.price"
+            class="price-original-large"
+          >
+            ${{ product.originalPrice }}
+          </text>
+          <view v-if="product.onSale" class="sale-tag">SALE</view>
         </view>
         <view class="title-row">
           <text class="title">{{ product.name }}</text>
           <view v-if="ip" class="ip-tag" :class="`tag-${ip.toLowerCase()}`">{{ ip }}</view>
         </view>
-        <text class="subtitle">{{ product.short_description?.replace(/<[^>]+>/g, '') }}</text>
+        <text class="subtitle">{{ product.detail?.replace(/<[^>]+>/g, '').slice(0, 200) }}</text>
       </view>
 
       <!-- 规格选择 -->
       <view class="section card" @click="skuVisible = true">
         <text class="section-label">Select Variant</text>
         <view class="sku-summary">
-          <text v-if="selectedAttrs.length">{{ selectedAttrs.map(a => a.value).join(' / ') }}</text>
+          <text v-if="selectedAttrs.length">
+            {{ selectedAttrs.map((a) => a.value).join(' / ') }}
+          </text>
           <text v-else class="placeholder">Choose Size / Color</text>
           <text class="arrow">›</text>
         </view>
@@ -46,7 +53,7 @@
       <!-- 商品详情（图文） -->
       <view class="section card">
         <text class="section-title">Product Details</text>
-        <view class="content-html" v-html="product.description"></view>
+        <view class="content-html" v-html="product.detail" />
       </view>
 
       <!-- 评价 -->
@@ -58,14 +65,14 @@
         <view v-if="reviews.length === 0" class="no-reviews">No reviews yet</view>
         <view v-for="r in reviews.slice(0, 2)" :key="r.id" class="review-item">
           <view class="review-head">
-            <text class="reviewer">{{ r.reviewer || 'Anonymous' }}</text>
+            <text class="reviewer">{{ r.reviewerName || 'Anonymous' }}</text>
             <text class="review-rating">★ {{ r.rating }}</text>
           </view>
-          <text class="review-content">{{ r.review }}</text>
+          <text class="review-content">{{ r.content }}</text>
         </view>
       </view>
 
-      <view class="bottom-spacer"></view>
+      <view class="bottom-spacer" />
     </scroll-view>
 
     <!-- SKU 选择弹窗 -->
@@ -77,7 +84,7 @@
             <text class="sku-price">${{ product.price }}</text>
             <text class="sku-stock">Stock: {{ stock }}</text>
           </view>
-          <u-icon name="close" size="20" @click="skuVisible = false"></u-icon>
+          <u-icon name="close" size="20" @click="skuVisible = false" />
         </view>
         <scroll-view scroll-y class="sku-body">
           <view v-for="attr in attributes" :key="attr.name" class="attr-group">
@@ -89,7 +96,9 @@
                 class="attr-chip"
                 :class="{ active: isAttrSelected(attr.name, opt) }"
                 @click="onAttrSelect(attr.name, opt)"
-              >{{ opt }}</view>
+              >
+                {{ opt }}
+              </view>
             </view>
           </view>
         </scroll-view>
@@ -112,7 +121,9 @@
       <view class="bar-icon" @click="goCart">
         <text class="bar-emoji">🛒</text>
         <text class="bar-label">Cart</text>
-        <view v-if="cartStore.totalQuantity > 0" class="bar-badge">{{ cartStore.totalQuantity }}</view>
+        <view v-if="cartStore.totalQuantity > 0" class="bar-badge">
+          {{ cartStore.totalQuantity }}
+        </view>
       </view>
       <view class="bar-icon" @click="onWishToggle">
         <text class="bar-emoji">{{ wishlisted ? '❤️' : '🤍' }}</text>
@@ -130,7 +141,7 @@
 </template>
 
 <script>
-import { productApi } from '@/api'
+import { productApi, reviewApi } from '@/api'
 import { useCartStore } from '@/store'
 
 export default {
@@ -139,12 +150,12 @@ export default {
       productId: null,
       product: null,
       reviews: [],
-      attributes: [],       // [{name, options: []}]
-      selectedAttrs: [],    // [{name, value}]
+      attributes: [], // [{name, options: []}]
+      selectedAttrs: [], // [{name, value}]
       quantity: 1,
       stock: 0,
       skuVisible: false,
-      wishlisted: false
+      wishlisted: false,
     }
   },
 
@@ -153,15 +164,18 @@ export default {
       return useCartStore()
     },
     ip() {
-      const tags = this.product?.tags?.map((t) => t.name.toUpperCase()) || []
-      return ['MILO', 'LUNA', 'ATLAS', 'OLIVE'].find((t) => tags.includes(t)) || null
+      return this.product?.brandIpId ? this.resolveIpName(this.product.brandIpId) : null
+    },
+    resolveIpName(brandIpId) {
+      const map = { 1: 'MILO', 2: 'LUNA', 3: 'ATLAS', 4: 'OLIVE' }
+      return map[brandIpId] || null
     },
     stockState() {
       if (!this.selectedAttrs.length) return ''
       if (this.stock === 0) return 'Out of stock'
       if (this.stock <= 5) return `Only ${this.stock} left`
       return ''
-    }
+    },
   },
 
   onLoad(query) {
@@ -175,9 +189,13 @@ export default {
         const data = await productApi.getProductDetail(this.productId)
         this.product = data
         this.attributes = data.attributes || []
-        this.reviews = await productApi.getProductReviews(this.productId).catch(() => [])
-        // 默认库存
-        this.stock = data.stock_quantity || 99
+        const revResult = await reviewApi.getProductReviews(this.productId, { page: 1, size: 5 })
+        this.reviews = revResult?.records || revResult || []
+        const firstSku = data.skus?.[0]
+        this.stock = firstSku?.stock || 99
+        if (firstSku) {
+          this.selectedAttrs = data.skus?.[0]?.attrs || []
+        }
       } catch (e) {
         console.error('[detail] load error', e)
         uni.showToast({ title: 'Load failed', icon: 'none' })
@@ -217,13 +235,13 @@ export default {
     onAddCart() {
       if (!this.product) return
       this.cartStore.addItem({
+        skuId: this.product.skus?.[0]?.id || this.product.id,
         productId: this.product.id,
-        variationId: this.product.id,
         name: this.product.name,
-        image: this.product.images?.[0]?.src,
+        image: this.product.mainImage || this.product.images?.[0]?.src,
         price: parseFloat(this.product.price) || 0,
         quantity: this.quantity,
-        attrs: this.selectedAttrs
+        attrs: this.selectedAttrs,
       })
       uni.showToast({ title: 'Added to cart', icon: 'success' })
     },
@@ -248,8 +266,8 @@ export default {
 
     seeAllReviews() {
       uni.navigateTo({ url: `/pages/order/reviews?productId=${this.productId}` })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -276,7 +294,8 @@ export default {
   height: 100%;
 }
 
-.header, .section {
+.header,
+.section {
   background: var(--color-surface);
   margin: 16rpx;
   padding: 24rpx;

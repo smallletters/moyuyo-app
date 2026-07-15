@@ -13,7 +13,7 @@ export const STORAGE_KEYS = {
   ONBOARDING_DONE: `${STORAGE_PREFIX}onboarding_done`,
   SEARCH_HISTORY: `${STORAGE_PREFIX}search_history`,
   ADDRESS_LIST: `${STORAGE_PREFIX}address_list`,
-  DEVICE_LIST: `${STORAGE_PREFIX}device_list`
+  DEVICE_LIST: `${STORAGE_PREFIX}device_list`,
 }
 
 export function setStorage(key, value) {

@@ -21,7 +21,9 @@
           <image :src="item.image" class="item-image" mode="aspectFill" />
           <view class="item-info">
             <text class="item-name text-ellipsis-2">{{ item.name }}</text>
-            <text v-if="item.attrs?.length" class="item-attrs">{{ item.attrs.map(a => a.value).join(' / ') }}</text>
+            <text v-if="item.attrs?.length" class="item-attrs">
+              {{ item.attrs.map((a) => a.value).join(' / ') }}
+            </text>
             <view class="item-bottom">
               <text class="price">${{ item.price }}</text>
               <view class="quantity-control">
@@ -33,7 +35,7 @@
           </view>
           <view class="item-delete" @click="onDelete(item)">×</view>
         </view>
-        <view class="bottom-spacer"></view>
+        <view class="bottom-spacer" />
       </scroll-view>
 
       <!-- 底部结算栏 -->
@@ -71,7 +73,7 @@ export default {
   computed: {
     cartStore() {
       return useCartStore()
-    }
+    },
   },
 
   methods: {
@@ -103,7 +105,7 @@ export default {
             this.cartStore.removeItem(key)
             uni.showToast({ title: 'Removed', icon: 'success' })
           }
-        }
+        },
       })
     },
 
@@ -117,8 +119,8 @@ export default {
 
     goShopping() {
       uni.switchTab({ url: '/pages/tabbar/category' })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -164,7 +166,8 @@ export default {
   border-radius: var(--radius-md);
 }
 
-.item-check, .check-all {
+.item-check,
+.check-all {
   display: flex;
   align-items: center;
 }

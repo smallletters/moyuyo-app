@@ -13,33 +13,28 @@
     </view>
 
     <scroll-view scroll-y class="scroll" @scrolltolower="onLoadMore">
-      <view
-        v-for="o in orders"
-        :key="o.id"
-        class="card order-card"
-        @click="goDetail(o.id)"
-      >
+      <view v-for="o in orders" :key="o.id" class="card order-card" @click="goDetail(o.id)">
         <view class="card-header">
-          <text class="order-no">#{{ o.number }}</text>
+          <text class="order-no">#{{ o.orderNo }}</text>
           <text class="order-status" :class="`status-${o.status}`">{{ statusText(o.status) }}</text>
         </view>
         <view class="order-items">
-          <view
-            v-for="item in o.line_items.slice(0, 2)"
-            :key="item.id"
-            class="item-row"
-          >
-            <image :src="item.image?.src || ''" class="item-image" />
+          <view v-for="item in (o.items || []).slice(0, 2)" :key="item.id" class="item-row">
+            <image :src="item.mainImage || ''" class="item-image" />
             <view class="item-info">
-              <text class="item-name text-ellipsis-2">{{ item.name }}</text>
+              <text class="item-name text-ellipsis-2">{{ item.productName }}</text>
               <text class="item-qty">x {{ item.quantity }}</text>
             </view>
           </view>
-          <view v-if="o.line_items.length > 2" class="more">+{{ o.line_items.length - 2 }} more</view>
+          <view v-if="(o.items || []).length > 2" class="more">
+            +{{ o.items.length - 2 }} more
+          </view>
         </view>
         <view class="card-footer">
-          <text class="total">Total: ${{ o.total }}</text>
-          <view class="btn btn-primary action-btn" @click.stop="onAction(o)">{{ actionText(o.status) }}</view>
+          <text class="total">Total: ${{ o.payAmount }}</text>
+          <view class="btn btn-primary action-btn" @click.stop="onAction(o)">
+            {{ actionText(o.status) }}
+          </view>
         </view>
       </view>
 
@@ -60,15 +55,15 @@ export default {
       activeTab: 'all',
       tabs: [
         { value: 'all', label: 'All' },
-        { value: 'pending', label: 'To Pay' },
-        { value: 'processing', label: 'To Ship' },
-        { value: 'shipped', label: 'Shipped' },
-        { value: 'completed', label: 'Completed' }
+        { value: 'PENDING_PAY', label: 'To Pay' },
+        { value: 'PENDING_SHIP', label: 'To Ship' },
+        { value: 'PENDING_RECEIVE', label: 'To Receive' },
+        { value: 'COMPLETED', label: 'Completed' },
       ],
       orders: [],
       loading: false,
       noMore: false,
-      page: 1
+      page: 1,
     }
   },
 
@@ -88,11 +83,15 @@ export default {
       }
       this.loading = true
       try {
-        const params = { page: this.page, per_page: 10 }
+        const params = { page: this.page, size: 10 }
         if (this.activeTab !== 'all') params.status = this.activeTab
-        const list = await orderApi.getOrderList(params)
+        const result = await orderApi.getOrderList(params)
+        // result could be Page wrapper with records, or plain array
+        const list = result?.records || result || []
         this.orders.push(...list)
-        this.noMore = list.length < 10
+        this.noMore = !result?.records
+          ? list.length < 10
+          : (result.total || 0) <= this.page * 10
         this.page += 1
       } catch (e) {
         console.error('[order-list] error', e)
@@ -113,32 +112,35 @@ export default {
 
     statusText(status) {
       const map = {
-        pending: 'To Pay',
-        processing: 'To Ship',
-        shipped: 'Shipped',
-        completed: 'Completed',
-        cancelled: 'Cancelled'
+        PENDING_PAY: 'To Pay',
+        PENDING_SHIP: 'To Ship',
+        PENDING_RECEIVE: 'To Receive',
+        COMPLETED: 'Completed',
+        CANCELLED: 'Cancelled',
+        REFUNDING: 'Refunding',
+        REFUNDED: 'Refunded',
       }
       return map[status] || status
     },
 
     actionText(status) {
       const map = {
-        pending: 'Pay Now',
-        processing: 'Track',
-        shipped: 'Track',
-        completed: 'Review'
+        PENDING_PAY: 'Pay Now',
+        PENDING_SHIP: 'Track',
+        PENDING_RECEIVE: 'Track',
+        COMPLETED: 'Review',
       }
       return map[status] || 'View'
     },
 
     onAction(order) {
-      if (order.status === 'pending') {
-        const payUrl = orderApi.getPayUrl(order.id)
-        uni.navigateTo({ url: `/pages/webview/pay?orderId=${order.id}&url=${encodeURIComponent(payUrl)}` })
-      } else if (order.status === 'shipped' || order.status === 'processing') {
+      if (order.status === 'PENDING_PAY') {
+        uni.navigateTo({
+          url: `/pages/order/pay?orderId=${order.id}&amount=${order.payAmount}`,
+        })
+      } else if (order.status === 'PENDING_SHIP' || order.status === 'PENDING_RECEIVE') {
         uni.navigateTo({ url: `/pages/order/logistics?id=${order.id}` })
-      } else if (order.status === 'completed') {
+      } else if (order.status === 'COMPLETED') {
         uni.navigateTo({ url: `/pages/order/review?orderId=${order.id}` })
       } else {
         this.goDetail(order.id)
@@ -147,8 +149,8 @@ export default {
 
     goDetail(id) {
       uni.navigateTo({ url: `/pages/order/detail?id=${id}` })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -168,134 +170,129 @@ export default {
 
 .tab {
   flex: 1;
-  padding: 24rpx 0;
   text-align: center;
-  font-size: var(--font-size-sm);
+  padding: 24rpx 0;
+  font-size: 26rpx;
   color: var(--color-text-secondary);
   position: relative;
-}
 
-.tab.active {
-  color: var(--color-text);
-  font-weight: var(--font-weight-semibold);
-}
+  &.active {
+    color: var(--color-primary);
+    font-weight: 600;
 
-.tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 32rpx;
-  height: 4rpx;
-  background: var(--color-primary);
-  border-radius: 2rpx;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60rpx;
+      height: 4rpx;
+      background: var(--color-primary);
+      border-radius: 2rpx;
+    }
+  }
 }
 
 .scroll {
   flex: 1;
-  padding: 16rpx;
+  padding: 20rpx;
 }
 
 .order-card {
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  padding: 24rpx;
-  margin-bottom: 16rpx;
+  margin-bottom: 20rpx;
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 16rpx;
-  border-bottom: 1rpx solid var(--color-divider);
+  margin-bottom: 20rpx;
 }
 
 .order-no {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
 }
 
 .order-status {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-}
+  font-size: 26rpx;
+  font-weight: 600;
 
-.status-pending { color: var(--color-warning); }
-.status-processing { color: var(--color-info); }
-.status-shipped { color: var(--color-info); }
-.status-completed { color: var(--color-success); }
-.status-cancelled { color: var(--color-text-tertiary); }
+  &.status-PENDING_PAY { color: var(--color-warning); }
+  &.status-PENDING_SHIP { color: var(--color-info); }
+  &.status-PENDING_RECEIVE { color: var(--color-primary); }
+  &.status-COMPLETED { color: var(--color-success); }
+  &.status-CANCELLED { color: var(--color-text-tertiary); }
+}
 
 .order-items {
-  padding: 16rpx 0;
-}
+  .item-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16rpx;
+  }
 
-.item-row {
-  display: flex;
-  gap: 16rpx;
-  padding: 8rpx 0;
-}
+  .item-image {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 12rpx;
+    margin-right: 16rpx;
+    background: var(--color-background);
+  }
 
-.item-image {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: var(--radius-sm);
-  background: var(--color-background);
-}
+  .item-info {
+    flex: 1;
+  }
 
-.item-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4rpx;
-}
+  .item-name {
+    font-size: 26rpx;
+    display: block;
+  }
 
-.item-name {
-  font-size: var(--font-size-sm);
-}
-
-.item-qty {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-tertiary);
+  .item-qty {
+    font-size: 24rpx;
+    color: var(--color-text-tertiary);
+  }
 }
 
 .more {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-tertiary);
   text-align: center;
-  padding: 8rpx 0;
+  font-size: 24rpx;
+  color: var(--color-text-tertiary);
+  padding: 8rpx;
 }
 
 .card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 16rpx;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
   border-top: 1rpx solid var(--color-divider);
 }
 
 .total {
-  font-size: var(--font-size-base);
-  color: var(--color-text);
-}
-
-.total::before {
-  content: 'Total: ';
-  color: var(--color-text-tertiary);
+  font-size: 28rpx;
+  font-weight: 600;
 }
 
 .action-btn {
-  padding: 12rpx 24rpx;
-  font-size: var(--font-size-sm);
+  padding: 12rpx 32rpx;
+  font-size: 24rpx;
 }
 
-.loading, .empty {
+.loading {
   text-align: center;
-  padding: 64rpx 0;
+  padding: 40rpx;
   color: var(--color-text-tertiary);
-  font-size: var(--font-size-sm);
+  font-size: 26rpx;
+}
+
+.empty {
+  text-align: center;
+  padding: 100rpx 40rpx;
+  color: var(--color-text-tertiary);
+  font-size: 28rpx;
 }
 </style>

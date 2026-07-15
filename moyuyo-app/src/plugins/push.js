@@ -104,4 +104,11 @@ export function togglePushNotification(enabled) {
   return Promise.resolve(false)
 }
 
-export default { registerPush, getPushToken, handlePushMessage, setBadgeCount, clearBadge, togglePushNotification }
+export default {
+  registerPush,
+  getPushToken,
+  handlePushMessage,
+  setBadgeCount,
+  clearBadge,
+  togglePushNotification,
+}

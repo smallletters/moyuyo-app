@@ -46,7 +46,7 @@ export function captureArPhoto() {
       if (result.success) {
         resolve({
           imagePath: result.imagePath,
-          thumbnailPath: result.thumbnailPath
+          thumbnailPath: result.thumbnailPath,
         })
       } else {
         reject(new Error(result.message || '拍照失败'))

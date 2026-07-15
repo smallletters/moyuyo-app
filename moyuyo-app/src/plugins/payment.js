@@ -39,18 +39,21 @@ export function createPay(params) {
   // #ifdef APP-PLUS
   const plugin = uni.requireNativePlugin(PLUGIN_NAME)
   return new Promise((resolve, reject) => {
-    plugin.pay({
-      orderNo,
-      payMethod,
-      amount,
-      currency
-    }, (result) => {
-      if (result.success) {
-        resolve({ transactionId: result.transactionId })
-      } else {
-        reject(new Error(result.message || '支付失败'))
-      }
-    })
+    plugin.pay(
+      {
+        orderNo,
+        payMethod,
+        amount,
+        currency,
+      },
+      (result) => {
+        if (result.success) {
+          resolve({ transactionId: result.transactionId })
+        } else {
+          reject(new Error(result.message || '支付失败'))
+        }
+      },
+    )
   })
   // #endif
 

@@ -22,7 +22,7 @@ export default {
   },
   onHide() {
     // 进入后台
-  }
+  },
 }
 </script>
 

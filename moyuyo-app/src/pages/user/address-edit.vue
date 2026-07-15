@@ -2,16 +2,12 @@
   <view class="address-edit">
     <scroll-view scroll-y class="form">
       <view class="input-group">
-        <text class="input-label">First Name *</text>
-        <input v-model="form.first_name" class="input" />
-      </view>
-      <view class="input-group">
-        <text class="input-label">Last Name *</text>
-        <input v-model="form.last_name" class="input" />
+        <text class="input-label">Full Name *</text>
+        <input v-model="form.receiver" class="input" placeholder="John Doe" />
       </view>
       <view class="input-group">
         <text class="input-label">Phone *</text>
-        <input v-model="form.phone" class="input" type="number" />
+        <input v-model="form.phone" class="input" type="number" placeholder="+1 555 1234" />
       </view>
       <view class="input-group">
         <text class="input-label">Country *</text>
@@ -20,24 +16,30 @@
         </picker>
       </view>
       <view class="input-group">
-        <text class="input-label">State / Province</text>
-        <input v-model="form.state" class="input" />
+        <text class="input-label">Province / State</text>
+        <input v-model="form.province" class="input" placeholder="California" />
       </view>
       <view class="input-group">
         <text class="input-label">City *</text>
         <input v-model="form.city" class="input" />
       </view>
       <view class="input-group">
-        <text class="input-label">Address Line 1 *</text>
-        <input v-model="form.address_1" class="input" placeholder="Street, building, etc." />
+        <text class="input-label">District</text>
+        <input v-model="form.district" class="input" />
       </view>
       <view class="input-group">
-        <text class="input-label">Address Line 2</text>
-        <input v-model="form.address_2" class="input" placeholder="Apt, suite, unit" />
+        <text class="input-label">Address *</text>
+        <input v-model="form.detail" class="input" placeholder="Street, building, apt" />
       </view>
       <view class="input-group">
-        <text class="input-label">Postal Code *</text>
-        <input v-model="form.postcode" class="input" />
+        <text class="input-label">Postal Code</text>
+        <input v-model="form.zipCode" class="input" />
+      </view>
+      <view class="input-group">
+        <text class="input-label">Tag</text>
+        <picker mode="selector" :range="tags" @change="onTagChange">
+          <view class="input picker">{{ form.tag || 'Select (optional)' }}</view>
+        </picker>
       </view>
       <view class="default-row" @click="form.isDefault = !form.isDefault">
         <view class="checkbox" :class="{ checked: form.isDefault }">
@@ -54,33 +56,37 @@
 </template>
 
 <script>
-import { setStorage, getStorage, STORAGE_KEYS } from '@/utils/storage'
+import { memberApi } from '@/api'
 
 export default {
   data() {
     return {
       form: {
         id: null,
-        first_name: '',
-        last_name: '',
+        receiver: '',
         phone: '',
         country: 'US',
-        state: '',
+        province: '',
         city: '',
-        address_1: '',
-        address_2: '',
-        postcode: '',
-        isDefault: false
+        district: '',
+        detail: '',
+        zipCode: '',
+        tag: '',
+        isDefault: false,
       },
-      countries: ['US', 'CA', 'GB', 'DE', 'FR', 'ES', 'IT', 'NL', 'AU', 'JP']
+      countries: ['US', 'CA', 'GB', 'DE', 'FR', 'ES', 'IT', 'NL', 'AU', 'JP'],
+      tags: ['HOME', 'COMPANY', 'OTHER'],
     }
   },
 
-  onLoad(query) {
+  async onLoad(query) {
     if (query.id) {
-      const list = getStorage(STORAGE_KEYS.ADDRESS_LIST, [])
-      const addr = list.find((a) => a.id == query.id)
-      if (addr) this.form = { ...addr }
+      try {
+        const addr = await memberApi.getAddressDetail(query.id)
+        if (addr) this.form = { ...addr }
+      } catch (e) {
+        console.warn('[address-edit] load failed', e)
+      }
     }
   },
 
@@ -89,35 +95,31 @@ export default {
       this.form.country = this.countries[e.detail.value]
     },
 
-    onSave() {
-      const required = ['first_name', 'last_name', 'phone', 'address_1', 'city', 'postcode']
+    onTagChange(e) {
+      this.form.tag = this.tags[e.detail.value]
+    },
+
+    async onSave() {
+      const required = ['receiver', 'phone', 'detail', 'city']
       for (const key of required) {
         if (!this.form[key]) {
-          uni.showToast({ title: '请填写完整信息', icon: 'none' })
+          uni.showToast({ title: 'Please fill required fields', icon: 'none' })
           return
         }
       }
-      const list = getStorage(STORAGE_KEYS.ADDRESS_LIST, [])
-      if (this.form.id) {
-        // 编辑
-        const idx = list.findIndex((a) => a.id === this.form.id)
-        if (idx >= 0) {
-          list[idx] = { ...this.form }
+      try {
+        if (this.form.id) {
+          await memberApi.updateAddress(this.form.id, this.form)
+        } else {
+          await memberApi.createAddress(this.form)
         }
-      } else {
-        // 新增
-        this.form.id = Date.now()
-        list.push({ ...this.form })
+        uni.showToast({ title: 'Saved', icon: 'success' })
+        setTimeout(() => uni.navigateBack(), 800)
+      } catch (e) {
+        uni.showToast({ title: 'Save failed', icon: 'none' })
       }
-      // 默认地址处理
-      if (this.form.isDefault) {
-        list.forEach((a) => (a.isDefault = a.id === this.form.id))
-      }
-      setStorage(STORAGE_KEYS.ADDRESS_LIST, list)
-      uni.showToast({ title: 'Saved', icon: 'success' })
-      setTimeout(() => uni.navigateBack(), 800)
-    }
-  }
+    },
+  },
 }
 </script>
 

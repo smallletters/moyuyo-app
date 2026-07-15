@@ -2,7 +2,7 @@
   <view class="search">
     <view class="search-bar">
       <view class="search-input-wrap">
-        <u-icon name="search" color="#9A948C" size="16"></u-icon>
+        <u-icon name="search" color="#9A948C" size="16" />
         <input
           v-model="keyword"
           class="search-input"
@@ -10,7 +10,13 @@
           confirm-type="search"
           @confirm="onSearch"
         />
-        <u-icon v-if="keyword" name="close-circle-fill" color="#9A948C" size="16" @click="keyword = ''"></u-icon>
+        <u-icon
+          v-if="keyword"
+          name="close-circle-fill"
+          color="#9A948C"
+          size="16"
+          @click="keyword = ''"
+        />
       </view>
       <text class="cancel" @click="onCancel">Cancel</text>
     </view>
@@ -20,10 +26,12 @@
       <view v-if="!keyword && searchHistory.length" class="section">
         <view class="section-header">
           <text class="section-title">Recent Searches</text>
-          <u-icon name="trash" color="#9A948C" size="16" @click="onClearHistory"></u-icon>
+          <u-icon name="trash" color="#9A948C" size="16" @click="onClearHistory" />
         </view>
         <view class="chips">
-          <view v-for="h in searchHistory" :key="h" class="chip" @click="onQuickSearch(h)">{{ h }}</view>
+          <view v-for="h in searchHistory" :key="h" class="chip" @click="onQuickSearch(h)">
+            {{ h }}
+          </view>
         </view>
       </view>
 
@@ -33,7 +41,9 @@
           <text class="section-title">Trending</text>
         </view>
         <view class="chips">
-          <view v-for="h in hotSearches" :key="h" class="chip hot" @click="onQuickSearch(h)">{{ h }}</view>
+          <view v-for="h in hotSearches" :key="h" class="chip hot" @click="onQuickSearch(h)">
+            {{ h }}
+          </view>
         </view>
       </view>
 
@@ -48,7 +58,7 @@
             class="suggestion-item"
             @click="goDetail(s.id)"
           >
-            <u-icon name="search" color="#9A948C" size="16"></u-icon>
+            <u-icon name="search" color="#9A948C" size="16" />
             <text>{{ s.name }}</text>
           </view>
         </view>
@@ -59,8 +69,7 @@
 
 <script>
 import { productApi } from '@/api'
-import { useProductStore } from '@/store'
-import { setStorage, getStorage, STORAGE_KEYS } from '@/utils/storage'
+import { setStorage, getStorage, removeStorage, STORAGE_KEYS } from '@/utils/storage'
 
 export default {
   data() {
@@ -70,7 +79,7 @@ export default {
       hotSearches: ['Pet Carrier', 'Harness', 'Bathing Set', 'Cat Toy', 'Reflective Gear'],
       suggestions: [],
       searching: false,
-      searchTimer: null
+      searchTimer: null,
     }
   },
 
@@ -82,7 +91,7 @@ export default {
         return
       }
       this.searchTimer = setTimeout(() => this.fetchSuggestions(), 300)
-    }
+    },
   },
 
   methods: {
@@ -115,8 +124,8 @@ export default {
       if (!this.keyword) return
       this.searching = true
       try {
-        const list = await productApi.searchProducts(this.keyword, { per_page: 10 })
-        this.suggestions = list
+        const res = await productApi.searchProducts(this.keyword, { size: 10 })
+        this.suggestions = res.records || res || []
       } catch (e) {
         this.suggestions = []
       } finally {
@@ -126,8 +135,8 @@ export default {
 
     goDetail(id) {
       uni.navigateTo({ url: `/pages/goods/detail?id=${id}` })
-    }
-  }
+    },
+  },
 }
 </script>
 

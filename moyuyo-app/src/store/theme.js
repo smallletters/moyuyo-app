@@ -6,7 +6,7 @@ import { setStorage, getStorage, STORAGE_KEYS } from '@/utils/storage'
 
 export const useThemeStore = defineStore('theme', {
   state: () => ({
-    mode: getStorage(STORAGE_KEYS.THEME, 'system') // light | dark | system
+    mode: getStorage(STORAGE_KEYS.THEME, 'system'), // light | dark | system
   }),
 
   actions: {
@@ -33,6 +33,6 @@ export const useThemeStore = defineStore('theme', {
       // 小程序和 APP 通过 navigationBarTextStyle / page meta 实现
       // 这里简化处理
       // #endif
-    }
-  }
+    },
+  },
 })

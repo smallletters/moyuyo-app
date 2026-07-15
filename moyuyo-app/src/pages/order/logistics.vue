@@ -1,47 +1,72 @@
 <template>
   <view class="logistics">
-    <view class="card status-card">
-      <text class="status-title">In Transit</text>
-      <text class="status-desc">Estimated delivery: 3-5 work days</text>
-    </view>
+    <view v-if="!logistics" class="loading">Loading...</view>
 
-    <view class="timeline">
-      <view
-        v-for="(t, i) in timeline"
-        :key="i"
-        class="timeline-item"
-        :class="{ active: i === 0, completed: i > 0 }"
-      >
-        <view class="timeline-dot"></view>
-        <view class="timeline-content">
-          <text class="timeline-title">{{ t.title }}</text>
-          <text class="timeline-desc">{{ t.desc }}</text>
-          <text class="timeline-time">{{ t.time }}</text>
+    <template v-else>
+      <view class="card status-card">
+        <text class="status-title">{{ statusLabel }}</text>
+        <text class="status-desc" v-if="logistics.carrier">{{ logistics.carrier }} · {{ logistics.trackingNumber }}</text>
+      </view>
+
+      <view class="timeline" v-if="logistics.traces && logistics.traces.length">
+        <view
+          v-for="(t, i) in logistics.traces"
+          :key="i"
+          class="timeline-item"
+          :class="{ active: i === 0, completed: i > 0 }"
+        >
+          <view class="timeline-dot" />
+          <view class="timeline-content">
+            <text class="timeline-title">{{ t.desc }}</text>
+            <text class="timeline-desc" v-if="t.location">{{ t.location }}</text>
+            <text class="timeline-time">{{ t.time }}</text>
+          </view>
         </view>
       </view>
-    </view>
 
-    <view class="card info-card">
-      <text class="info-title">Tracking Number</text>
-      <text class="info-value">1Z999AA10123456784</text>
-      <text class="info-title">Carrier</text>
-      <text class="info-value">UPS</text>
-    </view>
+      <view class="card info-card" v-if="logistics.carrier">
+        <text class="info-title">Tracking Number</text>
+        <text class="info-value">{{ logistics.trackingNumber }}</text>
+        <text class="info-title">Carrier</text>
+        <text class="info-value">{{ logistics.carrier }}</text>
+      </view>
+    </template>
   </view>
 </template>
 
 <script>
+import { orderApi } from '@/api'
+
 export default {
   data() {
     return {
-      timeline: [
-        { title: 'Out for Delivery', desc: 'Your package is on the delivery vehicle', time: 'Today 9:30 AM' },
-        { title: 'Arrived at Local Facility', desc: 'NEW YORK, NY', time: 'Yesterday 8:15 PM' },
-        { title: 'In Transit', desc: 'LOUISVILLE, KY', time: '2 days ago' },
-        { title: 'Shipped', desc: 'MOYUYO Warehouse', time: '3 days ago' }
-      ]
+      orderId: null,
+      logistics: null,
     }
-  }
+  },
+
+  computed: {
+    statusLabel() {
+      if (!this.logistics) return ''
+      const map = { DELIVERED: 'Delivered', IN_TRANSIT: 'In Transit', PENDING: 'Pending Shipment' }
+      return map[this.logistics.currentStatus] || 'In Transit'
+    },
+  },
+
+  onLoad(query) {
+    this.orderId = query.id
+    this.loadLogistics()
+  },
+
+  methods: {
+    async loadLogistics() {
+      try {
+        this.logistics = await orderApi.getLogistics(this.orderId)
+      } catch (e) {
+        console.error('[logistics] load error', e)
+      }
+    },
+  },
 }
 </script>
 
@@ -50,6 +75,12 @@ export default {
   min-height: 100vh;
   background: var(--color-background);
   padding: 16rpx;
+}
+
+.loading {
+  text-align: center;
+  padding: 64rpx;
+  color: var(--color-text-tertiary);
 }
 
 .status-card {
@@ -75,74 +106,69 @@ export default {
 }
 
 .timeline {
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  padding: 32rpx 24rpx;
+  padding: 0 16rpx;
   margin-bottom: 16rpx;
 }
 
 .timeline-item {
-  position: relative;
   display: flex;
-  gap: 24rpx;
+  gap: 16rpx;
   padding-bottom: 32rpx;
-}
+  position: relative;
 
-.timeline-item:last-child {
-  padding-bottom: 0;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    left: 14rpx;
+    top: 32rpx;
+    bottom: 0;
+    width: 2rpx;
+    background: var(--color-divider);
+  }
 
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: 16rpx;
-  top: 32rpx;
-  bottom: 0;
-  width: 2rpx;
-  background: var(--color-divider);
-}
-
-.timeline-item:last-child::before {
-  display: none;
+  &:last-child::before {
+    display: none;
+  }
 }
 
 .timeline-dot {
-  width: 32rpx;
-  height: 32rpx;
+  width: 30rpx;
+  height: 30rpx;
   border-radius: 50%;
   background: var(--color-divider);
   flex-shrink: 0;
-  position: relative;
-  z-index: 1;
+  margin-top: 4rpx;
 }
 
 .timeline-item.active .timeline-dot {
   background: var(--color-primary);
-  box-shadow: 0 0 0 8rpx rgba(219, 201, 138, 0.2);
+  box-shadow: 0 0 0 6rpx rgba(219, 201, 138, 0.2);
 }
 
 .timeline-item.completed .timeline-dot {
-  background: var(--color-success);
+  background: var(--color-primary);
 }
 
 .timeline-content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4rpx;
 }
 
 .timeline-title {
+  display: block;
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
+  margin-bottom: 4rpx;
 }
 
 .timeline-desc {
-  font-size: var(--font-size-sm);
+  display: block;
+  font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
+  margin-bottom: 4rpx;
 }
 
 .timeline-time {
+  display: block;
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
 }
@@ -151,19 +177,21 @@ export default {
   background: var(--color-surface);
   border-radius: var(--radius-md);
   padding: 24rpx;
-  display: flex;
-  flex-direction: column;
-  gap: 8rpx;
+  margin: 0 0 16rpx;
 }
 
 .info-title {
+  display: block;
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
-  margin-top: 8rpx;
+  margin-top: 16rpx;
+  &:first-child { margin-top: 0; }
 }
 
 .info-value {
+  display: block;
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
+  margin-top: 4rpx;
 }
 </style>

@@ -8,126 +8,94 @@
     <view class="grid">
       <view
         v-for="a in achievements"
-        :key="a.id"
+        :key="a.achievementCode || a.id"
         class="badge"
         :class="{ unlocked: a.unlocked }"
         @click="onBadgeClick(a)"
       >
         <view class="badge-icon">
-          <text>{{ a.icon }}</text>
+          <text>{{ achievementIcon(a.achievementCode) }}</text>
         </view>
-        <text class="badge-name">{{ a.name }}</text>
-        <text class="badge-desc">{{ a.unlocked ? a.desc : a.lockDesc }}</text>
+        <text class="badge-name">{{ achievementName(a.achievementCode) }}</text>
+        <text class="badge-desc">{{ a.unlocked ? achievementDesc(a.achievementCode) : 'Locked' }}</text>
+        <view v-if="!a.unlocked" class="progress-bar">
+          <view class="progress-fill" :style="{ width: `${(a.progress || 0) * 100}%` }" />
+        </view>
       </view>
     </view>
   </view>
 </template>
 
 <script>
+import { petApi } from '@/api'
+
+const ACHIEVEMENT_MAP = {
+  CLEAN_BABY: { icon: '🛁', name: 'Clean Baby', desc: 'Keep bath schedule on track' },
+  EPIDEMIC_MASTER: { icon: '💉', name: 'Epidemic Master', desc: 'Vaccinations up to date' },
+  DEWORM_GUARDIAN: { icon: '💊', name: 'Deworm Guardian', desc: 'Regular deworming completed' },
+  ATTENDANCE_FULL: { icon: '📅', name: 'Full Attendance', desc: 'All care reminders checked' },
+  EXPLORER_PIONEER: { icon: '🗺️', name: 'Explorer Pioneer', desc: 'Unlocked all 3D scenes' },
+}
+
 export default {
   data() {
     return {
-      achievements: [
-        { id: 1, name: 'First Friend', desc: 'Added your first pet', lockDesc: 'Add a pet to unlock', icon: '🐾', unlocked: true },
-        { id: 2, name: '5-Star Friend', desc: 'Got your first 5-star review', lockDesc: 'Write a review to unlock', icon: '⭐', unlocked: true },
-        { id: 3, name: 'Explorer', desc: 'Walked 100km with your pet', lockDesc: 'Track walks to unlock', icon: '🗺️', unlocked: false },
-        { id: 4, name: 'Healthy Buddy', desc: 'Completed 1 year of care reminders', lockDesc: 'Stay on schedule to unlock', icon: '💚', unlocked: true },
-        { id: 5, name: 'Social Star', desc: 'Got 100 likes on a post', lockDesc: 'Share posts to unlock', icon: '✨', unlocked: false },
-        { id: 6, name: 'Loyal Customer', desc: 'Made 10 orders', lockDesc: 'Keep shopping to unlock', icon: '👑', unlocked: true },
-        { id: 7, name: 'IP Collector', desc: 'Own products from all 4 IPs', lockDesc: 'Collect all IPs to unlock', icon: '🌟', unlocked: false },
-        { id: 8, name: 'Reviewer Pro', desc: 'Wrote 50 reviews', lockDesc: 'Write more reviews to unlock', icon: '✍️', unlocked: false }
-      ]
+      petId: null,
+      achievements: [],
     }
   },
 
   computed: {
     unlockedCount() {
       return this.achievements.filter((a) => a.unlocked).length
-    }
+    },
+  },
+
+  onLoad(query) {
+    this.petId = query.petId || null
+    this.loadAchievements()
   },
 
   methods: {
+    async loadAchievements() {
+      if (!this.petId) return
+      try {
+        this.achievements = await petApi.getAchievements(this.petId)
+      } catch (e) {
+        console.warn('[achievement] load failed', e)
+        this.achievements = []
+      }
+    },
+
+    achievementIcon(code) {
+      return ACHIEVEMENT_MAP[code]?.icon || '🏆'
+    },
+    achievementName(code) {
+      return ACHIEVEMENT_MAP[code]?.name || code
+    },
+    achievementDesc(code) {
+      return ACHIEVEMENT_MAP[code]?.desc || ''
+    },
+
     onBadgeClick(a) {
-      uni.showToast({
-        title: a.unlocked ? a.name : a.lockDesc,
-        icon: 'none',
-        duration: 2000
-      })
-    }
-  }
+      uni.showToast({ title: a.unlocked ? achievementName(a.achievementCode) : `${(a.progress || 0) * 100}% complete`, icon: 'none' })
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.achievement {
-  min-height: 100vh;
-  background: var(--color-background);
-  padding: 32rpx 16rpx;
-  padding-top: calc(32rpx + env(safe-area-inset-top));
-}
-
-.header {
-  padding: 0 16rpx 24rpx;
-}
-
-.title {
-  display: block;
-  font-size: 40rpx;
-  font-weight: var(--font-weight-bold);
-}
-
-.subtitle {
-  display: block;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
-  margin-top: 4rpx;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16rpx;
-}
-
-.badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8rpx;
-  padding: 32rpx 16rpx;
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  text-align: center;
-  opacity: 0.5;
-  filter: grayscale(1);
-}
-
-.badge.unlocked {
-  opacity: 1;
-  filter: none;
-}
-
-.badge-icon {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #DBC98A 0%, #B38A5A 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 60rpx;
-  box-shadow: 0 4rpx 16rpx rgba(219, 201, 138, 0.3);
-}
-
-.badge-name {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  margin-top: 8rpx;
-}
-
-.badge-desc {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-tertiary);
-  line-height: 1.4;
-}
+.achievement { min-height: 100vh; background: var(--color-background); padding: 32rpx 16rpx; padding-top: calc(32rpx + env(safe-area-inset-top)); }
+.header { padding: 0 16rpx 24rpx; }
+.title { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); }
+.subtitle { font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-top: 4rpx; }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16rpx; padding: 0 8rpx; }
+.badge { display: flex; flex-direction: column; align-items: center; gap: 8rpx; padding: 32rpx 16rpx; background: var(--color-surface); border-radius: var(--radius-md); text-align: center; }
+.badge.unlocked { }
+.badge:not(.unlocked) { opacity: 0.5; }
+.badge-icon { font-size: 56rpx; }
+.badge-name { font-size: var(--font-size-sm); font-weight: 600; }
+.badge-desc { font-size: var(--font-size-xs); color: var(--color-text-tertiary); }
+.progress-bar { width: 100%; height: 6rpx; background: var(--color-divider); border-radius: 3rpx; overflow: hidden; margin-top: 4rpx; }
+.progress-fill { height: 100%; background: var(--color-primary); border-radius: 3rpx; }
 </style>

@@ -4,7 +4,7 @@
       <view v-if="userStore.isLoggedIn" class="user-info" @click="goProfile">
         <image :src="userStore.userInfo?.avatar || defaultAvatar" class="avatar" />
         <view class="info">
-          <text class="name">{{ userStore.userInfo?.first_name || 'User' }}</text>
+          <text class="name">{{ userStore.userInfo?.nickname || userStore.userInfo?.email || 'User' }}</text>
           <text class="email">{{ userStore.userInfo?.email }}</text>
           <text class="member-level">{{ memberLevel }}</text>
         </view>
@@ -22,10 +22,10 @@
 
     <!-- 会员卡片 -->
     <view v-if="userStore.isLoggedIn" class="vip-card">
-      <view class="vip-bg"></view>
+      <view class="vip-bg" />
       <view class="vip-content">
         <text class="vip-title">MOYUYO Member</text>
-        <text class="vip-points">Points: 1,280</text>
+        <text class="vip-points">Points: {{ points.toLocaleString() }}</text>
         <text class="vip-tip">Earn 5x points on this order</text>
       </view>
     </view>
@@ -52,12 +52,7 @@
 
     <!-- 功能列表 -->
     <view class="card feature-card">
-      <view
-        v-for="(f, i) in features"
-        :key="i"
-        class="feature-item"
-        @click="onFeatureClick(f)"
-      >
+      <view v-for="(f, i) in features" :key="i" class="feature-item" @click="onFeatureClick(f)">
         <text class="feature-icon">{{ f.icon }}</text>
         <text class="feature-label">{{ f.label }}</text>
         <text class="feature-arrow">›</text>
@@ -73,16 +68,19 @@
 
 <script>
 import { useUserStore } from '@/store'
+import { memberApi } from '@/api'
 
 export default {
   data() {
     return {
       defaultAvatar: 'https://i.pravatar.cc/100?img=20',
+      memberInfo: null,
+      points: 0,
       orderTypes: [
-        { value: 'pending', label: 'To Pay', icon: '💳', badge: 0 },
-        { value: 'processing', label: 'To Ship', icon: '📦', badge: 0 },
-        { value: 'shipped', label: 'Shipped', icon: '🚚', badge: 0 },
-        { value: 'review', label: 'To Review', icon: '⭐', badge: 0 }
+        { value: 'PENDING_PAY', label: 'To Pay', icon: '💳', badge: 0 },
+        { value: 'PENDING_SHIP', label: 'To Ship', icon: '📦', badge: 0 },
+        { value: 'PENDING_RECEIVE', label: 'Shipped', icon: '🚚', badge: 0 },
+        { value: 'COMPLETED', label: 'To Review', icon: '⭐', badge: 0 },
       ],
       features: [
         { id: 'address', label: 'Shipping Address', icon: '📍' },
@@ -92,8 +90,8 @@ export default {
         { id: 'devices', label: 'Login Devices', icon: '📱' },
         { id: 'security', label: 'Account Security', icon: '🔒' },
         { id: 'settings', label: 'Settings', icon: '⚙️' },
-        { id: 'about', label: 'About MOYUYO', icon: '✨' }
-      ]
+        { id: 'about', label: 'About MOYUYO', icon: '✨' },
+      ],
     }
   },
 
@@ -102,12 +100,35 @@ export default {
       return useUserStore()
     },
     memberLevel() {
-      // 根据用户积分判断会员等级
-      return 'Gold Member'
+      if (!this.memberInfo) return ''
+      const levelMap = {
+        NORMAL: 'Member',
+        SILVER: 'Silver Member',
+        GOLD: 'Gold Member',
+        PLATINUM: 'Platinum Member',
+        DIAMOND: 'Diamond Member',
+      }
+      return levelMap[this.memberInfo.level] || this.memberInfo.level
+    },
+  },
+
+  onShow() {
+    if (this.userStore.isLoggedIn) {
+      this.loadMemberInfo()
     }
   },
 
   methods: {
+    async loadMemberInfo() {
+      try {
+        const info = await memberApi.getMemberInfo()
+        this.memberInfo = info
+        this.points = info.points || 0
+      } catch (e) {
+        console.warn('[user] load member info failed', e)
+      }
+    },
+
     goLogin() {
       uni.navigateTo({ url: '/pages/user/login' })
     },
@@ -126,15 +147,15 @@ export default {
         devices: '/pages/user/devices',
         security: '/pages/user/security',
         pets: '/pages/pet/profile',
-        settings: '/pages/user/settings'
+        settings: '/pages/user/settings',
       }
       if (map[f.id]) {
         uni.navigateTo({ url: map[f.id] })
       } else {
-        uni.showToast({ title: '敬请期待', icon: 'none' })
+        uni.showToast({ title: 'Coming soon', icon: 'none' })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -151,7 +172,8 @@ export default {
   padding-top: calc(48rpx + env(safe-area-inset-top));
 }
 
-.user-info, .login-prompt {
+.user-info,
+.login-prompt {
   display: flex;
   align-items: center;
   gap: 24rpx;
@@ -219,13 +241,13 @@ export default {
 .vip-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #2E2B29 0%, #4A4540 100%);
+  background: linear-gradient(135deg, #2e2b29 0%, #4a4540 100%);
 }
 
 .vip-content {
   position: relative;
   padding: 32rpx;
-  color: #F6F2EE;
+  color: #f6f2ee;
   display: flex;
   flex-direction: column;
   gap: 8rpx;

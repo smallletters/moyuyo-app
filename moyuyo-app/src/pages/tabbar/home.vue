@@ -3,14 +3,14 @@
     <!-- 顶部自定义导航栏 -->
     <view class="navbar">
       <view class="navbar-search" @click="goSearch">
-        <u-icon name="search" color="#9A948C" size="18"></u-icon>
+        <u-icon name="search" color="#9A948C" size="18" />
         <text class="navbar-search-placeholder">Search for products, brands...</text>
       </view>
       <view class="navbar-icon" @click="onScan">
-        <u-icon name="camera-fill" color="#2E2B29" size="22"></u-icon>
+        <u-icon name="camera-fill" color="#2E2B29" size="22" />
       </view>
       <view class="navbar-icon" @click="goMessages">
-        <u-icon name="bell-fill" color="#2E2B29" size="22"></u-icon>
+        <u-icon name="bell-fill" color="#2E2B29" size="22" />
         <view v-if="unreadCount > 0" class="navbar-badge">{{ unreadCount }}</view>
       </view>
     </view>
@@ -34,7 +34,7 @@
           indicator
           circular
           @click="onBannerClick"
-        ></u-swiper>
+        />
       </view>
 
       <!-- ② 金刚区：4 大产品线 + 4 个运营入口 -->
@@ -67,18 +67,17 @@
           <text class="section-more" @click="goCategory">View All</text>
         </view>
         <view class="product-grid">
-          <view
-            v-for="p in recommend"
-            :key="p.id"
-            class="product-card"
-            @click="goDetail(p.id)"
-          >
+          <view v-for="p in recommend" :key="p.id" class="product-card" @click="goDetail(p.id)">
             <image :src="p.image" class="product-image" mode="aspectFill" />
-            <view v-if="p.ip" class="product-ip" :class="`tag-${p.ip.toLowerCase()}`">{{ p.ip }}</view>
+            <view v-if="p.ip" class="product-ip" :class="`tag-${p.ip.toLowerCase()}`">
+              {{ p.ip }}
+            </view>
             <text class="product-name text-ellipsis-2">{{ p.name }}</text>
             <view class="product-price-row">
               <text class="price">${{ p.price }}</text>
-              <text v-if="p.regularPrice && p.regularPrice > p.price" class="price-original">${{ p.regularPrice }}</text>
+              <text v-if="p.regularPrice && p.regularPrice > p.price" class="price-original">
+                ${{ p.regularPrice }}
+              </text>
             </view>
           </view>
         </view>
@@ -104,7 +103,7 @@ export default {
       banners: [
         // 示例 Banner（实际应由 WP 后台或 CPT 提供）
         { image: 'https://picsum.photos/750/360?random=1', title: 'MILO 探险家' },
-        { image: 'https://picsum.photos/750/360?random=2', title: 'LUNA 策展家' }
+        { image: 'https://picsum.photos/750/360?random=2', title: 'LUNA 策展家' },
       ],
       kingkongList: [
         { id: 'care', label: 'CARE 洗护', icon: '🧴', bg: 'rgba(219,201,138,0.15)' },
@@ -114,9 +113,9 @@ export default {
         { id: 'subscribe', label: '订阅中心', icon: '🔁', bg: 'rgba(219,201,138,0.15)' },
         { id: 'vip', label: '会员俱乐部', icon: '👑', bg: 'rgba(179,138,90,0.15)' },
         { id: 'coupon', label: '领券中心', icon: '🎟️', bg: 'rgba(171,185,173,0.15)' },
-        { id: 'flash', label: '限时特惠', icon: '⚡', bg: 'rgba(217,180,176,0.15)' }
+        { id: 'flash', label: '限时特惠', icon: '⚡', bg: 'rgba(217,180,176,0.15)' },
       ],
-      recommend: []
+      recommend: [],
     }
   },
 
@@ -136,19 +135,20 @@ export default {
         this.recommend = []
       }
       try {
-        const list = await productApi.getProductList({
+        const res = await productApi.getProductList({
           page: this.page,
-          per_page: 20,
-          orderby: 'popularity'
+          size: 20,
+          sortBy: 'sales',
+          sortOrder: 'desc',
         })
-        // 转换数据为页面展示格式
+        const list = res.records || res || []
         const mapped = list.map((p) => ({
           id: p.id,
           name: p.name,
-          image: p.images?.[0]?.src || '',
+          image: p.mainImage || p.images?.[0]?.src || '',
           price: p.price,
-          regularPrice: p.regular_price,
-          ip: this.detectIP(p)
+          regularPrice: p.regularPrice || p.regular_price,
+          ip: p.brandIpId ? this.resolveIpName(p.brandIpId) : null,
         }))
         this.recommend.push(...mapped)
         this.noMore = list.length < 20
@@ -158,14 +158,9 @@ export default {
       }
     },
 
-    detectIP(p) {
-      // 简单从 tags 提取 IP 标识
-      const tags = p.tags?.map((t) => t.name) || []
-      const ipMap = { MILO: 'MILO', LUNA: 'LUNA', ATLAS: 'ATLAS', OLIVE: 'OLIVE' }
-      for (const tag of tags) {
-        if (ipMap[tag.toUpperCase()]) return ipMap[tag.toUpperCase()]
-      }
-      return null
+    resolveIpName(brandIpId) {
+      const map = { 1: 'MILO', 2: 'LUNA', 3: 'ATLAS', 4: 'OLIVE' }
+      return map[brandIpId] || null
     },
 
     async onRefresh() {
@@ -235,14 +230,14 @@ export default {
         },
         fail: () => {
           uni.showToast({ title: '未识别到有效二维码', icon: 'none' })
-        }
+        },
       })
       // #endif
       // #ifdef H5
       uni.showToast({ title: '请使用 APP 扫码', icon: 'none' })
       // #endif
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -351,8 +346,8 @@ export default {
   flex-direction: column;
   margin: 24rpx;
   padding: 32rpx;
-  background: linear-gradient(135deg, #2E2B29 0%, #4A4540 100%);
-  color: #F6F2EE;
+  background: linear-gradient(135deg, #2e2b29 0%, #4a4540 100%);
+  color: #f6f2ee;
   border-radius: var(--radius-lg);
 }
 
@@ -361,7 +356,7 @@ export default {
   width: fit-content;
   padding: 4rpx 12rpx;
   background: var(--color-primary);
-  color: #2E2B29;
+  color: #2e2b29;
   font-size: 20rpx;
   font-weight: bold;
   border-radius: var(--radius-sm);

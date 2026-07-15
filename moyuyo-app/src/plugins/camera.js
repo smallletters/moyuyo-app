@@ -23,7 +23,7 @@ export function takePhoto(options = {}) {
         resolve({
           imagePath: result.imagePath,
           thumbnailPath: result.thumbnailPath,
-          fileSize: result.fileSize
+          fileSize: result.fileSize,
         })
       } else {
         reject(new Error(result.message || '拍照失败'))
@@ -39,7 +39,7 @@ export function takePhoto(options = {}) {
       count: 1,
       sourceType: ['camera'],
       success: (res) => resolve({ imagePath: res.tempFilePaths[0] }),
-      fail: () => reject(new Error('拍照取消'))
+      fail: () => reject(new Error('拍照取消')),
     })
   })
   // #endif
@@ -74,7 +74,7 @@ export function pickImage(options = {}) {
       count,
       sourceType: ['album'],
       success: (res) => resolve(res.tempFilePaths),
-      fail: () => reject(new Error('选择图片取消'))
+      fail: () => reject(new Error('选择图片取消')),
     })
   })
   // #endif
@@ -109,7 +109,7 @@ export function compressImage(imagePath, options = {}) {
       src: imagePath,
       quality: options.quality || 80,
       success: (res) => resolve(res.tempFilePath),
-      fail: () => reject(new Error('图片压缩失败'))
+      fail: () => reject(new Error('图片压缩失败')),
     })
   })
   // #endif

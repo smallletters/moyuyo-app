@@ -50,7 +50,6 @@ export function usePaymentPlugin(): PaymentPluginProtocol {
   return {
     pay: (channel: PaymentChannel, orderInfo: Record<string, any>) =>
       call('pay', { channel, ...orderInfo }),
-    isAvailable: (channel: PaymentChannel) =>
-      call('isAvailable', { channel })
+    isAvailable: (channel: PaymentChannel) => call('isAvailable', { channel }),
   }
 }

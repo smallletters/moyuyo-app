@@ -100,4 +100,10 @@ export function closePetHub3d() {
   // #endif
 }
 
-export default { openPetHub3d, applyPetCosmetic, playPetAnimation, capturePetSnapshot, closePetHub3d }
+export default {
+  openPetHub3d,
+  applyPetCosmetic,
+  playPetAnimation,
+  capturePetSnapshot,
+  closePetHub3d,
+}

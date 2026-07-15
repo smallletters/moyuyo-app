@@ -1,34 +1,29 @@
-/**
- * 优惠券 API
- * 公开数据，仅需 WooCommerce Basic Auth，不需要用户 Token
- */
-import { get } from '@/utils/request'
+import { get, post } from '@/utils/request'
 
-const BASE = '/wc/v3/coupons'
-
-/**
- * 获取可用优惠券列表
- */
-export function getCouponList(params = {}) {
-  return get(BASE, { per_page: 50, ...params }, { useAuth: true, useOAuth: false })
+export function getAvailableCoupons(params = {}) {
+  return get('/api/v1/coupons', params)
 }
 
-/**
- * 获取优惠券详情
- */
+export function claimCoupon(id) {
+  return post(`/api/v1/coupons/${id}/claim`)
+}
+
+export function getMyCoupons(status) {
+  return get('/api/v1/coupons/mine', { status })
+}
+
+export function useCoupon(userCouponId, orderId) {
+  return post(`/api/v1/coupons/${userCouponId}/use`, { orderId })
+}
+
 export function getCouponDetail(id) {
-  return get(`${BASE}/${id}`, {}, { useAuth: true, useOAuth: false })
-}
-
-/**
- * 通过 code 查询优惠券
- */
-export function getCouponByCode(code) {
-  return get(BASE, { code }, { useAuth: true, useOAuth: false })
+  return get(`/api/v1/coupons/${id}`)
 }
 
 export default {
-  getCouponList,
+  getAvailableCoupons,
+  claimCoupon,
+  getMyCoupons,
+  useCoupon,
   getCouponDetail,
-  getCouponByCode
 }

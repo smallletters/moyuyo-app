@@ -42,23 +42,21 @@
         <text class="forgot" @click="onForgot">Forgot password?</text>
       </view>
 
-      <view
-        class="btn btn-primary login-btn"
-        :class="{ disabled: !canSubmit }"
-        @click="onLogin"
-      >
+      <view class="btn btn-primary login-btn" :class="{ disabled: !canSubmit }" @click="onLogin">
         Sign In
       </view>
 
+      <view class="magic-link-btn" @click="onMagicLink">Sign in with Magic Link</view>
+
       <view class="divider">
-        <view class="line"></view>
+        <view class="line" />
         <text class="or">or continue with</text>
-        <view class="line"></view>
+        <view class="line" />
       </view>
 
       <view class="social-buttons">
         <view class="social-btn" @click="onSocial('apple')">
-          <text class="social-icon"></text>
+          <text class="social-icon" />
           <text>Apple</text>
         </view>
         <view class="social-btn" @click="onSocial('google')">
@@ -88,7 +86,7 @@ export default {
       email: '',
       password: '',
       remember: false,
-      showPassword: false
+      showPassword: false,
     }
   },
 
@@ -98,7 +96,7 @@ export default {
     },
     userStore() {
       return useUserStore()
-    }
+    },
   },
 
   methods: {
@@ -108,7 +106,11 @@ export default {
         return
       }
       try {
-        await this.userStore.login({ username: this.email, password: this.password })
+        const result = await this.userStore.login({ username: this.email, password: this.password })
+        if (result?.requiresTwoFactor) {
+          uni.navigateTo({ url: '/pages/user/two-factor' })
+          return
+        }
         uni.showToast({ title: 'Welcome back!', icon: 'success' })
         setTimeout(() => uni.switchTab({ url: '/pages/tabbar/home' }), 800)
       } catch (e) {
@@ -120,14 +122,18 @@ export default {
       uni.showToast({ title: `${provider} 登录开发中`, icon: 'none' })
     },
 
+    onMagicLink() {
+      uni.navigateTo({ url: '/pages/user/magic-link' })
+    },
+
     onForgot() {
       uni.navigateTo({ url: '/pages/user/forgot' })
     },
 
     goRegister() {
       uni.navigateTo({ url: '/pages/user/register' })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -244,6 +250,14 @@ export default {
 
 .login-btn.disabled {
   opacity: 0.5;
+}
+
+.magic-link-btn {
+  text-align: center;
+  padding: 16rpx 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-dark);
+  margin-top: -8rpx;
 }
 
 .divider {

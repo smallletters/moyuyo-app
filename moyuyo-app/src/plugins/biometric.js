@@ -18,7 +18,7 @@ export function isBiometricAvailable() {
     plugin.isAvailable({}, (result) => {
       resolve({
         available: !!result.available,
-        biometricType: result.biometricType || 'NONE'
+        biometricType: result.biometricType || 'NONE',
       })
     })
   })

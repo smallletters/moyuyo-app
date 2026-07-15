@@ -7,8 +7,9 @@ page {
   background-color: var(--color-background);
   color: var(--color-text);
   font-size: var(--font-size-base);
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC',
-    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
   line-height: 1.5;
 }
 
@@ -29,10 +30,18 @@ page {
 }
 
 /* 圆角 */
-.rounded-sm { border-radius: var(--radius-sm); }
-.rounded-md { border-radius: var(--radius-md); }
-.rounded-lg { border-radius: var(--radius-lg); }
-.rounded-pill { border-radius: var(--radius-pill); }
+.rounded-sm {
+  border-radius: var(--radius-sm);
+}
+.rounded-md {
+  border-radius: var(--radius-md);
+}
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+.rounded-pill {
+  border-radius: var(--radius-pill);
+}
 
 /* 按钮基础 */
 .btn {
@@ -97,10 +106,22 @@ page {
 }
 
 /* 4 大产品线标签 */
-.tag-care { background: rgba(219, 201, 138, 0.15); color: var(--color-care); }
-.tag-gear { background: rgba(171, 185, 173, 0.15); color: var(--color-gear); }
-.tag-play { background: rgba(179, 138, 90, 0.15); color: var(--color-play); }
-.tag-home { background: rgba(217, 180, 176, 0.15); color: var(--color-home); }
+.tag-care {
+  background: rgba(219, 201, 138, 0.15);
+  color: var(--color-care);
+}
+.tag-gear {
+  background: rgba(171, 185, 173, 0.15);
+  color: var(--color-gear);
+}
+.tag-play {
+  background: rgba(179, 138, 90, 0.15);
+  color: var(--color-play);
+}
+.tag-home {
+  background: rgba(217, 180, 176, 0.15);
+  color: var(--color-home);
+}
 
 /* 加载占位 */
 .skeleton {
@@ -111,8 +132,12 @@ page {
 }
 
 @keyframes skeleton-loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* 安全区适配 */

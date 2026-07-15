@@ -30,7 +30,9 @@
               class="filter-chip"
               :class="{ active: filter.petType === opt.value }"
               @click="filter.petType = filter.petType === opt.value ? '' : opt.value"
-            >{{ opt.label }}</view>
+            >
+              {{ opt.label }}
+            </view>
           </view>
         </view>
         <view class="filter-section">
@@ -42,7 +44,9 @@
               class="filter-chip"
               :class="{ active: filter.ip === opt }"
               @click="filter.ip = filter.ip === opt ? '' : opt"
-            >{{ opt }}</view>
+            >
+              {{ opt }}
+            </view>
           </view>
         </view>
         <view class="filter-section">
@@ -54,7 +58,9 @@
               class="filter-chip"
               :class="{ active: filter.size === opt }"
               @click="filter.size = filter.size === opt ? '' : opt"
-            >{{ opt }}</view>
+            >
+              {{ opt }}
+            </view>
           </view>
         </view>
         <view class="filter-section">
@@ -66,7 +72,9 @@
               class="filter-chip"
               :class="{ active: filter.priceRange === opt.value }"
               @click="filter.priceRange = filter.priceRange === opt.value ? '' : opt.value"
-            >{{ opt.label }}</view>
+            >
+              {{ opt.label }}
+            </view>
           </view>
         </view>
         <view class="filter-footer">
@@ -86,18 +94,17 @@
       @scrolltolower="onLoadMore"
     >
       <view class="product-grid">
-        <view
-          v-for="p in products"
-          :key="p.id"
-          class="product-card"
-          @click="goDetail(p.id)"
-        >
+        <view v-for="p in products" :key="p.id" class="product-card" @click="goDetail(p.id)">
           <image :src="p.image" class="product-image" mode="aspectFill" />
-          <view v-if="p.ip" class="product-ip" :class="`tag-${p.ip.toLowerCase()}`">{{ p.ip }}</view>
+          <view v-if="p.ip" class="product-ip" :class="`tag-${p.ip.toLowerCase()}`">
+            {{ p.ip }}
+          </view>
           <text class="product-name text-ellipsis-2">{{ p.name }}</text>
           <view class="product-price-row">
             <text class="price">${{ p.price }}</text>
-            <text v-if="p.regularPrice > p.price" class="price-original">${{ p.regularPrice }}</text>
+            <text v-if="p.regularPrice > p.price" class="price-original">
+              ${{ p.regularPrice }}
+            </text>
           </view>
         </view>
       </view>
@@ -120,12 +127,12 @@ export default {
         { value: 'popularity', label: 'Best Selling' },
         { value: 'price_asc', label: 'Price ↑' },
         { value: 'price_desc', label: 'Price ↓' },
-        { value: 'date', label: 'Newest' }
+        { value: 'date', label: 'Newest' },
       ],
       petTypes: [
         { value: 'dog', label: 'Dog' },
         { value: 'cat', label: 'Cat' },
-        { value: 'other', label: 'Other' }
+        { value: 'other', label: 'Other' },
       ],
       ipOptions: ['MILO', 'LUNA', 'ATLAS', 'OLIVE', 'Classic'],
       sizes: ['XS', 'S', 'M', 'L', 'XL'],
@@ -133,13 +140,13 @@ export default {
         { value: '0-20', label: 'Under $20' },
         { value: '20-50', label: '$20 - $50' },
         { value: '50-100', label: '$50 - $100' },
-        { value: '100+', label: 'Over $100' }
+        { value: '100+', label: 'Over $100' },
       ],
       filter: {
         petType: '',
         ip: '',
         size: '',
-        priceRange: ''
+        priceRange: '',
       },
       filterVisible: false,
       products: [],
@@ -148,14 +155,14 @@ export default {
       noMore: false,
       page: 1,
       keyword: '',
-      category: ''
+      category: '',
     }
   },
 
   computed: {
     filterCount() {
       return Object.values(this.filter).filter(Boolean).length
-    }
+    },
   },
 
   onLoad(query) {
@@ -175,23 +182,24 @@ export default {
       try {
         const params = {
           page: this.page,
-          per_page: 20,
-          orderby: this.mapOrderby(),
-          order: this.mapOrder()
+          size: 20,
+          sortBy: this.mapSortBy(),
+          sortOrder: this.mapSortOrder(),
         }
-        if (this.keyword) params.search = this.keyword
-        if (this.category) params.category = this.category
+        if (this.keyword) params.keyword = this.keyword
+        if (this.category) params.categoryId = this.category
         if (this.filter.ip) {
-          params.tag = this.filter.ip.toLowerCase()
+          params.brandIpId = this.resolveIpId(this.filter.ip)
         }
-        const list = await productApi.getProductList(params)
+        const res = await productApi.getProductList(params)
+        const list = res.records || res || []
         const mapped = list.map((p) => ({
           id: p.id,
           name: p.name,
-          image: p.images?.[0]?.src || '',
+          image: p.mainImage || p.images?.[0]?.src || '',
           price: parseFloat(p.price) || 0,
-          regularPrice: parseFloat(p.regular_price) || 0,
-          ip: this.detectIP(p)
+          regularPrice: parseFloat(p.regularPrice || p.regular_price) || 0,
+          ip: p.brandIpId ? this.resolveIpName(p.brandIpId) : null,
         }))
         this.products.push(...mapped)
         this.noMore = list.length < 20
@@ -204,18 +212,23 @@ export default {
       }
     },
 
-    mapOrderby() {
-      const map = { default: 'menu_order', popularity: 'popularity', date: 'date' }
+    mapSortBy() {
+      const map = { default: 'createTime', popularity: 'sales', date: 'createTime' }
       return map[this.sortBy] || 'price'
     },
 
-    mapOrder() {
-      return this.sortBy === 'price_desc' ? 'desc' : 'asc'
+    mapSortOrder() {
+      return this.sortBy === 'price_asc' ? 'asc' : this.sortBy === 'price_desc' ? 'desc' : 'desc'
     },
 
-    detectIP(p) {
-      const tags = p.tags?.map((t) => t.name.toUpperCase()) || []
-      return ['MILO', 'LUNA', 'ATLAS', 'OLIVE'].find((ip) => tags.includes(ip)) || null
+    resolveIpName(brandIpId) {
+      const map = { 1: 'MILO', 2: 'LUNA', 3: 'ATLAS', 4: 'OLIVE' }
+      return map[brandIpId] || null
+    },
+
+    resolveIpId(name) {
+      const map = { MILO: 1, LUNA: 2, ATLAS: 3, OLIVE: 4 }
+      return map[name?.toUpperCase()] || null
     },
 
     onSortChange(value) {
@@ -244,8 +257,8 @@ export default {
 
     goDetail(id) {
       uni.navigateTo({ url: `/pages/goods/detail?id=${id}` })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -395,7 +408,8 @@ export default {
   gap: 4rpx;
 }
 
-.loading, .empty {
+.loading,
+.empty {
   text-align: center;
   padding: 32rpx 0;
   color: var(--color-text-tertiary);

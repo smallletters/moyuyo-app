@@ -9,6 +9,6 @@ export function createApp() {
   const app = createSSRApp(App)
   app.use(pinia)
   return {
-    app
+    app,
   }
 }

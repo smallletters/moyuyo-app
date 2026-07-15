@@ -1,76 +1,63 @@
-/**
- * 用户状态管理（WP OAuth Server 适配版）
- * - OAuth access_token 持久化
- * - 通过 /api/v1/userinfo 获取用户信息
- * - Device 列表（2FA 场景）
- * - 登录 / 登出 / Token 刷新
- */
 import { defineStore } from 'pinia'
 import { userApi } from '@/api'
 import { setStorage, getStorage, removeStorage, STORAGE_KEYS } from '@/utils/storage'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    // OAuth access_token（WP OAuth Server 返回的 access_token）
     token: getStorage(STORAGE_KEYS.TOKEN, ''),
-    // 用户信息（来自 /api/v1/userinfo）
+    refreshToken: getStorage('moyuyo_refresh_token', ''),
     userInfo: getStorage(STORAGE_KEYS.USER_INFO, null),
-    deviceList: getStorage(STORAGE_KEYS.DEVICE_LIST, [])
+    deviceList: getStorage(STORAGE_KEYS.DEVICE_LIST, []),
   }),
 
   getters: {
     isLoggedIn: (state) => !!state.token && !!state.userInfo,
-    userId: (state) => state.userInfo?.id || state.userInfo?.sub || null
+    userId: (state) => state.userInfo?.id || null,
   },
 
   actions: {
-    /**
-     * OAuth Password Grant 登录
-     * 调用 /api/v1/token → 存储 access_token → 拉取 userinfo
-     */
     async login(credentials) {
       const result = await userApi.login(credentials.username, credentials.password)
-      // WP OAuth Server 返回 { access_token, refresh_token, expires_in, id_token }
-      const token = result.access_token
-      this.token = token
-      setStorage(STORAGE_KEYS.TOKEN, token)
-      // 拉取用户信息（/api/v1/userinfo 端点）
+      this.token = result.accessToken
+      this.refreshToken = result.refreshToken
+      setStorage(STORAGE_KEYS.TOKEN, result.accessToken)
+      setStorage('moyuyo_refresh_token', result.refreshToken)
+      await this.fetchProfile()
+      if (this.userInfo?.twoFactorEnabled) {
+        return { requiresTwoFactor: true }
+      }
+      return true
+    },
+
+    async register(userData) {
+      const result = await userApi.register(userData)
+      this.token = result.accessToken
+      this.refreshToken = result.refreshToken
+      setStorage(STORAGE_KEYS.TOKEN, result.accessToken)
+      setStorage('moyuyo_refresh_token', result.refreshToken)
       await this.fetchProfile()
       return true
     },
 
-    /**
-     * 注册
-     */
-    async register(userData) {
-      const result = await userApi.register(userData)
-      return result
-    },
-
-    /**
-     * 拉取当前用户资料
-     * 通过 /api/v1/userinfo 端点获取（WP OAuth Server 标准 OAuth 端点）
-     * 返回数据格式：{ id, sub, email, first_name, last_name, picture, ... }
-     */
     async fetchProfile() {
       try {
         const data = await userApi.getUserInfo()
-        // 映射 OAuth userinfo 为标准用户格式
         this.userInfo = {
-          id: data.id || data.sub,
+          id: data.id,
           email: data.email,
-          first_name: data.first_name || data.given_name || '',
-          last_name: data.last_name || data.family_name || '',
-          avatar: data.picture || data.avatar || '',
-          // 保留原始数据供业务使用
-          ...data
+          nickname: data.nickname || '',
+          avatar: data.avatar || '',
+          phone: data.phone || '',
+          birthday: data.birthday || '',
+          country: data.country || '',
+          emailVerified: data.emailVerified || false,
+          twoFactorEnabled: data.twoFactorEnabled || false,
         }
         setStorage(STORAGE_KEYS.USER_INFO, this.userInfo)
         return this.userInfo
       } catch (e) {
         console.error('[user] fetchProfile error', e)
         if (this.token) {
-          // userinfo 拉取失败，尝试降级使用本地缓存
           const cached = getStorage(STORAGE_KEYS.USER_INFO)
           if (cached) this.userInfo = cached
         }
@@ -78,36 +65,114 @@ export const useUserStore = defineStore('user', {
       }
     },
 
-    /**
-     * 更新用户资料（WooCommerce 顾客）
-     */
     async updateProfile(data) {
-      if (!this.userId) throw new Error('未登录')
-      const updated = await userApi.updateUser(this.userId, data)
+      const updated = await userApi.updateUser(data)
       this.userInfo = { ...this.userInfo, ...updated }
       setStorage(STORAGE_KEYS.USER_INFO, this.userInfo)
       return updated
     },
 
-    /**
-     * 退出登录
-     */
-    async logout() {
-      await userApi.logout()
-      this.token = ''
-      this.userInfo = null
-      this.deviceList = []
+    async refreshTokenAction() {
+      if (!this.refreshToken) throw new Error('No refresh token')
+      const result = await userApi.refreshToken(this.refreshToken)
+      this.token = result.accessToken
+      this.refreshToken = result.refreshToken
+      setStorage(STORAGE_KEYS.TOKEN, result.accessToken)
+      setStorage('moyuyo_refresh_token', result.refreshToken)
     },
 
-    /**
-     * 强制登出（Token 失效时）
-     */
+    async logout() {
+      try { await userApi.logout() } catch (e) { /* ignore */ }
+      this.token = ''
+      this.refreshToken = ''
+      this.userInfo = null
+      this.deviceList = []
+      removeStorage(STORAGE_KEYS.TOKEN)
+      removeStorage(STORAGE_KEYS.USER_INFO)
+      removeStorage('moyuyo_refresh_token')
+    },
+
     forceLogout() {
       this.token = ''
+      this.refreshToken = ''
       this.userInfo = null
       removeStorage(STORAGE_KEYS.TOKEN)
       removeStorage(STORAGE_KEYS.USER_INFO)
       removeStorage('moyuyo_refresh_token')
-    }
-  }
+    },
+
+    async sendEmailVerification(email) {
+      await userApi.sendEmailVerification(email)
+    },
+
+    async confirmEmailVerification(email, code) {
+      await userApi.confirmEmailVerification(email, code)
+      if (this.userInfo) {
+        this.userInfo.emailVerified = true
+        setStorage(STORAGE_KEYS.USER_INFO, this.userInfo)
+      }
+    },
+
+    async forgotPassword(email) {
+      await userApi.forgotPassword(email)
+    },
+
+    async resetPassword(token, newPassword) {
+      await userApi.resetPassword(token, newPassword)
+    },
+
+    async changePassword(oldPassword, newPassword) {
+      await userApi.changePassword(oldPassword, newPassword)
+    },
+
+    async sendMagicLink(email) {
+      await userApi.sendMagicLink(email)
+    },
+
+    async verifyMagicLink(token) {
+      const result = await userApi.verifyMagicLink(token)
+      this.token = result.accessToken
+      this.refreshToken = result.refreshToken
+      setStorage(STORAGE_KEYS.TOKEN, result.accessToken)
+      setStorage('moyuyo_refresh_token', result.refreshToken)
+      await this.fetchProfile()
+      return true
+    },
+
+    async toggle2FA(enabled) {
+      if (this.userInfo) {
+        this.userInfo.twoFactorEnabled = enabled
+        setStorage(STORAGE_KEYS.USER_INFO, this.userInfo)
+      }
+    },
+
+    async sendTwoFactorCode() {
+      await userApi.sendTwoFactorCode()
+    },
+
+    async verifyTwoFactorCode(code) {
+      await userApi.verifyTwoFactorCode(code)
+    },
+
+    async fetchDevices() {
+      return this.deviceList
+    },
+
+    async trustDevice(deviceId) {
+      const dev = this.deviceList.find(d => d.id === deviceId)
+      if (dev) dev.trusted = true
+      setStorage(STORAGE_KEYS.DEVICE_LIST, this.deviceList)
+    },
+
+    async untrustDevice(deviceId) {
+      const dev = this.deviceList.find(d => d.id === deviceId)
+      if (dev) dev.trusted = false
+      setStorage(STORAGE_KEYS.DEVICE_LIST, this.deviceList)
+    },
+
+    async removeDevice(deviceId) {
+      this.deviceList = this.deviceList.filter(d => d.id !== deviceId)
+      setStorage(STORAGE_KEYS.DEVICE_LIST, this.deviceList)
+    },
+  },
 })
