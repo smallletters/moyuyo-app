@@ -3,13 +3,37 @@
     <view class="status-banner" :class="`status-${order.status}`">
       <text class="status-title">{{ statusTitle }}</text>
       <text class="status-desc">{{ statusDesc }}</text>
+      <text
+        v-if="order.status === 'PENDING_SHIP' || order.status === 'PENDING_RECEIVE'"
+        class="status-eta"
+      >
+        Estimated Delivery: {{ estimatedDelivery }}
+      </text>
+    </view>
+
+    <!-- Logistics Timeline -->
+    <view v-if="logisticsTraces.length" class="card logistics-card">
+      <text class="card-title">Logistics</text>
+      <view class="timeline">
+        <view
+          v-for="(t, i) in logisticsTraces"
+          :key="i"
+          class="timeline-item"
+          :class="{ active: i === 0, done: i > 0 }"
+        >
+          <view class="timeline-dot" />
+          <view class="timeline-body">
+            <text class="timeline-desc">{{ t.desc }}</text>
+            <text class="timeline-time">{{ t.time }}</text>
+            <text v-if="t.location" class="timeline-location">{{ t.location }}</text>
+          </view>
+        </view>
+      </view>
     </view>
 
     <view class="card address-card">
       <text class="card-title">Shipping Address</text>
-      <text class="address-name">
-        {{ order.receiverName }} · {{ order.receiverPhone }}
-      </text>
+      <text class="address-name">{{ order.receiverName }} · {{ order.receiverPhone }}</text>
       <text class="address-detail">
         {{ order.receiverAddress }}
       </text>
@@ -80,10 +104,16 @@
     </view>
 
     <view class="action-bar safe-area-bottom">
+      <view class="btn btn-text" @click="onCS">
+        <text class="cs-icon">💬</text>
+        <text>Contact CS</text>
+      </view>
       <view v-if="order.status === 'PENDING_PAY'" class="btn btn-outline" @click="onCancel">
         Cancel Order
       </view>
-      <view v-if="order.status === 'PENDING_PAY'" class="btn btn-primary" @click="onPay">Pay Now</view>
+      <view v-if="order.status === 'PENDING_PAY'" class="btn btn-primary" @click="onPay">
+        Pay Now
+      </view>
       <view
         v-if="order.status === 'PENDING_SHIP' || order.status === 'PENDING_RECEIVE'"
         class="btn btn-primary"
@@ -97,7 +127,11 @@
       <view v-if="order.status === 'COMPLETED'" class="btn btn-primary" @click="onReview">
         Write Review
       </view>
-      <view v-if="order.status === 'PAID' || order.status === 'RECEIVED'" class="btn btn-outline" @click="onRefund">
+      <view
+        v-if="order.status === 'PAID' || order.status === 'RECEIVED'"
+        class="btn btn-outline"
+        @click="onRefund"
+      >
         Refund
       </view>
     </view>
@@ -113,6 +147,7 @@ export default {
     return {
       orderId: null,
       order: null,
+      logisticsTraces: [],
     }
   },
 
@@ -139,11 +174,18 @@ export default {
       }
       return map[this.order?.status] || ''
     },
+    estimatedDelivery() {
+      if (!this.order?.createTime) return ''
+      const d = new Date(this.order.createTime)
+      d.setDate(d.getDate() + 5)
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    },
   },
 
   onLoad(query) {
     this.orderId = query.id
     this.loadOrder()
+    this.loadLogistics()
   },
 
   methods: {
@@ -152,6 +194,17 @@ export default {
         this.order = await orderApi.getOrderDetail(this.orderId)
       } catch (e) {
         uni.showToast({ title: 'Load failed', icon: 'none' })
+      }
+    },
+
+    async loadLogistics() {
+      try {
+        const logistics = await orderApi.getLogistics(this.orderId)
+        if (logistics?.traces?.length) {
+          this.logisticsTraces = logistics.traces
+        }
+      } catch (e) {
+        // silently ignore
       }
     },
 
@@ -209,6 +262,10 @@ export default {
     onRefund() {
       uni.navigateTo({ url: `/pages/order/refund?orderId=${this.orderId}` })
     },
+
+    onCS() {
+      uni.showToast({ title: 'Customer service coming soon', icon: 'none' })
+    },
   },
 }
 </script>
@@ -218,5 +275,132 @@ export default {
   min-height: 100vh;
   background: var(--color-background);
   padding-bottom: 120rpx;
+}
+
+.status-banner {
+  padding: 40rpx 24rpx;
+  text-align: center;
+}
+
+.status-title {
+  font-size: 36rpx;
+  font-weight: var(--font-weight-bold);
+  display: block;
+  color: var(--color-text);
+}
+.status-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  display: block;
+  margin-top: 8rpx;
+}
+.status-eta {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+  display: block;
+  margin-top: 8rpx;
+}
+
+.logistics-card {
+  margin: 16rpx;
+}
+
+.timeline {
+  padding: 8rpx 0;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 16rpx;
+  padding-bottom: 32rpx;
+  position: relative;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 14rpx;
+  top: 32rpx;
+  bottom: 0;
+  width: 2rpx;
+  background: var(--color-divider);
+}
+.timeline-item:last-child::before {
+  display: none;
+}
+
+.timeline-dot {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  background: var(--color-divider);
+  flex-shrink: 0;
+  margin-top: 4rpx;
+}
+.timeline-item.active .timeline-dot {
+  background: var(--color-primary);
+  box-shadow: 0 0 0 6rpx rgba(219, 201, 138, 0.2);
+}
+.timeline-item.done .timeline-dot {
+  background: var(--color-primary);
+}
+
+.timeline-body {
+  flex: 1;
+}
+.timeline-desc {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  display: block;
+}
+.timeline-time {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  display: block;
+  margin-top: 4rpx;
+}
+.timeline-location {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  display: block;
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 24rpx;
+  margin: 16rpx;
+}
+.card-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 16rpx;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background: var(--color-surface);
+  border-top: 1rpx solid var(--color-divider);
+}
+.action-bar .btn {
+  flex-shrink: 0;
+}
+
+.cs-icon {
+  font-size: 32rpx;
+}
+.btn-text {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
 }
 </style>

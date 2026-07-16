@@ -10,7 +10,12 @@
     </view>
 
     <!-- WebView 加载 WP 支付页 -->
-    <web-view v-if="payUrl" :src="payUrl" @message="onMessage" @load="onLoad" @error="onError" />
+    <web-view
+      v-if="payUrl"
+      :src="payUrl"
+      @message="onMessage"
+      @load="onLoad"
+      @error="onError" />
   </view>
 </template>
 

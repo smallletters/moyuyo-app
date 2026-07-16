@@ -1,15 +1,21 @@
 /**
  * 全局通用样式
  */
-@import './variables.scss';
+@use './variables.scss' as *;
 
 page {
   background-color: var(--color-background);
   color: var(--color-text);
   font-size: var(--font-size-base);
   font-family:
-    -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB',
-    'Microsoft YaHei', sans-serif;
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Helvetica Neue',
+    'PingFang SC',
+    'Hiragino Sans GB',
+    'Microsoft YaHei',
+    sans-serif;
   line-height: 1.5;
 }
 
@@ -18,6 +24,13 @@ page {
   min-height: 100vh;
   padding: 0 var(--space-md);
   box-sizing: border-box;
+}
+
+/* 标题字体（品牌：Playfair Display） */
+.section-title,
+.headline-1,
+.headline-2 {
+  font-family: 'Playfair Display', 'Inter', serif;
 }
 
 /* 卡片 */

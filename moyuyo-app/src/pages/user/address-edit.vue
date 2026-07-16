@@ -3,11 +3,15 @@
     <scroll-view scroll-y class="form">
       <view class="input-group">
         <text class="input-label">Full Name *</text>
-        <input v-model="form.receiver" class="input" placeholder="John Doe" />
+        <input v-model="form.receiver" class="input" placeholder="John Doe">
       </view>
       <view class="input-group">
         <text class="input-label">Phone *</text>
-        <input v-model="form.phone" class="input" type="number" placeholder="+1 555 1234" />
+        <input
+          v-model="form.phone"
+          class="input"
+          type="number"
+          placeholder="+1 555 1234">
       </view>
       <view class="input-group">
         <text class="input-label">Country *</text>
@@ -17,23 +21,23 @@
       </view>
       <view class="input-group">
         <text class="input-label">Province / State</text>
-        <input v-model="form.province" class="input" placeholder="California" />
+        <input v-model="form.province" class="input" placeholder="California">
       </view>
       <view class="input-group">
         <text class="input-label">City *</text>
-        <input v-model="form.city" class="input" />
+        <input v-model="form.city" class="input">
       </view>
       <view class="input-group">
         <text class="input-label">District</text>
-        <input v-model="form.district" class="input" />
+        <input v-model="form.district" class="input">
       </view>
       <view class="input-group">
         <text class="input-label">Address *</text>
-        <input v-model="form.detail" class="input" placeholder="Street, building, apt" />
+        <input v-model="form.detail" class="input" placeholder="Street, building, apt">
       </view>
       <view class="input-group">
         <text class="input-label">Postal Code</text>
-        <input v-model="form.zipCode" class="input" />
+        <input v-model="form.zipCode" class="input">
       </view>
       <view class="input-group">
         <text class="input-label">Tag</text>
@@ -56,7 +60,7 @@
 </template>
 
 <script>
-import { memberApi } from '@/api'
+import { addressApi } from '@/api'
 
 export default {
   data() {
@@ -82,7 +86,7 @@ export default {
   async onLoad(query) {
     if (query.id) {
       try {
-        const addr = await memberApi.getAddressDetail(query.id)
+        const addr = await addressApi.getAddressDetail(query.id)
         if (addr) this.form = { ...addr }
       } catch (e) {
         console.warn('[address-edit] load failed', e)
@@ -109,9 +113,9 @@ export default {
       }
       try {
         if (this.form.id) {
-          await memberApi.updateAddress(this.form.id, this.form)
+          await addressApi.updateAddress(this.form.id, this.form)
         } else {
-          await memberApi.createAddress(this.form)
+          await addressApi.createAddress(this.form)
         }
         uni.showToast({ title: 'Saved', icon: 'success' })
         setTimeout(() => uni.navigateBack(), 800)

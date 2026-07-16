@@ -2,13 +2,23 @@
   <view class="magic-link">
     <view class="header">
       <text class="title">Magic Link</text>
-      <text class="sub">{{ step === 1 ? 'Enter your email and we\'ll send a sign-in link' : 'Check your email for the sign-in link' }}</text>
+      <text class="sub">
+        {{
+          step === 1
+            ? "Enter your email and we'll send a sign-in link"
+            : 'Check your email for the sign-in link'
+        }}
+      </text>
     </view>
 
-    <view class="form" v-if="step === 1">
+    <view v-if="step === 1" class="form">
       <view class="input-group">
         <text class="input-label">Email</text>
-        <input v-model="email" class="input" type="text" placeholder="your@email.com" />
+        <input
+          v-model="email"
+          class="input"
+          type="text"
+          placeholder="your@email.com">
       </view>
 
       <view class="btn btn-primary submit-btn" :class="{ disabled: !canSend }" @click="onSend">
@@ -18,12 +28,14 @@
       <view class="back-link" @click="goBack">Back to Sign In</view>
     </view>
 
-    <view class="form" v-else>
+    <view v-else class="form">
       <view class="sent-info">
         <text class="sent-icon">✉️</text>
         <text class="sent-text">We sent a sign-in link to</text>
         <text class="sent-email">{{ email }}</text>
-        <text class="sent-hint">The link expires in 15 minutes. If you don't see it, check your spam folder.</text>
+        <text class="sent-hint">
+          The link expires in 15 minutes. If you don't see it, check your spam folder.
+        </text>
       </view>
 
       <view class="resend" @click="onResend">
@@ -57,7 +69,7 @@ export default {
     },
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.timer) clearInterval(this.timer)
   },
 

@@ -32,10 +32,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up JDK 25
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '25'
           distribution: 'temurin'
           cache: maven
 
@@ -83,7 +83,7 @@ jobs:
           path: moyuyo-server/moyuyo-api/target/
 
       - name: Build Docker image
-        run: docker build -t moyuyo-server:latest -f moyuyo-server/Dockerfile moyuyo-server
+        run: docker build -t moyuyo-server:${{ github.sha }} -f moyuyo-server/Dockerfile moyuyo-server
 
       - name: Log in to Docker Hub
         if: github.ref == 'refs/heads/main' && secrets.DOCKER_USERNAME
@@ -95,5 +95,7 @@ jobs:
       - name: Push Docker image
         if: github.ref == 'refs/heads/main' && secrets.DOCKER_USERNAME
         run: |
-          docker tag moyuyo-server:latest ${{ secrets.DOCKER_USERNAME }}/moyuyo-server:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/moyuyo-server:latest
+          docker tag moyuyo-server:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/moyuyo-server:${{ github.sha }}
+          docker tag moyuyo-server:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/moyuyo-server:${{ github.ref_name }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/moyuyo-server:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/moyuyo-server:${{ github.ref_name }}

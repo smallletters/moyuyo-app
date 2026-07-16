@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { memberApi } from '@/api'
+import { addressApi } from '@/api'
 
 export default {
   data() {
@@ -62,7 +62,7 @@ export default {
     async loadAddresses() {
       this.loading = true
       try {
-        this.addressList = await memberApi.getAddressList()
+        this.addressList = await addressApi.getAddressList()
       } catch (e) {
         console.warn('[address] load failed', e)
         this.addressList = []
@@ -82,7 +82,7 @@ export default {
 
     async onSetDefault(addr) {
       try {
-        await memberApi.setDefaultAddress(addr.id)
+        await addressApi.setDefaultAddress(addr.id)
         this.addressList.forEach((a) => (a.isDefault = a.id === addr.id))
         uni.showToast({ title: 'Default updated', icon: 'success' })
       } catch (e) {
@@ -101,7 +101,7 @@ export default {
         success: async (res) => {
           if (res.confirm) {
             try {
-              await memberApi.deleteAddress(addr.id)
+              await addressApi.deleteAddress(addr.id)
               this.addressList = this.addressList.filter((a) => a.id !== addr.id)
               uni.showToast({ title: 'Deleted', icon: 'success' })
             } catch (e) {

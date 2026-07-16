@@ -92,7 +92,11 @@
 
         <!-- 商品列表 -->
         <view class="product-list">
-          <view v-for="p in products" :key="p.id" class="product-row" @click="goDetail(p.id)">
+          <view
+            v-for="p in products"
+            :key="p.id"
+            class="product-row"
+            @click="goDetail(p.id)">
             <image :src="p.image" class="product-image" mode="aspectFill" />
             <view class="product-info">
               <text class="product-name">{{ p.name }}</text>

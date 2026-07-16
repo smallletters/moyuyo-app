@@ -18,10 +18,14 @@
           maxlength="1"
           @input="onDigitInput(i, $event)"
           @backspace="onDigitBackspace(i)"
-        />
+        >
       </view>
 
-      <view class="btn btn-primary verify-btn" :class="{ disabled: !codeComplete }" @click="onVerify">
+      <view
+        class="btn btn-primary verify-btn"
+        :class="{ disabled: !codeComplete }"
+        @click="onVerify"
+      >
         Verify
       </view>
 
@@ -49,7 +53,7 @@ export default {
       return useUserStore()
     },
     codeComplete() {
-      return this.code.filter(c => c).length === 6
+      return this.code.filter((c) => c).length === 6
     },
   },
 
@@ -57,7 +61,7 @@ export default {
     this.sendCode()
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.timer) clearInterval(this.timer)
   },
 

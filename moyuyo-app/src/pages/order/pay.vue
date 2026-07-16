@@ -5,7 +5,7 @@
       <text class="status-text">{{ statusText }}</text>
     </view>
 
-    <view class="card order-summary" v-if="order">
+    <view v-if="order" class="card order-summary">
       <text class="card-title">Order #{{ order.orderNo }}</text>
       <view class="summary-row">
         <text>Amount</text>

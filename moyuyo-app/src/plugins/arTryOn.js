@@ -3,6 +3,7 @@
  * 插件标识: MOYUYO-AR
  * 功能: AR 宠物服饰试穿、AR 追踪、拍照
  */
+/* eslint-disable no-unreachable */
 
 const PLUGIN_NAME = 'MOYUYO-AR'
 
@@ -26,12 +27,10 @@ export function startArTryOn(params) {
     })
   })
   // #endif
-
-  // #ifdef H5
-  // H5 降级: 使用 WebXR 或显示 3D 模型预览
+  /* #ifndef APP-PLUS */
   uni.showToast({ title: 'AR 试穿仅支持 APP 端', icon: 'none' })
   return Promise.reject(new Error('当前环境不支持 AR'))
-  // #endif
+  /* #endif */
 }
 
 /**
@@ -54,7 +53,9 @@ export function captureArPhoto() {
     })
   })
   // #endif
+  /* #ifndef APP-PLUS */
   return Promise.reject(new Error('当前环境不支持'))
+  /* #endif */
 }
 
 /**

@@ -10,7 +10,7 @@
     <view class="card">
       <view class="form-row">
         <text class="label">Nickname</text>
-        <input v-model="form.nickname" class="input" />
+        <input v-model="form.nickname" class="input">
       </view>
       <view class="form-row">
         <text class="label">Email</text>
@@ -18,7 +18,7 @@
       </view>
       <view class="form-row">
         <text class="label">Phone</text>
-        <input v-model="form.phone" class="input" type="number" />
+        <input v-model="form.phone" class="input" type="number">
       </view>
       <view class="form-row">
         <text class="label">Birthday</text>

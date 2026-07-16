@@ -3,6 +3,7 @@
  * 插件标识: MOYUYO-Auth
  * 功能: Apple Sign-In / Google Sign-In / Facebook Login
  */
+/* eslint-disable no-unreachable */
 
 const PLUGIN_NAME = 'MOYUYO-Auth'
 
@@ -28,7 +29,9 @@ export function loginWithApple() {
     })
   })
   // #endif
+  /* #ifndef APP-PLUS */
   return Promise.reject(new Error('当前环境不支持 Apple 登录'))
+  /* #endif */
 }
 
 /**
@@ -53,7 +56,9 @@ export function loginWithGoogle() {
     })
   })
   // #endif
+  /* #ifndef APP-PLUS */
   return Promise.reject(new Error('当前环境不支持 Google 登录'))
+  /* #endif */
 }
 
 /**
@@ -78,7 +83,9 @@ export function loginWithFacebook() {
     })
   })
   // #endif
+  /* #ifndef APP-PLUS */
   return Promise.reject(new Error('当前环境不支持 Facebook 登录'))
+  /* #endif */
 }
 
 /**

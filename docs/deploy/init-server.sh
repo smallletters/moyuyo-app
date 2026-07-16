@@ -87,14 +87,10 @@ echo ""
 echo "[6/8] 配置防火墙..."
 ufw allow 80/tcp
 ufw allow 443/tcp
-ufw allow 443/tcp
-ufw allow 8080/tcp
-ufw allow 3306/tcp
-ufw allow 6379/tcp
-ufw allow 9876/tcp
-ufw allow 10911/tcp
 ufw --force enable
 echo "防火墙配置完成"
+echo "  > 仅开放 80(HTTP) 和 443(HTTPS) 端口"
+echo "  > 数据库和中间件通过 Docker 内部网络访问，不对外暴露"
 
 # --------------------------
 # 7. 创建目录结构

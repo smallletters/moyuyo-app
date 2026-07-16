@@ -33,7 +33,12 @@
       </view>
 
       <view class="care-cards">
-        <view v-for="card in computedCareCards" :key="card.id" class="care-card" @click="onCareClick(card)">
+        <view
+          v-for="card in computedCareCards"
+          :key="card.id"
+          class="care-card"
+          @click="onCareClick(card)"
+        >
           <view class="care-icon" :style="{ background: card.bg }">
             <text>{{ card.icon }}</text>
           </view>
@@ -48,7 +53,11 @@
       <view class="quick-actions">
         <view class="section-title">Quick Actions</view>
         <view class="action-grid">
-          <view v-for="a in actions" :key="a.id" class="action-item" @click="onActionClick(a)">
+          <view
+            v-for="a in actions"
+            :key="a.id"
+            class="action-item"
+            @click="onActionClick(a)">
             <text class="action-icon">{{ a.icon }}</text>
             <text class="action-label">{{ a.label }}</text>
           </view>
@@ -163,34 +172,160 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pet-hub { display: flex; flex-direction: column; height: 100vh; background: var(--color-background); }
-.header { padding: 48rpx 24rpx 16rpx; padding-top: calc(48rpx + env(safe-area-inset-top)); background: var(--color-surface); }
-.title { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); }
-.subtitle { font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-top: 4rpx; }
-.content { flex: 1; }
-.scene { margin: 24rpx; height: 360rpx; border-radius: var(--radius-lg); overflow: hidden; background: linear-gradient(135deg, #2e2b29, #4a4540); display: flex; align-items: center; justify-content: center; }
-.scene-placeholder { text-align: center; color: #f6f2ee; }
-.scene-emoji { font-size: 96rpx; display: block; margin-bottom: 16rpx; }
-.scene-name { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); }
-.scene-tip { font-size: var(--font-size-xs); opacity: 0.5; margin-top: 8rpx; display: block; }
-.pet-switcher { display: flex; gap: 16rpx; padding: 0 24rpx; margin-bottom: 24rpx; flex-wrap: wrap; }
-.pet-chip { display: flex; align-items: center; gap: 8rpx; padding: 12rpx 24rpx; background: var(--color-surface); border-radius: var(--radius-pill); border: 2rpx solid transparent; }
-.pet-chip.active { border-color: var(--color-primary); }
-.pet-emoji { font-size: 32rpx; }
-.pet-name { font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); }
-.pet-chip.add { justify-content: center; width: 72rpx; padding: 12rpx 0; }
-.pet-add { font-size: 32rpx; color: var(--color-text-tertiary); }
-.care-cards { padding: 0 24rpx; display: flex; flex-direction: column; gap: 12rpx; margin-bottom: 24rpx; }
-.care-card { display: flex; align-items: center; background: var(--color-surface); border-radius: var(--radius-md); padding: 20rpx; gap: 16rpx; }
-.care-icon { width: 64rpx; height: 64rpx; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28rpx; }
-.care-info { flex: 1; }
-.care-title { font-size: var(--font-size-base); font-weight: var(--font-weight-medium); }
-.care-subtitle { font-size: var(--font-size-xs); color: var(--color-text-tertiary); margin-top: 4rpx; }
-.care-arrow { font-size: 36rpx; color: var(--color-text-tertiary); }
-.quick-actions { padding: 0 24rpx 32rpx; }
-.section-title { font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); margin-bottom: 16rpx; }
-.action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16rpx; }
-.action-item { display: flex; flex-direction: column; align-items: center; gap: 8rpx; padding: 20rpx 0; background: var(--color-surface); border-radius: var(--radius-md); }
-.action-icon { font-size: 40rpx; }
-.action-label { font-size: var(--font-size-xs); color: var(--color-text-secondary); }
+.pet-hub {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--color-background);
+}
+.header {
+  padding: 48rpx 24rpx 16rpx;
+  padding-top: calc(48rpx + env(safe-area-inset-top));
+  background: var(--color-surface);
+}
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  margin-top: 4rpx;
+}
+.content {
+  flex: 1;
+}
+.scene {
+  margin: 24rpx;
+  height: 360rpx;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: linear-gradient(135deg, #2e2b29, #4a4540);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scene-placeholder {
+  text-align: center;
+  color: #f6f2ee;
+}
+.scene-emoji {
+  font-size: 96rpx;
+  display: block;
+  margin-bottom: 16rpx;
+}
+.scene-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+.scene-tip {
+  font-size: var(--font-size-xs);
+  opacity: 0.5;
+  margin-top: 8rpx;
+  display: block;
+}
+.pet-switcher {
+  display: flex;
+  gap: 16rpx;
+  padding: 0 24rpx;
+  margin-bottom: 24rpx;
+  flex-wrap: wrap;
+}
+.pet-chip {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 12rpx 24rpx;
+  background: var(--color-surface);
+  border-radius: var(--radius-pill);
+  border: 2rpx solid transparent;
+}
+.pet-chip.active {
+  border-color: var(--color-primary);
+}
+.pet-emoji {
+  font-size: 32rpx;
+}
+.pet-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+.pet-chip.add {
+  justify-content: center;
+  width: 72rpx;
+  padding: 12rpx 0;
+}
+.pet-add {
+  font-size: 32rpx;
+  color: var(--color-text-tertiary);
+}
+.care-cards {
+  padding: 0 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin-bottom: 24rpx;
+}
+.care-card {
+  display: flex;
+  align-items: center;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 20rpx;
+  gap: 16rpx;
+}
+.care-icon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}
+.care-info {
+  flex: 1;
+}
+.care-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+.care-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  margin-top: 4rpx;
+}
+.care-arrow {
+  font-size: 36rpx;
+  color: var(--color-text-tertiary);
+}
+.quick-actions {
+  padding: 0 24rpx 32rpx;
+}
+.section-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 16rpx;
+}
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16rpx;
+}
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 20rpx 0;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+.action-icon {
+  font-size: 40rpx;
+}
+.action-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
 </style>

@@ -28,6 +28,15 @@ spring:
           max-idle: 8
           min-idle: 4
 
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    out-of-order: false
+    placeholder-replacement: false
+    table: schema_history
+
 # MyBatis-Plus
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
@@ -65,3 +74,11 @@ payment:
     client-secret: ${PAYPAL_CLIENT_SECRET:placeholder}
     webhook-id: ${PAYPAL_WEBHOOK_ID:placeholder}
     mode: sandbox
+
+# WooCommerce
+woocommerce:
+  url: ${WOOCOMMERCE_URL:https://your-woocommerce-store.com}
+  consumer-key: ${WOOCOMMERCE_CONSUMER_KEY:}
+  consumer-secret: ${WOOCOMMERCE_CONSUMER_SECRET:}
+  connect-timeout: 10000
+  read-timeout: 30000

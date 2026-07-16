@@ -30,7 +30,7 @@ jobs:
         working-directory: moyuyo-app
 
       - name: Lint check
-        run: npm run lint 2>/dev/null || echo "No lint script configured"
+        run: npm run lint
         working-directory: moyuyo-app
 
       - name: Build (H5)

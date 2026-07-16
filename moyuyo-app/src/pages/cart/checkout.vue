@@ -5,13 +5,14 @@
       <view class="card address-card" @click="onSelectAddress">
         <view v-if="selectedAddress" class="address-selected">
           <text class="address-name">
-            {{ selectedAddress.first_name }} {{ selectedAddress.last_name }} ·
-            {{ selectedAddress.phone }}
+            {{ selectedAddress.receiverName || selectedAddress.first_name }} ·
+            {{ selectedAddress.receiverPhone || selectedAddress.phone }}
           </text>
           <text class="address-detail">
-            {{ selectedAddress.address_1 }} {{ selectedAddress.address_2 }}
-            {{ selectedAddress.city }} {{ selectedAddress.state }} {{ selectedAddress.postcode }}
-            {{ selectedAddress.country }}
+            {{ selectedAddress.addressLine || selectedAddress.address_1 }}
+            {{ selectedAddress.city || '' }}
+            {{ selectedAddress.state || '' }}
+            {{ selectedAddress.zipCode || selectedAddress.postcode || '' }}
           </text>
         </view>
         <view v-else class="address-empty">
@@ -58,9 +59,65 @@
       </view>
 
       <!-- 配送方式 -->
-      <view class="card row-card">
-        <text class="row-label">Shipping</text>
-        <text class="row-value">Standard · $5.99</text>
+      <view class="card">
+        <text class="card-title">Shipping Method</text>
+        <view
+          v-for="s in shippingMethods"
+          :key="s.id"
+          class="shipping-option"
+          :class="{ active: selectedShipping === s.id }"
+          @click="selectedShipping = s.id"
+        >
+          <view class="shipping-radio">
+            <view v-if="selectedShipping === s.id" class="shipping-dot" />
+          </view>
+          <view class="shipping-info">
+            <text class="shipping-name">{{ s.name }}</text>
+            <text class="shipping-time">{{ s.eta }}</text>
+          </view>
+          <text class="shipping-price" :class="{ free: s.free }">
+            {{ s.free ? 'Free' : '$' + s.price.toFixed(2) }}
+          </text>
+        </view>
+      </view>
+
+      <!-- 支付方式 -->
+      <view class="card">
+        <text class="card-title">Payment Method</text>
+        <scroll-view scroll-x class="payment-scroll" show-scrollbar="false">
+          <view
+            v-for="p in paymentMethods"
+            :key="p.id"
+            class="payment-option"
+            :class="{ active: selectedPayment === p.id }"
+            @click="selectedPayment = p.id"
+          >
+            <text class="payment-icon">{{ p.icon }}</text>
+            <text class="payment-name">{{ p.name }}</text>
+          </view>
+        </scroll-view>
+      </view>
+
+      <!-- 优惠券 -->
+      <view class="card row-card" @click="onSelectCoupon">
+        <text class="row-label">Coupon</text>
+        <view class="row-value">
+          <text v-if="cartStore.selectedCoupon" class="coupon-selected text-danger">
+            -${{ cartStore.selectedCoupon.amount }}
+          </text>
+          <text v-else class="row-placeholder">Select coupon</text>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+
+      <!-- 订单备注 -->
+      <view class="card">
+        <textarea
+          v-model="orderRemark"
+          class="remark-input"
+          placeholder="Optional: order notes (e.g. special delivery instructions)..."
+          maxlength="500"
+        />
       </view>
 
       <!-- 价格明细 -->
@@ -71,7 +128,9 @@
         </view>
         <view class="price-row">
           <text>Shipping</text>
-          <text>$5.99</text>
+          <text>
+            {{ selectedShippingPrice > 0 ? '$' + selectedShippingPrice.toFixed(2) : 'Free' }}
+          </text>
         </view>
         <view v-if="cartStore.selectedCoupon" class="price-row">
           <text>Coupon Discount</text>
@@ -113,6 +172,31 @@ export default {
       selectedAddress: null,
       addressList: [],
       usePoints: false,
+      orderRemark: '',
+      selectedShipping: 'standard',
+      selectedPayment: 'stripe',
+      shippingMethods: [
+        {
+          id: 'standard',
+          name: 'Standard Shipping',
+          eta: '3-5 business days',
+          price: 0,
+          free: true,
+        },
+        {
+          id: 'express',
+          name: 'Express Shipping',
+          eta: 'Next day delivery',
+          price: 12.0,
+          free: false,
+        },
+      ],
+      paymentMethods: [
+        { id: 'stripe', name: 'Card', icon: '💳' },
+        { id: 'paypal', name: 'PayPal', icon: '🅿' },
+        { id: 'applepay', name: 'Apple Pay', icon: '' },
+        { id: 'alipay', name: 'Alipay', icon: '💰' },
+      ],
     }
   },
 
@@ -122,6 +206,10 @@ export default {
     },
     userStore() {
       return useUserStore()
+    },
+    selectedShippingPrice() {
+      const method = this.shippingMethods.find((s) => s.id === this.selectedShipping)
+      return method ? method.price : 0
     },
     subtotal() {
       return this.cartStore.selectedPrice
@@ -134,7 +222,10 @@ export default {
       return this.usePoints ? Math.min(12.8, this.subtotal * 0.1) : 0
     },
     total() {
-      return Math.max(0, this.subtotal + 5.99 - this.discount - this.pointsDiscount)
+      return Math.max(
+        0,
+        this.subtotal + this.selectedShippingPrice - this.discount - this.pointsDiscount,
+      )
     },
   },
 
@@ -144,16 +235,19 @@ export default {
 
   methods: {
     loadAddress() {
-      addressApi.getAddressList().then((list) => {
-        if (list && list.length > 0) {
-          this.addressList = list
-          this.selectedAddress = list.find((a) => a.isDefault) || list[0]
-        }
-      }).catch(() => {
-        const saved = uni.getStorageSync('moyuyo_address_list') || []
-        this.addressList = saved
-        this.selectedAddress = saved.find((a) => a.default) || saved[0]
-      })
+      addressApi
+        .getAddressList()
+        .then((list) => {
+          if (list && list.length > 0) {
+            this.addressList = list
+            this.selectedAddress = list.find((a) => a.isDefault) || list[0]
+          }
+        })
+        .catch(() => {
+          const saved = uni.getStorageSync('moyuyo_address_list') || []
+          this.addressList = saved
+          this.selectedAddress = saved.find((a) => a.default) || saved[0]
+        })
     },
 
     onSelectAddress() {
@@ -187,8 +281,10 @@ export default {
             quantity: it.quantity,
           })),
           addressId: this.selectedAddress.id || null,
-          remark: '',
+          remark: this.orderRemark,
           couponId: this.cartStore.selectedCoupon?.code || null,
+          paymentMethod: this.selectedPayment,
+          shippingMethod: this.selectedShipping,
         }
         const order = await orderApi.createOrder(orderData)
         uni.hideLoading()
@@ -241,6 +337,13 @@ export default {
   border-radius: var(--radius-md);
   padding: 24rpx;
   margin-bottom: 16rpx;
+}
+
+.card-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 16rpx;
+  color: var(--color-text-secondary);
 }
 
 .address-card {
@@ -344,8 +447,111 @@ export default {
 }
 
 .coupon-selected {
-  color: var(--color-primary-dark);
+  color: var(--color-danger);
   font-weight: var(--font-weight-medium);
+}
+
+.shipping-option {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid var(--color-divider);
+}
+
+.shipping-option:last-child {
+  border-bottom: none;
+}
+
+.shipping-option.active .shipping-name {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.shipping-radio {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  border: 2rpx solid var(--color-divider);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.shipping-option.active .shipping-radio {
+  border-color: var(--color-primary);
+}
+
+.shipping-dot {
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.shipping-info {
+  flex: 1;
+}
+
+.shipping-name {
+  font-size: var(--font-size-sm);
+  display: block;
+}
+
+.shipping-time {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.shipping-price {
+  font-size: var(--font-size-sm);
+}
+.shipping-price.free {
+  color: var(--color-primary);
+}
+
+.payment-scroll {
+  display: flex;
+  gap: 16rpx;
+  white-space: nowrap;
+  padding-bottom: 8rpx;
+}
+
+.payment-option {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 20rpx 32rpx;
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+  border: 2rpx solid var(--color-divider);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.payment-option.active {
+  border-color: var(--color-primary);
+  background: rgba(219, 201, 138, 0.08);
+  color: var(--color-primary);
+}
+
+.payment-icon {
+  font-size: 40rpx;
+}
+
+.remark-input {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 16rpx;
+  background: var(--color-background);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+}
+
+.text-danger {
+  color: var(--color-danger);
 }
 
 .price-card .price-row {

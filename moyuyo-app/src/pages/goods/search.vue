@@ -9,7 +9,7 @@
           placeholder="Search for products, brands..."
           confirm-type="search"
           @confirm="onSearch"
-        />
+        >
         <u-icon
           v-if="keyword"
           name="close-circle-fill"
@@ -26,10 +26,18 @@
       <view v-if="!keyword && searchHistory.length" class="section">
         <view class="section-header">
           <text class="section-title">Recent Searches</text>
-          <u-icon name="trash" color="#9A948C" size="16" @click="onClearHistory" />
+          <u-icon
+            name="trash"
+            color="#9A948C"
+            size="16"
+            @click="onClearHistory" />
         </view>
         <view class="chips">
-          <view v-for="h in searchHistory" :key="h" class="chip" @click="onQuickSearch(h)">
+          <view
+            v-for="h in searchHistory"
+            :key="h"
+            class="chip"
+            @click="onQuickSearch(h)">
             {{ h }}
           </view>
         </view>
@@ -41,7 +49,11 @@
           <text class="section-title">Trending</text>
         </view>
         <view class="chips">
-          <view v-for="h in hotSearches" :key="h" class="chip hot" @click="onQuickSearch(h)">
+          <view
+            v-for="h in hotSearches"
+            :key="h"
+            class="chip hot"
+            @click="onQuickSearch(h)">
             {{ h }}
           </view>
         </view>

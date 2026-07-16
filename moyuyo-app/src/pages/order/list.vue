@@ -13,7 +13,11 @@
     </view>
 
     <scroll-view scroll-y class="scroll" @scrolltolower="onLoadMore">
-      <view v-for="o in orders" :key="o.id" class="card order-card" @click="goDetail(o.id)">
+      <view
+        v-for="o in orders"
+        :key="o.id"
+        class="card order-card"
+        @click="goDetail(o.id)">
         <view class="card-header">
           <text class="order-no">#{{ o.orderNo }}</text>
           <text class="order-status" :class="`status-${o.status}`">{{ statusText(o.status) }}</text>
@@ -26,9 +30,7 @@
               <text class="item-qty">x {{ item.quantity }}</text>
             </view>
           </view>
-          <view v-if="(o.items || []).length > 2" class="more">
-            +{{ o.items.length - 2 }} more
-          </view>
+          <view v-if="(o.items || []).length > 2" class="more">+{{ o.items.length - 2 }} more</view>
         </view>
         <view class="card-footer">
           <text class="total">Total: ${{ o.payAmount }}</text>
@@ -58,7 +60,7 @@ export default {
         { value: 'PENDING_PAY', label: 'To Pay' },
         { value: 'PENDING_SHIP', label: 'To Ship' },
         { value: 'PENDING_RECEIVE', label: 'To Receive' },
-        { value: 'COMPLETED', label: 'Completed' },
+        { value: 'COMPLETED', label: 'To Review' },
       ],
       orders: [],
       loading: false,
@@ -89,9 +91,7 @@ export default {
         // result could be Page wrapper with records, or plain array
         const list = result?.records || result || []
         this.orders.push(...list)
-        this.noMore = !result?.records
-          ? list.length < 10
-          : (result.total || 0) <= this.page * 10
+        this.noMore = !result?.records ? list.length < 10 : (result.total || 0) <= this.page * 10
         this.page += 1
       } catch (e) {
         console.error('[order-list] error', e)
@@ -219,11 +219,21 @@ export default {
   font-size: 26rpx;
   font-weight: 600;
 
-  &.status-PENDING_PAY { color: var(--color-warning); }
-  &.status-PENDING_SHIP { color: var(--color-info); }
-  &.status-PENDING_RECEIVE { color: var(--color-primary); }
-  &.status-COMPLETED { color: var(--color-success); }
-  &.status-CANCELLED { color: var(--color-text-tertiary); }
+  &.status-PENDING_PAY {
+    color: var(--color-warning);
+  }
+  &.status-PENDING_SHIP {
+    color: var(--color-info);
+  }
+  &.status-PENDING_RECEIVE {
+    color: var(--color-primary);
+  }
+  &.status-COMPLETED {
+    color: var(--color-success);
+  }
+  &.status-CANCELLED {
+    color: var(--color-text-tertiary);
+  }
 }
 
 .order-items {

@@ -8,7 +8,12 @@
     <view class="form">
       <view class="input-group">
         <text class="input-label">Current Password</text>
-        <input v-model="oldPassword" class="input" type="password" placeholder="Enter current password" />
+        <input
+          v-model="oldPassword"
+          class="input"
+          type="password"
+          placeholder="Enter current password"
+        >
       </view>
 
       <view class="input-group">
@@ -18,7 +23,7 @@
           class="input"
           type="password"
           placeholder="At least 8 characters, letters and numbers"
-        />
+        >
       </view>
 
       <view class="input-group">
@@ -28,7 +33,7 @@
           class="input"
           type="password"
           placeholder="Re-enter new password"
-        />
+        >
       </view>
 
       <view class="password-rules">
@@ -77,8 +82,11 @@ export default {
     canSubmit() {
       return (
         this.oldPassword.length >= 8 &&
-        this.hasLower && this.hasUpper && this.hasDigit &&
-        this.hasMinLen && this.passwordsMatch
+        this.hasLower &&
+        this.hasUpper &&
+        this.hasDigit &&
+        this.hasMinLen &&
+        this.passwordsMatch
       )
     },
     userStore() {

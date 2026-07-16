@@ -1,6 +1,6 @@
 <template>
   <view class="refund-page">
-    <view class="card order-info" v-if="order">
+    <view v-if="order" class="card order-info">
       <text class="card-title">Order #{{ order.orderNo }}</text>
       <text class="order-amount">Amount: ${{ order.payAmount }}</text>
     </view>
@@ -24,9 +24,13 @@
         </view>
       </view>
 
-      <view class="form-item" v-if="form.type === 'PARTIAL'">
+      <view v-if="form.type === 'PARTIAL'" class="form-item">
         <text class="label">Refund Amount ($)</text>
-        <input v-model="form.amount" class="input" type="digit" placeholder="0.00" />
+        <input
+          v-model="form.amount"
+          class="input"
+          type="digit"
+          placeholder="0.00">
       </view>
 
       <view class="form-item">
@@ -66,14 +70,22 @@ export default {
         description: '',
       },
       reasonIndex: -1,
-      reasonOptions: ['Item damaged', 'Wrong item received', 'Item not as described', 'Quality issue', 'No longer needed', 'Other'],
+      reasonOptions: [
+        'Item damaged',
+        'Wrong item received',
+        'Item not as described',
+        'Quality issue',
+        'No longer needed',
+        'Other',
+      ],
     }
   },
 
   computed: {
     canSubmit() {
       if (!this.form.reason) return false
-      if (this.form.type === 'PARTIAL' && (!this.form.amount || parseFloat(this.form.amount) <= 0)) return false
+      if (this.form.type === 'PARTIAL' && (!this.form.amount || parseFloat(this.form.amount) <= 0))
+        return false
       return true
     },
   },

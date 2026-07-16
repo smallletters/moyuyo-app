@@ -4,7 +4,9 @@
       <view v-if="userStore.isLoggedIn" class="user-info" @click="goProfile">
         <image :src="userStore.userInfo?.avatar || defaultAvatar" class="avatar" />
         <view class="info">
-          <text class="name">{{ userStore.userInfo?.nickname || userStore.userInfo?.email || 'User' }}</text>
+          <text class="name">
+            {{ userStore.userInfo?.nickname || userStore.userInfo?.email || 'User' }}
+          </text>
           <text class="email">{{ userStore.userInfo?.email }}</text>
           <text class="member-level">{{ memberLevel }}</text>
         </view>
@@ -30,6 +32,28 @@
       </view>
     </view>
 
+    <!-- 钱包区域 -->
+    <view v-if="userStore.isLoggedIn" class="wallet-area card">
+      <view class="wallet-grid">
+        <view class="wallet-item" @click="goWallet">
+          <text class="wallet-num">${{ walletBalance }}</text>
+          <text class="wallet-label">余额</text>
+        </view>
+        <view class="wallet-item" @click="goPoints">
+          <text class="wallet-num">{{ points.toLocaleString() }}</text>
+          <text class="wallet-label">积分</text>
+        </view>
+        <view class="wallet-item" @click="goCoupons">
+          <text class="wallet-num">{{ couponCount }}张</text>
+          <text class="wallet-label">优惠券</text>
+        </view>
+        <view class="wallet-item" @click="goGiftCards">
+          <text class="wallet-num">{{ giftCardCount }}张</text>
+          <text class="wallet-label">礼品卡</text>
+        </view>
+      </view>
+    </view>
+
     <!-- 订单宫格 -->
     <view class="card order-card">
       <view class="card-header">
@@ -52,7 +76,11 @@
 
     <!-- 功能列表 -->
     <view class="card feature-card">
-      <view v-for="(f, i) in features" :key="i" class="feature-item" @click="onFeatureClick(f)">
+      <view
+        v-for="(f, i) in features"
+        :key="i"
+        class="feature-item"
+        @click="onFeatureClick(f)">
         <text class="feature-icon">{{ f.icon }}</text>
         <text class="feature-label">{{ f.label }}</text>
         <text class="feature-arrow">›</text>
@@ -83,14 +111,12 @@ export default {
         { value: 'COMPLETED', label: 'To Review', icon: '⭐', badge: 0 },
       ],
       features: [
-        { id: 'address', label: 'Shipping Address', icon: '📍' },
-        { id: 'coupons', label: 'My Coupons', icon: '🎟️' },
-        { id: 'wishlist', label: 'Wishlist', icon: '❤️' },
-        { id: 'pets', label: 'My Pets', icon: '🐾' },
-        { id: 'devices', label: 'Login Devices', icon: '📱' },
-        { id: 'security', label: 'Account Security', icon: '🔒' },
-        { id: 'settings', label: 'Settings', icon: '⚙️' },
-        { id: 'about', label: 'About MOYUYO', icon: '✨' },
+        { id: 'address', label: '收货地址', icon: '📍' },
+        { id: 'pets', label: '宠物档案', icon: '🐾' },
+        { id: 'favorites', label: '我的收藏', icon: '❤️' },
+        { id: 'history', label: '浏览足迹', icon: '👣' },
+        { id: 'help', label: '帮助中心', icon: '❓' },
+        { id: 'about', label: '关于我们', icon: '✨' },
       ],
     }
   },
@@ -110,6 +136,12 @@ export default {
       }
       return levelMap[this.memberInfo.level] || this.memberInfo.level
     },
+    growthPercent() {
+      if (!this.memberInfo) return 0
+      const total = 5000
+      const current = this.memberInfo.growthValue || 0
+      return Math.min(100, Math.round((current / total) * 100))
+    },
   },
 
   onShow() {
@@ -124,6 +156,7 @@ export default {
         const info = await memberApi.getMemberInfo()
         this.memberInfo = info
         this.points = info.points || 0
+        this.walletBalance = info.walletBalance || 0
       } catch (e) {
         console.warn('[user] load member info failed', e)
       }
@@ -144,16 +177,33 @@ export default {
     onFeatureClick(f) {
       const map = {
         address: '/pages/user/address',
-        devices: '/pages/user/devices',
-        security: '/pages/user/security',
         pets: '/pages/pet/profile',
-        settings: '/pages/user/settings',
+        favorites: '/pages/user/favorites',
+        history: '/pages/user/history',
+        help: '/pages/user/help',
+        about: '/pages/user/about',
       }
       if (map[f.id]) {
         uni.navigateTo({ url: map[f.id] })
       } else {
         uni.showToast({ title: 'Coming soon', icon: 'none' })
       }
+    },
+
+    goWallet() {
+      uni.navigateTo({ url: '/pages/user/wallet' })
+    },
+
+    goPoints() {
+      uni.navigateTo({ url: '/pages/user/points-shop' })
+    },
+
+    goCoupons() {
+      uni.navigateTo({ url: '/pages/user/coupon-center' })
+    },
+
+    goGiftCards() {
+      uni.showToast({ title: 'Gift cards coming soon', icon: 'none' })
     },
   },
 }
@@ -266,6 +316,35 @@ export default {
 .vip-tip {
   font-size: var(--font-size-xs);
   opacity: 0.7;
+}
+
+.wallet-area {
+  margin: 0 24rpx 16rpx;
+}
+
+.wallet-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8rpx;
+  text-align: center;
+}
+
+.wallet-item {
+  padding: 16rpx 0;
+}
+
+.wallet-num {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin-bottom: 4rpx;
+}
+
+.wallet-label {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
 }
 
 .card {

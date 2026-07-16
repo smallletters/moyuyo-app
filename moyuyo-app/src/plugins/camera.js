@@ -3,6 +3,7 @@
  * 插件标识: MOYUYO-Camera
  * 功能: 拍照、选图、压缩、裁剪
  */
+/* eslint-disable no-unreachable */
 
 const PLUGIN_NAME = 'MOYUYO-Camera'
 

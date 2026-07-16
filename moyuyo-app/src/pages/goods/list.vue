@@ -94,7 +94,11 @@
       @scrolltolower="onLoadMore"
     >
       <view class="product-grid">
-        <view v-for="p in products" :key="p.id" class="product-card" @click="goDetail(p.id)">
+        <view
+          v-for="p in products"
+          :key="p.id"
+          class="product-card"
+          @click="goDetail(p.id)">
           <image :src="p.image" class="product-image" mode="aspectFill" />
           <view v-if="p.ip" class="product-ip" :class="`tag-${p.ip.toLowerCase()}`">
             {{ p.ip }}

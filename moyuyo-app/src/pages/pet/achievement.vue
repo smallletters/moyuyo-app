@@ -17,7 +17,9 @@
           <text>{{ achievementIcon(a.achievementCode) }}</text>
         </view>
         <text class="badge-name">{{ achievementName(a.achievementCode) }}</text>
-        <text class="badge-desc">{{ a.unlocked ? achievementDesc(a.achievementCode) : 'Locked' }}</text>
+        <text class="badge-desc">
+          {{ a.unlocked ? achievementDesc(a.achievementCode) : 'Locked' }}
+        </text>
         <view v-if="!a.unlocked" class="progress-bar">
           <view class="progress-fill" :style="{ width: `${(a.progress || 0) * 100}%` }" />
         </view>
@@ -78,24 +80,79 @@ export default {
     },
 
     onBadgeClick(a) {
-      uni.showToast({ title: a.unlocked ? achievementName(a.achievementCode) : `${(a.progress || 0) * 100}% complete`, icon: 'none' })
+      uni.showToast({
+        title: a.unlocked
+          ? this.achievementName(a.achievementCode)
+          : `${(a.progress || 0) * 100}% complete`,
+        icon: 'none',
+      })
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.achievement { min-height: 100vh; background: var(--color-background); padding: 32rpx 16rpx; padding-top: calc(32rpx + env(safe-area-inset-top)); }
-.header { padding: 0 16rpx 24rpx; }
-.title { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); }
-.subtitle { font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-top: 4rpx; }
-.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16rpx; padding: 0 8rpx; }
-.badge { display: flex; flex-direction: column; align-items: center; gap: 8rpx; padding: 32rpx 16rpx; background: var(--color-surface); border-radius: var(--radius-md); text-align: center; }
-.badge.unlocked { }
-.badge:not(.unlocked) { opacity: 0.5; }
-.badge-icon { font-size: 56rpx; }
-.badge-name { font-size: var(--font-size-sm); font-weight: 600; }
-.badge-desc { font-size: var(--font-size-xs); color: var(--color-text-tertiary); }
-.progress-bar { width: 100%; height: 6rpx; background: var(--color-divider); border-radius: 3rpx; overflow: hidden; margin-top: 4rpx; }
-.progress-fill { height: 100%; background: var(--color-primary); border-radius: 3rpx; }
+.achievement {
+  min-height: 100vh;
+  background: var(--color-background);
+  padding: 32rpx 16rpx;
+  padding-top: calc(32rpx + env(safe-area-inset-top));
+}
+.header {
+  padding: 0 16rpx 24rpx;
+}
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  margin-top: 4rpx;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16rpx;
+  padding: 0 8rpx;
+}
+.badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 32rpx 16rpx;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+.badge.unlocked {
+}
+.badge:not(.unlocked) {
+  opacity: 0.5;
+}
+.badge-icon {
+  font-size: 56rpx;
+}
+.badge-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+.badge-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+.progress-bar {
+  width: 100%;
+  height: 6rpx;
+  background: var(--color-divider);
+  border-radius: 3rpx;
+  overflow: hidden;
+  margin-top: 4rpx;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 3rpx;
+}
 </style>

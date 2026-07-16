@@ -9,4 +9,8 @@ public interface WooCommerceSyncService {
     void syncOrderStatus(Long wooOrderId, String status);
 
     void syncAllPendingOrders();
+
+    void syncProductsFromWooCommerce();
+
+    void syncCategoriesFromWooCommerce();
 }

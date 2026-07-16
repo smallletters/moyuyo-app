@@ -1,8 +1,9 @@
 /**
  * 生物识别原生插件调用封装
  * 插件标识: MOYUYO-Biometric
- * 功能: Face ID / Touch ID / 指纹识别
+ * 功能: Face ID / Touch ID 生物识别
  */
+/* eslint-disable no-unreachable */
 
 const PLUGIN_NAME = 'MOYUYO-Biometric'
 
@@ -55,7 +56,9 @@ export function authenticateBiometric(options = {}) {
     return Promise.reject(new Error('请使用支持生物识别的设备'))
   }
   // #endif
+  /* #ifndef APP-PLUS */
   return Promise.reject(new Error('当前环境不支持生物识别'))
+  /* #endif */
 }
 
 /**

@@ -2,13 +2,23 @@
   <view class="forgot">
     <view class="header">
       <text class="title">Reset Password</text>
-      <text class="sub">{{ step === 1 ? 'Enter your email to receive a reset link' : 'Enter the code and set a new password' }}</text>
+      <text class="sub">
+        {{
+          step === 1
+            ? 'Enter your email to receive a reset link'
+            : 'Enter the code and set a new password'
+        }}
+      </text>
     </view>
 
-    <view class="form" v-if="step === 1">
+    <view v-if="step === 1" class="form">
       <view class="input-group">
         <text class="input-label">Email</text>
-        <input v-model="email" class="input" type="text" placeholder="your@email.com" />
+        <input
+          v-model="email"
+          class="input"
+          type="text"
+          placeholder="your@email.com">
       </view>
 
       <view class="btn btn-primary submit-btn" :class="{ disabled: !canSend }" @click="onSendCode">
@@ -18,10 +28,15 @@
       <view class="back-link" @click="goBack">Back to Sign In</view>
     </view>
 
-    <view class="form" v-else>
+    <view v-else class="form">
       <view class="input-group">
         <text class="input-label">Verification Code</text>
-        <input v-model="code" class="input" type="text" placeholder="6-digit code" maxlength="6" />
+        <input
+          v-model="code"
+          class="input"
+          type="text"
+          placeholder="6-digit code"
+          maxlength="6">
       </view>
 
       <view class="input-group">
@@ -31,7 +46,7 @@
           class="input"
           type="password"
           placeholder="At least 8 characters, letters and numbers"
-        />
+        >
       </view>
 
       <view class="input-group">
@@ -41,7 +56,7 @@
           class="input"
           type="password"
           placeholder="Re-enter new password"
-        />
+        >
       </view>
 
       <view class="btn btn-primary submit-btn" :class="{ disabled: !canReset }" @click="onReset">

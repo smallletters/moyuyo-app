@@ -10,13 +10,13 @@ COPY moyuyo-api/target/*.jar app.jar
 
 EXPOSE 8080
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
-  CMD curl -sf http://localhost:8080/api/health || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+  CMD curl -sf http://localhost:8080/actuator/health || exit 1
 
 ENTRYPOINT ["java", \
   "-jar", \
-  "-Xms512m", \
-  "-Xmx1024m", \
+  "-Xms${JVM_XMS:-512m}", \
+  "-Xmx${JVM_XMX:-1024m}", \
   "-XX:+UseZGC", \
   "-XX:MaxGCPauseMillis=100", \
   "-Dspring.profiles.active=prod", \

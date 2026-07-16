@@ -3,6 +3,7 @@
  * 插件标识: MOYUYO-Payment
  * 功能: Stripe / PayPal / Apple Pay / Google Pay 原生支付
  */
+/* eslint-disable no-unreachable */
 
 const PLUGIN_NAME = 'MOYUYO-Payment'
 
@@ -87,7 +88,9 @@ export function queryPaymentStatus(orderNo) {
     })
   })
   // #endif
+  /* #ifndef APP-PLUS */
   return Promise.reject(new Error('当前环境不支持'))
+  /* #endif */
 }
 
 /**

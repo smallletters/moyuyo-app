@@ -3,6 +3,7 @@
  * 插件标识: MOYUYO-Location
  * 功能: GPS 定位、地址选择、物流轨迹地图
  */
+/* eslint-disable no-unreachable */
 
 const PLUGIN_NAME = 'MOYUYO-Location'
 
@@ -68,7 +69,9 @@ export function openMapSelector(options = {}) {
     })
   })
   // #endif
+  /* #ifndef APP-PLUS */
   return Promise.reject(new Error('当前环境不支持'))
+  /* #endif */
 }
 
 /**
@@ -103,7 +106,9 @@ export function geocode(address) {
     })
   })
   // #endif
+  /* #ifndef APP-PLUS */
   return Promise.reject(new Error('当前环境不支持'))
+  /* #endif */
 }
 
 export default { getCurrentLocation, openMapSelector, showLogisticsMap, geocode }

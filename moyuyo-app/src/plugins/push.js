@@ -3,6 +3,7 @@
  * 插件标识: MOYUYO-Push
  * 功能: FCM / APNs 设备注册、通知接收、角标管理
  */
+/* eslint-disable no-unreachable */
 
 const PLUGIN_NAME = 'MOYUYO-Push'
 

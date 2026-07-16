@@ -2,7 +2,11 @@
   <view v-if="product" class="detail">
     <scroll-view scroll-y class="scroll">
       <!-- 主图/视频轮播 -->
-      <swiper class="swiper" indicator-dots autoplay circular>
+      <swiper
+        class="swiper"
+        indicator-dots
+        autoplay
+        circular>
         <swiper-item v-for="(img, i) in product.images" :key="i">
           <image :src="img.url" class="swiper-image" mode="aspectFill" />
         </swiper-item>
@@ -53,7 +57,7 @@
       <!-- 商品详情（图文） -->
       <view class="section card">
         <text class="section-title">Product Details</text>
-        <view class="content-html" v-html="product.detail" />
+        <rich-text class="detail-content" :nodes="product.detail" />
       </view>
 
       <!-- 评价 -->

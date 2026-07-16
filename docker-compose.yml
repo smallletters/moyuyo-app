@@ -54,6 +54,11 @@ services:
       PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID}
       PAYPAL_CLIENT_SECRET: ${PAYPAL_CLIENT_SECRET}
       PAYPAL_WEBHOOK_ID: ${PAYPAL_WEBHOOK_ID}
+      WOOCOMMERCE_URL: ${WOOCOMMERCE_URL}
+      WOOCOMMERCE_CONSUMER_KEY: ${WOOCOMMERCE_CONSUMER_KEY}
+      WOOCOMMERCE_CONSUMER_SECRET: ${WOOCOMMERCE_CONSUMER_SECRET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     depends_on:
       mysql:
         condition: service_healthy
@@ -68,8 +73,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./moyuyo-app/dist/build/h5:/usr/share/nginx/html
+      - ./docs/deploy/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docs/deploy/nginx/conf.d/moyuyo.conf:/etc/nginx/conf.d/moyuyo.conf:ro
+      - ./moyuyo-app/dist/build/h5:/usr/share/nginx/html:ro
       - letsencrypt:/etc/letsencrypt
     depends_on:
       - app

@@ -3,6 +3,7 @@
  * 插件标识: MOYUYO-PetHub3D
  * 功能: 3D 宠物渲染、手势交互、IP 动画、换装
  */
+/* eslint-disable no-unreachable */
 
 const PLUGIN_NAME = 'MOYUYO-PetHub3D'
 
@@ -55,7 +56,9 @@ export function applyPetCosmetic(params) {
     })
   })
   // #endif
+  /* #ifndef APP-PLUS */
   return Promise.reject(new Error('当前环境不支持'))
+  /* #endif */
 }
 
 /**
@@ -87,7 +90,9 @@ export function capturePetSnapshot() {
     })
   })
   // #endif
+  /* #ifndef APP-PLUS */
   return Promise.reject(new Error('当前环境不支持'))
+  /* #endif */
 }
 
 /**

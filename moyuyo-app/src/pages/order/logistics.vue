@@ -5,10 +5,12 @@
     <template v-else>
       <view class="card status-card">
         <text class="status-title">{{ statusLabel }}</text>
-        <text class="status-desc" v-if="logistics.carrier">{{ logistics.carrier }} · {{ logistics.trackingNumber }}</text>
+        <text v-if="logistics.carrier" class="status-desc">
+          {{ logistics.carrier }} · {{ logistics.trackingNumber }}
+        </text>
       </view>
 
-      <view class="timeline" v-if="logistics.traces && logistics.traces.length">
+      <view v-if="logistics.traces && logistics.traces.length" class="timeline">
         <view
           v-for="(t, i) in logistics.traces"
           :key="i"
@@ -18,13 +20,13 @@
           <view class="timeline-dot" />
           <view class="timeline-content">
             <text class="timeline-title">{{ t.desc }}</text>
-            <text class="timeline-desc" v-if="t.location">{{ t.location }}</text>
+            <text v-if="t.location" class="timeline-desc">{{ t.location }}</text>
             <text class="timeline-time">{{ t.time }}</text>
           </view>
         </view>
       </view>
 
-      <view class="card info-card" v-if="logistics.carrier">
+      <view v-if="logistics.carrier" class="card info-card">
         <text class="info-title">Tracking Number</text>
         <text class="info-value">{{ logistics.trackingNumber }}</text>
         <text class="info-title">Carrier</text>
@@ -185,7 +187,9 @@ export default {
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
   margin-top: 16rpx;
-  &:first-child { margin-top: 0; }
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 .info-value {

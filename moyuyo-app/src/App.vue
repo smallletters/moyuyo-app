@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/styles/common.scss';
+@use '@/styles/common.scss' as *;
 
 /* uView Plus 全局样式 */
 @import 'uview-plus/index.scss';
