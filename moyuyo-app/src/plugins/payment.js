@@ -104,4 +104,38 @@ export function handlePaymentCallback(callbackData) {
   // #endif
 }
 
-export default { createPay, getPaymentChannels, queryPaymentStatus, handlePaymentCallback }
+/**
+ * 支付插件调用封装（composable）
+ * 与 payment.ts 中 usePaymentPlugin 保持一致
+ * @returns {{ pay: Function, isAvailable: Function }}
+ */
+export function usePaymentPlugin() {
+  const call = (method, args) => {
+    return new Promise((resolve) => {
+      // #ifdef APP-PLUS
+      const plugin = uni.requireNativePlugin(PLUGIN_NAME)
+      if (!plugin) {
+        resolve({ success: false, error: '原生支付插件不可用' })
+        return
+      }
+      plugin[method](args, (res) => resolve(res))
+      // #endif
+      // #ifndef APP-PLUS
+      resolve({ success: false, error: '原生支付插件不可用' })
+      // #endif
+    })
+  }
+
+  return {
+    pay: (channel, orderInfo) => call('pay', { channel, ...orderInfo }),
+    isAvailable: (channel) => call('isAvailable', { channel }),
+  }
+}
+
+export default {
+  createPay,
+  getPaymentChannels,
+  queryPaymentStatus,
+  handlePaymentCallback,
+  usePaymentPlugin,
+}

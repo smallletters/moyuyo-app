@@ -115,10 +115,40 @@ export function logoutFromProvider(provider) {
   // #endif
 }
 
+/**
+ * 社交登录插件调用封装（composable）
+ * 与 auth.ts 中 useAuthPlugin 保持一致
+ * @returns {{ login: Function, logout: Function, isAuthorized: Function }}
+ */
+export function useAuthPlugin() {
+  const call = (method, args) => {
+    return new Promise((resolve) => {
+      // #ifdef APP-PLUS
+      const plugin = uni.requireNativePlugin(PLUGIN_NAME)
+      if (!plugin) {
+        resolve({ success: false, error: '原生登录插件不可用' })
+        return
+      }
+      plugin[method](args, (res) => resolve(res))
+      // #endif
+      // #ifndef APP-PLUS
+      resolve({ success: false, error: '原生登录插件不可用' })
+      // #endif
+    })
+  }
+
+  return {
+    login: (provider) => call('login', { provider }),
+    logout: (provider) => call('logout', { provider }),
+    isAuthorized: (provider) => call('isAuthorized', { provider }),
+  }
+}
+
 export default {
   loginWithApple,
   loginWithGoogle,
   loginWithFacebook,
   isAppInstalled,
   logoutFromProvider,
+  useAuthPlugin,
 }

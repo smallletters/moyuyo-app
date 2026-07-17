@@ -38,3 +38,6 @@ Thumbs.db
 
 # Maven 构建产物
 **/target/
+
+# 管理后台前端构建产物
+moyuyo-server/moyuyo-api/src/main/resources/static/admin/

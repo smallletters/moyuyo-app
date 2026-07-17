@@ -536,6 +536,171 @@
       "style": {
         "navigationBarTitleText": "宠物装扮"
       }
+    },
+    {
+      "path": "pages/user/affiliate-center",
+      "style": {
+        "navigationBarTitleText": "推广中心"
+      }
+    },
+    {
+      "path": "pages/user/prime-page",
+      "style": {
+        "navigationBarTitleText": "MOYUYO+",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/membership",
+      "style": {
+        "navigationBarTitleText": "会员等级"
+      }
+    },
+    {
+      "path": "pages/user/coupon-detail",
+      "style": {
+        "navigationBarTitleText": "优惠券详情"
+      }
+    },
+    {
+      "path": "pages/user/coupon-transfer",
+      "style": {
+        "navigationBarTitleText": "优惠券转赠"
+      }
+    },
+    {
+      "path": "pages/goods/flash-sale-detail",
+      "style": {
+        "navigationBarTitleText": "限时抢购详情"
+      }
+    },
+    {
+      "path": "pages/goods/crowdfunding-list",
+      "style": {
+        "navigationBarTitleText": "众筹列表"
+      }
+    },
+    {
+      "path": "pages/goods/ar-try-on",
+      "style": {
+        "navigationBarTitleText": "AR试穿",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/subscription-manage",
+      "style": {
+        "navigationBarTitleText": "订阅管理"
+      }
+    },
+    {
+      "path": "pages/user/subscribe-plan",
+      "style": {
+        "navigationBarTitleText": "订阅计划"
+      }
+    },
+    {
+      "path": "pages/user/subscribe-manage-detail",
+      "style": {
+        "navigationBarTitleText": "订阅详情"
+      }
+    },
+    {
+      "path": "pages/goods/product-subscribe",
+      "style": {
+        "navigationBarTitleText": "商品订阅"
+      }
+    },
+    {
+      "path": "pages/goods/product-subscribe-list",
+      "style": {
+        "navigationBarTitleText": "订阅商品列表"
+      }
+    },
+    {
+      "path": "pages/user/booking-detail",
+      "style": {
+        "navigationBarTitleText": "预约详情"
+      }
+    },
+    {
+      "path": "pages/pet/pet-hub-3d",
+      "style": {
+        "navigationBarTitleText": "Pet Hub 3D"
+      }
+    },
+    {
+      "path": "pages/pet/allergy-profile",
+      "style": {
+        "navigationBarTitleText": "过敏档案"
+      }
+    },
+    {
+      "path": "pages/user/annual-report",
+      "style": {
+        "navigationBarTitleText": "年度报告",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/edit-profile",
+      "style": {
+        "navigationBarTitleText": "编辑资料"
+      }
+    },
+    {
+      "path": "pages/user/avatar-settings",
+      "style": {
+        "navigationBarTitleText": "头像设置"
+      }
+    },
+    {
+      "path": "pages/user/block-manager",
+      "style": {
+        "navigationBarTitleText": "屏蔽管理"
+      }
+    },
+    {
+      "path": "pages/community/dm-chat",
+      "style": {
+        "navigationBarTitleText": "私信"
+      }
+    },
+    {
+      "path": "pages/community/chat-history",
+      "style": {
+        "navigationBarTitleText": "聊天记录"
+      }
+    },
+    {
+      "path": "pages/order/after-sales-policy",
+      "style": {
+        "navigationBarTitleText": "售后政策"
+      }
+    },
+    {
+      "path": "pages/order/cs-rating",
+      "style": {
+        "navigationBarTitleText": "客服评价"
+      }
+    },
+    {
+      "path": "pages/order/tariff-detail",
+      "style": {
+        "navigationBarTitleText": "关税详情"
+      }
+    },
+    {
+      "path": "pages/common/empty-state",
+      "style": {
+        "navigationBarTitleText": "空状态"
+      }
+    },
+    {
+      "path": "pages/common/splash-popup",
+      "style": {
+        "navigationBarTitleText": "启动弹窗"
+      }
     }
   ],
   "tabBar": {
