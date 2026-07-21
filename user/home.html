@@ -291,14 +291,14 @@
       </nav>
 
     </main>
+    <script src="shared/mock-api.js"></script>
     <script src="shared/api.js"></script>
   <script>lucide.createIcons();</script>
   <script>
     (function () {
-      // 商品卡片模板
       function productCard(product) {
         var slug = product.slug || product.id || '';
-        var img = product.coverImage || product.images?.[0] || '../assets/product-placeholder.jpg';
+        var img = product.coverImage || (product.images && product.images[0]) || '../assets/product-placeholder.jpg';
         var name = product.name || product.title || '';
         var desc = product.subtitle || product.brief || '';
         var price = product.price != null ? '¥' + (product.price / 100).toFixed(0) : '';
@@ -335,34 +335,86 @@
         return n.toString();
       }
 
-      // 加载 Home Feed
-      async function loadFeed() {
-        var grid = document.getElementById('product-grid');
-        if (!grid) return;
+      function renderKingKong(items) {
+        var container = document.querySelector('.grid.grid-cols-4.gap-x-2.gap-y-4');
+        if (!container || !items || !items.length) return;
+        container.innerHTML = '';
+        items.forEach(function(item) {
+          var btn = document.createElement('a');
+          btn.href = item.link || '#';
+          btn.className = 'flex flex-col items-center gap-2 min-h-[56px]';
+          btn.innerHTML =
+            '<div class="w-12 h-12 rounded-2xl flex items-center justify-center overflow-hidden" style="background:var(--background-200)">' +
+            '<img src="' + item.icon + '" alt="' + item.name + '" class="w-full h-full object-cover">' +
+            '</div>' +
+            '<span class="text-xs font-medium whitespace-nowrap" style="color:var(--text-600)">' + item.name + '</span>';
+          container.appendChild(btn);
+        });
+      }
 
+      function renderBanners(banners) {
+        var container = document.querySelector('.flex.gap-3.overflow-x-auto.no-scrollbar.snap-x.snap-mandatory.pb-1');
+        var dotsContainer = document.querySelector('.flex.justify-center.gap-1\.5.mt-3');
+        if (!container || !banners || !banners.length) return;
+        container.innerHTML = '';
+        banners.forEach(function(b, i) {
+          var div = document.createElement('div');
+          div.className = 'shrink-0 w-[calc(100%-12px)] snap-start rounded-[var(--radius)] overflow-hidden';
+          div.style.cssText = 'box-shadow:var(--shadow-sm)';
+          div.innerHTML =
+            '<div class="relative">' +
+            '<img src="' + b.image + '" alt="' + b.title + '" class="w-full aspect-[16/9] object-cover">' +
+            '<div class="absolute inset-x-0 bottom-0 px-4 pb-3 pt-8" style="background:linear-gradient(0deg,rgba(0,0,0,0.5) 0%,transparent 100%)">' +
+            '<span class="text-white text-xs font-semibold tracking-wide">' + (b.tag || '活动') + '</span>' +
+            '<p class="text-white text-sm font-medium mt-0.5 truncate">' + b.title + '</p>' +
+            '</div></div>';
+          container.appendChild(div);
+        });
+        if (dotsContainer) {
+          dotsContainer.innerHTML = banners.map(function(_, i) {
+            return '<span class="' + (i === 0 ? 'w-5' : 'w-1.5') + ' h-1.5 rounded-full" style="background:' + (i === 0 ? 'var(--primary)' : 'var(--background-400)') + '"></span>';
+          }).join('');
+        }
+      }
+
+      async function loadFeed() {
         try {
           var res = await moyuyoAPI.get('/api/v1/home/feed?page=1&pageSize=10', { skipSign: true });
           if (res.code === 0 && res.data) {
             var data = res.data;
-            var products = data.products || data.recommendations || data.items || data.list || [];
 
-            if (products.length > 0) {
-              // 清除静态占位
+            if (data.kingKong && data.kingKong.length) {
+              renderKingKong(data.kingKong);
+            }
+            if (data.banners && data.banners.length) {
+              renderBanners(data.banners);
+            }
+
+            var products = data.products || data.recommendations || data.items || data.list || [];
+            var grid = document.getElementById('product-grid');
+            if (grid && products.length > 0) {
               grid.innerHTML = '';
-              // 渲染 API 商品
               products.forEach(function (p) {
                 grid.appendChild(productCard(p));
               });
             }
-            // 无数据时保留静态占位
           }
         } catch (e) {
-          // API 不可用时保留静态占位，不报错
           console.log('[MOYUYO] Home feed unavailable, showing static content');
         }
       }
 
+      function fixNavLinks() {
+        var navCategory = document.querySelector('[data-dom-id="nav-category"]');
+        if (navCategory) navCategory.onclick = function() { window.location.href = 'category.html'; };
+        var navPetHub = document.querySelector('[data-dom-id="nav-pet-hub"]');
+        if (navPetHub) navPetHub.onclick = function() { window.location.href = 'pet-hub.html'; };
+        var navProfile = document.querySelector('[data-dom-id="nav-profile"]');
+        if (navProfile) navProfile.onclick = function() { window.location.href = 'profile.html'; };
+      }
+
       loadFeed();
+      fixNavLinks();
     })();
   </script>
 </body>

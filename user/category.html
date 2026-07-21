@@ -621,27 +621,105 @@
 
   </div>
 
-  <!-- ===== 交互脚本 ===== -->
+  <script src="shared/mock-api.js"></script>
+  <script src="shared/api.js"></script>
   <script>
-    /* 产品线 Tab 切换 */
-    document.querySelectorAll('.product-tab').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        document.querySelectorAll('.product-tab').forEach(function(t) {
-          t.classList.remove('active');
-        });
-        this.classList.add('active');
-      });
-    });
+    (function() {
+      var categoriesData = [];
+      var currentCategoryId = null;
 
-    /* 左侧分类导航切换 */
-    document.querySelectorAll('.category-item').forEach(function(item) {
-      item.addEventListener('click', function() {
-        document.querySelectorAll('.category-item').forEach(function(i) {
-          i.classList.remove('active');
+      function renderSidebar(categories) {
+        var sidebar = document.querySelector('.category-sidebar');
+        if (!sidebar || !categories.length) return;
+        sidebar.innerHTML = '';
+        categories.forEach(function(cat, index) {
+          var btn = document.createElement('button');
+          btn.className = 'category-item' + (index === 0 ? ' active' : '');
+          btn.setAttribute('data-category', cat.id);
+          btn.textContent = cat.name;
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.category-item').forEach(function(i) { i.classList.remove('active'); });
+            this.classList.add('active');
+            currentCategoryId = cat.id;
+            renderSubcategories(cat.subcategories || []);
+          });
+          sidebar.appendChild(btn);
         });
-        this.classList.add('active');
+      }
+
+      function renderSubcategories(subs) {
+        var grid = document.querySelector('.product-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        if (!subs || !subs.length) {
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text-400);font-size:13px;">暂无商品</div>';
+          return;
+        }
+        subs.forEach(function(sub, i) {
+          var card = document.createElement('a');
+          card.className = 'product-card fade-in';
+          card.href = 'search.html?keyword=' + encodeURIComponent(sub.name);
+          card.style.animationDelay = (i * 0.05) + 's';
+          card.innerHTML =
+            '<div class="card-image" style="display:flex;align-items:center;justify-content:center;background:var(--background-100);">' +
+            '<span style="font-size:32px;color:var(--text-300);">' + (sub.icon || '📦') + '</span>' +
+            '</div>' +
+            '<div class="card-info">' +
+            '<div class="card-name">' + sub.name + '</div>' +
+            '<div class="card-bottom"><span class="card-brand">查看全部</span></div>' +
+            '</div>';
+          grid.appendChild(card);
+        });
+      }
+
+      async function loadCategories() {
+        try {
+          var res = await moyuyoAPI.get('/api/v1/goods/categories', { skipSign: true });
+          if (res.code === 0 && res.data && res.data.length) {
+            categoriesData = res.data;
+            renderSidebar(categoriesData);
+            if (categoriesData[0]) {
+              currentCategoryId = categoriesData[0].id;
+              renderSubcategories(categoriesData[0].subcategories || []);
+            }
+          }
+        } catch (e) {
+          console.log('[MOYUYO] Categories unavailable, showing static content');
+        }
+      }
+
+      /* 产品线 Tab 切换 */
+      document.querySelectorAll('.product-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.product-tab').forEach(function(t) { t.classList.remove('active'); });
+          this.classList.add('active');
+        });
       });
-    });
+
+      /* 搜索栏点击 */
+      var searchBar = document.querySelector('.search-bar');
+      if (searchBar) {
+        searchBar.addEventListener('click', function() {
+          window.location.href = 'search.html';
+        });
+      }
+
+      /* 返回按钮 */
+      var backBtn = document.querySelector('[data-dom-id="back-previous"]');
+      if (backBtn) {
+        backBtn.addEventListener('click', function() { window.history.back(); });
+      }
+
+      /* 底部导航 */
+      var navHome = document.querySelector('[data-dom-id="nav-home"]');
+      if (navHome) { navHome.href = 'home.html'; navHome.onclick = null; }
+      var navPetHub = document.querySelector('[data-dom-id="nav-pet-hub"]');
+      if (navPetHub) { navPetHub.href = 'pet-hub.html'; navPetHub.onclick = null; }
+      var navProfile = document.querySelector('[data-dom-id="nav-profile"]');
+      if (navProfile) { navProfile.href = 'profile.html'; navProfile.onclick = null; }
+
+      loadCategories();
+    })();
   </script>
   <script>lucide.createIcons();</script>
 

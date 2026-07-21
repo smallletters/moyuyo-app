@@ -141,6 +141,118 @@
         </div>
       </section>
     </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      (function() {
+        var searchInput = document.querySelector('input[placeholder="搜索宠物用品、品牌、IP"]');
+        var historyContainer = document.querySelector('.flex.flex-wrap.gap-2');
+        var hotListContainer = document.querySelector('ul.flex.flex-col.gap-0');
+        var clearBtn = document.querySelector('button[aria-label="清空搜索历史"]');
+        var cancelBtn = document.querySelector('[data-dom-id="back-previous"]');
+
+        function getSearchHistory() {
+          try {
+            var raw = localStorage.getItem('moyuyo_search_history');
+            return raw ? JSON.parse(raw) : [];
+          } catch (e) { return []; }
+        }
+
+        function saveSearchHistory(history) {
+          localStorage.setItem('moyuyo_search_history', JSON.stringify(history.slice(0, 10)));
+        }
+
+        function renderHistory() {
+          if (!historyContainer) return;
+          var history = getSearchHistory();
+          if (!history.length) {
+            historyContainer.innerHTML = '<span style="color:var(--text-400);font-size:13px;">暂无搜索历史</span>';
+            return;
+          }
+          historyContainer.innerHTML = '';
+          history.forEach(function(keyword) {
+            var span = document.createElement('span');
+            span.className = 'inline-flex items-center justify-center px-3 py-1.5 text-sm whitespace-nowrap cursor-pointer';
+            span.style.cssText = 'background:var(--background-200);color:var(--text-600);border-radius:var(--radius)';
+            span.textContent = keyword;
+            span.addEventListener('click', function() {
+              searchInput.value = keyword;
+              doSearch(keyword);
+            });
+            historyContainer.appendChild(span);
+          });
+        }
+
+        async function loadHotSearch() {
+          if (!hotListContainer) return;
+          try {
+            var res = await moyuyoAPI.get('/api/v1/goods/search/hot', { skipSign: true });
+            if (res.code === 0 && res.data && res.data.list) {
+              hotListContainer.innerHTML = '';
+              res.data.list.forEach(function(item, index) {
+                var li = document.createElement('li');
+                li.className = 'flex items-center gap-3 py-2.5';
+                li.style.cssText = 'border-bottom:1px solid var(--border);cursor:pointer;';
+                var rankColor = index < 3 ? 'var(--brand-500)' : 'var(--text-400)';
+                var rankWeight = index < 3 ? 'bold' : 'medium';
+                var tagHtml = '';
+                if (item.tag === '热') {
+                  tagHtml = '<span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap" style="background:var(--state-error);color:var(--state-error-foreground);border-radius:4px;">热</span>';
+                } else if (item.tag === '新') {
+                  tagHtml = '<span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap" style="background:var(--brand-500);color:var(--primary-foreground);border-radius:4px;">新</span>';
+                }
+                li.innerHTML =
+                  '<span class="w-5 text-center text-sm font-' + rankWeight + '" style="color:' + rankColor + '">' + (index + 1) + '</span>' +
+                  '<span class="flex-1 min-w-0 text-sm truncate" style="color:var(--text-800)">' + item.keyword + '</span>' +
+                  tagHtml;
+                li.addEventListener('click', function() {
+                  searchInput.value = item.keyword;
+                  doSearch(item.keyword);
+                });
+                hotListContainer.appendChild(li);
+              });
+            }
+          } catch (e) {
+            console.log('[MOYUYO] Hot search unavailable');
+          }
+        }
+
+        function doSearch(keyword) {
+          if (!keyword || !keyword.trim()) return;
+          keyword = keyword.trim();
+          var history = getSearchHistory();
+          var idx = history.indexOf(keyword);
+          if (idx !== -1) history.splice(idx, 1);
+          history.unshift(keyword);
+          saveSearchHistory(history);
+          window.location.href = 'search-result.html?keyword=' + encodeURIComponent(keyword);
+        }
+
+        if (searchInput) {
+          searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+              doSearch(searchInput.value);
+            }
+          });
+        }
+
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function() {
+            localStorage.removeItem('moyuyo_search_history');
+            renderHistory();
+          });
+        }
+
+        if (cancelBtn) {
+          cancelBtn.addEventListener('click', function() {
+            window.history.back();
+          });
+        }
+
+        renderHistory();
+        loadHotSearch();
+      })();
+    </script>
     <script>lucide.createIcons();</script>
 </body>
 </html>
