@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社区笔记详情 - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen antialiased" style="font-family: 'DM Sans', -apple-system, sans-serif;">
+
+    <!-- 全屏图片查看器 -->
+    <div class="image-viewer-overlay" id="imageViewer">
+      <button class="absolute top-12 right-4 w-10 h-10 flex items-center justify-center rounded-full" style="background: rgba(255,255,255,0.15); color: #fff;" id="closeViewer" aria-label="关闭图片查看">
+        <span data-icon class="w-6 h-6" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/x.svg'); mask-image: url('../assets/icons/dl-builtin-apple/x.svg');"></span>
+      </button>
+      <img id="viewerImage" src="" alt="查看大图">
+      <p class="mt-3 text-sm" style="color: rgba(255,255,255,0.6);" id="viewerCounter"></p>
+    </div>
+
+    <main class="pb-6" style="max-width: 393px; margin: 0 auto;">
+
+      <!-- iOS 状态栏模拟 -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--foreground);"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 顶部导航栏 -->
+      <nav class="sticky top-11 z-30 flex items-center justify-between h-12 px-4" style="background: var(--background); border-bottom: 1px solid var(--border);" aria-label="笔记详情导航">
+        <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" data-dom-id="cta-back" aria-label="返回">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--foreground);"></span>
+        </button>
+        <h1 class="text-base font-semibold truncate" style="color: var(--foreground);">笔记详情</h1>
+        <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="moreBtn" aria-label="更多操作">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/gear.svg'); mask-image: url('../assets/icons/dl-builtin-apple/gear.svg'); color: var(--foreground);"></span>
+        </button>
+      </nav>
+
+      <!-- 笔记内容主体 -->
+      <article class="px-4 pt-4">
+
+        <!-- 作者信息栏 -->
+        <div class="flex items-center gap-3 mb-4">
+          <!-- 头像占位 -->
+          <div class="w-10 h-10 rounded-full shrink-0" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-200));"></div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="text-sm font-semibold truncate" style="color: var(--foreground);">养猫的小确幸</span>
+              <!-- 会员标签 -->
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold" style="background: var(--state-warning); color: #fff;">PRIME</span>
+            </div>
+            <span class="text-xs" style="color: var(--text-400);">3 小时前</span>
+          </div>
+          <!-- 关注按钮 -->
+          <button class="h-8 px-4 rounded-full text-xs font-semibold shrink-0" style="background: var(--primary); color: var(--primary-foreground);" id="followBtn" aria-label="关注作者">
+            关注
+          </button>
+        </div>
+
+        <!-- 标题 -->
+        <h2 class="text-lg font-bold leading-snug mb-3" style="color: var(--text-800);">
+          第一次带猫猫去宠物医院，这些准备你一定要做好
+        </h2>
+
+        <!-- 正文内容 -->
+        <div class="text-sm leading-relaxed space-y-3 mb-4" style="color: var(--text-600);">
+          <p>上周带团子去做了第一次全面体检，分享一下经验给新手铲屎官们。其实只要提前做好准备，整个流程会比想象中顺利很多。</p>
+          <p>首先最重要的是选对医院。建议提前在网上看评价，选择有正规资质的宠物医院。可以关注医院的环境是否干净、医生的态度是否专业耐心。</p>
+          <p>出发前记得带上猫咪常用的毯子或玩具，这样能帮助它在陌生环境中保持安全感。如果有之前的疫苗本或健康记录，也一并带去方便医生了解情况。</p>
+          <p>费用方面，基础体检一般在 200-500 之间，如果需要额外检查可能会更高。建议提前和医生沟通好价格范围。</p>
+        </div>
+
+        <!-- 关联标签 -->
+        <div class="flex flex-wrap gap-2 mb-3">
+          <a href="#" class="topic-tag">#宠物日常</a>
+          <a href="#" class="topic-tag">#养猫经验</a>
+          <a href="#" class="pet-tag">
+            <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+            @团子
+          </a>
+          <span class="ip-tag">MILO</span>
+          <span class="ip-tag">OLIVE</span>
+        </div>
+
+        <!-- 图片网格（3列展示） -->
+        <div class="image-grid cols-3 mb-4" id="imageGrid">
+          <div class="grid-img" style="background: linear-gradient(135deg, var(--brand-50), var(--brand-200));" data-index="0" role="button" tabindex="0" aria-label="查看图片 1"></div>
+          <div class="grid-img" style="background: linear-gradient(135deg, var(--state-success-surface), var(--brand-100));" data-index="1" role="button" tabindex="0" aria-label="查看图片 2"></div>
+          <div class="grid-img" style="background: linear-gradient(135deg, var(--brand-100), var(--background-200));" data-index="2" role="button" tabindex="0" aria-label="查看图片 3"></div>
+          <div class="grid-img" style="background: linear-gradient(225deg, var(--brand-200), var(--brand-50));" data-index="3" role="button" tabindex="0" aria-label="查看图片 4"></div>
+          <div class="grid-img" style="background: linear-gradient(180deg, var(--secondary), var(--accent));" data-index="4" role="button" tabindex="0" aria-label="查看图片 5"></div>
+          <div class="grid-img" style="background: linear-gradient(135deg, var(--brand-50), var(--secondary));" data-index="5" role="button" tabindex="0" aria-label="查看图片 6"></div>
+        </div>
+
+        <!-- 互动数据栏 -->
+        <div class="flex items-center justify-between py-3 mb-1" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+          <!-- 数据展示 -->
+          <div class="flex items-center gap-4">
+            <span class="text-xs" style="color: var(--text-400);">
+              <span data-icon class="w-3.5 h-3.5 inline-block align-text-bottom" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg');"></span>
+              328
+            </span>
+            <span class="text-xs" style="color: var(--text-400);">
+              <span data-icon class="w-3.5 h-3.5 inline-block align-text-bottom" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+              56
+            </span>
+            <span class="text-xs" style="color: var(--text-400);">
+              <span data-icon class="w-3.5 h-3.5 inline-block align-text-bottom" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg');"></span>
+              142
+            </span>
+            <span class="text-xs" style="color: var(--text-400);">
+              <span data-icon class="w-3.5 h-3.5 inline-block align-text-bottom" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/share.svg'); mask-image: url('../assets/icons/dl-builtin-apple/share.svg');"></span>
+              23
+            </span>
+          </div>
+          <!-- 操作按钮 -->
+          <div class="flex items-center gap-2">
+            <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="likeBtn" aria-label="点赞">
+              <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); color: var(--text-500);"></span>
+            </button>
+            <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="bookmarkBtn" aria-label="收藏">
+              <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--text-500);"></span>
+            </button>
+            <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="shareBtn" aria-label="分享">
+              <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/share.svg'); mask-image: url('../assets/icons/dl-builtin-apple/share.svg'); color: var(--text-500);"></span>
+            </button>
+          </div>
+        </div>
+
+      </article>
+
+      <!-- 关联商品卡片 -->
+      <section class="px-4 pt-2 pb-4" aria-label="关联商品">
+        <div class="flex items-center gap-2 mb-3">
+          <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/link.svg'); color: var(--text-400);"></span>
+          <span class="text-xs font-semibold tracking-wide" style="color: var(--text-400);">关联商品</span>
+          <span class="commission-badge">笔记带货</span>
+        </div>
+
+        <div class="linked-product-card" data-dom-id="cta-buy">
+          <!-- 商品缩略图占位 -->
+          <div class="w-16 h-16 rounded-xl shrink-0" style="background: linear-gradient(135deg, var(--secondary), var(--accent)); border: 1px solid var(--border);"></div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium truncate" style="color: var(--foreground);">宠物便携航空箱 标准款</p>
+            <div class="flex items-baseline gap-1.5 mt-1">
+              <span class="text-sm font-bold" style="color: var(--primary);">¥259</span>
+              <span class="text-xs line-through" style="color: var(--text-300);">¥359</span>
+            </div>
+          </div>
+          <button class="h-8 px-4 rounded-full text-xs font-semibold shrink-0" style="background: var(--primary); color: var(--primary-foreground);" data-dom-id="cta-buy" aria-label="去购买">
+            去购买
+          </button>
+        </div>
+      </section>
+
+      <!-- 分隔 -->
+      <div class="mx-4" style="height: 1px; background: var(--border);"></div>
+
+      <!-- 评论区 -->
+      <section class="px-4 pt-3 pb-6" aria-label="评论区">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-base font-semibold" style="color: var(--foreground);">评论 (56)</h3>
+          <button class="text-xs font-medium" style="color: var(--text-400);">按热度</button>
+        </div>
+
+        <!-- 评论 1 -->
+        <div class="comment-item">
+          <div class="flex items-start gap-2.5">
+            <div class="w-8 h-8 rounded-full shrink-0" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-300));"></div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-0.5">
+                <span class="text-xs font-semibold" style="color: var(--text-800);">猫咪控小美</span>
+                <span class="text-[11px]" style="color: var(--text-400);">2 小时前</span>
+              </div>
+              <p class="text-sm leading-relaxed" style="color: var(--text-600);">超级实用！我家猫第一次去医院的时候紧张得不行，早看到这篇就好了。下次一定提前准备。</p>
+              <div class="flex items-center gap-4 mt-2">
+                <button class="flex items-center gap-1 text-xs" style="color: var(--text-400);" aria-label="标记有用">
+                  <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg');"></span>
+                  有用 (12)
+                </button>
+                <button class="text-xs" style="color: var(--text-400);">回复</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 评论 2 -->
+        <div class="comment-item">
+          <div class="flex items-start gap-2.5">
+            <div class="w-8 h-8 rounded-full shrink-0" style="background: linear-gradient(135deg, var(--state-success-surface), var(--brand-50));"></div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-0.5">
+                <span class="text-xs font-semibold" style="color: var(--text-800);">铲屎官日记</span>
+                <span class="text-[11px]" style="color: var(--text-400);">1 小时前</span>
+              </div>
+              <p class="text-sm leading-relaxed" style="color: var(--text-600);">请问体检大概需要多长时间？我预约的下午三点，担心来不及。</p>
+              <div class="flex items-center gap-4 mt-2">
+                <button class="flex items-center gap-1 text-xs" style="color: var(--text-400);" aria-label="标记有用">
+                  <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg');"></span>
+                  有用 (5)
+                </button>
+                <button class="text-xs" style="color: var(--text-400);">回复</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 评论 3 -->
+        <div class="comment-item">
+          <div class="flex items-start gap-2.5">
+            <div class="w-8 h-8 rounded-full shrink-0" style="background: linear-gradient(135deg, var(--brand-200), var(--background-200));"></div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-0.5">
+                <span class="text-xs font-semibold" style="color: var(--text-800);">宠物营养师Lucy</span>
+                <span class="inline-flex items-center px-1 py-0 rounded text-[9px] font-bold" style="background: var(--brand-50); color: var(--primary);">认证作者</span>
+                <span class="text-[11px]" style="color: var(--text-400);">45 分钟前</span>
+              </div>
+              <p class="text-sm leading-relaxed" style="color: var(--text-600);">补充一下，体检前最好让猫咪空腹 6-8 小时，这样血液检查结果更准确。另外幼猫和老年猫建议半年体检一次。</p>
+              <div class="flex items-center gap-4 mt-2">
+                <button class="flex items-center gap-1 text-xs" style="color: var(--text-400);" aria-label="标记有用">
+                  <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg');"></span>
+                  有用 (28)
+                </button>
+                <button class="text-xs" style="color: var(--text-400);">回复</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 查看更多评论入口 -->
+        <button class="w-full flex items-center justify-center gap-1.5 h-11 rounded-xl mt-2" style="background: var(--secondary); border: none; color: var(--primary);" id="moreCommentsBtn" aria-label="查看更多评论">
+          <span class="text-sm font-medium">查看全部 56 条评论</span>
+          <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg');"></span>
+        </button>
+      </section>
+
+    </main>
+
+    <!-- 底部评论输入栏 -->
+    <div class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);">
+      <div class="flex items-center gap-3 h-[52px] px-4" style="max-width: 393px; margin: 0 auto; padding-bottom: env(safe-area-inset-bottom, 0px);">
+        <div class="flex-1 h-9 flex items-center px-3 rounded-full" style="background: var(--secondary);">
+          <span class="text-sm" style="color: var(--text-400);">说点什么...</span>
+        </div>
+        <button class="w-9 h-9 flex items-center justify-center rounded-full shrink-0" style="background: var(--secondary);" aria-label="点赞">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); color: var(--text-500);"></span>
+        </button>
+        <button class="w-9 h-9 flex items-center justify-center rounded-full shrink-0" style="background: var(--secondary);" aria-label="收藏">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--text-500);"></span>
+        </button>
+        <button class="w-9 h-9 flex items-center justify-center rounded-full shrink-0" style="background: var(--secondary);" aria-label="分享">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/share.svg'); mask-image: url('../assets/icons/dl-builtin-apple/share.svg'); color: var(--text-500);"></span>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // 初始化 Lucide 图标
+      lucide.createIcons();
+
+      // ===== 点赞按钮切换 =====
+      var likeBtn = document.getElementById('likeBtn');
+      var isLiked = false;
+      likeBtn.addEventListener('click', function () {
+        isLiked = !isLiked;
+        var icon = likeBtn.querySelector('[data-icon]');
+        if (isLiked) {
+          likeBtn.classList.add('action-btn-liked');
+          likeBtn.style.background = 'var(--state-error-surface)';
+          icon.style.color = 'var(--state-error)';
+        } else {
+          likeBtn.classList.remove('action-btn-liked');
+          likeBtn.style.background = 'var(--secondary)';
+          icon.style.color = 'var(--text-500)';
+        }
+      });
+
+      // ===== 收藏按钮切换 =====
+      var bookmarkBtn = document.getElementById('bookmarkBtn');
+      var isBookmarked = false;
+      bookmarkBtn.addEventListener('click', function () {
+        isBookmarked = !isBookmarked;
+        var icon = bookmarkBtn.querySelector('[data-icon]');
+        if (isBookmarked) {
+          bookmarkBtn.classList.add('action-btn-bookmarked');
+          bookmarkBtn.style.background = 'rgba(255, 149, 0, 0.12)';
+          icon.style.color = 'var(--state-warning)';
+        } else {
+          bookmarkBtn.classList.remove('action-btn-bookmarked');
+          bookmarkBtn.style.background = 'var(--secondary)';
+          icon.style.color = 'var(--text-500)';
+        }
+      });
+
+      // ===== 关注按钮切换 =====
+      var followBtn = document.getElementById('followBtn');
+      var isFollowing = false;
+      followBtn.addEventListener('click', function () {
+        isFollowing = !isFollowing;
+        if (isFollowing) {
+          followBtn.textContent = '已关注';
+          followBtn.style.background = 'var(--secondary)';
+          followBtn.style.color = 'var(--text-500)';
+        } else {
+          followBtn.textContent = '关注';
+          followBtn.style.background = 'var(--primary)';
+          followBtn.style.color = 'var(--primary-foreground)';
+        }
+      });
+
+      // ===== 全屏图片查看 =====
+      var viewer = document.getElementById('imageViewer');
+      var viewerImg = document.getElementById('viewerImage');
+      var viewerCounter = document.getElementById('viewerCounter');
+      var closeBtn = document.getElementById('closeViewer');
+      var gridImages = document.querySelectorAll('#imageGrid .grid-img');
+
+      // 模拟图片占位渐变色数组
+      var placeholderGradients = [
+        'linear-gradient(135deg, #e8f2ff, #9fcbff)',
+        'linear-gradient(135deg, #e9f9ee, #cfe5ff)',
+        'linear-gradient(135deg, #cfe5ff, #f2f2f7)',
+        'linear-gradient(225deg, #9fcbff, #e8f2ff)',
+        'linear-gradient(180deg, #f2f2f7, #f7f7fa)',
+        'linear-gradient(135deg, #e8f2ff, #f2f2f7)'
+      ];
+
+      gridImages.forEach(function (img, index) {
+        img.addEventListener('click', function () {
+          // 显示渐变色占位作为大图
+          viewerImg.style.background = placeholderGradients[index];
+          viewerImg.style.width = '80vw';
+          viewerImg.style.aspectRatio = '1';
+          viewerImg.src = '';
+          viewerImg.alt = '图片 ' + (index + 1);
+          viewerCounter.textContent = (index + 1) + ' / ' + gridImages.length;
+          viewer.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      closeBtn.addEventListener('click', function () {
+        viewer.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+
+      viewer.addEventListener('click', function (e) {
+        if (e.target === viewer) {
+          viewer.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+
+      // ===== 更多操作按钮 =====
+      var moreBtn = document.getElementById('moreBtn');
+      moreBtn.addEventListener('click', function () {
+        // 在实际项目中此处弹出 ActionSheet
+        // 选项：分享笔记 / 举报内容 / 不感兴趣
+      });
+    </script>
+</body>
+</html>

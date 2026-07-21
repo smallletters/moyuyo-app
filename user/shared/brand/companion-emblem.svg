@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360" role="img" aria-labelledby="title desc">
+  <title id="title">MOYUYO Companion Emblem</title>
+  <desc id="desc">Graphic totem inspired by hound ears, cat tail curves, and infinity companionship.</desc>
+  <rect width="360" height="360" fill="#F6F2EE"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M104 82 L180 178 L256 82" stroke="#2E2B29" stroke-width="14"/>
+    <path d="M126 80 C146 132, 157 158, 180 178 C203 158, 214 132, 234 80" stroke="#B38A5A" stroke-width="5"/>
+    <path d="M180 178 L125 262" stroke="#2E2B29" stroke-width="14"/>
+    <path d="M180 178 L235 262" stroke="#2E2B29" stroke-width="14"/>
+    <path d="M117 266 C77 222, 77 185, 117 185 C151 185, 151 266, 117 266Z" stroke="#7C8468" stroke-width="8"/>
+    <path d="M243 266 C283 222, 283 185, 243 185 C209 185, 209 266, 243 266Z" stroke="#7C8468" stroke-width="8"/>
+    <path d="M114 111 C77 121, 62 151, 76 184" stroke="#8B5E3C" stroke-width="5"/>
+    <path d="M246 111 C283 121, 298 151, 284 184" stroke="#8B5E3C" stroke-width="5"/>
+    <circle cx="180" cy="178" r="11" fill="#B38A5A" stroke="none"/>
+  </g>
+</svg>

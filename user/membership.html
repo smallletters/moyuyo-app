@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO+</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-8" style="max-width: 375px; margin: 0 auto;">
+
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30 flex h-11 items-center px-4 border-b border-[var(--background-300)]" style="background: var(--background-50);">
+        <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center" style="border-radius: var(--radius);" aria-label="返回">
+          <span data-icon class="w-5 h-5" style="mask-image: url('../assets/icons/dl-builtin-apple/arrow-left.svg'); color: var(--text-800);"></span>
+        </button>
+        <h1 class="flex-1 text-center text-base font-semibold tracking-[-0.02em]" style="color: var(--text-800);">MOYUYO+</h1>
+        <div class="w-8"></div>
+      </header>
+
+      <!-- Hero 会员卡区域 -->
+      <section class="relative overflow-hidden" style="min-height: 260px;">
+        <!-- 背景图 -->
+        <div class="absolute inset-0">
+          <img src="../assets/membership-hero.jpg" alt="会员背景" class="h-full w-full object-cover">
+          <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%);"></div>
+        </div>
+
+        <!-- 会员信息 -->
+        <div class="relative z-10 flex flex-col items-center px-6 pt-8 pb-6">
+          <div class="mb-3">
+            <img src="../assets/pet-avatar-cat.jpg" alt="用户头像" class="h-16 w-16 rounded-full object-cover" style="border: 2px solid var(--background-50); box-shadow: 0 2px 12px rgba(0,0,0,0.2);">
+          </div>
+          <p class="text-base font-semibold" style="color: var(--background-50);">宠物达人小雅</p>
+          <span class="mt-1.5 inline-flex items-center px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap" style="border-radius: 999px; background: color-mix(in srgb, var(--brand-500) 20%, transparent); color: var(--background-50);">金卡会员</span>
+
+          <!-- 成长进度 -->
+          <div class="mt-5 w-full" style="max-width: 280px;">
+            <div class="flex items-center justify-between mb-1.5">
+              <p class="text-xs" style="color: rgba(255,255,255,0.75);">距铂金会员还需 2,200 成长值</p>
+              <p class="text-xs font-semibold" style="color: var(--background-50);">56%</p>
+            </div>
+            <div class="w-full h-1.5 rounded-full overflow-hidden" style="background: rgba(255,255,255,0.2);">
+              <div class="h-full rounded-full" style="width: 56%; background: linear-gradient(90deg, var(--brand-400), var(--brand-500)); transition: width 0.6s cubic-bezier(0.32, 0.72, 0, 1);"></div>
+            </div>
+          </div>
+
+          <!-- 升级CTA -->
+          <button data-dom-id="cta-join-prime" class="mt-5 inline-flex items-center justify-center whitespace-nowrap font-semibold text-sm" style="height: 44px; padding: 0 28px; border-radius: 999px; background: linear-gradient(135deg, color-mix(in srgb, var(--brand-500) 85%, #f5a623), var(--brand-500)); color: var(--background-50); box-shadow: 0 4px 16px rgba(0,122,255,0.3); transition: filter 0.18s ease, transform 0.18s ease;" onmouseenter="this.style.filter='brightness(1.08)'" onmouseleave="this.style.filter='brightness(1)'" onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'">
+            立即升级 ¥99/年
+          </button>
+        </div>
+      </section>
+
+      <!-- 会员等级权益对比 -->
+      <section class="px-4 pt-6 pb-2">
+        <h2 class="text-lg font-semibold tracking-[-0.01em] mb-4" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">会员等级权益对比</h2>
+
+        <!-- 对比卡片（简化卡片格式） -->
+        <div class="overflow-x-auto no-scrollbar -mx-4 px-4">
+          <div class="min-w-[560px]">
+            <!-- 表头 -->
+            <div class="grid grid-cols-4 mb-1">
+              <div class="px-2 py-2">
+                <p class="text-xs font-medium" style="color: var(--text-500);">权益项目</p>
+              </div>
+              <div class="px-2 py-2 text-center" style="background: var(--brand-100); border-radius: var(--radius) var(--radius) 0 0;">
+                <p class="text-xs font-semibold" style="color: var(--brand-700);">金卡</p>
+                <p class="text-[10px] mt-0.5" style="color: var(--text-500);">当前</p>
+              </div>
+              <div class="px-2 py-2 text-center" style="border-radius: var(--radius) var(--radius) 0 0;">
+                <p class="text-xs font-semibold" style="color: var(--text-800);">铂金</p>
+              </div>
+              <div class="px-2 py-2 text-center" style="border-radius: var(--radius) var(--radius) 0 0;">
+                <p class="text-xs font-semibold" style="color: var(--text-800);">黑钻</p>
+              </div>
+            </div>
+
+            <!-- 数据行 -->
+            <div class="space-y-px">
+              <!-- 积分加速 -->
+              <div class="grid grid-cols-4 items-center" style="border-bottom: 1px solid var(--background-200);">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">积分加速</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800);">1.2x</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">1.5x</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800);">2x</div>
+              </div>
+              <!-- 专属折扣 -->
+              <div class="grid grid-cols-4 items-center" style="border-bottom: 1px solid var(--background-200);">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">专属折扣</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800);">95折</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">9折</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800);">85折</div>
+              </div>
+              <!-- 免费退换货 -->
+              <div class="grid grid-cols-4 items-center" style="border-bottom: 1px solid var(--background-200);">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">免费退换货</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800);">2次/年</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">4次/年</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800);">无限</div>
+              </div>
+              <!-- 生日礼品 -->
+              <div class="grid grid-cols-4 items-center" style="border-bottom: 1px solid var(--background-200);">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">生日礼品</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800);">有</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">有+优先</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800);">有+定制</div>
+              </div>
+              <!-- 专属客服 -->
+              <div class="grid grid-cols-4 items-center" style="border-bottom: 1px solid var(--background-200);">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">专属客服</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800);">在线</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">专属</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800);">1对1</div>
+              </div>
+              <!-- 每年配送券 -->
+              <div class="grid grid-cols-4 items-center">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">每年配送券</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800); border-radius: 0 0 0 var(--radius);">4张</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">8张</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800); border-radius: 0 0 var(--radius) 0;">12张</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 会员专属特权 -->
+      <section class="pt-6 pb-2">
+        <h2 class="px-4 text-lg font-semibold tracking-[-0.01em] mb-4" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">会员专属特权</h2>
+
+        <div class="flex gap-3 overflow-x-auto no-scrollbar px-4 pb-2">
+          <!-- 新品优先购 -->
+          <div class="shrink-0 flex flex-col justify-between" style="width: 140px; min-height: 160px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--background-50); box-shadow: var(--shadow-sm);">
+            <div>
+              <div class="inline-flex items-center justify-center mb-3" style="width: 36px; height: 36px; border-radius: var(--radius); background: var(--background-200);">
+                <span data-icon class="w-5 h-5" style="mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); color: var(--brand-500);"></span>
+              </div>
+              <p class="text-sm font-semibold mb-1" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">新品优先购</p>
+            </div>
+            <p class="text-xs leading-relaxed" style="color: var(--text-500);">新品提前48小时购买权</p>
+          </div>
+
+          <!-- 会员日特惠 -->
+          <div class="shrink-0 flex flex-col justify-between" style="width: 140px; min-height: 160px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--background-50); box-shadow: var(--shadow-sm);">
+            <div>
+              <div class="inline-flex items-center justify-center mb-3" style="width: 36px; height: 36px; border-radius: var(--radius); background: var(--background-200);">
+                <span data-icon class="w-5 h-5" style="mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-500);"></span>
+              </div>
+              <p class="text-sm font-semibold mb-1" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">会员日特惠</p>
+            </div>
+            <p class="text-xs leading-relaxed" style="color: var(--text-500);">每月8号会员专属折扣</p>
+          </div>
+
+          <!-- 免费宠物体检 -->
+          <div class="shrink-0 flex flex-col justify-between" style="width: 140px; min-height: 160px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--background-50); box-shadow: var(--shadow-sm);">
+            <div>
+              <div class="inline-flex items-center justify-center mb-3" style="width: 36px; height: 36px; border-radius: var(--radius); background: var(--background-200);">
+                <span data-icon class="w-5 h-5" style="mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--brand-500);"></span>
+              </div>
+              <p class="text-sm font-semibold mb-1" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">免费宠物体检</p>
+            </div>
+            <p class="text-xs leading-relaxed" style="color: var(--text-500);">年度一次基础体检</p>
+          </div>
+
+          <!-- 专属IP周边 -->
+          <div class="shrink-0 flex flex-col justify-between" style="width: 140px; min-height: 160px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--background-50); box-shadow: var(--shadow-sm);">
+            <div>
+              <div class="inline-flex items-center justify-center mb-3" style="width: 36px; height: 36px; border-radius: var(--radius); background: var(--background-200);">
+                <span data-icon class="w-5 h-5" style="mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--brand-500);"></span>
+              </div>
+              <p class="text-sm font-semibold mb-1" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">专属IP周边</p>
+            </div>
+            <p class="text-xs leading-relaxed" style="color: var(--text-500);">MOYUYO IP限定周边</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 底部链接 -->
+      <section class="px-4 pt-6">
+        <div class="flex items-center justify-center gap-6 py-4" style="border-top: 1px solid var(--background-300);">
+          <a href="#" class="inline-flex items-center gap-1 text-xs font-medium whitespace-nowrap" style="color: var(--brand-500); transition: opacity 0.18s ease;" onmouseenter="this.style.opacity='0.7'" onmouseleave="this.style.opacity='1'">
+            了解会员规则
+            <span data-icon class="w-3.5 h-3.5" style="mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg');"></span>
+          </a>
+          <span class="w-px h-3" style="background: var(--background-300);"></span>
+          <a href="#" class="inline-flex items-center gap-1 text-xs font-medium whitespace-nowrap" style="color: var(--brand-500); transition: opacity 0.18s ease;" onmouseenter="this.style.opacity='0.7'" onmouseleave="this.style.opacity='1'">
+            查看积分明细
+            <span data-icon class="w-3.5 h-3.5" style="mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg');"></span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+    <script src="shared/api.js"></script><script>lucide.createIcons();</script>
+  <script>
+    (function () {
+      async function loadMember() {
+        try {
+          var res = await moyuyoAPI.get('/api/v1/member/info');
+          if (res.code === 0 && res.data) {
+            var data = res.data;
+            // 更新会员等级
+            var levelSpan = document.querySelector('span[style*="border-radius: 999px"]');
+            if (levelSpan && data.level) {
+              var levelMap = { GOLD: '金卡会员', PLATINUM: '铂金会员', DIAMOND: '黑钻会员' };
+              levelSpan.textContent = levelMap[data.level] || data.level;
+            }
+            // 更新昵称
+            var nameEl = document.querySelector('.text-base.font-semibold');
+            if (nameEl && data.nickname) nameEl.textContent = data.nickname;
+            // 更新头像
+            var avatarEl = document.querySelector('img[alt="用户头像"]');
+            if (avatarEl && data.avatar) avatarEl.src = data.avatar;
+            // 更新成长值进度
+            if (data.progress != null) {
+              var progressBar = document.querySelector('.h-1\\.5.rounded-full div');
+              if (progressBar) progressBar.style.width = data.progress + '%';
+              var progressText = document.querySelector('.text-xs.font-semibold');
+              if (progressText) progressText.textContent = data.progress + '%';
+            }
+            // 更新距下一级
+            if (data.toNextLevel != null) {
+              var nextEl = document.querySelector('.text-xs[style*="rgba(255,255,255,0.75)"]');
+              if (nextEl) nextEl.textContent = '距' + (data.nextLevel || '') + '还需 ' + Number(data.toNextLevel).toLocaleString() + ' 成长值';
+            }
+          }
+        } catch (e) {
+          console.log('[MOYUYO] Member info unavailable, showing static content');
+        }
+      }
+
+      loadMember();
+    })();
+  </script>
+</body>
+</html>

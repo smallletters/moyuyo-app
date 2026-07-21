@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 评价</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30 flex items-center justify-center border-b border-[var(--border)] bg-[var(--background)]/95 px-4 h-11 backdrop-blur">
+        <button data-dom-id="back-previous" class="absolute left-4 inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--background)]" aria-label="返回">
+          <span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+        </button>
+        <h1 class="text-base font-semibold tracking-tight text-[var(--foreground)]">发表评价</h1>
+      </header>
+
+      <div class="mx-auto max-w-lg px-4 pt-4 space-y-5">
+
+        <!-- 订单商品卡片 -->
+        <section class="flex gap-3 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-3">
+          <img src="../assets/product-shampoo-bottle.jpg" alt="温和植物萃取宠物洗护套装" class="h-20 w-20 shrink-0 rounded-xl object-cover border border-[var(--border)]">
+          <div class="flex flex-col justify-center min-w-0">
+            <p class="text-sm font-semibold text-[var(--foreground)] truncate">温和植物萃取宠物洗护套装</p>
+            <p class="mt-1 text-sm font-variant-numeric:tabular-nums text-[var(--primary)]">¥128.00</p>
+          </div>
+        </section>
+
+        <!-- 商品评分 -->
+        <section class="space-y-3">
+          <h2 class="text-sm font-semibold text-[var(--foreground)]">商品评分</h2>
+
+          <!-- 综合评分 -->
+          <div class="flex items-center gap-2">
+            <span class="text-sm text-[var(--text-500)]">综合评分</span>
+            <div class="flex gap-0.5" id="overall-rating" role="radiogroup" aria-label="综合评分">
+              <button class="star-btn h-7 w-7 flex items-center justify-center" data-value="1" aria-label="1星"><span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span></button>
+              <button class="star-btn h-7 w-7 flex items-center justify-center" data-value="2" aria-label="2星"><span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span></button>
+              <button class="star-btn h-7 w-7 flex items-center justify-center" data-value="3" aria-label="3星"><span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span></button>
+              <button class="star-btn h-7 w-7 flex items-center justify-center" data-value="4" aria-label="4星"><span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span></button>
+              <button class="star-btn h-7 w-7 flex items-center justify-center" data-value="5" aria-label="5星"><span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span></button>
+            </div>
+          </div>
+
+          <!-- 子评分 -->
+          <div class="space-y-2">
+            <!-- 质量 5星 -->
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-[var(--text-500)]">质量</span>
+              <div class="flex gap-0.5 sub-rating" data-rating="5" role="radiogroup" aria-label="质量评分">
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+              </div>
+            </div>
+            <!-- 外观 4星 -->
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-[var(--text-500)]">外观</span>
+              <div class="flex gap-0.5 sub-rating" data-rating="4" role="radiogroup" aria-label="外观评分">
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--background-300);"></span>
+              </div>
+            </div>
+            <!-- 气味 5星 -->
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-[var(--text-500)]">气味</span>
+              <div class="flex gap-0.5 sub-rating" data-rating="5" role="radiogroup" aria-label="气味评分">
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+                <span class="sub-star h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 选择标签 -->
+        <section class="space-y-3">
+          <h2 class="text-sm font-semibold text-[var(--foreground)]">选择标签（可多选）</h2>
+          <div class="flex flex-wrap gap-2">
+            <button class="tag-chip selected inline-flex items-center justify-center h-8 px-3 rounded-lg text-xs font-medium whitespace-nowrap transition-colors" style="background-color: var(--primary); color: var(--primary-foreground);">味道好闻</button>
+            <button class="tag-chip inline-flex items-center justify-center h-8 px-3 rounded-lg text-xs font-medium whitespace-nowrap border border-[var(--border)] text-[var(--text-600)] transition-colors" style="background-color: var(--background);">包装精美</button>
+            <button class="tag-chip inline-flex items-center justify-center h-8 px-3 rounded-lg text-xs font-medium whitespace-nowrap border border-[var(--border)] text-[var(--text-600)] transition-colors" style="background-color: var(--background);">用量省</button>
+            <button class="tag-chip selected inline-flex items-center justify-center h-8 px-3 rounded-lg text-xs font-medium whitespace-nowrap transition-colors" style="background-color: var(--primary); color: var(--primary-foreground);">温和不刺激</button>
+            <button class="tag-chip inline-flex items-center justify-center h-8 px-3 rounded-lg text-xs font-medium whitespace-nowrap border border-[var(--border)] text-[var(--text-600)] transition-colors" style="background-color: var(--background);">物流快</button>
+            <button class="tag-chip inline-flex items-center justify-center h-8 px-3 rounded-lg text-xs font-medium whitespace-nowrap border border-[var(--border)] text-[var(--text-600)] transition-colors" style="background-color: var(--background);">回购</button>
+          </div>
+        </section>
+
+        <!-- 文字评价 -->
+        <section class="space-y-2">
+          <textarea class="w-full h-28 rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-sm text-[var(--foreground)] placeholder:text-[var(--text-400)] resize-none focus:outline-none focus:border-[var(--ring)] focus:shadow-[0_0_0_1px_var(--ring)] transition-colors" placeholder="分享你和TA的使用体验吧..." maxlength="500" aria-label="评价内容"></textarea>
+          <p class="text-right text-xs text-[var(--text-400)]">0/500</p>
+        </section>
+
+        <!-- 上传图片 -->
+        <section class="space-y-3">
+          <h2 class="text-sm font-semibold text-[var(--foreground)]">上传图片（选填，最多6张）</h2>
+          <div class="flex gap-3">
+            <button class="shrink-0 h-20 w-20 rounded-xl border-2 border-dashed border-[var(--background-300)] bg-[var(--background-100)] flex flex-col items-center justify-center transition-colors hover:border-[var(--primary)]" aria-label="上传图片">
+              <i data-lucide="camera" class="h-5 w-5 text-[var(--text-400)]"></i>
+            </button>
+            <button class="shrink-0 h-20 w-20 rounded-xl border-2 border-dashed border-[var(--background-300)] bg-[var(--background-100)] flex flex-col items-center justify-center transition-colors hover:border-[var(--primary)]" aria-label="上传图片">
+              <i data-lucide="camera" class="h-5 w-5 text-[var(--text-400)]"></i>
+            </button>
+            <button class="shrink-0 h-20 w-20 rounded-xl border-2 border-dashed border-[var(--background-300)] bg-[var(--background-100)] flex flex-col items-center justify-center transition-colors hover:border-[var(--primary)]" aria-label="上传图片">
+              <i data-lucide="camera" class="h-5 w-5 text-[var(--text-400)]"></i>
+            </button>
+          </div>
+          <p class="text-xs text-[var(--text-400)]">好评晒图额外奖励20积分</p>
+        </section>
+
+        <!-- 匿名评价 -->
+        <section class="flex items-center justify-between">
+          <span class="text-sm text-[var(--foreground)]">匿名评价</span>
+          <button class="toggle-switch relative h-7 w-12 rounded-full border border-[var(--background-300)] bg-[var(--background-300)] transition-colors" aria-label="匿名评价开关" role="switch" aria-checked="false">
+            <span class="toggle-knob absolute top-0.5 left-0.5 h-6 w-6 rounded-full bg-white shadow-sm transition-transform"></span>
+          </button>
+        </section>
+
+      </div>
+
+      <!-- 底部固定操作栏 -->
+      <div class="fixed bottom-0 inset-x-0 z-30 border-t border-[var(--border)] bg-[var(--background)]/95 px-4 pt-2.5 pb-6 backdrop-blur">
+        <button data-dom-id="cta-submit-review" class="btn btn-primary w-full h-11 text-sm font-semibold rounded-xl" style="border-radius: calc(var(--radius));">发表评价</button>
+      </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

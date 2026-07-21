@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 限时秒杀</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+
+      <!-- iOS 状态栏模拟 -->
+      <div class="sticky top-0 z-30" style="background: linear-gradient(135deg, var(--brand-500) 0%, var(--brand-600) 100%);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <a href="home.html" class="flex items-center gap-1.5 text-white" data-dom-id="cta-back" aria-label="返回首页">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+            <span class="text-sm font-medium">返回</span>
+          </a>
+          <span class="text-sm font-semibold text-white">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm bg-white"></span>
+          </div>
+        </div>
+
+        <!-- 秒杀头部区域：标题 + 倒计时 -->
+        <div class="px-5 pt-1 pb-5">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-xl font-bold text-white">限时秒杀</h1>
+              <p class="text-xs mt-1" style="color: rgba(255,255,255,0.75);">超值好物 限量抢购</p>
+            </div>
+            <!-- 当前场倒计时 -->
+            <div class="flex flex-col items-end gap-1">
+              <span class="text-xs font-medium" style="color: rgba(255,255,255,0.7);">本场距结束</span>
+              <div class="flex items-center">
+                <span class="countdown-digit">02</span>
+                <span class="countdown-sep">:</span>
+                <span class="countdown-digit">34</span>
+                <span class="countdown-sep">:</span>
+                <span class="countdown-digit">56</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 场次切换 -->
+          <div class="flex gap-2 mt-4">
+            <!-- 10:00 场（进行中） -->
+            <button class="flex-1 h-9 rounded-xl text-xs font-semibold text-white flex items-center justify-center gap-1.5" style="background: rgba(255,255,255,0.25);">
+              <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+              10:00 场
+              <span class="font-normal" style="color: rgba(255,255,255,0.7);">抢购中</span>
+            </button>
+            <!-- 20:00 场（预告） -->
+            <button class="flex-1 h-9 rounded-xl text-xs font-medium flex items-center justify-center gap-1.5" style="background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.7);">
+              <span data-icon class="w-3 h-3" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/clock.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-pause.svg'); opacity: 0.7;"></span>
+              20:00 场
+              <span>预告</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 秒杀商品列表（2列网格） -->
+      <section class="px-4 pt-4" aria-label="秒杀商品">
+        <div class="grid grid-cols-2 gap-3">
+
+          <!-- 秒杀商品 1 -->
+          <a href="product-detail.html" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-sm); transition: transform 0.18s ease, box-shadow 0.18s ease;" data-dom-id="product-flash-1">
+            <div class="aspect-square overflow-hidden relative">
+              <img src="../assets/product-shampoo-bottle.jpg" alt="高端宠物洗护套装" class="w-full h-full object-cover">
+              <!-- 秒杀角标 -->
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[10px] font-bold text-white" style="background: var(--state-error);">秒杀</span>
+            </div>
+            <div class="p-2.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">高端宠物洗护套装</h3>
+              <!-- 价格区域 -->
+              <div class="flex items-baseline gap-1.5 mt-1.5">
+                <span class="text-base font-bold" style="color: var(--state-error);">¥99</span>
+                <span class="text-xs line-through" style="color: var(--text-400);">¥259</span>
+              </div>
+              <!-- 进度条 -->
+              <div class="mt-2">
+                <div class="flash-progress-bar">
+                  <div class="flash-progress-fill" style="width: 78%;"></div>
+                  <span class="flash-progress-text">已抢 78%</span>
+                </div>
+              </div>
+              <!-- 按钮与限购 -->
+              <div class="flex items-center justify-between mt-2">
+                <button class="h-7 px-3 rounded-lg text-xs font-semibold text-white" style="background: var(--state-error); border: none;">马上抢</button>
+                <span class="text-[10px]" style="color: var(--text-400);">每人限1件</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 秒杀商品 2 -->
+          <a href="product-detail.html" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-sm); transition: transform 0.18s ease, box-shadow 0.18s ease;" data-dom-id="product-flash-2">
+            <div class="aspect-square overflow-hidden relative">
+              <img src="../assets/product-harness-gear.jpg" alt="舒适胸背带" class="w-full h-full object-cover">
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[10px] font-bold text-white" style="background: var(--state-error);">秒杀</span>
+            </div>
+            <div class="p-2.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">舒适胸背带</h3>
+              <div class="flex items-baseline gap-1.5 mt-1.5">
+                <span class="text-base font-bold" style="color: var(--state-error);">¥59</span>
+                <span class="text-xs line-through" style="color: var(--text-400);">¥168</span>
+              </div>
+              <div class="mt-2">
+                <div class="flash-progress-bar">
+                  <div class="flash-progress-fill" style="width: 92%;"></div>
+                  <span class="flash-progress-text">已抢 92%</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-2">
+                <button class="h-7 px-3 rounded-lg text-xs font-semibold text-white" style="background: var(--state-error); border: none;">马上抢</button>
+                <span class="text-[10px]" style="color: var(--text-400);">每人限1件</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 秒杀商品 3 -->
+          <a href="product-detail.html" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-sm); transition: transform 0.18s ease, box-shadow 0.18s ease;" data-dom-id="product-flash-3">
+            <div class="aspect-square overflow-hidden relative">
+              <img src="../assets/product-toy-play.jpg" alt="互动益智玩具" class="w-full h-full object-cover">
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[10px] font-bold text-white" style="background: var(--state-error);">秒杀</span>
+            </div>
+            <div class="p-2.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">互动益智玩具</h3>
+              <div class="flex items-baseline gap-1.5 mt-1.5">
+                <span class="text-base font-bold" style="color: var(--state-error);">¥29</span>
+                <span class="text-xs line-through" style="color: var(--text-400);">¥99</span>
+              </div>
+              <div class="mt-2">
+                <div class="flash-progress-bar">
+                  <div class="flash-progress-fill" style="width: 65%;"></div>
+                  <span class="flash-progress-text">已抢 65%</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-2">
+                <button class="h-7 px-3 rounded-lg text-xs font-semibold text-white" style="background: var(--state-error); border: none;">马上抢</button>
+                <span class="text-[10px]" style="color: var(--text-400);">每人限1件</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 秒杀商品 4 -->
+          <a href="product-detail.html" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-sm); transition: transform 0.18s ease, box-shadow 0.18s ease;" data-dom-id="product-flash-4">
+            <div class="aspect-square overflow-hidden relative">
+              <img src="../assets/product-pet-jacket.jpg" alt="宠物潮流外套" class="w-full h-full object-cover">
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[10px] font-bold text-white" style="background: var(--state-error);">秒杀</span>
+            </div>
+            <div class="p-2.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">宠物潮流外套</h3>
+              <div class="flex items-baseline gap-1.5 mt-1.5">
+                <span class="text-base font-bold" style="color: var(--state-error);">¥119</span>
+                <span class="text-xs line-through" style="color: var(--text-400);">¥299</span>
+              </div>
+              <div class="mt-2">
+                <div class="flash-progress-bar">
+                  <div class="flash-progress-fill" style="width: 43%;"></div>
+                  <span class="flash-progress-text">已抢 43%</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-2">
+                <button class="h-7 px-3 rounded-lg text-xs font-semibold text-white" style="background: var(--state-error); border: none;">马上抢</button>
+                <span class="text-[10px]" style="color: var(--text-400);">每人限1件</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 底部提示：下一场倒计时 -->
+      <section class="mx-4 mt-5 mb-4 rounded-[var(--radius)] p-4" style="background: var(--background-200); border: 1px solid var(--border);" aria-label="下一场预告">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-alert.svg'); color: var(--primary);"></span>
+            <div>
+              <p class="text-sm font-semibold" style="color: var(--foreground);">下一场 20:00 开始</p>
+              <p class="text-xs mt-0.5" style="color: var(--text-500);">更多爆款即将开放，敬请期待</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="text-xs font-medium" style="color: var(--text-500);">距开始</span>
+            <div class="flex items-center" style="color: var(--foreground);">
+              <span class="inline-flex items-center justify-center min-w-[26px] h-[26px] px-1 rounded-md text-sm font-bold" style="background: var(--foreground); color: var(--background-50);">07</span>
+              <span class="text-sm font-bold mx-0.5" style="color: var(--foreground);">:</span>
+              <span class="inline-flex items-center justify-center min-w-[26px] h-[26px] px-1 rounded-md text-sm font-bold" style="background: var(--foreground); color: var(--background-50);">25</span>
+              <span class="text-sm font-bold mx-0.5" style="color: var(--foreground);">:</span>
+              <span class="inline-flex items-center justify-center min-w-[26px] h-[26px] px-1 rounded-md text-sm font-bold" style="background: var(--foreground); color: var(--background-50);">04</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 底部 TabBar -->
+      <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="主导航">
+        <div class="flex items-stretch justify-around h-[49px]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+          <!-- 首页 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-home" aria-label="首页">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
+            <span class="text-[10px] font-medium">首页</span>
+          </button>
+          <!-- 分类 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-category" aria-label="分类">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/grip.svg'); mask-image: url('../assets/icons/dl-builtin-apple/grip.svg');"></span>
+            <span class="text-[10px] font-medium">分类</span>
+          </button>
+          <!-- Pet Hub -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-pet-hub" aria-label="Pet Hub">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+            <span class="text-[10px] font-medium">Pet Hub</span>
+          </button>
+          <!-- 社区 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="社区">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+            <span class="text-[10px] font-medium">社区</span>
+          </button>
+          <!-- 我的 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-profile" aria-label="个人中心">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
+            <span class="text-[10px] font-medium">我的</span>
+          </button>
+        </div>
+        <!-- Safe area -->
+        <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.88);"></div>
+      </nav>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

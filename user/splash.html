@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="relative flex flex-col items-center justify-center min-h-screen overflow-hidden" style="background: var(--background-50);">
+      <!-- 背景图 + 遮罩 -->
+      <img src="../assets/splash-bg.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" style="opacity: 0.12; filter: blur(1px);">
+      <div class="absolute inset-0" style="background: linear-gradient(180deg, var(--background-50) 0%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,0.85) 100%);"></div>
+
+      <!-- 品牌名 -->
+      <h1 class="relative z-10" style="font-family: var(--font-sans); font-size: 36px; font-weight: 700; letter-spacing: 0.1em; color: var(--text-800); text-wrap: balance; animation: fadeInUp 0.8s cubic-bezier(0.32, 0.72, 0, 1) forwards;">
+        MOYUYO
+      </h1>
+
+      <!-- 标语 -->
+      <p class="relative z-10 mt-3" style="font-family: var(--font-sans); font-size: 14px; font-weight: 400; letter-spacing: 0.04em; color: var(--text-500); animation: fadeInUp 0.8s cubic-bezier(0.32, 0.72, 0, 1) 0.25s forwards; opacity: 0;">
+        为TA创造美好生活
+      </p>
+
+      <!-- IP 角色图标行 -->
+      <div class="relative z-10 flex items-center gap-4 mt-8" style="animation: fadeInUp 0.8s cubic-bezier(0.32, 0.72, 0, 1) 0.5s forwards; opacity: 0;">
+        <!-- MILO -->
+        <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 50%; background: var(--brand-100); color: var(--brand-500); font-family: var(--font-sans); font-size: 14px; font-weight: 700;">
+          M
+        </div>
+        <!-- LUNA -->
+        <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 50%; background: var(--background-200); color: var(--text-500); font-family: var(--font-sans); font-size: 14px; font-weight: 700;">
+          L
+        </div>
+        <!-- ATLAS -->
+        <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 50%; background: var(--brand-50); color: var(--brand-600); font-family: var(--font-sans); font-size: 14px; font-weight: 700;">
+          A
+        </div>
+        <!-- OLIVE -->
+        <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 50%; background: var(--background-200); color: var(--text-500); font-family: var(--font-sans); font-size: 14px; font-weight: 700;">
+          O
+        </div>
+      </div>
+
+      <!-- 底部加载区 -->
+      <div class="absolute bottom-16 left-0 right-0 flex flex-col items-center z-10">
+        <p style="font-family: var(--font-sans); font-size: 12px; color: var(--text-400); letter-spacing: 0.02em; animation: fadeInUp 0.6s cubic-bezier(0.32, 0.72, 0, 1) 0.8s forwards; opacity: 0;">
+          正在加载...
+        </p>
+        <!-- 加载条 -->
+        <div class="mt-2" style="width: 120px; height: 2px; border-radius: 1px; background: var(--background-300); overflow: hidden; animation: fadeInUp 0.6s cubic-bezier(0.32, 0.72, 0, 1) 0.8s forwards; opacity: 0;">
+          <div class="h-full" style="width: 40%; border-radius: 1px; background: var(--brand-500); animation: loadingBar 1.8s cubic-bezier(0.32, 0.72, 0, 1) 0.9s infinite;"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 启动页专用动画（无自定义 class，纯 keyframes） -->
+    <style>
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes loadingBar {
+        0% {
+          transform: translateX(-100%);
+          width: 40%;
+        }
+        50% {
+          width: 60%;
+        }
+        100% {
+          transform: translateX(350%);
+          width: 40%;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

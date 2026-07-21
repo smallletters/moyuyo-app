@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 订单详情</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-20">
+
+        <!-- 顶部导航栏 -->
+        <header class="sticky top-0 z-30 flex h-11 items-center justify-center border-b border-[var(--border)] bg-[var(--background)]/95 px-4 backdrop-blur">
+            <button data-dom-id="back-previous" class="absolute left-4 inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--background)] transition-transform duration-150 hover:scale-105 active:scale-95" aria-label="返回">
+                <span data-icon class="h-4 w-4" style="mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+            </button>
+            <span class="text-[16px] font-semibold tracking-[-0.02em] text-[var(--text-800)]">订单详情</span>
+        </header>
+
+        <!-- 订单状态卡片 -->
+        <section class="mx-4 mt-4 rounded-xl bg-[var(--brand-50)] p-4">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center justify-center rounded-lg bg-[var(--brand-500)] px-2.5 py-1 text-[13px] font-semibold text-[var(--background-50)] whitespace-nowrap">待收货</span>
+                <span class="text-[14px] text-[var(--text-500)]">您的包裹正在配送中</span>
+            </div>
+            <p class="mt-2 text-[13px] text-[var(--text-400)]">预计 7月12日 送达</p>
+        </section>
+
+        <!-- 物流时间线 -->
+        <section class="mx-4 mt-4 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
+            <h2 class="mb-4 text-[15px] font-semibold text-[var(--text-800)]">物流跟踪</h2>
+
+            <!-- 时间线条目 -->
+            <div class="relative pl-6">
+                <!-- 竖线 -->
+                <div class="absolute bottom-0 left-[7px] top-[6px] w-px bg-[var(--background-300)]"></div>
+
+                <!-- 最新物流 -->
+                <div class="relative pb-5">
+                    <div class="absolute -left-6 top-0.5 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-[var(--brand-500)]">
+                        <span class="h-1.5 w-1.5 rounded-full bg-[var(--background-50)]"></span>
+                    </div>
+                    <p class="text-[14px] font-semibold text-[var(--text-800)]">包裹已到达上海浦东配送站</p>
+                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">7月11日 14:30</p>
+                </div>
+
+                <!-- 历史物流 -->
+                <div class="relative pb-5">
+                    <div class="absolute -left-6 top-1 flex h-[10px] w-[10px] items-center justify-center rounded-full bg-[var(--background-300)]"></div>
+                    <p class="text-[14px] text-[var(--text-600)]">包裹从杭州分拨中心发出</p>
+                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">7月10日 22:15</p>
+                </div>
+
+                <div class="relative pb-5">
+                    <div class="absolute -left-6 top-1 flex h-[10px] w-[10px] items-center justify-center rounded-full bg-[var(--background-300)]"></div>
+                    <p class="text-[14px] text-[var(--text-600)]">卖家已发货</p>
+                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">7月10日 08:00</p>
+                </div>
+
+                <div class="relative">
+                    <div class="absolute -left-6 top-1 flex h-[10px] w-[10px] items-center justify-center rounded-full bg-[var(--background-300)]"></div>
+                    <p class="text-[14px] text-[var(--text-600)]">订单已支付</p>
+                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">7月9日 16:30</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 配送地图 -->
+        <section class="mx-4 mt-4">
+            <img src="../assets/order-tracking-map.jpg" alt="配送路线地图" class="aspect-[4/3] w-full rounded-xl border border-[var(--border)] object-cover">
+        </section>
+
+        <!-- 收货信息 -->
+        <section class="mx-4 mt-4 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
+            <h2 class="mb-3 text-[15px] font-semibold text-[var(--text-800)]">收货信息</h2>
+            <div class="space-y-2">
+                <div class="flex items-center gap-3">
+                    <span class="w-14 shrink-0 text-[13px] text-[var(--text-400)]">收件人</span>
+                    <span class="text-[14px] text-[var(--text-800)]">小雅</span>
+                    <span class="text-[14px] text-[var(--text-500)]">138****8888</span>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="w-14 shrink-0 text-[13px] text-[var(--text-400)]">地址</span>
+                    <span class="text-[14px] leading-relaxed text-[var(--text-600)]">上海市浦东新区张江高科技园区碧波路690号</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 订单信息 -->
+        <section class="mx-4 mt-4 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
+            <h2 class="mb-3 text-[15px] font-semibold text-[var(--text-800)]">订单信息</h2>
+            <div class="space-y-2">
+                <div class="flex items-center gap-3">
+                    <span class="w-16 shrink-0 text-[13px] text-[var(--text-400)]">订单编号</span>
+                    <span class="text-[14px] text-[var(--text-600)]">MOY20260710002</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="w-16 shrink-0 text-[13px] text-[var(--text-400)]">下单时间</span>
+                    <span class="text-[14px] text-[var(--text-600)]">2026-07-10 15:22</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="w-16 shrink-0 text-[13px] text-[var(--text-400)]">支付方式</span>
+                    <span class="text-[14px] text-[var(--text-600)]">微信支付</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 商品信息 -->
+        <section class="mx-4 mt-4 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
+            <h2 class="mb-3 text-[15px] font-semibold text-[var(--text-800)]">订单商品</h2>
+
+            <!-- 商品条目 -->
+            <div class="flex gap-3">
+                <img src="../assets/product-harness-gear.jpg" alt="经典尼龙宠物牵引套装" class="h-20 w-20 shrink-0 rounded-lg border border-[var(--border)] object-cover">
+                <div class="flex min-w-0 flex-1 flex-col justify-between">
+                    <p class="truncate text-[14px] font-medium text-[var(--text-800)]">经典尼龙宠物牵引套装</p>
+                    <p class="text-[12px] text-[var(--text-400)]">x1</p>
+                </div>
+                <span class="shrink-0 text-[14px] font-semibold text-[var(--text-800)]">¥89.00</span>
+            </div>
+
+            <!-- 分隔线 -->
+            <div class="my-3 h-px bg-[var(--background-200)]"></div>
+
+            <!-- 价格明细 -->
+            <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-[13px] text-[var(--text-400)]">运费</span>
+                    <span class="text-[13px] text-[var(--text-600)]">¥0.00</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-[13px] text-[var(--text-400)]">优惠</span>
+                    <span class="text-[13px] text-[var(--state-success)]">-¥20.00</span>
+                </div>
+                <div class="flex items-center justify-between pt-2">
+                    <span class="text-[14px] font-semibold text-[var(--text-800)]">实付</span>
+                    <span class="text-[16px] font-semibold text-[var(--brand-500)]">¥69.00</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 底部操作栏 -->
+    <div class="fixed bottom-0 inset-x-0 z-30 border-t border-[var(--border)] bg-[var(--background)]/95 px-4 pb-[env(safe-area-inset-bottom,0px)] pt-3 backdrop-blur">
+        <div class="flex items-center gap-3">
+            <button class="btn btn-text h-11 text-[14px] text-[var(--text-600)]" aria-label="联系客服">
+                <i data-lucide="message-circle-more" class="mr-1 h-4 w-4"></i>联系客服
+            </button>
+            <button class="btn btn-primary flex-1 rounded-full text-[14px]" aria-label="确认收货">确认收货</button>
+        </div>
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

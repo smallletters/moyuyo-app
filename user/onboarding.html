@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>MOYUYO 欢迎体验</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body>
+
+<div class="onboarding-shell">
+
+  <!-- 跳过按钮 -->
+  <button class="skip-btn" data-dom-id="cta-skip">跳过</button>
+
+  <!-- 滑动区域：4 页 -->
+  <div class="onboarding-scroll" id="scrollContainer">
+
+    <!-- 第 1 页 - MILO the Explorer -->
+    <div class="onboard-page">
+      <img class="onboard-image" src="../assets/onboard-milo.jpg" alt="MILO the Explorer" draggable="false">
+      <div class="onboard-content">
+        <h2 class="onboard-title">发现你的专属装备</h2>
+        <p class="onboard-desc">GEAR产品线 — 探索户外，为TA选择最专业的装备</p>
+      </div>
+    </div>
+
+    <!-- 第 2 页 - LUNA the Curator -->
+    <div class="onboard-page">
+      <img class="onboard-image" src="../assets/onboard-luna.jpg" alt="LUNA the Curator" draggable="false">
+      <div class="onboard-content">
+        <h2 class="onboard-title">呵护TA的每一天</h2>
+        <p class="onboard-desc">CARE产品线 — 温和植萃成分，专业级护理体验</p>
+      </div>
+    </div>
+
+    <!-- 第 3 页 - ATLAS the Guardian -->
+    <div class="onboard-page">
+      <img class="onboard-image" src="../assets/onboard-atlas.jpg" alt="ATLAS the Guardian" draggable="false">
+      <div class="onboard-content">
+        <h2 class="onboard-title">守护TA的健康</h2>
+        <p class="onboard-desc">PLAY产品线 — 智能健康管理，贴心呵护无忧</p>
+      </div>
+    </div>
+
+    <!-- 第 4 页 - OLIVE the Artist -->
+    <div class="onboard-page">
+      <img class="onboard-image" src="../assets/onboard-olive.jpg" alt="OLIVE the Artist" draggable="false">
+      <div class="onboard-content">
+        <h2 class="onboard-title">为TA创造美好生活</h2>
+        <p class="onboard-desc">HOME产品线 — 舒适家居，打造TA的温馨空间</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 底部操作区 -->
+  <div class="onboarding-footer">
+    <!-- 页码指示器 -->
+    <div class="page-indicators" id="pageIndicators">
+      <span class="page-dot active"></span>
+      <span class="page-dot"></span>
+      <span class="page-dot"></span>
+      <span class="page-dot"></span>
+    </div>
+    <!-- 按钮 -->
+    <button class="onboard-btn btn-next" id="actionBtn">下一步</button>
+  </div>
+
+</div>
+
+<script>
+  // ===== 滑动页面交互逻辑 =====
+  const scrollContainer = document.getElementById('scrollContainer');
+  const actionBtn = document.getElementById('actionBtn');
+  const pageIndicators = document.getElementById('pageIndicators');
+  const dots = pageIndicators.querySelectorAll('.page-dot');
+  const totalPages = 4;
+  let currentPage = 0;
+
+  // 监听滚动，更新当前页码与指示器
+  scrollContainer.addEventListener('scroll', () => {
+    const scrollLeft = scrollContainer.scrollLeft;
+    const pageWidth = scrollContainer.offsetWidth;
+    const newIndex = Math.round(scrollLeft / pageWidth);
+    if (newIndex !== currentPage) {
+      currentPage = newIndex;
+      updateUI();
+    }
+  });
+
+  // 按钮点击：翻到下一页或触发"立即开始"
+  actionBtn.addEventListener('click', () => {
+    if (currentPage < totalPages - 1) {
+      const pageWidth = scrollContainer.offsetWidth;
+      scrollContainer.scrollTo({
+        left: (currentPage + 1) * pageWidth,
+        behavior: 'smooth'
+      });
+    }
+  });
+
+  // 更新指示器与按钮状态
+  function updateUI() {
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentPage);
+    });
+
+    if (currentPage === totalPages - 1) {
+      // 最后一页：显示"立即开始"主级按钮
+      actionBtn.textContent = '立即开始';
+      actionBtn.className = 'onboard-btn btn-start';
+      actionBtn.setAttribute('data-dom-id', 'cta-start');
+    } else {
+      // 前 3 页：显示"下一步"次级按钮
+      actionBtn.textContent = '下一步';
+      actionBtn.className = 'onboard-btn btn-next';
+      actionBtn.removeAttribute('data-dom-id');
+    }
+  }
+</script>
+
+<script>lucide.createIcons();</script>
+
+</body>
+</html>

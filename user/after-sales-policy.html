@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 售后政策</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="max-w-[375px] mx-auto min-h-screen pb-24" style="background: var(--background);">
+
+      <!-- 顶部导航栏 -->
+      <nav class="sticky top-0 z-50 flex items-center justify-center h-[44px] px-4" style="background: var(--background);">
+        <!-- 返回按钮 -->
+        <button data-dom-id="cta-back" class="absolute left-4 flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--secondary);" aria-label="返回">
+          <i data-lucide="arrow-left" class="w-[18px] h-[18px]" style="color: var(--foreground);"></i>
+        </button>
+        <!-- 页面标题 -->
+        <span class="text-[17px] font-semibold" style="color: var(--foreground);">售后政策</span>
+        <!-- 分享按钮 -->
+        <button data-dom-id="cta-share" class="absolute right-4 flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--secondary);" aria-label="分享政策页">
+          <i data-lucide="share" class="w-[18px] h-[18px]" style="color: var(--foreground);"></i>
+        </button>
+      </nav>
+
+      <div class="px-4 pt-3 flex flex-col gap-3">
+
+        <!-- 最近更新时间提示 -->
+        <div class="flex items-center gap-2 py-2">
+          <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/file.svg'); mask-image: url('../assets/icons/dl-builtin-apple/file.svg'); color: var(--text-400);"></span>
+          <span class="text-[12px]" style="color: var(--text-400);">政策更新于 2026-07-01</span>
+        </div>
+
+        <!-- FAQ 折叠分区 -->
+        <div class="flex flex-col gap-3">
+
+          <!-- 1. 退货政策 -->
+          <details class="group rounded-[19.2px] overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <summary class="flex items-center justify-between px-4 py-3.5 cursor-pointer select-none list-none">
+              <span class="text-[15px] font-semibold" style="color: var(--foreground);">退货政策</span>
+              <i data-lucide="chevron-down" class="w-[18px] h-[18px] transition-transform duration-200 group-open:rotate-180" style="color: var(--icon-muted);"></i>
+            </summary>
+            <div class="px-4 pb-4 flex flex-col gap-3">
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">7天无理由退货</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">自签收之日起 7 个自然日内，商品完好且不影响二次销售的情况下，可申请无理由退货。</p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">退货条件</h4>
+                <ul class="flex flex-col gap-1.5 pl-1">
+                  <li class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                    <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--state-success);"></span>
+                    商品未使用、未清洗、未拆封（密封类商品）
+                  </li>
+                  <li class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                    <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--state-success);"></span>
+                    原包装、吊牌、说明书、赠品等配件齐全
+                  </li>
+                  <li class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                    <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--state-success);"></span>
+                    保留原始购买凭证或电子订单记录
+                  </li>
+                </ul>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--destructive);">不适用情况</h4>
+                <ul class="flex flex-col gap-1.5 pl-1">
+                  <li class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                    <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--destructive);"></span>
+                    超过 7 天退货时效
+                  </li>
+                  <li class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                    <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--destructive);"></span>
+                    商品已被使用或洗涤
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </details>
+
+          <!-- 2. 退款说明 -->
+          <details class="group rounded-[19.2px] overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <summary class="flex items-center justify-between px-4 py-3.5 cursor-pointer select-none list-none">
+              <span class="text-[15px] font-semibold" style="color: var(--foreground);">退款说明</span>
+              <i data-lucide="chevron-down" class="w-[18px] h-[18px] transition-transform duration-200 group-open:rotate-180" style="color: var(--icon-muted);"></i>
+            </summary>
+            <div class="px-4 pb-4 flex flex-col gap-3">
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">退款时效</h4>
+                <div class="flex flex-col gap-1.5 pl-1">
+                  <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">Stripe 支付：退款将在审核通过后 3-5 个工作日内原路退回。</p>
+                  <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">PayPal 支付：退款将在审核通过后 1-3 个工作日内原路退回。</p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">退款方式</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">所有退款均通过原支付方式原路退回，不支持更换退款渠道。退款到账时间以各支付机构实际处理速度为准。</p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">价格保护</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">下单后 7 个自然日内如商品降价，可申请价格保护补差价。差价将退回至原支付账户，具体退款时效同上。</p>
+              </div>
+            </div>
+          </details>
+
+          <!-- 3. 换货说明 -->
+          <details class="group rounded-[19.2px] overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <summary class="flex items-center justify-between px-4 py-3.5 cursor-pointer select-none list-none">
+              <span class="text-[15px] font-semibold" style="color: var(--foreground);">换货说明</span>
+              <i data-lucide="chevron-down" class="w-[18px] h-[18px] transition-transform duration-200 group-open:rotate-180" style="color: var(--icon-muted);"></i>
+            </summary>
+            <div class="px-4 pb-4 flex flex-col gap-3">
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">同款不同规格换货</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">签收后 7 个自然日内，可申请同款商品不同颜色或尺寸的换货。需确保商品完好、未使用、原包装齐全。</p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">换货流程</h4>
+                <div class="flex flex-col gap-2 pl-1">
+                  <div class="flex items-start gap-2.5">
+                    <span class="flex items-center justify-center w-5 h-5 rounded-full text-[11px] font-bold shrink-0" style="background: var(--primary); color: var(--primary-foreground);">1</span>
+                    <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">在订单详情页提交换货申请，选择目标规格</p>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="flex items-center justify-center w-5 h-5 rounded-full text-[11px] font-bold shrink-0" style="background: var(--primary); color: var(--primary-foreground);">2</span>
+                    <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">客服审核通过后，寄回原商品</p>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="flex items-center justify-center w-5 h-5 rounded-full text-[11px] font-bold shrink-0" style="background: var(--primary); color: var(--primary-foreground);">3</span>
+                    <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">仓库签收并确认商品完好后，发出新规格商品</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- 4. 运费说明 -->
+          <details class="group rounded-[19.2px] overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <summary class="flex items-center justify-between px-4 py-3.5 cursor-pointer select-none list-none">
+              <span class="text-[15px] font-semibold" style="color: var(--foreground);">运费说明</span>
+              <i data-lucide="chevron-down" class="w-[18px] h-[18px] transition-transform duration-200 group-open:rotate-180" style="color: var(--icon-muted);"></i>
+            </summary>
+            <div class="px-4 pb-4 flex flex-col gap-3">
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">商家原因</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">因商品质量问题、发错货等商家原因产生的退换货，往返运费由 MOYUYO 全额承担。</p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">用户原因</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">因个人偏好、尺寸不合适等非商家原因的退换货，寄回运费由用户自行承担。换货的新商品发货运费由商家承担。</p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">运费险</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">部分商品附赠运费险，可在退货时使用运费险抵扣寄回运费。具体以商品详情页标注及保险公司规则为准。</p>
+              </div>
+            </div>
+          </details>
+
+          <!-- 5. 不支持退换的情况 -->
+          <details class="group rounded-[19.2px] overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <summary class="flex items-center justify-between px-4 py-3.5 cursor-pointer select-none list-none">
+              <span class="text-[15px] font-semibold" style="color: var(--foreground);">不支持退换的情况</span>
+              <i data-lucide="chevron-down" class="w-[18px] h-[18px] transition-transform duration-200 group-open:rotate-180" style="color: var(--icon-muted);"></i>
+            </summary>
+            <div class="px-4 pb-4 flex flex-col gap-2.5 pl-1">
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                已洗涤、使用或拆封的洗护类商品
+              </div>
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                定制商品、刻字/绣花等个性化定制商品
+              </div>
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                内衣、窝垫等贴身或卫生类商品（拆封后）
+              </div>
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                食品、零食、保健品等消耗类商品（拆封后）
+              </div>
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                促销赠品、试用装等非售卖商品
+              </div>
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                超过退换货时效的商品
+              </div>
+            </div>
+          </details>
+
+        </div>
+      </div>
+
+      <!-- 底部"联系客服"按钮 -->
+      <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[375px] z-50 flex flex-col items-center gap-2 pb-6 pt-3 px-4" style="background: linear-gradient(to top, var(--background) 70%, transparent);">
+        <button data-dom-id="cta-contact-cs" class="w-full h-[48px] rounded-full text-[16px] font-semibold flex items-center justify-center gap-2" style="background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-sm);">
+          <i data-lucide="headphones" class="w-[18px] h-[18px]"></i>
+          <span>联系客服</span>
+        </button>
+      </div>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

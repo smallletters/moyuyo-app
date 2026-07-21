@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 定期购</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24" style="background-color: var(--background);">
+
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30 flex h-11 items-center px-4" style="background-color: var(--background); border-bottom: 1px solid var(--border);">
+        <button data-dom-id="back-previous" class="inline-flex h-9 w-9 items-center justify-center" style="border-radius: var(--radius);" aria-label="返回">
+          <i data-lucide="chevron-left" class="h-5 w-5" style="color: var(--foreground);"></i>
+        </button>
+        <h1 class="min-w-0 flex-1 text-center text-base font-semibold tracking-tight" style="color: var(--foreground); text-wrap: balance; word-break: keep-all;">定期购管理</h1>
+        <div class="w-9"></div>
+      </header>
+
+      <!-- Hero Banner -->
+      <section class="mx-4 mt-4 overflow-hidden" style="border-radius: var(--radius);">
+        <div class="relative px-5 py-6" style="background-image: url('../assets/subscribe-pattern.jpg'); background-size: cover; background-position: center;">
+          <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(0,122,255,0.88) 0%, rgba(0,79,173,0.82) 100%);"></div>
+          <div class="relative z-10">
+            <h2 class="text-xl font-bold tracking-tight" style="color: var(--primary-foreground); text-wrap: balance;">定期购 · 省心省力</h2>
+            <p class="mt-2 text-sm leading-relaxed" style="color: rgba(255,255,255,0.85);">订阅商品自动配送，再享额外95折</p>
+            <a href="#" class="mt-3 inline-flex items-center gap-1 text-xs font-semibold" style="color: var(--primary-foreground);">
+              了解定期购
+              <i data-lucide="chevron-right" class="h-3.5 w-3.5"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 汇总统计行 -->
+      <section class="mx-4 mt-4 flex gap-2">
+        <div class="flex-1 px-3 py-3 text-center" style="border-radius: var(--radius); background-color: var(--secondary);">
+          <div class="text-lg font-bold" style="color: var(--primary); font-variant-numeric: tabular-nums;">2</div>
+          <div class="mt-0.5 text-xs" style="color: var(--muted-foreground);">活跃订阅</div>
+        </div>
+        <div class="flex-1 px-3 py-3 text-center" style="border-radius: var(--radius); background-color: var(--secondary);">
+          <div class="text-lg font-bold" style="color: var(--state-success); font-variant-numeric: tabular-nums;">¥86</div>
+          <div class="mt-0.5 text-xs" style="color: var(--muted-foreground);">已节省</div>
+        </div>
+        <div class="flex-1 px-3 py-3 text-center" style="border-radius: var(--radius); background-color: var(--secondary);">
+          <div class="text-lg font-bold" style="color: var(--foreground); font-variant-numeric: tabular-nums;">7月20日</div>
+          <div class="mt-0.5 text-xs" style="color: var(--muted-foreground);">下次配送</div>
+        </div>
+      </section>
+
+      <!-- 活跃订阅列表 -->
+      <section class="mt-6 px-4">
+        <h3 class="text-sm font-semibold" style="color: var(--foreground);">活跃订阅</h3>
+
+        <!-- 订阅1：宠物洗护套装 -->
+        <article class="mt-3 flex gap-3 p-3" style="border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--card);">
+          <img src="../assets/product-shampoo-bottle.jpg" alt="温和植物萃取宠物洗护套装" class="h-20 w-20 shrink-0 object-cover" style="border-radius: calc(var(--radius) - 4px);">
+          <div class="min-w-0 flex-1">
+            <h4 class="text-sm font-semibold truncate" style="color: var(--foreground);">温和植物萃取宠物洗护套装</h4>
+            <p class="mt-1 text-xs" style="color: var(--muted-foreground);">每30天配送一次</p>
+            <p class="mt-0.5 text-xs" style="color: var(--primary);">下次: 7月20日</p>
+            <p class="mt-1 text-sm font-bold" style="color: var(--foreground); font-variant-numeric: tabular-nums;">¥121.60<span class="text-xs font-normal" style="color: var(--muted-foreground);">/期 (¥128×0.95)</span></p>
+            <div class="mt-2 flex gap-2">
+              <button class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold whitespace-nowrap" style="border-radius: 999px; border: 1px solid var(--border); background-color: var(--secondary); color: var(--foreground);">修改周期</button>
+              <button class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold whitespace-nowrap" style="border-radius: 999px; border: 1px solid var(--border); background-color: var(--secondary); color: var(--foreground);">跳过</button>
+              <button class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold whitespace-nowrap" style="border-radius: 999px; border: 1px solid var(--state-error); color: var(--state-error); background: transparent;">取消</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 订阅2：宠物零食礼盒 -->
+        <article class="mt-3 flex gap-3 p-3" style="border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--card);">
+          <img src="../assets/product-pet-treats.jpg" alt="有机健康宠物零食礼盒" class="h-20 w-20 shrink-0 object-cover" style="border-radius: calc(var(--radius) - 4px);">
+          <div class="min-w-0 flex-1">
+            <h4 class="text-sm font-semibold truncate" style="color: var(--foreground);">有机健康宠物零食礼盒</h4>
+            <p class="mt-1 text-xs" style="color: var(--muted-foreground);">每14天配送一次</p>
+            <p class="mt-0.5 text-xs" style="color: var(--primary);">下次: 7月18日</p>
+            <p class="mt-1 text-sm font-bold" style="color: var(--foreground); font-variant-numeric: tabular-nums;">¥53.20<span class="text-xs font-normal" style="color: var(--muted-foreground);">/期 (¥56×0.95)</span></p>
+            <div class="mt-2 flex gap-2">
+              <button class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold whitespace-nowrap" style="border-radius: 999px; border: 1px solid var(--border); background-color: var(--secondary); color: var(--foreground);">修改周期</button>
+              <button class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold whitespace-nowrap" style="border-radius: 999px; border: 1px solid var(--border); background-color: var(--secondary); color: var(--foreground);">跳过</button>
+              <button class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold whitespace-nowrap" style="border-radius: 999px; border: 1px solid var(--state-error); color: var(--state-error); background: transparent;">取消</button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- 配送日历 -->
+      <section class="mt-6 px-4">
+        <h3 class="text-sm font-semibold" style="color: var(--foreground);">配送日历</h3>
+        <div class="mt-3 p-4" style="border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--card);">
+          <!-- 月份标题 -->
+          <div class="flex items-center justify-between">
+            <button class="inline-flex h-8 w-8 items-center justify-center" style="border-radius: 999px;" aria-label="上个月">
+              <i data-lucide="chevron-left" class="h-4 w-4" style="color: var(--muted-foreground);"></i>
+            </button>
+            <span class="text-sm font-semibold" style="color: var(--foreground);">2026年7月</span>
+            <button class="inline-flex h-8 w-8 items-center justify-center" style="border-radius: 999px;" aria-label="下个月">
+              <i data-lucide="chevron-right" class="h-4 w-4" style="color: var(--muted-foreground);"></i>
+            </button>
+          </div>
+          <!-- 星期标题行 -->
+          <div class="mt-3 grid grid-cols-7 gap-y-1 text-center">
+            <span class="text-xs font-medium" style="color: var(--muted-foreground);">日</span>
+            <span class="text-xs font-medium" style="color: var(--muted-foreground);">一</span>
+            <span class="text-xs font-medium" style="color: var(--muted-foreground);">二</span>
+            <span class="text-xs font-medium" style="color: var(--muted-foreground);">三</span>
+            <span class="text-xs font-medium" style="color: var(--muted-foreground);">四</span>
+            <span class="text-xs font-medium" style="color: var(--muted-foreground);">五</span>
+            <span class="text-xs font-medium" style="color: var(--muted-foreground);">六</span>
+          </div>
+          <!-- 日期网格（7月1日是周三） -->
+          <div class="mt-1 grid grid-cols-7 gap-y-1 text-center">
+            <!-- 填充空白 -->
+            <span></span>
+            <span></span>
+            <span></span>
+            <!-- 1-17号 -->
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">1</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">2</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">3</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">4</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">5</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">6</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">7</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">8</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">9</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">10</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">11</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">12</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">13</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">14</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">15</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">16</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">17</span>
+            <!-- 18号 配送日 -->
+            <span class="py-1.5 text-xs font-bold" style="color: var(--primary-foreground); background-color: var(--primary); border-radius: 999px;">18</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">19</span>
+            <!-- 20号 配送日 -->
+            <span class="py-1.5 text-xs font-bold" style="color: var(--primary-foreground); background-color: var(--primary); border-radius: 999px;">20</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">21</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">22</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">23</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">24</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">25</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">26</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">27</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">28</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">29</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">30</span>
+            <span class="py-1.5 text-xs" style="color: var(--foreground);">31</span>
+          </div>
+          <!-- 图例 -->
+          <div class="mt-3 flex items-center gap-3">
+            <span class="flex items-center gap-1.5">
+              <span class="inline-block h-2.5 w-2.5" style="border-radius: 999px; background-color: var(--primary);"></span>
+              <span class="text-xs" style="color: var(--muted-foreground);">配送日</span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 定期购权益 -->
+      <section class="mt-6 px-4">
+        <h3 class="text-sm font-semibold" style="color: var(--foreground);">定期购权益</h3>
+        <div class="mt-3 p-4" style="border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--card);">
+          <!-- 权益1: 专属95折 -->
+          <div class="flex items-center gap-3 pb-3" style="border-bottom: 1px solid var(--border);">
+            <div class="inline-flex h-9 w-9 shrink-0 items-center justify-center" style="border-radius: var(--radius); background-color: var(--brand-50);">
+              <i data-lucide="percent" class="h-4.5 w-4.5" style="color: var(--primary);"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <span class="text-sm font-semibold" style="color: var(--foreground);">专属95折</span>
+              <p class="text-xs" style="color: var(--muted-foreground);">所有订阅商品享受额外折扣</p>
+            </div>
+          </div>
+          <!-- 权益2: 免运费 -->
+          <div class="flex items-center gap-3 py-3" style="border-bottom: 1px solid var(--border);">
+            <div class="inline-flex h-9 w-9 shrink-0 items-center justify-center" style="border-radius: var(--radius); background-color: var(--brand-50);">
+              <i data-lucide="truck" class="h-4.5 w-4.5" style="color: var(--primary);"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <span class="text-sm font-semibold" style="color: var(--foreground);">免运费</span>
+              <p class="text-xs" style="color: var(--muted-foreground);">订阅订单全程免配送费</p>
+            </div>
+          </div>
+          <!-- 权益3: 优先发货 -->
+          <div class="flex items-center gap-3 py-3" style="border-bottom: 1px solid var(--border);">
+            <div class="inline-flex h-9 w-9 shrink-0 items-center justify-center" style="border-radius: var(--radius); background-color: var(--brand-50);">
+              <i data-lucide="zap" class="h-4.5 w-4.5" style="color: var(--primary);"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <span class="text-sm font-semibold" style="color: var(--foreground);">优先发货</span>
+              <p class="text-xs" style="color: var(--muted-foreground);">订阅订单享有优先处理权</p>
+            </div>
+          </div>
+          <!-- 权益4: 随时取消 -->
+          <div class="flex items-center gap-3 pt-3">
+            <div class="inline-flex h-9 w-9 shrink-0 items-center justify-center" style="border-radius: var(--radius); background-color: var(--brand-50);">
+              <i data-lucide="shield-check" class="h-4.5 w-4.5" style="color: var(--primary);"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <span class="text-sm font-semibold" style="color: var(--foreground);">随时取消</span>
+              <p class="text-xs" style="color: var(--muted-foreground);">无违约金，灵活管理订阅</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 底部 CTA -->
+      <section class="mt-6 px-4 pb-4">
+        <button data-dom-id="cta-edit-subscription" class="flex w-full items-center justify-center gap-2 px-4 py-3 text-sm font-semibold whitespace-nowrap" style="border-radius: 999px; border: 1.5px solid var(--primary); background: transparent; color: var(--primary);">
+          <i data-lucide="plus" class="h-4 w-4"></i>
+          添加新的订阅
+        </button>
+      </section>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

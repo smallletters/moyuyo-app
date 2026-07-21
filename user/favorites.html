@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 我的收藏</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="min-h-screen bg-[var(--background)]" style="max-width: 375px; margin: 0 auto;">
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--background)]/95 backdrop-blur">
+        <div class="flex h-11 items-center px-4">
+          <!-- 返回按钮 -->
+          <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" aria-label="返回">
+            <i data-lucide="chevron-left" class="h-5 w-5" style="color: var(--foreground);"></i>
+          </button>
+          <!-- 居中标题 -->
+          <div class="min-w-0 flex-1 text-center text-[16px] font-semibold tracking-[-0.02em]" style="color: var(--text-800);">我的收藏</div>
+          <!-- 视图切换图标 -->
+          <button class="inline-flex h-8 w-8 items-center justify-center rounded-lg" aria-label="切换视图">
+            <i data-lucide="layout-grid" class="h-5 w-5" style="color: var(--icon);"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- 筛选标签栏 -->
+      <nav class="flex items-center gap-2 px-4 py-3 overflow-x-auto no-scrollbar">
+        <button class="inline-flex h-8 items-center justify-center px-3 rounded-lg whitespace-nowrap text-[13px] font-medium" style="background: var(--brand-500); color: var(--background-50);">全部</button>
+        <button class="inline-flex h-8 items-center justify-center px-3 rounded-lg whitespace-nowrap text-[13px] font-medium" style="background: var(--background-200); color: var(--text-500);">降价</button>
+        <button class="inline-flex h-8 items-center justify-center px-3 rounded-lg whitespace-nowrap text-[13px] font-medium" style="background: var(--background-200); color: var(--text-500);">上新</button>
+        <button class="inline-flex h-8 items-center justify-center px-3 rounded-lg whitespace-nowrap text-[13px] font-medium" style="background: var(--background-200); color: var(--text-500);">库存紧张</button>
+      </nav>
+
+      <!-- 商品网格 2列 -->
+      <section class="grid grid-cols-2 gap-2 px-3 pb-4">
+        <!-- 商品 1: 洗护套装 -->
+        <a data-dom-id="link-product-detail" href="#" class="flex flex-col rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden transition-transform duration-150 active:scale-[0.98]" style="box-shadow: var(--shadow-xs);">
+          <div class="relative aspect-square">
+            <img src="../assets/product-shampoo-bottle.jpg" alt="温和植物萃取宠物洗护套装" class="w-full h-full object-cover" loading="lazy">
+            <!-- 爱心图标 - 已收藏（填充红色） -->
+            <button class="absolute top-2 right-2 h-7 w-7 flex items-center justify-center rounded-full" style="background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);" aria-label="取消收藏">
+              <i data-lucide="heart" class="h-4 w-4" style="color: var(--state-error); fill: var(--state-error);"></i>
+            </button>
+          </div>
+          <div class="flex flex-col gap-1 p-2.5">
+            <h3 class="text-[13px] leading-[1.25] line-clamp-2" style="color: var(--text-800);">温和植物萃取宠物洗护套装</h3>
+            <p class="text-[14px] font-semibold whitespace-nowrap" style="color: var(--text-800);">¥128</p>
+          </div>
+        </a>
+
+        <!-- 商品 2: 牵引套装 -->
+        <a data-dom-id="link-product-detail" href="#" class="flex flex-col rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden transition-transform duration-150 active:scale-[0.98]" style="box-shadow: var(--shadow-xs);">
+          <div class="relative aspect-square">
+            <img src="../assets/product-harness-gear.jpg" alt="经典尼龙宠物牵引套装" class="w-full h-full object-cover" loading="lazy">
+            <button class="absolute top-2 right-2 h-7 w-7 flex items-center justify-center rounded-full" style="background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);" aria-label="取消收藏">
+              <i data-lucide="heart" class="h-4 w-4" style="color: var(--state-error); fill: var(--state-error);"></i>
+            </button>
+          </div>
+          <div class="flex flex-col gap-1 p-2.5">
+            <h3 class="text-[13px] leading-[1.25] line-clamp-2" style="color: var(--text-800);">经典尼龙宠物牵引套装</h3>
+            <p class="text-[14px] font-semibold whitespace-nowrap" style="color: var(--text-800);">¥89</p>
+          </div>
+        </a>
+
+        <!-- 商品 3: 互动玩具球 -->
+        <a data-dom-id="link-product-detail" href="#" class="flex flex-col rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden transition-transform duration-150 active:scale-[0.98]" style="box-shadow: var(--shadow-xs);">
+          <div class="relative aspect-square">
+            <img src="../assets/product-toy-play.jpg" alt="环保毛绒互动玩具球" class="w-full h-full object-cover" loading="lazy">
+            <button class="absolute top-2 right-2 h-7 w-7 flex items-center justify-center rounded-full" style="background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);" aria-label="取消收藏">
+              <i data-lucide="heart" class="h-4 w-4" style="color: var(--state-error); fill: var(--state-error);"></i>
+            </button>
+          </div>
+          <div class="flex flex-col gap-1 p-2.5">
+            <h3 class="text-[13px] leading-[1.25] line-clamp-2" style="color: var(--text-800);">环保毛绒互动玩具球</h3>
+            <p class="text-[14px] font-semibold whitespace-nowrap" style="color: var(--text-800);">¥45</p>
+          </div>
+        </a>
+
+        <!-- 商品 4: 机能风衣（降价标签） -->
+        <a data-dom-id="link-product-detail" href="#" class="flex flex-col rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden transition-transform duration-150 active:scale-[0.98]" style="box-shadow: var(--shadow-xs);">
+          <div class="relative aspect-square">
+            <img src="../assets/product-pet-jacket.jpg" alt="设计师宠物机能风衣" class="w-full h-full object-cover" loading="lazy">
+            <!-- 降价标签 -->
+            <span class="absolute top-2 left-2 inline-flex h-5 items-center justify-center px-1.5 rounded-md text-[10px] font-semibold whitespace-nowrap" style="background: var(--state-error); color: var(--state-error-foreground);">降价</span>
+            <button class="absolute top-2 right-2 h-7 w-7 flex items-center justify-center rounded-full" style="background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);" aria-label="取消收藏">
+              <i data-lucide="heart" class="h-4 w-4" style="color: var(--state-error); fill: var(--state-error);"></i>
+            </button>
+          </div>
+          <div class="flex flex-col gap-1 p-2.5">
+            <h3 class="text-[13px] leading-[1.25] line-clamp-2" style="color: var(--text-800);">设计师宠物机能风衣</h3>
+            <p class="text-[14px] font-semibold whitespace-nowrap" style="color: var(--text-800);">¥168</p>
+          </div>
+        </a>
+
+        <!-- 商品 5: 航空包 -->
+        <a data-dom-id="link-product-detail" href="#" class="flex flex-col rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden transition-transform duration-150 active:scale-[0.98]" style="box-shadow: var(--shadow-xs);">
+          <div class="relative aspect-square">
+            <img src="../assets/product-pet-carrier.jpg" alt="轻奢宠物外出航空包" class="w-full h-full object-cover" loading="lazy">
+            <button class="absolute top-2 right-2 h-7 w-7 flex items-center justify-center rounded-full" style="background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);" aria-label="取消收藏">
+              <i data-lucide="heart" class="h-4 w-4" style="color: var(--state-error); fill: var(--state-error);"></i>
+            </button>
+          </div>
+          <div class="flex flex-col gap-1 p-2.5">
+            <h3 class="text-[13px] leading-[1.25] line-clamp-2" style="color: var(--text-800);">轻奢宠物外出航空包</h3>
+            <p class="text-[14px] font-semibold whitespace-nowrap" style="color: var(--text-800);">¥259</p>
+          </div>
+        </a>
+
+        <!-- 商品 6: 零食礼盒（库存紧张标签） -->
+        <a data-dom-id="link-product-detail" href="#" class="flex flex-col rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden transition-transform duration-150 active:scale-[0.98]" style="box-shadow: var(--shadow-xs);">
+          <div class="relative aspect-square">
+            <img src="../assets/product-pet-treats.jpg" alt="有机健康宠物零食礼盒" class="w-full h-full object-cover" loading="lazy">
+            <!-- 库存紧张标签（琥珀色） -->
+            <span class="absolute top-2 left-2 inline-flex h-5 items-center justify-center px-1.5 rounded-md text-[10px] font-semibold whitespace-nowrap" style="background: var(--chart-3); color: var(--background-50);">库存紧张</span>
+            <button class="absolute top-2 right-2 h-7 w-7 flex items-center justify-center rounded-full" style="background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);" aria-label="取消收藏">
+              <i data-lucide="heart" class="h-4 w-4" style="color: var(--state-error); fill: var(--state-error);"></i>
+            </button>
+          </div>
+          <div class="flex flex-col gap-1 p-2.5">
+            <h3 class="text-[13px] leading-[1.25] line-clamp-2" style="color: var(--text-800);">有机健康宠物零食礼盒</h3>
+            <p class="text-[14px] font-semibold whitespace-nowrap" style="color: var(--text-800);">¥56</p>
+          </div>
+        </a>
+      </section>
+
+      <!-- 底部统计文本 -->
+      <div class="flex items-center justify-center py-4 pb-6">
+        <p class="text-[13px]" style="color: var(--text-400);">共收藏 12 件商品</p>
+      </div>
+    </main>
+    <script src="shared/api.js"></script><script>lucide.createIcons();</script>
+  <script>
+    (function () {
+      var grid = document.querySelector('.grid.grid-cols-2');
+      if (!grid) return;
+
+      function favCard(item) {
+        var goods = item.goods || item;
+        var name = goods.name || goods.title || '';
+        var price = goods.price != null ? '¥' + (goods.price / 100).toFixed(0) : '';
+        var img = goods.coverImage || goods.images?.[0] || '../assets/product-placeholder.jpg';
+        var slug = goods.slug || goods.id || '';
+        var isOnSale = item.priceDrop || item.onSale;
+
+        var a = document.createElement('a');
+        a.href = 'product-detail.html?slug=' + encodeURIComponent(slug);
+        a.className = 'flex flex-col rounded-xl border overflow-hidden';
+        a.setAttribute('data-dom-id', 'link-product-detail');
+        a.style.cssText = 'border-color:var(--border);background:var(--card);box-shadow:var(--shadow-xs);transition:transform .15s';
+
+        a.innerHTML =
+          '<div class="relative aspect-square">' +
+          '<img src="' + img + '" alt="' + name + '" class="w-full h-full object-cover" loading="lazy" onerror="this.src=\'../assets/product-placeholder.jpg\'">' +
+          (isOnSale ? '<span class="absolute top-2 left-2 inline-flex h-5 items-center justify-center px-1.5 rounded-md text-[10px] font-semibold" style="background:var(--state-error);color:var(--state-error-foreground)">降价</span>' : '') +
+          '<button class="fav-remove absolute top-2 right-2 h-7 w-7 flex items-center justify-center rounded-full" style="background:rgba(0,0,0,0.3);backdrop-filter:blur(4px)" data-fav-id="' + (item.id || '') + '"><i data-lucide="heart" class="h-4 w-4" style="color:var(--state-error);fill:var(--state-error)"></i></button>' +
+          '</div>' +
+          '<div class="flex flex-col gap-1 p-2.5">' +
+          '<h3 class="text-[13px] leading-[1.25] line-clamp-2" style="color:var(--text-800)">' + name + '</h3>' +
+          '<p class="text-[14px] font-semibold" style="color:var(--text-800)">' + price + '</p>' +
+          '</div>';
+        return a;
+      }
+
+      // 加载收藏
+      async function loadFavorites() {
+        try {
+          var res = await moyuyoAPI.get('/api/v1/favorites/list?page=1&pageSize=20');
+          if (res.code === 0 && res.data) {
+            var items = res.data.items || res.data.list || [];
+            if (items.length > 0) {
+              grid.innerHTML = '';
+              items.forEach(function (item) {
+                grid.appendChild(favCard(item));
+              });
+              lucide.createIcons();
+            }
+          }
+        } catch (e) {
+          console.log('[MOYUYO] Favorites unavailable, showing static content');
+        }
+      }
+
+      // 取消收藏
+      grid.addEventListener('click', function (e) {
+        var btn = e.target.closest('.fav-remove');
+        if (!btn) return;
+        e.preventDefault();
+        var favId = btn.getAttribute('data-fav-id');
+        moyuyoAPI.post('/api/v1/favorites/remove', { favoriteId: favId }).then(function (res) {
+          if (res.code === 0) {
+            var card = btn.closest('a');
+            if (card) { card.style.opacity = '0'; setTimeout(function () { card.remove(); }, 200); }
+          }
+        }).catch(function () {});
+      });
+
+      loadFavorites();
+    })();
+  </script>
+</body>
+</html>

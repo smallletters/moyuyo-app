@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 幸运大转盘</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+  <main class="pb-12">
+
+    <!-- 顶部导航栏：深色背景 -->
+    <div class="sticky top-0 z-30" style="background: var(--background-800);">
+      <div class="h-11 flex items-center justify-between px-5">
+        <span class="text-sm font-semibold" style="color: var(--text-50);">9:41</span>
+        <div class="flex items-center gap-1.5">
+          <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--text-50);"></span>
+          <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--text-50);"></span>
+          <span class="w-6 h-3 rounded-sm" style="background: var(--text-50);"></span>
+        </div>
+      </div>
+      <!-- 导航：返回箭头 + 标题 -->
+      <div class="flex items-center h-12 px-4 gap-3" style="background: var(--background-800);">
+        <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--background-700);" aria-label="返回">
+          <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--text-50);"></i>
+        </button>
+        <h1 class="text-base font-semibold flex-1 text-center pr-9" style="color: var(--text-50);">幸运大转盘</h1>
+      </div>
+    </div>
+
+    <!-- 剩余抽奖次数卡片 -->
+    <section class="px-4 pt-5">
+      <div class="rounded-[var(--radius)] p-4 flex items-center justify-between" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600)); box-shadow: var(--shadow-md);">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.2);">
+            <i data-lucide="ticket" class="w-5 h-5" style="color: var(--background-50);"></i>
+          </div>
+          <div>
+            <p class="text-sm font-semibold" style="color: var(--background-50);">剩余 3 次抽奖机会</p>
+            <p class="text-xs mt-0.5" style="color: rgba(255,255,255,0.75);">消费满 $50 再获得 1 次</p>
+          </div>
+        </div>
+        <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.2);">
+          <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--background-50);"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- 转盘主体区域 -->
+    <section class="flex flex-col items-center px-4 pt-8 pb-6">
+      <!-- 转盘容器 -->
+      <div class="relative" style="width: 300px; height: 300px;">
+
+        <!-- 外圈装饰环 -->
+        <div class="absolute inset-0 rounded-full" style="border: 4px solid var(--brand-500); box-shadow: 0 0 0 8px var(--brand-50), 0 0 0 12px var(--brand-200), var(--shadow-lg);"></div>
+
+        <!-- 指针（转盘顶部） -->
+        <div class="absolute top-[-2px] left-1/2 -translate-x-1/2 z-10">
+          <div class="wheel-pointer"></div>
+        </div>
+
+        <!-- 转盘本体 -->
+        <div id="wheel" class="wheel-spin absolute inset-[4px] rounded-full overflow-hidden cursor-pointer"
+             style="background: conic-gradient(
+               #007AFF 0deg 45deg,
+               #34C759 45deg 90deg,
+               #FF9500 90deg 135deg,
+               #5856D6 135deg 180deg,
+               #AF52DE 180deg 225deg,
+               #FF3B30 225deg 270deg,
+               #00C7BE 270deg 315deg,
+               #8E8E93 315deg 360deg
+             );">
+
+          <!-- 扇区标签容器 -->
+          <div class="absolute inset-0">
+            <!-- 8个扇区奖品标签，通过旋转定位 -->
+            <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(22.5deg) translateY(-50%);">
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">$5优惠券</span>
+            </div>
+            <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(67.5deg) translateY(-50%);">
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">10积分</span>
+            </div>
+            <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(112.5deg) translateY(-50%);">
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">$10优惠券</span>
+            </div>
+            <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(157.5deg) translateY(-50%);">
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">限定礼盒</span>
+            </div>
+            <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(202.5deg) translateY(-50%);">
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">20积分</span>
+            </div>
+            <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(247.5deg) translateY(-50%);">
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">免邮券</span>
+            </div>
+            <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(292.5deg) translateY(-50%);">
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">50积分</span>
+            </div>
+            <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(337.5deg) translateY(-50%);">
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">谢谢参与</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 中心按钮 -->
+        <button id="spinBtn" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full flex items-center justify-center"
+                style="background: var(--primary); box-shadow: 0 4px 16px rgba(0,122,255,0.4); border: 3px solid var(--background-50);"
+                aria-label="开始抽奖">
+          <span class="text-sm font-bold" style="color: var(--background-50);">开始</span>
+        </button>
+      </div>
+
+      <!-- 转盘下方提示 -->
+      <p class="text-xs mt-5 text-center" style="color: var(--muted-foreground);">点击「开始」按钮进行抽奖</p>
+    </section>
+
+    <!-- 抽奖记录折叠面板 -->
+    <section class="px-4 mt-2">
+      <button id="toggleHistory" class="w-full flex items-center justify-between p-4 rounded-t-[var(--radius)]"
+              style="background: var(--secondary); border: 1px solid var(--border); border-bottom: none;">
+        <div class="flex items-center gap-2">
+          <i data-lucide="history" class="w-4 h-4" style="color: var(--primary);"></i>
+          <span class="text-sm font-semibold" style="color: var(--foreground);">抽奖记录</span>
+          <span class="text-xs px-1.5 py-0.5 rounded-full" style="background: var(--brand-100); color: var(--primary);">10</span>
+        </div>
+        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" style="color: var(--muted-foreground);" id="historyArrow"></i>
+      </button>
+      <div id="historyContent" class="collapse-content rounded-b-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); border-top: none;">
+        <div class="divide-y" style="border-color: var(--border);">
+          <!-- 记录 1 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
+                <i data-lucide="tag" class="w-4 h-4" style="color: var(--primary);"></i>
+              </div>
+              <span class="text-sm font-medium" style="color: var(--foreground);">$5优惠券</span>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">2025-07-08 14:32</span>
+          </div>
+          <!-- 记录 2 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--state-success-surface);">
+                <i data-lucide="star" class="w-4 h-4" style="color: var(--state-success);"></i>
+              </div>
+              <span class="text-sm font-medium" style="color: var(--foreground);">20积分</span>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">2025-07-07 09:15</span>
+          </div>
+          <!-- 记录 3 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
+                <i data-lucide="tag" class="w-4 h-4" style="color: var(--primary);"></i>
+              </div>
+              <span class="text-sm font-medium" style="color: var(--foreground);">$10优惠券</span>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">2025-07-06 20:41</span>
+          </div>
+          <!-- 记录 4 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: #f3e8ff;">
+                <i data-lucide="gift" class="w-4 h-4" style="color: #5856D6;"></i>
+              </div>
+              <span class="text-sm font-medium" style="color: var(--foreground);">限定礼盒</span>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">2025-07-05 16:08</span>
+          </div>
+          <!-- 记录 5 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
+                <i data-lucide="truck" class="w-4 h-4" style="color: var(--primary);"></i>
+              </div>
+              <span class="text-sm font-medium" style="color: var(--foreground);">免邮券</span>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">2025-07-04 11:22</span>
+          </div>
+          <!-- 记录 6 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--state-success-surface);">
+                <i data-lucide="star" class="w-4 h-4" style="color: var(--state-success);"></i>
+              </div>
+              <span class="text-sm font-medium" style="color: var(--foreground);">50积分</span>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">2025-07-03 08:55</span>
+          </div>
+          <!-- 记录 7 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--background-200);">
+                <i data-lucide="frown" class="w-4 h-4" style="color: var(--text-400);"></i>
+              </div>
+              <span class="text-sm font-medium" style="color: var(--foreground);">谢谢参与</span>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">2025-07-02 19:33</span>
+          </div>
+          <!-- 记录 8 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
+                <i data-lucide="tag" class="w-4 h-4" style="color: var(--primary);"></i>
+              </div>
+              <span class="text-sm font-medium" style="color: var(--foreground);">$5优惠券</span>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">2025-07-01 13:17</span>
+          </div>
+          <!-- 记录 9 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--state-success-surface);">
+                <i data-lucide="star" class="w-4 h-4" style="color: var(--state-success);"></i>
+              </div>
+              <span class="text-sm font-medium" style="color: var(--foreground);">10积分</span>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">2025-06-30 10:44</span>
+          </div>
+          <!-- 记录 10 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
+                <i data-lucide="tag" class="w-4 h-4" style="color: var(--primary);"></i>
+              </div>
+              <span class="text-sm font-medium" style="color: var(--foreground);">$10优惠券</span>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">2025-06-29 17:29</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 底部规则说明 -->
+    <section class="px-4 pt-6 pb-8">
+      <div class="rounded-[var(--radius)] p-4" style="background: var(--secondary);">
+        <div class="flex items-center gap-2 mb-3">
+          <i data-lucide="info" class="w-4 h-4" style="color: var(--primary);"></i>
+          <span class="text-sm font-semibold" style="color: var(--foreground);">活动规则</span>
+        </div>
+        <ul class="space-y-2">
+          <li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
+            <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
+            消费满 $50 获得 1 次抽奖机会，每日上限 5 次
+          </li>
+          <li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
+            <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
+            奖品包括优惠券、积分、免邮券及限定礼盒
+          </li>
+          <li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
+            <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
+            优惠券有效期为发放后 7 天，积分实时到账
+          </li>
+          <li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
+            <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
+            限定礼盒中奖后 3 个工作日内发货
+          </li>
+          <li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
+            <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
+            活动最终解释权归 MOYUYO 所有
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 中奖结果弹窗（默认隐藏） -->
+    <div id="prizeModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center" style="background: rgba(0,0,0,0.5); opacity: 0; pointer-events: none;">
+      <div class="mx-4 w-full max-w-[340px] rounded-2xl p-6 text-center" style="background: var(--card); box-shadow: var(--shadow-2xl);">
+        <!-- 奖品图标 -->
+        <div id="prizeIcon" class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style="background: var(--brand-50);">
+          <i data-lucide="gift" class="w-8 h-8" style="color: var(--primary);"></i>
+        </div>
+        <!-- 奖品名称 -->
+        <h2 id="prizeTitle" class="text-lg font-bold mb-2" style="color: var(--foreground);">恭喜中奖</h2>
+        <!-- 奖品说明 -->
+        <p id="prizeDesc" class="text-sm mb-6" style="color: var(--muted-foreground);">您获得了一张 $5 优惠券</p>
+        <!-- 收下奖品按钮 -->
+        <button id="claimBtn" class="w-full h-12 rounded-full text-sm font-semibold"
+                style="background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-md);">
+          收下奖品
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 交互脚本 -->
+  <script>
+    // ===== 转盘旋转逻辑 =====
+    const prizes = [
+      { name: '$5优惠券', desc: '您获得了一张 $5 优惠券，下单立减', icon: 'tag', color: 'var(--brand-50)' },
+      { name: '10积分', desc: '您获得了 10 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
+      { name: '$10优惠券', desc: '您获得了一张 $10 优惠券，下单立减', icon: 'tag', color: 'var(--brand-50)' },
+      { name: '限定礼盒', desc: '恭喜获得限定礼盒，将在 3 个工作日内发货', icon: 'gift', color: '#f3e8ff' },
+      { name: '20积分', desc: '您获得了 20 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
+      { name: '免邮券', desc: '您获得了一张免邮券，可免一次运费', icon: 'truck', color: 'var(--brand-50)' },
+      { name: '50积分', desc: '您获得了 50 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
+      { name: '谢谢参与', desc: '很遗憾未中奖，再试一次吧', icon: 'frown', color: 'var(--background-200)' }
+    ];
+
+    const wheel = document.getElementById('wheel');
+    const spinBtn = document.getElementById('spinBtn');
+    const prizeModal = document.getElementById('prizeModal');
+    const prizeTitle = document.getElementById('prizeTitle');
+    const prizeDesc = document.getElementById('prizeDesc');
+    const prizeIcon = document.getElementById('prizeIcon');
+    const claimBtn = document.getElementById('claimBtn');
+    let isSpinning = false;
+    let currentRotation = 0;
+
+    // 点击开始按钮旋转转盘
+    spinBtn.addEventListener('click', function () {
+      if (isSpinning) return;
+      isSpinning = true;
+
+      // 随机选择奖品（加权：谢谢参与概率更高）
+      const weights = [15, 15, 10, 2, 10, 10, 5, 33]; // 概率权重
+      const totalWeight = weights.reduce((a, b) => a + b, 0);
+      let random = Math.random() * totalWeight;
+      let selectedIndex = 0;
+      for (let i = 0; i < weights.length; i++) {
+        random -= weights[i];
+        if (random <= 0) { selectedIndex = i; break; }
+      }
+
+      // 计算旋转角度（至少转5圈 + 目标扇区偏移）
+      const sectorAngle = 360 / prizes.length;
+      const targetAngle = 360 * 5 + (360 - (selectedIndex * sectorAngle + sectorAngle / 2));
+      currentRotation += targetAngle;
+
+      // 应用旋转
+      wheel.style.transform = 'rotate(' + currentRotation + 'deg)';
+
+      // 旋转结束后显示弹窗
+      setTimeout(function () {
+        showPrize(selectedIndex);
+        isSpinning = false;
+      }, 4200);
+    });
+
+    // 显示中奖弹窗
+    function showPrize(index) {
+      const prize = prizes[index];
+      prizeTitle.textContent = prize.name === '谢谢参与' ? '差一点就中了' : '恭喜中奖';
+      prizeDesc.textContent = prize.desc;
+
+      // 更新弹窗图标
+      prizeIcon.style.background = prize.color;
+      prizeIcon.innerHTML = '<i data-lucide="' + prize.icon + '" class="w-8 h-8" style="color: ' +
+        (prize.name === '谢谢参与' ? 'var(--text-400)' : prize.icon === 'gift' ? '#5856D6' : 'var(--primary)') +
+        ';"></i>';
+      lucide.createIcons();
+
+      // 显示弹窗
+      prizeModal.style.opacity = '1';
+      prizeModal.style.pointerEvents = 'auto';
+    }
+
+    // 关闭弹窗
+    claimBtn.addEventListener('click', function () {
+      prizeModal.style.opacity = '0';
+      prizeModal.style.pointerEvents = 'none';
+    });
+
+    // 点击遮罩关闭
+    prizeModal.addEventListener('click', function (e) {
+      if (e.target === prizeModal) {
+        prizeModal.style.opacity = '0';
+        prizeModal.style.pointerEvents = 'none';
+      }
+    });
+
+    // ===== 折叠面板逻辑 =====
+    const toggleHistory = document.getElementById('toggleHistory');
+    const historyContent = document.getElementById('historyContent');
+    const historyArrow = document.getElementById('historyArrow');
+    let historyOpen = false;
+
+    toggleHistory.addEventListener('click', function () {
+      historyOpen = !historyOpen;
+      historyContent.classList.toggle('open', historyOpen);
+      historyArrow.style.transform = historyOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+    });
+  </script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

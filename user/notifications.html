@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 消息中心</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="min-h-screen" style="background: var(--background);">
+        <!-- 顶部导航栏 -->
+        <header class="sticky top-0 z-30 flex h-11 items-center px-4 border-b" style="border-color: var(--border); background: var(--background-50);">
+            <!-- 返回按钮 -->
+            <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="color: var(--brand-500);" aria-label="返回">
+                <i data-lucide="chevron-left" class="h-5 w-5"></i>
+            </button>
+            <!-- 页面标题 -->
+            <div class="min-w-0 flex-1 text-center text-[17px] font-semibold" style="color: var(--text-800); word-break: keep-all; overflow-wrap: break-word;">消息中心</div>
+            <!-- 全部已读 -->
+            <button class="text-[15px] font-normal whitespace-nowrap" style="color: var(--brand-500);">全部已读</button>
+        </header>
+
+        <!-- Tab 栏 -->
+        <nav class="flex gap-0 border-b px-4" style="border-color: var(--border); background: var(--background-50);" aria-label="消息分类">
+            <button class="flex-1 py-2.5 text-center text-[14px] font-semibold whitespace-nowrap" style="color: var(--brand-500); border-bottom: 2px solid var(--brand-500);" data-tab-key="all" data-active="true">全部</button>
+            <button class="flex-1 py-2.5 text-center text-[14px] font-normal whitespace-nowrap" style="color: var(--text-400);" data-tab-key="logistics">物流</button>
+            <button class="flex-1 py-2.5 text-center text-[14px] font-normal whitespace-nowrap" style="color: var(--text-400);" data-tab-key="interaction">互动</button>
+            <button class="flex-1 py-2.5 text-center text-[14px] font-normal whitespace-nowrap" style="color: var(--text-400);" data-tab-key="system">系统</button>
+        </nav>
+
+        <!-- 通知列表 -->
+        <div class="flex flex-col gap-2 p-4">
+
+            <!-- Item 1: UNREAD - 物流通知 -->
+            <article class="flex gap-3 rounded-xl p-3 border" style="background: var(--brand-50); border-color: transparent;">
+                <!-- 未读圆点 -->
+                <div class="flex flex-col items-center pt-1">
+                    <div class="h-2 w-2 rounded-full shrink-0" style="background: var(--brand-500);"></div>
+                </div>
+                <!-- 图标 -->
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background: var(--background-200);">
+                    <span data-icon class="h-4.5 w-4.5" style="mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--brand-500);"></span>
+                </div>
+                <!-- 内容 -->
+                <div class="flex flex-1 flex-col gap-0.5 min-w-0">
+                    <div class="text-[15px] font-semibold truncate" style="color: var(--text-800);">您的包裹已发货</div>
+                    <p class="text-[13px] leading-relaxed line-clamp-2" style="color: var(--text-500);">经典尼龙宠物牵引套装已从杭州仓发出，预计7月12日送达</p>
+                    <span class="mt-1 text-[12px] whitespace-nowrap" style="color: var(--text-400);">2小时前</span>
+                </div>
+            </article>
+
+            <!-- Item 2: UNREAD - 积分通知 -->
+            <article class="flex gap-3 rounded-xl p-3 border" style="background: var(--brand-50); border-color: transparent;">
+                <div class="flex flex-col items-center pt-1">
+                    <div class="h-2 w-2 rounded-full shrink-0" style="background: var(--brand-500);"></div>
+                </div>
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background: var(--background-200);">
+                    <span data-icon class="h-4.5 w-4.5" style="mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-500);"></span>
+                </div>
+                <div class="flex flex-1 flex-col gap-0.5 min-w-0">
+                    <div class="text-[15px] font-semibold truncate" style="color: var(--text-800);">恭喜获得500积分</div>
+                    <p class="text-[13px] leading-relaxed line-clamp-2" style="color: var(--text-500);">您已完成首次订单评价，500积分已到账</p>
+                    <span class="mt-1 text-[12px] whitespace-nowrap" style="color: var(--text-400);">5小时前</span>
+                </div>
+            </article>
+
+            <!-- Item 3: UNREAD - 促销通知 -->
+            <article class="flex gap-3 rounded-xl p-3 border" style="background: var(--brand-50); border-color: transparent;">
+                <div class="flex flex-col items-center pt-1">
+                    <div class="h-2 w-2 rounded-full shrink-0" style="background: var(--brand-500);"></div>
+                </div>
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background: var(--background-200);">
+                    <span data-icon class="h-4.5 w-4.5" style="mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); color: var(--brand-500);"></span>
+                </div>
+                <div class="flex flex-1 flex-col gap-0.5 min-w-0">
+                    <div class="text-[15px] font-semibold truncate" style="color: var(--text-800);">限时折扣通知</div>
+                    <p class="text-[13px] leading-relaxed line-clamp-2" style="color: var(--text-500);">CARE产品线夏季特惠，精选护理用品低至6折</p>
+                    <span class="mt-1 text-[12px] whitespace-nowrap" style="color: var(--text-400);">1天前</span>
+                </div>
+            </article>
+
+            <!-- Item 4: READ - 互动通知 -->
+            <article class="flex gap-3 rounded-xl p-3 border" style="background: var(--background-50); border-color: var(--border);">
+                <div class="flex flex-col items-center pt-1">
+                    <div class="h-2 w-2 shrink-0"></div>
+                </div>
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background: var(--background-200);">
+                    <span data-icon class="h-4.5 w-4.5" style="mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--text-500);"></span>
+                </div>
+                <div class="flex flex-1 flex-col gap-0.5 min-w-0">
+                    <div class="text-[15px] font-medium truncate" style="color: var(--text-800);">小圆赞了你的笔记</div>
+                    <p class="text-[13px] leading-relaxed line-clamp-2" style="color: var(--text-500);">"我家英短的OOTD日常"获得了一个新赞</p>
+                    <span class="mt-1 text-[12px] whitespace-nowrap" style="color: var(--text-400);">2天前</span>
+                </div>
+            </article>
+
+            <!-- Item 5: READ - 系统提醒 -->
+            <article class="flex gap-3 rounded-xl p-3 border" style="background: var(--background-50); border-color: var(--border);">
+                <div class="flex flex-col items-center pt-1">
+                    <div class="h-2 w-2 shrink-0"></div>
+                </div>
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background: var(--background-200);">
+                    <span data-icon class="h-4.5 w-4.5" style="mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--text-500);"></span>
+                </div>
+                <div class="flex flex-1 flex-col gap-0.5 min-w-0">
+                    <div class="text-[15px] font-medium truncate" style="color: var(--text-800);">宠物驱虫提醒</div>
+                    <p class="text-[13px] leading-relaxed line-clamp-2" style="color: var(--text-500);">旺财的下次驱虫时间还有12天，请及时准备</p>
+                    <span class="mt-1 text-[12px] whitespace-nowrap" style="color: var(--text-400);">3天前</span>
+                </div>
+            </article>
+
+            <!-- Item 6: READ - 订单确认 -->
+            <article class="flex gap-3 rounded-xl p-3 border" style="background: var(--background-50); border-color: var(--border);">
+                <div class="flex flex-col items-center pt-1">
+                    <div class="h-2 w-2 shrink-0"></div>
+                </div>
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background: var(--background-200);">
+                    <span data-icon class="h-4.5 w-4.5" style="mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--text-500);"></span>
+                </div>
+                <div class="flex flex-1 flex-col gap-0.5 min-w-0">
+                    <div class="text-[15px] font-medium truncate" style="color: var(--text-800);">订单签收确认</div>
+                    <p class="text-[13px] leading-relaxed line-clamp-2" style="color: var(--text-500);">订单MOY20260705003已签收，欢迎评价</p>
+                    <span class="mt-1 text-[12px] whitespace-nowrap" style="color: var(--text-400);">5天前</span>
+                </div>
+            </article>
+
+        </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

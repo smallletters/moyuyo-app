@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>先试后买 - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+  <main class="pb-24">
+
+    <!-- 顶部导航栏 -->
+    <nav class="sticky top-0 z-30" style="background: var(--background-800);">
+      <div class="flex items-center justify-between h-11 px-4" style="background: var(--background-800);">
+        <!-- 返回箭头 -->
+        <button class="flex items-center justify-center w-9 h-9 rounded-full" style="background: var(--background-700); color: var(--background-50);" aria-label="返回">
+          <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <!-- 标题 -->
+        <h1 class="text-base font-semibold" style="color: var(--background-50);">先试后买</h1>
+        <!-- 占位 -->
+        <div class="w-9"></div>
+      </div>
+    </nav>
+
+    <!-- 页面内容 -->
+    <div class="px-4 pt-4 flex flex-col gap-4">
+
+      <!-- 活动说明横幅卡片 -->
+      <section class="rounded-2xl p-5 relative overflow-hidden" style="background: linear-gradient(135deg, var(--brand-600), var(--brand-400)); color: var(--background-50);">
+        <!-- 装饰圆 -->
+        <div class="absolute -top-6 -right-6 w-24 h-24 rounded-full" style="background: rgba(255,255,255,0.12);"></div>
+        <div class="absolute -bottom-4 -right-10 w-20 h-20 rounded-full" style="background: rgba(255,255,255,0.08);"></div>
+        <div class="relative z-10">
+          <div class="flex items-center gap-2 mb-2">
+            <i data-lucide="sparkles" class="w-5 h-5" style="color: var(--background-50);"></i>
+            <h2 class="text-lg font-bold" style="color: var(--background-50);">先试后买 0 风险试穿</h2>
+          </div>
+          <p class="text-sm leading-relaxed" style="color: rgba(255,255,255,0.88);">
+            下单时仅预授权 $1，商品寄到家后试穿。7 天试用期，到期前选择留下或寄回，寄回使用预付退货标签免费寄回。
+          </p>
+          <div class="flex items-center gap-4 mt-4">
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="lock" class="w-3.5 h-3.5" style="color: rgba(255,255,255,0.7);"></i>
+              <span class="text-xs font-medium" style="color: rgba(255,255,255,0.85);">预授权 $1</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="clock" class="w-3.5 h-3.5" style="color: rgba(255,255,255,0.7);"></i>
+              <span class="text-xs font-medium" style="color: rgba(255,255,255,0.85);">7 天试用期</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="undo-2" class="w-3.5 h-3.5" style="color: rgba(255,255,255,0.7);"></i>
+              <span class="text-xs font-medium" style="color: rgba(255,255,255,0.85);">免费寄回</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 试用中商品标题 -->
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-semibold" style="color: var(--foreground);">试用中的商品</h3>
+        <span class="text-xs font-medium px-2.5 py-1 rounded-full" style="background: var(--primary); color: var(--primary-foreground);">2 件试用中</span>
+      </div>
+
+      <!-- 试用中商品列表 -->
+      <div class="flex flex-col gap-3">
+
+        <!-- 商品卡片 1 -->
+        <article class="rounded-2xl p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <div class="flex gap-3.5">
+            <!-- 商品图（CSS 渐变占位） -->
+            <div class="w-24 h-24 rounded-xl shrink-0" style="background: linear-gradient(145deg, var(--brand-100), var(--brand-200), var(--brand-50));"></div>
+            <!-- 商品信息 -->
+            <div class="flex-1 min-w-0 flex flex-col justify-between">
+              <div>
+                <h4 class="text-sm font-semibold truncate" style="color: var(--foreground);">MOYUYO 经典款宠物风衣</h4>
+                <p class="text-xs mt-1" style="color: var(--muted-foreground);">规格：M 码 / 藏青色</p>
+              </div>
+              <div class="flex items-baseline gap-1 mt-1">
+                <span class="text-sm font-bold" style="color: var(--primary);">$89.00</span>
+                <span class="text-xs" style="color: var(--muted-foreground);">试穿价</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 试用倒计时 -->
+          <div class="flex items-center gap-2 mt-3.5 px-3 py-2 rounded-xl" style="background: var(--accent);">
+            <i data-lucide="timer" class="w-4 h-4" style="color: var(--brand-500);"></i>
+            <span class="text-xs font-medium" style="color: var(--text-500);">剩余试用时间</span>
+            <span class="ml-auto text-sm font-bold tabular-nums" style="color: var(--brand-600);">3天 12:30:00</span>
+          </div>
+
+          <!-- 操作按钮 -->
+          <div class="flex gap-2.5 mt-3.5">
+            <button class="flex-1 h-11 rounded-xl text-sm font-semibold flex items-center justify-center gap-1.5" style="background: var(--primary); color: var(--primary-foreground);">
+              <i data-lucide="check" class="w-4 h-4"></i>
+              确认留下
+            </button>
+            <button class="flex-1 h-11 rounded-xl text-sm font-semibold flex items-center justify-center gap-1.5" style="background: var(--secondary); color: var(--secondary-foreground);">
+              <i data-lucide="package" class="w-4 h-4"></i>
+              预约寄回
+            </button>
+          </div>
+        </article>
+
+        <!-- 商品卡片 2 -->
+        <article class="rounded-2xl p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <div class="flex gap-3.5">
+            <!-- 商品图（CSS 渐变占位） -->
+            <div class="w-24 h-24 rounded-xl shrink-0" style="background: linear-gradient(145deg, var(--state-success-surface), var(--brand-50), var(--background-200));"></div>
+            <!-- 商品信息 -->
+            <div class="flex-1 min-w-0 flex flex-col justify-between">
+              <div>
+                <h4 class="text-sm font-semibold truncate" style="color: var(--foreground);">MOYUYO 皮革宠物项圈</h4>
+                <p class="text-xs mt-1" style="color: var(--muted-foreground);">规格：S 码 / 棕色</p>
+              </div>
+              <div class="flex items-baseline gap-1 mt-1">
+                <span class="text-sm font-bold" style="color: var(--primary);">$45.00</span>
+                <span class="text-xs" style="color: var(--muted-foreground);">试穿价</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 试用倒计时 -->
+          <div class="flex items-center gap-2 mt-3.5 px-3 py-2 rounded-xl" style="background: var(--accent);">
+            <i data-lucide="timer" class="w-4 h-4" style="color: var(--brand-500);"></i>
+            <span class="text-xs font-medium" style="color: var(--text-500);">剩余试用时间</span>
+            <span class="ml-auto text-sm font-bold tabular-nums" style="color: var(--brand-600);">3天 12:30:00</span>
+          </div>
+
+          <!-- 操作按钮 -->
+          <div class="flex gap-2.5 mt-3.5">
+            <button class="flex-1 h-11 rounded-xl text-sm font-semibold flex items-center justify-center gap-1.5" style="background: var(--primary); color: var(--primary-foreground);">
+              <i data-lucide="check" class="w-4 h-4"></i>
+              确认留下
+            </button>
+            <button class="flex-1 h-11 rounded-xl text-sm font-semibold flex items-center justify-center gap-1.5" style="background: var(--secondary); color: var(--secondary-foreground);">
+              <i data-lucide="package" class="w-4 h-4"></i>
+              预约寄回
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <!-- 可试件数提示 -->
+      <div class="flex items-center gap-2.5 px-4 py-3 rounded-xl" style="background: var(--accent); border: 1px solid var(--border);">
+        <i data-lucide="info" class="w-4 h-4 shrink-0" style="color: var(--primary);"></i>
+        <span class="text-xs" style="color: var(--text-600);">
+          当前可试 <strong style="color: var(--foreground);">1/3</strong> 件，升级会员享更多
+        </span>
+        <button class="ml-auto text-xs font-semibold shrink-0" style="color: var(--primary);">去升级</button>
+      </div>
+
+      <!-- 试用规则说明折叠面板 -->
+      <section class="rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+        <!-- 折叠面板头部 -->
+        <button class="w-full flex items-center justify-between px-4 py-3.5" id="rules-toggle" aria-expanded="false" aria-controls="rules-content">
+          <div class="flex items-center gap-2">
+            <i data-lucide="scroll-text" class="w-4 h-4" style="color: var(--icon-muted);"></i>
+            <span class="text-sm font-semibold" style="color: var(--foreground);">试用规则说明</span>
+          </div>
+          <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200" style="color: var(--icon-muted);" id="rules-arrow"></i>
+        </button>
+        <!-- 折叠面板内容 -->
+        <div class="hidden px-4 pb-4" id="rules-content">
+          <div class="flex flex-col gap-3 text-xs leading-relaxed" style="color: var(--text-500);">
+            <div class="flex gap-2.5">
+              <span class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background: var(--primary); color: var(--primary-foreground);">1</span>
+              <p>下单时仅预授权 $1，不会实际扣款。试用期间商品所有权归 MOYUYO 所有。</p>
+            </div>
+            <div class="flex gap-2.5">
+              <span class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background: var(--primary); color: var(--primary-foreground);">2</span>
+              <p>商品寄到后享有 7 天试用期，从签收之日起计算。请在试用期内做出决定。</p>
+            </div>
+            <div class="flex gap-2.5">
+              <span class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background: var(--primary); color: var(--primary-foreground);">3</span>
+              <p>选择「确认留下」后，系统将自动从预授权中扣除商品全款；选择「预约寄回」后，将提供预付退货标签，免费寄回。</p>
+            </div>
+            <div class="flex gap-2.5">
+              <span class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background: var(--primary); color: var(--primary-foreground);">4</span>
+              <p>普通会员单次最多可试 3 件商品，高级会员可试 5 件，VIP 会员可试 8 件。</p>
+            </div>
+            <div class="flex gap-2.5">
+              <span class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background: var(--primary); color: var(--primary-foreground);">5</span>
+              <p>试用商品需保持全新状态，不影响二次销售。如有损坏将按原价扣款。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 推荐试用商品区 -->
+      <section>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-base font-semibold" style="color: var(--foreground);">推荐试用</h3>
+          <button class="flex items-center gap-1 text-xs font-medium" style="color: var(--primary);">
+            查看全部
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- 横向滚动商品列表 -->
+        <div class="flex gap-3 overflow-x-auto no-scrollbar -mx-4 px-4 pb-2">
+
+          <!-- 推荐商品 1 -->
+          <article class="w-36 shrink-0 rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="w-full aspect-square" style="background: linear-gradient(160deg, var(--brand-100), var(--brand-200), var(--background-200));"></div>
+            <div class="p-3">
+              <h4 class="text-xs font-semibold truncate" style="color: var(--foreground);">MOYUYO 轻量宠物夹克</h4>
+              <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">M / 黑色</p>
+              <div class="flex items-baseline justify-between mt-2">
+                <span class="text-sm font-bold" style="color: var(--primary);">$69.00</span>
+                <span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background: var(--brand-50); color: var(--brand-600);">可试用</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 推荐商品 2 -->
+          <article class="w-36 shrink-0 rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="w-full aspect-square" style="background: linear-gradient(160deg, var(--background-200), var(--brand-50), var(--state-success-surface));"></div>
+            <div class="p-3">
+              <h4 class="text-xs font-semibold truncate" style="color: var(--foreground);">MOYUYO 宠物贝雷帽</h4>
+              <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">S / 米白色</p>
+              <div class="flex items-baseline justify-between mt-2">
+                <span class="text-sm font-bold" style="color: var(--primary);">$32.00</span>
+                <span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background: var(--brand-50); color: var(--brand-600);">可试用</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 推荐商品 3 -->
+          <article class="w-36 shrink-0 rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="w-full aspect-square" style="background: linear-gradient(160deg, var(--brand-200), var(--background-100), var(--brand-100));"></div>
+            <div class="p-3">
+              <h4 class="text-xs font-semibold truncate" style="color: var(--foreground);">MOYUYO 羊绒宠物围巾</h4>
+              <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">均码 / 驼色</p>
+              <div class="flex items-baseline justify-between mt-2">
+                <span class="text-sm font-bold" style="color: var(--primary);">$55.00</span>
+                <span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background: var(--brand-50); color: var(--brand-600);">可试用</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- 折叠面板交互逻辑 -->
+  <script>
+    // 试用规则折叠面板切换
+    const rulesToggle = document.getElementById('rules-toggle');
+    const rulesContent = document.getElementById('rules-content');
+    const rulesArrow = document.getElementById('rules-arrow');
+
+    if (rulesToggle) {
+      rulesToggle.addEventListener('click', () => {
+        const expanded = rulesToggle.getAttribute('aria-expanded') === 'true';
+        rulesToggle.setAttribute('aria-expanded', String(!expanded));
+        // 切换显示/隐藏
+        rulesContent.classList.toggle('hidden');
+        // 箭头旋转
+        rulesArrow.style.transform = expanded ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+    }
+
+    // 初始化 Lucide 图标
+    lucide.createIcons();
+  </script>
+</body>
+</html>

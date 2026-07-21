@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milo的相册 - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background: var(--background-200, #f2f2f7);">
+
+    <main class="pb-24 max-w-[430px] mx-auto min-h-screen" style="background: var(--background-200, #f2f2f7);">
+
+      <!-- 顶部导航栏 - 深色背景 -->
+      <header class="sticky top-0 z-30" style="background: var(--background-800, #1c1c1e);">
+        <!-- iOS 状态栏模拟 -->
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: #ffffff;">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: #ffffff;"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: #ffffff;"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: #ffffff;"></span>
+          </div>
+        </div>
+
+        <!-- 导航标题栏 -->
+        <div class="flex items-center justify-between h-11 px-4">
+          <!-- 返回按钮 -->
+          <button class="flex items-center justify-center w-9 h-9 -ml-1 rounded-full transition-colors" style="color: var(--primary, #007AFF);" aria-label="返回">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+          </button>
+          <!-- 页面标题 -->
+          <h1 class="text-base font-semibold" style="color: #ffffff;">Milo的相册</h1>
+          <!-- 上传按钮 -->
+          <button class="flex items-center justify-center w-9 h-9 -mr-1 rounded-full transition-colors" style="color: var(--primary, #007AFF);" aria-label="上传照片">
+            <i data-lucide="upload" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- 存储空间提示 -->
+      <section class="mx-4 mt-3 p-3.5 rounded-xl" style="background: var(--card); box-shadow: var(--shadow-xs);">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <i data-lucide="hard-drive" class="w-4 h-4" style="color: var(--icon-muted);"></i>
+            <span class="text-xs font-medium" style="color: var(--foreground);">存储空间</span>
+          </div>
+          <span class="text-xs font-semibold" style="color: var(--primary, #007AFF);">156 / 500 张</span>
+        </div>
+        <!-- 进度条 -->
+        <div class="storage-track" style="background: var(--secondary);">
+          <div class="storage-fill" style="width: 31.2%; background: var(--primary, #007AFF);"></div>
+        </div>
+        <p class="text-[11px] mt-1.5" style="color: var(--text-400);">已使用 31%，还可添加 344 张照片</p>
+      </section>
+
+      <!-- 月份分组标题 -->
+      <div class="flex items-center justify-between px-4 mt-5 mb-3">
+        <button class="flex items-center justify-center w-7 h-7 rounded-full" style="color: var(--icon-muted);" aria-label="上个月">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </button>
+        <h2 class="text-sm font-semibold" style="color: var(--foreground);">2026年7月</h2>
+        <button class="flex items-center justify-center w-7 h-7 rounded-full" style="color: var(--icon-muted);" aria-label="下个月">
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- 照片网格 - 3列瀑布流布局 -->
+      <section class="px-2" aria-label="照片网格">
+        <div class="photo-grid">
+
+          <!-- 日期标记：7月8日 -->
+          <div class="date-marker px-2 py-1.5">
+            <span class="text-[11px] font-medium" style="color: var(--text-400);">7月8日</span>
+          </div>
+
+          <!-- 照片 1：暖棕色调 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 120%; background: linear-gradient(135deg, #d4a574, #c4956a, #b8845c);"></div>
+            <span class="watermark-badge" style="background: rgba(0,0,0,0.35); color: #fff;">MOYUYO</span>
+          </div>
+
+          <!-- 照片 2：奶油色调 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 100%; background: linear-gradient(160deg, #f5e6d0, #edd5b8, #e8cda8);"></div>
+          </div>
+
+          <!-- 照片 3：淡粉色调 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 85%; background: linear-gradient(145deg, #f2d6d6, #ecc8c8, #e6baba);"></div>
+          </div>
+
+          <!-- 照片 4：淡蓝暖色调 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 120%; background: linear-gradient(130deg, #d6e4f2, #c8d8ec, #bacede);"></div>
+          </div>
+
+          <!-- 照片 5：暖棕深色调 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 100%; background: linear-gradient(140deg, #c4956a, #b8845c, #a8734d);"></div>
+            <span class="watermark-badge" style="background: rgba(0,0,0,0.35); color: #fff;">MOYUYO</span>
+          </div>
+
+          <!-- 日期标记：7月5日 -->
+          <div class="date-marker px-2 py-1.5">
+            <span class="text-[11px] font-medium" style="color: var(--text-400);">7月5日</span>
+          </div>
+
+          <!-- 照片 6：奶油淡粉 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 85%; background: linear-gradient(150deg, #edd5b8, #f2d6d6, #f5e0d0);"></div>
+          </div>
+
+          <!-- 照片 7：米棕色调 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 120%; background: linear-gradient(135deg, #e8cda8, #d4a574, #c9b896);"></div>
+          </div>
+
+          <!-- 照片 8：淡蓝灰色调 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 100%; background: linear-gradient(125deg, #d8e2ea, #ccd6de, #c2ccd6);"></div>
+            <span class="watermark-badge" style="background: rgba(0,0,0,0.35); color: #fff;">MOYUYO</span>
+          </div>
+
+          <!-- 照片 9：暖粉棕 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 85%; background: linear-gradient(155deg, #e6baba, #d4a574, #f2d6d6);"></div>
+          </div>
+
+          <!-- 日期标记：7月2日 -->
+          <div class="date-marker px-2 py-1.5">
+            <span class="text-[11px] font-medium" style="color: var(--text-400);">7月2日</span>
+          </div>
+
+          <!-- 照片 10：浅奶油色 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 120%; background: linear-gradient(140deg, #f5ece0, #edd5b8, #e8dac0);"></div>
+          </div>
+
+          <!-- 照片 11：淡棕暖色 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 100%; background: linear-gradient(130deg, #c9b896, #b8845c, #d4a574);"></div>
+          </div>
+
+          <!-- 照片 12：淡粉浅蓝 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 85%; background: linear-gradient(150deg, #ecc8c8, #d8e2ea, #f5e6d0);"></div>
+            <span class="watermark-badge" style="background: rgba(0,0,0,0.35); color: #fff;">MOYUYO</span>
+          </div>
+
+          <!-- 照片 13 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 120%; background: linear-gradient(135deg, #bacede, #a8c4d6, #c4956a);"></div>
+          </div>
+
+          <!-- 照片 14 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 100%; background: linear-gradient(145deg, #f2d6d6, #e8cda8, #edd5b8);"></div>
+          </div>
+
+          <!-- 照片 15 -->
+          <div class="photo-item" style="cursor: pointer;">
+            <div class="photo-placeholder relative" style="padding-top: 85%; background: linear-gradient(140deg, #d4a574, #e6baba, #c9b896);"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 空状态提示 - 2026年6月无照片示例 -->
+      <div class="mx-4 mt-6 p-5 rounded-xl text-center" style="background: var(--card); box-shadow: var(--shadow-xs);">
+        <div class="flex items-center justify-center w-12 h-12 rounded-full mx-auto mb-3" style="background: var(--secondary);">
+          <i data-lucide="image" class="w-6 h-6" style="color: var(--icon-muted);"></i>
+        </div>
+        <p class="text-sm font-medium" style="color: var(--foreground);">6月还没有照片</p>
+        <p class="text-xs mt-1" style="color: var(--text-400);">记录 Milo 的精彩瞬间，自动从成长记录聚合</p>
+        <button class="mt-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-colors" style="background: var(--primary); color: var(--primary-foreground);">
+          <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+          添加第一张照片
+        </button>
+      </div>
+
+      <!-- 晒宠发布提示 -->
+      <div class="mx-4 mt-3 mb-4 p-3.5 rounded-xl flex items-center gap-3" style="background: var(--brand-50); border: 1px solid var(--brand-100);">
+        <div class="flex items-center justify-center w-9 h-9 rounded-full shrink-0" style="background: var(--primary);">
+          <i data-lucide="share-2" class="w-4 h-4" style="color: var(--primary-foreground);"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs font-semibold" style="color: var(--foreground);">晒宠一键发布到社区</p>
+          <p class="text-[11px] mt-0.5" style="color: var(--text-400);">选择照片可叠加品牌水印</p>
+        </div>
+        <i data-lucide="chevron-right" class="w-4 h-4 shrink-0" style="color: var(--icon-muted);"></i>
+      </div>
+
+    </main>
+
+    <!-- 底部浮动操作按钮 -->
+    <button class="fixed z-40 flex items-center justify-center w-14 h-14 rounded-full" style="background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-lg); bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); left: 50%; transform: translateX(-50%);" aria-label="添加新照片">
+      <i data-lucide="plus" class="w-6 h-6"></i>
+    </button>
+
+    <!-- 图片预览遮罩 -->
+    <div class="preview-overlay" id="previewOverlay">
+      <div class="absolute top-0 inset-x-0 z-10">
+        <!-- 预览顶部操作栏 -->
+        <div class="flex items-center justify-between px-4 pt-14 pb-3" style="background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);">
+          <button class="flex items-center gap-1 text-sm font-medium text-white" id="previewClose" aria-label="关闭预览">
+            <i data-lucide="x" class="w-5 h-5 text-white"></i>
+            <span>关闭</span>
+          </button>
+          <div class="flex items-center gap-3">
+            <button class="flex items-center justify-center w-9 h-9 rounded-full" style="background: rgba(255,255,255,0.15);" aria-label="添加水印">
+              <i data-lucide="stamp" class="w-4 h-4 text-white"></i>
+            </button>
+            <button class="flex items-center justify-center w-9 h-9 rounded-full" style="background: rgba(255,255,255,0.15);" aria-label="分享">
+              <i data-lucide="share-2" class="w-4 h-4 text-white"></i>
+            </button>
+            <button class="flex items-center justify-center w-9 h-9 rounded-full" style="background: rgba(255,255,255,0.15);" aria-label="删除">
+              <i data-lucide="trash-2" class="w-4 h-4 text-white"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 预览图片区域 -->
+      <div class="preview-image" id="previewImage" style="background: linear-gradient(135deg, #d4a574, #c4956a);">
+        <span class="text-white/40 text-sm font-medium">CSS 渐变占位图预览</span>
+      </div>
+
+      <!-- 左右切换指示 -->
+      <div class="absolute inset-y-0 inset-x-0 flex items-center justify-between px-2 pointer-events-none">
+        <button class="pointer-events-auto flex items-center justify-center w-10 h-10 rounded-full" style="background: rgba(0,0,0,0.4);" aria-label="上一张" id="previewPrev">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-white"></i>
+        </button>
+        <button class="pointer-events-auto flex items-center justify-center w-10 h-10 rounded-full" style="background: rgba(0,0,0,0.4);" aria-label="下一张" id="previewNext">
+          <i data-lucide="chevron-right" class="w-5 h-5 text-white"></i>
+        </button>
+      </div>
+
+      <!-- 底部计数器 -->
+      <div class="absolute bottom-10 inset-x-0 text-center">
+        <span class="text-xs font-medium text-white/60" id="previewCounter">1 / 15</span>
+      </div>
+    </div>
+
+    <script>
+      // 初始化 Lucide 图标
+      lucide.createIcons();
+
+      // 预览功能
+      const previewOverlay = document.getElementById('previewOverlay');
+      const previewImage = document.getElementById('previewImage');
+      const previewClose = document.getElementById('previewClose');
+      const previewPrev = document.getElementById('previewPrev');
+      const previewNext = document.getElementById('previewNext');
+      const previewCounter = document.getElementById('previewCounter');
+      const photoItems = document.querySelectorAll('.photo-item .photo-placeholder');
+
+      // 渐变色数组，用于预览切换
+      const gradients = Array.from(photoItems).map(el => el.style.background);
+
+      let currentIndex = 0;
+
+      // 点击照片打开预览
+      photoItems.forEach((item, index) => {
+        item.style.cursor = 'pointer';
+        item.parentElement.addEventListener('click', () => {
+          currentIndex = index;
+          showPreview();
+        });
+      });
+
+      // 显示预览
+      function showPreview() {
+        previewOverlay.classList.add('active');
+        previewImage.style.background = gradients[currentIndex] || 'linear-gradient(135deg, #d4a574, #c4956a)';
+        previewCounter.textContent = (currentIndex + 1) + ' / ' + gradients.length;
+        document.body.style.overflow = 'hidden';
+      }
+
+      // 关闭预览
+      function closePreview() {
+        previewOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      previewClose.addEventListener('click', closePreview);
+
+      previewOverlay.addEventListener('click', (e) => {
+        if (e.target === previewOverlay) closePreview();
+      });
+
+      // 上一张
+      previewPrev.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex - 1 + gradients.length) % gradients.length;
+        showPreview();
+      });
+
+      // 下一张
+      previewNext.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex + 1) % gradients.length;
+        showPreview();
+      });
+
+      // 键盘切换
+      document.addEventListener('keydown', (e) => {
+        if (!previewOverlay.classList.contains('active')) return;
+        if (e.key === 'Escape') closePreview();
+        if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + gradients.length) % gradients.length; showPreview(); }
+        if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % gradients.length; showPreview(); }
+      });
+    </script>
+</body>
+</html>

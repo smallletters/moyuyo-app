@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 礼品卡</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="min-h-screen" style="background: var(--background);">
+
+        <!-- 顶部导航栏 -->
+        <header class="sticky top-0 z-30 flex h-14 items-center px-4" style="background: var(--background); border-bottom: 1px solid var(--border);">
+            <button data-dom-id="cta-back" class="inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-[var(--secondary)] focus-visible:outline-2 focus-visible:outline-[var(--ring)]" aria-label="返回钱包">
+                <span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+            </button>
+            <h1 class="flex-1 text-center text-base font-semibold tracking-[-0.02em]" style="color: var(--foreground);">我的礼品卡</h1>
+            <div class="w-9"></div>
+        </header>
+
+        <div class="px-4 pb-8 pt-5">
+
+            <!-- 顶部汇总卡片 -->
+            <section class="relative overflow-hidden" style="border-radius: calc(var(--radius) * 1.2); min-height: 140px; background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-500) 50%, var(--brand-400) 100%);">
+                <!-- 装饰图案 -->
+                <div class="gc-summary-pattern"></div>
+                <!-- 右上角装饰圆 -->
+                <div class="absolute -top-8 -right-8 w-32 h-32 rounded-full" style="background: rgba(255,255,255,0.08);"></div>
+                <div class="absolute -bottom-10 -right-4 w-40 h-40 rounded-full" style="background: rgba(255,255,255,0.05);"></div>
+                <!-- 内容 -->
+                <div class="relative z-10 flex flex-col justify-center p-5" style="min-height: 140px;">
+                    <div class="flex items-center gap-4">
+                        <!-- 可用张数 -->
+                        <div class="flex-1">
+                            <div class="text-sm" style="color: rgba(255,255,255,0.7);">可用礼品卡</div>
+                            <div class="mt-1.5 text-3xl font-semibold tracking-tight" style="color: #ffffff; font-variant-numeric: tabular-nums;">2 张</div>
+                        </div>
+                        <!-- 分割线 -->
+                        <div class="w-px h-12" style="background: rgba(255,255,255,0.2);"></div>
+                        <!-- 总余额 -->
+                        <div class="flex-1">
+                            <div class="text-sm" style="color: rgba(255,255,255,0.7);">总余额</div>
+                            <div class="mt-1.5 text-3xl font-semibold tracking-tight" style="color: #ffffff; font-variant-numeric: tabular-nums;">$175.00</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 切换 -->
+            <nav class="mt-6 flex border-b" style="border-color: var(--border);" aria-label="礼品卡状态筛选">
+                <button class="gc-tab-btn active flex-1 h-11 flex items-center justify-center text-sm font-semibold" style="color: var(--primary);" data-tab="available" aria-selected="true">
+                    可用
+                </button>
+                <button class="gc-tab-btn flex-1 h-11 flex items-center justify-center text-sm font-medium" style="color: var(--text-400);" data-tab="used" aria-selected="false">
+                    已使用
+                </button>
+                <button class="gc-tab-btn flex-1 h-11 flex items-center justify-center text-sm font-medium" style="color: var(--text-400);" data-tab="expired" aria-selected="false">
+                    已过期
+                </button>
+            </nav>
+
+            <!-- Tab 内容区域 -->
+            <div class="mt-4">
+
+                <!-- 可用礼品卡列表（默认显示） -->
+                <div id="tab-available" class="gc-tab-content flex flex-col gap-4">
+
+                    <!-- 礼品卡 1 -->
+                    <article class="gc-card gc-card-decoration" style="background: linear-gradient(135deg, var(--brand-700) 0%, var(--brand-500) 60%, var(--brand-400) 100%);">
+                        <div class="relative z-10 flex flex-col justify-between h-full" style="min-height: 140px;">
+                            <!-- 卡面顶部：品牌名 + 芯片 -->
+                            <div class="flex items-start justify-between">
+                                <span class="text-sm font-bold tracking-widest uppercase" style="color: rgba(255,255,255,0.9);">MOYUYO</span>
+                                <div class="gc-chip"></div>
+                            </div>
+                            <!-- 面额 -->
+                            <div class="mt-3">
+                                <span class="text-2xl font-semibold tracking-tight" style="color: #ffffff; font-variant-numeric: tabular-nums;">$100.00</span>
+                            </div>
+                            <!-- 卡号末四位 + 有效期 + 余额 -->
+                            <div class="mt-4 flex items-end justify-between">
+                                <div>
+                                    <div class="text-xs tracking-wider" style="color: rgba(255,255,255,0.5); font-variant-numeric: tabular-nums;">****  ****  ****  5678</div>
+                                    <div class="mt-1 text-xs" style="color: rgba(255,255,255,0.5);">有效期至 2027-07-08</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs" style="color: rgba(255,255,255,0.5);">余额</div>
+                                    <div class="text-base font-semibold" style="color: #ffffff; font-variant-numeric: tabular-nums;">$45.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 已用部分灰化遮罩 -->
+                        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(90deg, transparent 55%, rgba(0,0,0,0.25) 100%); border-radius: inherit;"></div>
+                    </article>
+
+                    <!-- 礼品卡 2 -->
+                    <article class="gc-card gc-card-decoration" style="background: linear-gradient(135deg, var(--brand-800) 0%, var(--brand-600) 60%, var(--brand-500) 100%);">
+                        <div class="relative z-10 flex flex-col justify-between h-full" style="min-height: 140px;">
+                            <!-- 卡面顶部：品牌名 + 芯片 -->
+                            <div class="flex items-start justify-between">
+                                <span class="text-sm font-bold tracking-widest uppercase" style="color: rgba(255,255,255,0.9);">MOYUYO</span>
+                                <div class="gc-chip"></div>
+                            </div>
+                            <!-- 面额 -->
+                            <div class="mt-3">
+                                <span class="text-2xl font-semibold tracking-tight" style="color: #ffffff; font-variant-numeric: tabular-nums;">$75.00</span>
+                            </div>
+                            <!-- 卡号末四位 + 有效期 + 余额 -->
+                            <div class="mt-4 flex items-end justify-between">
+                                <div>
+                                    <div class="text-xs tracking-wider" style="color: rgba(255,255,255,0.5); font-variant-numeric: tabular-nums;">****  ****  ****  9012</div>
+                                    <div class="mt-1 text-xs" style="color: rgba(255,255,255,0.5);">有效期至 2027-12-31</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs" style="color: rgba(255,255,255,0.5);">余额</div>
+                                    <div class="text-base font-semibold" style="color: #ffffff; font-variant-numeric: tabular-nums;">$75.00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 使用按钮（每张卡） -->
+                    <button class="btn btn-primary w-full rounded-full" style="height: 48px; font-size: 15px;" aria-label="使用礼品卡">
+                        使用
+                    </button>
+
+                </div>
+
+                <!-- 已使用礼品卡列表（默认隐藏） -->
+                <div id="tab-used" class="gc-tab-content hidden flex flex-col gap-4">
+                    <!-- 已使用礼品卡 1 -->
+                    <article class="gc-card" style="background: var(--background-200); opacity: 0.6;">
+                        <div class="relative z-10 flex flex-col justify-between" style="min-height: 140px;">
+                            <div class="flex items-start justify-between">
+                                <span class="text-sm font-bold tracking-widest uppercase" style="color: var(--text-400);">MOYUYO</span>
+                                <div class="gc-chip" style="border-color: var(--background-400); background: linear-gradient(135deg, var(--background-300) 0%, var(--background-200) 100%);"></div>
+                            </div>
+                            <div class="mt-3">
+                                <span class="text-2xl font-semibold tracking-tight" style="color: var(--text-400); font-variant-numeric: tabular-nums; text-decoration: line-through;">$50.00</span>
+                            </div>
+                            <div class="mt-4 flex items-end justify-between">
+                                <div>
+                                    <div class="text-xs tracking-wider" style="color: var(--text-400); font-variant-numeric: tabular-nums;">****  ****  ****  3456</div>
+                                    <div class="mt-1 text-xs" style="color: var(--text-400);">已于 2026-06-15 使用完毕</div>
+                                </div>
+                                <div class="inline-flex items-center gap-1 rounded-full px-2.5 py-1" style="background: var(--background-300);">
+                                    <i data-lucide="check" class="h-3 w-3" style="color: var(--muted-foreground);"></i>
+                                    <span class="text-xs font-medium" style="color: var(--muted-foreground);">已使用</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- 已过期礼品卡列表（默认隐藏） -->
+                <div id="tab-expired" class="gc-tab-content hidden flex flex-col gap-4">
+                    <!-- 已过期礼品卡 1 -->
+                    <article class="gc-card" style="background: var(--background-200); opacity: 0.6;">
+                        <div class="relative z-10 flex flex-col justify-between" style="min-height: 140px;">
+                            <div class="flex items-start justify-between">
+                                <span class="text-sm font-bold tracking-widest uppercase" style="color: var(--text-400);">MOYUYO</span>
+                                <div class="gc-chip" style="border-color: var(--background-400); background: linear-gradient(135deg, var(--background-300) 0%, var(--background-200) 100%);"></div>
+                            </div>
+                            <div class="mt-3">
+                                <span class="text-2xl font-semibold tracking-tight" style="color: var(--text-400); font-variant-numeric: tabular-nums;">$30.00</span>
+                            </div>
+                            <div class="mt-4 flex items-end justify-between">
+                                <div>
+                                    <div class="text-xs tracking-wider" style="color: var(--text-400); font-variant-numeric: tabular-nums;">****  ****  ****  7890</div>
+                                    <div class="mt-1 text-xs" style="color: var(--text-400);">已于 2026-01-01 过期</div>
+                                </div>
+                                <div class="inline-flex items-center gap-1 rounded-full px-2.5 py-1" style="background: var(--state-error-surface);">
+                                    <i data-lucide="circle-alert" class="h-3 w-3" style="color: var(--state-error);"></i>
+                                    <span class="text-xs font-medium" style="color: var(--state-error);">已过期</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+            </div>
+
+            <!-- 底部操作按钮区 -->
+            <section class="mt-6 flex flex-col gap-3">
+                <button data-dom-id="cta-bind" id="btn-open-bind-modal" class="btn btn-secondary w-full rounded-full" style="height: 48px; font-size: 15px; border: 1px solid var(--border);">
+                    <i data-lucide="link" class="h-4 w-4" style="color: var(--primary);"></i>
+                    绑定礼品卡
+                </button>
+                <button data-dom-id="cta-buy" class="btn btn-primary w-full rounded-full" style="height: 48px; font-size: 15px;">
+                    <i data-lucide="shopping-bag" class="h-4 w-4"></i>
+                    购买礼品卡
+                </button>
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- 绑定礼品卡弹窗 -->
+    <div id="bind-modal" class="gc-modal-overlay" aria-hidden="true">
+        <div class="gc-modal-panel">
+            <!-- 把手 -->
+            <div class="gc-modal-handle"></div>
+            <!-- 标题 -->
+            <h2 class="text-lg font-semibold tracking-[-0.02em]" style="color: var(--foreground);">绑定礼品卡</h2>
+            <p class="mt-1 text-sm" style="color: var(--muted-foreground);">请输入礼品卡卡号和验证码以完成绑定</p>
+
+            <!-- 表单 -->
+            <div class="mt-5 flex flex-col gap-4">
+                <!-- 卡号输入 -->
+                <div>
+                    <label class="block text-xs font-medium mb-1.5" style="color: var(--text-500);">礼品卡卡号</label>
+                    <div class="field w-full" style="min-width: 0; height: 48px;">
+                        <i data-lucide="credit-card" class="h-4 w-4 shrink-0" style="color: var(--icon-muted);"></i>
+                        <input class="control text-sm" type="text" placeholder="请输入16位卡号" maxlength="16" aria-label="礼品卡卡号">
+                    </div>
+                </div>
+                <!-- 验证码输入 -->
+                <div>
+                    <label class="block text-xs font-medium mb-1.5" style="color: var(--text-500);">验证码</label>
+                    <div class="flex gap-3">
+                        <div class="field flex-1" style="min-width: 0; height: 48px;">
+                            <i data-lucide="shield" class="h-4 w-4 shrink-0" style="color: var(--icon-muted);"></i>
+                            <input class="control text-sm" type="text" placeholder="请输入验证码" maxlength="6" aria-label="验证码">
+                        </div>
+                        <button class="btn shrink-0 rounded-full" style="height: 48px; padding: 0 16px; font-size: 13px; color: var(--primary); border: 1px solid var(--primary); background: transparent; box-shadow: none; font-weight: 600;">
+                            获取验证码
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="mt-6 flex gap-3">
+                <button id="btn-close-bind-modal" class="btn flex-1 rounded-full" style="height: 48px; font-size: 15px; background: var(--secondary); color: var(--secondary-foreground); box-shadow: none; font-weight: 600;">
+                    取消
+                </button>
+                <button class="btn btn-primary flex-1 rounded-full" style="height: 48px; font-size: 15px; font-weight: 600;">
+                    绑定
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化 Lucide 图标
+        lucide.createIcons();
+
+        // Tab 切换逻辑
+        const tabButtons = document.querySelectorAll('.gc-tab-btn');
+        const tabContents = document.querySelectorAll('.gc-tab-content');
+
+        tabButtons.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // 清除所有活跃状态
+                tabButtons.forEach(function(b) {
+                    b.classList.remove('active');
+                    b.style.color = 'var(--text-400)';
+                    b.style.fontWeight = '500';
+                    b.setAttribute('aria-selected', 'false');
+                });
+                // 设置当前活跃状态
+                btn.classList.add('active');
+                btn.style.color = 'var(--primary)';
+                btn.style.fontWeight = '600';
+                btn.setAttribute('aria-selected', 'true');
+
+                // 切换内容
+                var targetTab = btn.getAttribute('data-tab');
+                tabContents.forEach(function(content) {
+                    content.classList.add('hidden');
+                });
+                var targetContent = document.getElementById('tab-' + targetTab);
+                if (targetContent) {
+                    targetContent.classList.remove('hidden');
+                }
+            });
+        });
+
+        // 绑定礼品卡弹窗逻辑
+        var bindModal = document.getElementById('bind-modal');
+        var btnOpenBind = document.getElementById('btn-open-bind-modal');
+        var btnCloseBind = document.getElementById('btn-close-bind-modal');
+
+        function openBindModal() {
+            bindModal.classList.add('active');
+            bindModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBindModal() {
+            bindModal.classList.remove('active');
+            bindModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        btnOpenBind.addEventListener('click', openBindModal);
+        btnCloseBind.addEventListener('click', closeBindModal);
+
+        // 点击遮罩关闭弹窗
+        bindModal.addEventListener('click', function(e) {
+            if (e.target === bindModal) {
+                closeBindModal();
+            }
+        });
+    </script>
+</body>
+</html>

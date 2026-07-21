@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 我的售后</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="min-h-screen" style="background-color: var(--background-200);">
+
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30" style="background-color: var(--background-50); border-bottom: 1px solid var(--border);">
+        <div class="flex items-center justify-center h-11 px-4 relative">
+          <!-- 返回按钮 -->
+          <button data-dom-id="cta-back" class="absolute left-4 inline-flex h-8 w-8 items-center justify-center rounded-lg" style="border: 1px solid var(--border); background-color: var(--background-50);" aria-label="返回">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+          </button>
+          <!-- 页面标题 -->
+          <h1 class="text-base font-semibold" style="color: var(--text-800); letter-spacing: -0.02em;">我的售后</h1>
+          <!-- 右侧申请售后按钮 -->
+          <button data-dom-id="cta-apply" class="absolute right-4 text-xs font-medium" style="color: var(--brand-500);">申请售后</button>
+        </div>
+      </header>
+
+      <!-- 一级筛选 Tab：状态 -->
+      <nav class="sticky top-11 z-20" style="background-color: var(--background-50);">
+        <div class="flex no-scrollbar overflow-x-auto" style="border-bottom: 1px solid var(--border);">
+          <button class="flex-shrink-0 flex flex-col items-center px-4 pt-2 pb-1.5 text-xs font-semibold" style="color: var(--brand-500); border-bottom: 2px solid var(--brand-500);">
+            全部
+          </button>
+          <button class="flex-shrink-0 flex flex-col items-center px-4 pt-2 pb-1.5 text-xs font-medium" style="color: var(--text-500); border-bottom: 2px solid transparent;">
+            处理中
+          </button>
+          <button class="flex-shrink-0 flex flex-col items-center px-4 pt-2 pb-1.5 text-xs font-medium" style="color: var(--text-500); border-bottom: 2px solid transparent;">
+            已完成
+          </button>
+          <button class="flex-shrink-0 flex flex-col items-center px-4 pt-2 pb-1.5 text-xs font-medium" style="color: var(--text-500); border-bottom: 2px solid transparent;">
+            已拒绝
+          </button>
+          <button class="flex-shrink-0 flex flex-col items-center px-4 pt-2 pb-1.5 text-xs font-medium" style="color: var(--text-500); border-bottom: 2px solid transparent;">
+            已取消
+          </button>
+        </div>
+
+        <!-- 二级筛选：类型 + 时间范围 -->
+        <div class="flex items-center justify-between px-4 py-2.5 gap-2">
+          <!-- 类型筛选下拉 -->
+          <button class="flex items-center gap-1.5 h-8 px-3 rounded-full text-xs font-medium flex-shrink-0" style="background-color: var(--background-200); color: var(--text-600);">
+            <span>售后类型</span>
+            <i data-lucide="chevron-down" class="w-3 h-3"></i>
+          </button>
+          <!-- 时间范围筛选 -->
+          <div class="flex gap-1.5 overflow-x-auto no-scrollbar">
+            <button class="flex-shrink-0 h-8 px-3 rounded-full text-xs font-medium" style="background-color: var(--brand-500); color: var(--background-50);">全部时间</button>
+            <button class="flex-shrink-0 h-8 px-3 rounded-full text-xs font-medium" style="background-color: var(--background-200); color: var(--text-600);">近7天</button>
+            <button class="flex-shrink-0 h-8 px-3 rounded-full text-xs font-medium" style="background-color: var(--background-200); color: var(--text-600);">近30天</button>
+            <button class="flex-shrink-0 h-8 px-3 rounded-full text-xs font-medium" style="background-color: var(--background-200); color: var(--text-600);">近90天</button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- 售后卡片列表 -->
+      <div class="flex flex-col gap-3 p-4">
+
+        <!-- 售后卡片 1：待寄回（处理中） -->
+        <a data-dom-id="card-after-sale-1" href="order-detail.html" class="block rounded-[var(--radius)] overflow-hidden" style="background-color: var(--background-50); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <!-- 卡片头部：售后状态 + 类型标签 -->
+          <div class="flex items-center justify-between px-4 pt-3 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-xs font-semibold whitespace-nowrap" style="background-color: var(--brand-50); color: var(--brand-500);">
+                待寄回
+              </span>
+              <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-xs font-medium whitespace-nowrap" style="background-color: var(--background-200); color: var(--text-500);">
+                退货退款
+              </span>
+            </div>
+            <span data-icon class="w-4 h-4 flex-shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--text-300);"></span>
+          </div>
+          <!-- 商品信息行 -->
+          <div class="flex items-center gap-3 px-4 pb-3">
+            <img src="../assets/product-shampoo-bottle.jpg" alt="温和植物萃取宠物洗护套装" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" style="border: 1px solid var(--border);">
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium truncate" style="color: var(--text-800);">温和植物萃取宠物洗护套装</p>
+              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">500ml / 经典款</p>
+            </div>
+          </div>
+          <!-- 分隔线 -->
+          <div style="border-top: 1px solid var(--border);"></div>
+          <!-- 底部信息：退款金额 + 申请时间 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-baseline gap-1">
+              <span class="text-xs" style="color: var(--text-500);">退款金额</span>
+              <span class="text-sm font-semibold tabular-nums" style="color: var(--state-error);">-¥128.00</span>
+            </div>
+            <span class="text-xs" style="color: var(--text-400);">2026-07-05 申请</span>
+          </div>
+          <!-- 售后进度条 -->
+          <div class="px-4 pb-3">
+            <div class="flex items-center gap-1">
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--brand-500);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--brand-500);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--brand-500);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--background-300);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--background-300);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--background-300);"></span>
+            </div>
+            <div class="flex items-center justify-between mt-1.5">
+              <span class="text-[10px]" style="color: var(--text-400);">申请中</span>
+              <span class="text-[10px]" style="color: var(--text-400);">审核通过</span>
+              <span class="text-[10px] font-medium" style="color: var(--brand-500);">待寄回</span>
+              <span class="text-[10px]" style="color: var(--text-400);">仓库签收</span>
+              <span class="text-[10px]" style="color: var(--text-400);">退款中</span>
+              <span class="text-[10px]" style="color: var(--text-400);">已完成</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 售后卡片 2：退款中（处理中） -->
+        <a data-dom-id="card-after-sale-2" href="order-detail.html" class="block rounded-[var(--radius)] overflow-hidden" style="background-color: var(--background-50); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <!-- 卡片头部：售后状态 + 类型标签 -->
+          <div class="flex items-center justify-between px-4 pt-3 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-xs font-semibold whitespace-nowrap" style="background-color: color-mix(in srgb, var(--chart-3) 12%, var(--background-50)); color: var(--chart-3);">
+                退款中
+              </span>
+              <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-xs font-medium whitespace-nowrap" style="background-color: var(--background-200); color: var(--text-500);">
+                仅退款
+              </span>
+            </div>
+            <span data-icon class="w-4 h-4 flex-shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--text-300);"></span>
+          </div>
+          <!-- 商品信息行 -->
+          <div class="flex items-center gap-3 px-4 pb-3">
+            <img src="../assets/product-harness-gear.jpg" alt="经典尼龙宠物牵引套装" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" style="border: 1px solid var(--border);">
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium truncate" style="color: var(--text-800);">经典尼龙宠物牵引套装</p>
+              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">M码 / 黑色</p>
+            </div>
+          </div>
+          <!-- 分隔线 -->
+          <div style="border-top: 1px solid var(--border);"></div>
+          <!-- 底部信息：退款金额 + 申请时间 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-baseline gap-1">
+              <span class="text-xs" style="color: var(--text-500);">退款金额</span>
+              <span class="text-sm font-semibold tabular-nums" style="color: var(--state-error);">-¥89.00</span>
+            </div>
+            <span class="text-xs" style="color: var(--text-400);">2026-06-28 申请</span>
+          </div>
+          <!-- 售后进度条 -->
+          <div class="px-4 pb-3">
+            <div class="flex items-center gap-1">
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--brand-500);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--brand-500);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--brand-500);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--brand-500);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--chart-3);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--background-300);"></span>
+            </div>
+            <div class="flex items-center justify-between mt-1.5">
+              <span class="text-[10px]" style="color: var(--text-400);">申请中</span>
+              <span class="text-[10px]" style="color: var(--text-400);">审核通过</span>
+              <span class="text-[10px]" style="color: var(--text-400);">仓库签收</span>
+              <span class="text-[10px]" style="color: var(--text-400);">仓库签收</span>
+              <span class="text-[10px] font-medium" style="color: var(--chart-3);">退款中</span>
+              <span class="text-[10px]" style="color: var(--text-400);">已完成</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 售后卡片 3：已完成 -->
+        <a data-dom-id="card-after-sale-3" href="order-detail.html" class="block rounded-[var(--radius)] overflow-hidden" style="background-color: var(--background-50); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <!-- 卡片头部：售后状态 + 类型标签 -->
+          <div class="flex items-center justify-between px-4 pt-3 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-xs font-semibold whitespace-nowrap" style="background-color: var(--state-success-surface); color: var(--state-success);">
+                已完成
+              </span>
+              <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-xs font-medium whitespace-nowrap" style="background-color: var(--background-200); color: var(--text-500);">
+                换货
+              </span>
+            </div>
+            <span data-icon class="w-4 h-4 flex-shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--text-300);"></span>
+          </div>
+          <!-- 商品信息行 -->
+          <div class="flex items-center gap-3 px-4 pb-3">
+            <img src="../assets/product-toy-play.jpg" alt="互动益智玩具" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" style="border: 1px solid var(--border);">
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium truncate" style="color: var(--text-800);">互动益智玩具</p>
+              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">大号 / 耐咬款</p>
+            </div>
+          </div>
+          <!-- 分隔线 -->
+          <div style="border-top: 1px solid var(--border);"></div>
+          <!-- 底部信息：退款金额 + 申请时间 -->
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-baseline gap-1">
+              <span class="text-xs" style="color: var(--text-500);">换货完成</span>
+              <span class="text-sm font-semibold tabular-nums" style="color: var(--state-success);">已寄出</span>
+            </div>
+            <span class="text-xs" style="color: var(--text-400);">2026-06-15 申请</span>
+          </div>
+          <!-- 售后进度条（全部完成） -->
+          <div class="px-4 pb-3">
+            <div class="flex items-center gap-1">
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--state-success);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--state-success);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--state-success);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--state-success);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--state-success);"></span>
+              <span class="flex-1 h-1 rounded-full" style="background-color: var(--state-success);"></span>
+            </div>
+            <div class="flex items-center justify-between mt-1.5">
+              <span class="text-[10px]" style="color: var(--text-400);">申请中</span>
+              <span class="text-[10px]" style="color: var(--text-400);">审核通过</span>
+              <span class="text-[10px]" style="color: var(--text-400);">待寄回</span>
+              <span class="text-[10px]" style="color: var(--text-400);">仓库签收</span>
+              <span class="text-[10px]" style="color: var(--text-400);">换货寄出</span>
+              <span class="text-[10px] font-medium" style="color: var(--state-success);">已完成</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- 空状态（无售后记录时显示） -->
+      <div id="empty-state" class="hidden flex flex-col items-center justify-center px-4 pt-16 pb-8">
+        <!-- 纯 CSS 空状态插画：文件/盒子图标 -->
+        <div class="relative w-24 h-24 mb-6">
+          <!-- 外框 -->
+          <div class="absolute inset-0 rounded-[var(--radius)]" style="background-color: var(--background-200); border: 1px solid var(--border);"></div>
+          <!-- 内部文件图标模拟 -->
+          <div class="absolute top-5 left-1/2 -translate-x-1/2 w-10 h-12 rounded-md" style="background-color: var(--background-50); border: 1.5px solid var(--background-400);"></div>
+          <!-- 文件折角 -->
+          <div class="absolute top-5 right-[calc(50%-22px)] w-3 h-3" style="border-left: 1.5px solid var(--background-400); border-bottom: 1.5px solid var(--background-400); border-radius: 0 0 0 3px; transform: rotate(-45deg) translate(-1px, -1px); background-color: var(--background-200);"></div>
+          <!-- 文件内线条模拟 -->
+          <div class="absolute top-9 left-1/2 -translate-x-1/2 w-6 h-[2px] rounded-full" style="background-color: var(--background-400);"></div>
+          <div class="absolute top-12 left-1/2 -translate-x-1/2 w-5 h-[2px] rounded-full" style="background-color: var(--background-400);"></div>
+          <div class="absolute top-[58px] left-1/2 -translate-x-1/2 w-7 h-[2px] rounded-full" style="background-color: var(--background-400);"></div>
+          <!-- 搜索/查看图标圆圈 -->
+          <div class="absolute -bottom-1 -right-1 w-8 h-8 rounded-full flex items-center justify-center" style="background-color: var(--background-300); border: 2px solid var(--background-50);">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/search.svg'); mask-image: url('../assets/icons/dl-builtin-apple/search.svg'); color: var(--text-400);"></span>
+          </div>
+        </div>
+        <!-- 文案 -->
+        <p class="text-sm font-medium" style="color: var(--text-800);">暂无售后记录</p>
+        <p class="text-xs mt-1.5" style="color: var(--text-400);">您的售后申请记录将在这里展示</p>
+        <!-- 去购物按钮 -->
+        <button class="mt-6 h-10 px-8 rounded-full text-sm font-semibold" style="background-color: var(--brand-500); color: var(--background-50);">去购物</button>
+      </div>
+
+      <!-- 底部说明文字 -->
+      <div class="px-4 pb-8 pt-2 text-center">
+        <p class="text-xs" style="color: var(--text-400);">售后服务热线：400-888-6688</p>
+        <p class="text-xs mt-1" style="color: var(--text-400);">服务时间：09:00 - 21:00</p>
+      </div>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

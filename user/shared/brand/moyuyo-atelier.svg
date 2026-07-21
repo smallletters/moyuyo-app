@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" role="img" aria-labelledby="title desc">
+  <title id="title">MOYUYO Atelier wordmark</title>
+  <desc id="desc">Luxury wordmark with copper divider.</desc>
+  <rect width="760" height="220" fill="#F6F2EE"/>
+  <text x="380" y="92" text-anchor="middle"
+        font-family="Didot, 'Bodoni 72', 'Times New Roman', serif"
+        font-size="62" letter-spacing="24" fill="#2E2B29">MOYUYO</text>
+  <line x1="238" y1="125" x2="522" y2="125" stroke="#B38A5A" stroke-width="2"/>
+  <text x="380" y="160" text-anchor="middle"
+        font-family="'Neue Haas Grotesk Text', Helvetica, Arial, sans-serif"
+        font-size="18" letter-spacing="10" fill="#6F6A63">ATELIER</text>
+</svg>

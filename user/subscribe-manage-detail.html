@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 订阅管理详情</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      /* 隐藏滚动条 */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+      /* 图标占位基础样式 */
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+
+      /* 页面级自定义样式 */
+      /* 订阅总览卡片渐变背景 */
+      .overview-card {
+        background: linear-gradient(135deg, var(--brand-500) 0%, var(--brand-600) 100%);
+        color: var(--background-50);
+      }
+
+      /* 周期切换按钮组 */
+      .cycle-btn {
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-500);
+        background: var(--background-200);
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .cycle-btn.active {
+        color: var(--primary-foreground);
+        background: var(--primary);
+      }
+
+      /* 配送操作按钮 */
+      .action-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px 8px;
+        border-radius: var(--radius);
+        background: var(--background-200);
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        flex: 1;
+        min-width: 0;
+      }
+      .action-btn:hover {
+        background: var(--background-300);
+      }
+      .action-btn:active {
+        transform: scale(0.97);
+      }
+      .action-btn .action-icon-wrap {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .action-btn .action-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-600);
+        white-space: nowrap;
+      }
+
+      /* 折叠区域 */
+      .collapsible-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      .collapsible-content.expanded {
+        max-height: 600px;
+      }
+      .collapse-chevron {
+        transition: transform 0.3s ease;
+      }
+      .collapse-chevron.rotated {
+        transform: rotate(180deg);
+      }
+
+      /* 历史记录行 */
+      .history-row {
+        display: flex;
+        align-items: center;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .history-row:last-child {
+        border-bottom: none;
+      }
+
+      /* 状态标签 */
+      .status-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+      .status-tag.active {
+        background: var(--state-success-surface);
+        color: var(--state-success);
+      }
+      .status-tag.paused {
+        background: var(--state-warning-surface);
+        color: var(--state-warning);
+      }
+      .status-tag.renewing {
+        background: var(--brand-50);
+        color: var(--brand-600);
+      }
+
+      /* 10% off 标签 */
+      .discount-tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: var(--state-success-surface);
+        color: var(--state-success);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      /* 倒计时数字样式 */
+      .countdown-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        height: 28px;
+        padding: 0 6px;
+        border-radius: 6px;
+        background: rgba(255,255,255,0.2);
+        font-size: 13px;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+      }
+      .countdown-sep {
+        font-size: 12px;
+        font-weight: 600;
+        opacity: 0.7;
+        margin: 0 2px;
+      }
+      .countdown-label {
+        font-size: 10px;
+        opacity: 0.7;
+        margin-top: 2px;
+      }
+
+      /* 合规区域 */
+      .compliance-box {
+        background: var(--background-200);
+        border-radius: var(--radius);
+        padding: 16px;
+      }
+
+      /* 分隔线 */
+      .section-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 0;
+      }
+
+      /* 信息行 */
+      .info-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+      }
+      .info-row + .info-row {
+        border-top: 1px solid var(--border);
+      }
+
+      /* 商品缩略图占位 */
+      .product-thumb-placeholder {
+        width: 72px;
+        height: 72px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--secondary), var(--accent));
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="font-family: 'DM Sans', -apple-system, sans-serif;">
+
+    <main class="pb-8">
+
+      <!-- 顶部导航栏 -->
+      <div class="sticky top-0 z-30" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);">
+        <div class="flex items-center justify-between h-12 px-4">
+          <button class="flex items-center justify-center w-9 h-9 rounded-full" style="background: var(--background-200); border: none;" data-dom-id="cta-back" aria-label="返回">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--foreground);"></span>
+          </button>
+          <h1 class="text-base font-semibold" style="color: var(--foreground);">订阅管理</h1>
+          <div class="w-9 h-9"></div>
+          <!-- 占位保持标题居中 -->
+        </div>
+      </div>
+
+      <!-- 页面内容区 -->
+      <div class="px-4 pt-4 flex flex-col gap-4">
+
+        <!-- ====== 订阅总览卡片 ====== -->
+        <div class="overview-card rounded-[var(--radius)] p-5" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-medium" style="color: rgba(255,255,255,0.7);">活跃订阅</p>
+              <div class="flex items-baseline gap-1 mt-1">
+                <span class="text-3xl font-bold" style="color: var(--background-50);">2</span>
+                <span class="text-sm" style="color: rgba(255,255,255,0.7);">个</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="text-xs font-medium" style="color: rgba(255,255,255,0.7);">累计节省</p>
+              <div class="flex items-baseline gap-0.5 mt-1">
+                <span class="text-lg font-bold" style="color: var(--background-50);">&yen;326</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-center w-10 h-10 rounded-full" style="background: rgba(255,255,255,0.15);">
+              <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/crown.svg'); mask-image: url('../assets/icons/dl-builtin-apple/crown.svg'); color: var(--background-50);"></span>
+            </div>
+          </div>
+          <!-- 全部订阅列表入口 -->
+          <button class="flex items-center justify-center w-full h-10 mt-4 rounded-xl text-xs font-semibold" style="background: rgba(255,255,255,0.15); color: var(--background-50); border: none; cursor: pointer;" data-dom-id="cta-all-subs">
+            查看全部订阅
+            <span data-icon class="w-4 h-4 ml-1" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg');"></span>
+          </button>
+        </div>
+
+        <!-- ====== 单个订阅详情卡片 ====== -->
+        <div class="rounded-[var(--radius)] overflow-hidden" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid var(--border);">
+          <div class="p-4">
+            <!-- 卡片头部：商品信息 -->
+            <div class="flex items-start gap-3">
+              <div class="product-thumb-placeholder">
+                <span data-icon class="w-7 h-7" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--icon-400);"></span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <h2 class="text-base font-semibold truncate" style="color: var(--foreground);">高端猫粮 成猫专用</h2>
+                </div>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">鸡肉配方 / 2kg 装</p>
+                <div class="flex items-center gap-2 mt-2">
+                  <span class="status-tag active">
+                    <span data-icon class="w-3 h-3" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg');"></span>
+                    活跃
+                  </span>
+                  <span class="text-xs" style="color: var(--text-400);">订阅号 SUB20250101001</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-divider mt-4"></div>
+
+            <!-- 订阅周期切换 -->
+            <div class="mt-4">
+              <p class="text-xs font-semibold mb-2.5" style="color: var(--text-500);">订阅周期</p>
+              <div class="flex gap-2" data-dom-id="cycle-selector">
+                <button class="cycle-btn" data-cycle="monthly">月付</button>
+                <button class="cycle-btn active" data-cycle="bimonthly">双月付</button>
+                <button class="cycle-btn" data-cycle="quarterly">季付</button>
+              </div>
+            </div>
+
+            <div class="section-divider mt-4"></div>
+
+            <!-- 配送频率 -->
+            <div class="info-row" data-dom-id="cta-edit-delivery-date">
+              <div>
+                <p class="text-xs font-semibold" style="color: var(--text-500);">配送频率</p>
+                <p class="text-sm font-medium mt-0.5" style="color: var(--foreground);">每月 15 号配送</p>
+              </div>
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/pencil.svg'); mask-image: url('../assets/icons/dl-builtin-apple/pencil.svg'); color: var(--icon-muted);"></span>
+            </div>
+
+            <!-- 下次配送日期 + 倒计时 -->
+            <div class="info-row">
+              <div>
+                <p class="text-xs font-semibold" style="color: var(--text-500);">下次配送</p>
+                <p class="text-sm font-medium mt-0.5" style="color: var(--foreground);">2026年7月15日</p>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="countdown-num">7</span>
+                <span class="countdown-sep">:</span>
+                <span class="countdown-num">12</span>
+                <span class="countdown-sep">:</span>
+                <span class="countdown-num">36</span>
+              </div>
+            </div>
+            <div class="flex justify-end gap-3 -mt-1">
+              <div class="text-center">
+                <p class="text-[10px]" style="color: var(--text-400);">天</p>
+              </div>
+              <div class="text-center">
+                <p class="text-[10px]" style="color: var(--text-400);">时</p>
+              </div>
+              <div class="text-center">
+                <p class="text-[10px]" style="color: var(--text-400);">分</p>
+              </div>
+            </div>
+
+            <div class="section-divider mt-2"></div>
+
+            <!-- 价格信息 -->
+            <div class="info-row">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xl font-bold" style="color: var(--primary);">&yen;170.10</span>
+                <span class="discount-tag">10% OFF</span>
+              </div>
+              <div class="text-right">
+                <p class="text-sm line-through" style="color: var(--text-400);">&yen;189.00</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">原价</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 灵活配送管理操作区 ====== -->
+        <div>
+          <h3 class="text-sm font-semibold mb-3 px-1" style="color: var(--foreground);">配送管理</h3>
+          <div class="grid grid-cols-4 gap-2.5">
+            <!-- 跳过本次 -->
+            <button class="action-btn" data-dom-id="cta-skip-delivery">
+              <div class="action-icon-wrap" style="background: var(--brand-50);">
+                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/fast-forward.svg'); mask-image: url('../assets/icons/dl-builtin-apple/fast-forward.svg'); color: var(--brand-500);"></span>
+              </div>
+              <span class="action-label">跳过本次</span>
+            </button>
+            <!-- 提前配送 -->
+            <button class="action-btn" data-dom-id="cta-early-delivery">
+              <div class="action-icon-wrap" style="background: var(--state-success-surface);">
+                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--state-success);"></span>
+              </div>
+              <span class="action-label">提前配送</span>
+            </button>
+            <!-- 更换商品 -->
+            <button class="action-btn" data-dom-id="cta-change-product">
+              <div class="action-icon-wrap" style="background: var(--state-warning-surface);">
+                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/repeat.svg'); mask-image: url('../assets/icons/dl-builtin-apple/repeat.svg'); color: var(--state-warning);"></span>
+              </div>
+              <span class="action-label">更换商品</span>
+            </button>
+            <!-- 修改配送日期 -->
+            <button class="action-btn" data-dom-id="cta-modify-date">
+              <div class="action-icon-wrap" style="background: var(--background-200);">
+                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/calendar.svg'); mask-image: url('../assets/icons/dl-builtin-apple/calendar.svg'); color: var(--icon-600);"></span>
+              </div>
+              <span class="action-label">改配送日</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ====== 订阅历史记录（折叠区域） ====== -->
+        <div class="rounded-[var(--radius)] overflow-hidden" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid var(--border);">
+          <!-- 折叠头部 -->
+          <button class="flex items-center justify-between w-full h-12 px-4" style="background: transparent; border: none; cursor: pointer;" data-dom-id="cta-toggle-history">
+            <div class="flex items-center gap-2">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/clock.svg'); mask-image: url('../assets/icons/dl-builtin-apple/clock.svg'); color: var(--icon-muted);"></span>
+              <span class="text-sm font-semibold" style="color: var(--foreground);">配送历史</span>
+              <span class="text-xs font-medium px-1.5 py-0.5 rounded-full" style="background: var(--background-200); color: var(--text-400);">6 次</span>
+            </div>
+            <span data-icon class="w-4 h-4 collapse-chevron rotated" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); color: var(--icon-muted);"></span>
+          </button>
+
+          <!-- 折叠内容 -->
+          <div class="collapsible-content expanded" id="historyContent">
+            <div class="px-4 pb-1">
+              <div class="history-row">
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium truncate" style="color: var(--foreground);">高端猫粮 成猫专用</p>
+                  <p class="text-xs mt-0.5" style="color: var(--text-400);">2026-06-15</p>
+                </div>
+                <div class="text-right flex-shrink-0 ml-3">
+                  <p class="text-sm font-semibold" style="color: var(--foreground);">&yen;170.10</p>
+                  <p class="text-xs" style="color: var(--state-success);">已配送</p>
+                </div>
+              </div>
+
+              <div class="history-row">
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium truncate" style="color: var(--foreground);">高端猫粮 成猫专用</p>
+                  <p class="text-xs mt-0.5" style="color: var(--text-400);">2026-05-15</p>
+                </div>
+                <div class="text-right flex-shrink-0 ml-3">
+                  <p class="text-sm font-semibold" style="color: var(--foreground);">&yen;170.10</p>
+                  <p class="text-xs" style="color: var(--state-success);">已配送</p>
+                </div>
+              </div>
+
+              <div class="history-row">
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium truncate" style="color: var(--foreground);">高端猫粮 成猫专用</p>
+                  <p class="text-xs mt-0.5" style="color: var(--text-400);">2026-04-15</p>
+                </div>
+                <div class="text-right flex-shrink-0 ml-3">
+                  <p class="text-sm font-semibold" style="color: var(--foreground);">&yen;170.10</p>
+                  <p class="text-xs" style="color: var(--state-success);">已配送</p>
+                </div>
+              </div>
+
+              <div class="history-row">
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium truncate" style="color: var(--foreground);">高端猫粮 成猫专用</p>
+                  <p class="text-xs mt-0.5" style="color: var(--text-400);">2026-03-15</p>
+                </div>
+                <div class="text-right flex-shrink-0 ml-3">
+                  <p class="text-sm font-semibold" style="color: var(--foreground);">&yen;170.10</p>
+                  <p class="text-xs" style="color: var(--brand-500);">已跳过</p>
+                </div>
+              </div>
+
+              <div class="history-row">
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium truncate" style="color: var(--foreground);">高端猫粮 成猫专用</p>
+                  <p class="text-xs mt-0.5" style="color: var(--text-400);">2026-02-15</p>
+                </div>
+                <div class="text-right flex-shrink-0 ml-3">
+                  <p class="text-sm font-semibold" style="color: var(--foreground);">&yen;170.10</p>
+                  <p class="text-xs" style="color: var(--state-success);">已配送</p>
+                </div>
+              </div>
+
+              <div class="history-row">
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium truncate" style="color: var(--foreground);">高端猫粮 成猫专用</p>
+                  <p class="text-xs mt-0.5" style="color: var(--text-400);">2026-01-15</p>
+                </div>
+                <div class="text-right flex-shrink-0 ml-3">
+                  <p class="text-sm font-semibold" style="color: var(--foreground);">&yen;170.10</p>
+                  <p class="text-xs" style="color: var(--state-success);">已配送</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 合规信息 ====== -->
+        <div class="compliance-box">
+          <div class="flex items-start gap-2.5">
+            <span data-icon class="w-4 h-4 mt-0.5 flex-shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/info.svg'); mask-image: url('../assets/icons/dl-builtin-apple/info.svg'); color: var(--text-400);"></span>
+            <div>
+              <p class="text-xs font-semibold" style="color: var(--text-500);">自动续订条款</p>
+              <p class="text-xs mt-1.5 leading-relaxed" style="color: var(--text-400);">
+                您的订阅将按所选周期自动续订并扣款。每次续订前 24 小时我们将发送提醒通知。订阅价享受 10% 优惠折扣，取消订阅后优惠即刻失效。
+              </p>
+            </div>
+          </div>
+          <!-- 取消入口 -->
+          <button class="flex items-center justify-center w-full h-11 mt-3 rounded-xl text-sm font-semibold" style="background: var(--state-error-surface); color: var(--state-error); border: none; cursor: pointer;" data-dom-id="cta-cancel-subscription">
+            <span data-icon class="w-4 h-4 mr-1.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/x.svg'); mask-image: url('../assets/icons/dl-builtin-apple/x.svg');"></span>
+            取消订阅
+          </button>
+        </div>
+
+        <!-- 底部安全间距 -->
+        <div class="h-4"></div>
+
+      </div>
+    </main>
+
+    <script>
+      // 初始化 Lucide 图标
+      lucide.createIcons();
+
+      // 订阅周期切换交互
+      document.querySelectorAll('[data-cycle]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('[data-cycle]').forEach(function(b) {
+            b.classList.remove('active');
+          });
+          btn.classList.add('active');
+        });
+      });
+
+      // 折叠区域交互
+      var toggleBtn = document.querySelector('[data-dom-id="cta-toggle-history"]');
+      var historyContent = document.getElementById('historyContent');
+      var chevron = toggleBtn ? toggleBtn.querySelector('.collapse-chevron') : null;
+
+      if (toggleBtn && historyContent) {
+        toggleBtn.addEventListener('click', function() {
+          var isExpanded = historyContent.classList.contains('expanded');
+          historyContent.classList.toggle('expanded');
+          if (chevron) {
+            chevron.classList.toggle('rotated');
+          }
+        });
+      }
+    </script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 运费估算</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body>
+  <div class="shipping-page">
+
+    <!-- 顶部深色导航栏 -->
+    <div class="dark-nav">
+      <div class="nav-back">
+        <i data-lucide="arrow-left" style="width:20px;height:20px;color:var(--text-50)"></i>
+      </div>
+      <span class="nav-title">运费估算</span>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="shipping-content">
+
+      <!-- 收货地址卡片 -->
+      <div class="section-card">
+        <div class="section-label">
+          <i data-lucide="map-pin" style="width:16px;height:16px"></i>
+          收货地址
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>国家/地区</label>
+            <select class="form-input" id="country-select">
+              <option value="US">美国 (US)</option>
+              <option value="CA">加拿大 (CA)</option>
+              <option value="UK">英国 (UK)</option>
+              <option value="AU">澳大利亚 (AU)</option>
+              <option value="JP">日本 (JP)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>邮政编码</label>
+            <input type="text" class="form-input" id="zip-input" placeholder="例如: 10001" maxlength="10">
+          </div>
+          <div class="form-group">
+            <label>州 / 省</label>
+            <input type="text" class="form-input" id="state-input" placeholder="自动填充" readonly>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>城市</label>
+            <input type="text" class="form-input" id="city-input" placeholder="自动填充" readonly>
+          </div>
+        </div>
+      </div>
+
+      <!-- 购物车商品概要 -->
+      <div class="section-card">
+        <div class="section-label">
+          <i data-lucide="shopping-bag" style="width:16px;height:16px"></i>
+          购物车概要
+        </div>
+        <div class="cart-summary">
+          <div class="cart-items-preview">
+            <!-- 商品缩略图用 CSS 渐变占位 -->
+            <div class="cart-item-thumb" style="background: linear-gradient(135deg, #e8f2ff, #cfe5ff)"></div>
+            <div class="cart-item-thumb" style="background: linear-gradient(135deg, #f2f2f7, #d1d1d6)"></div>
+            <div class="cart-item-thumb" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2)"></div>
+          </div>
+          <div class="cart-info">
+            <div class="cart-count">3 件商品</div>
+            <div class="cart-weight">总重 1.2 kg</div>
+          </div>
+          <div class="cart-total">$85.00</div>
+        </div>
+      </div>
+
+      <!-- 免邮进度提示 -->
+      <div class="free-shipping-bar">
+        <div class="bar-text">
+          <i data-lucide="truck" style="width:15px;height:15px"></i>
+          再加 $14 即可享免费配送
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 85%"></div>
+        </div>
+        <div class="bar-label">免邮门槛 $99.00</div>
+      </div>
+
+      <!-- 承运商运费对比 -->
+      <div class="section-card" style="padding:14px">
+        <div class="section-label">
+          <i data-lucide="package" style="width:16px;height:16px"></i>
+          配送方式
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+
+          <!-- USPS Standard（推荐） -->
+          <div class="carrier-card selected" data-carrier="usps" onclick="selectCarrier(this)">
+            <div class="carrier-radio">
+              <div class="radio-inner"></div>
+            </div>
+            <div class="carrier-info">
+              <div class="carrier-name">
+                USPS Standard
+                <span class="recommend-tag">推荐</span>
+              </div>
+              <div class="carrier-eta">
+                <i data-lucide="clock" style="width:13px;height:13px"></i>
+                预计 5-7 个工作日
+              </div>
+            </div>
+            <div class="carrier-price">$5.99</div>
+          </div>
+
+          <!-- FedEx Express（最快） -->
+          <div class="carrier-card" data-carrier="fedex" onclick="selectCarrier(this)">
+            <div class="carrier-radio">
+              <div class="radio-inner"></div>
+            </div>
+            <div class="carrier-info">
+              <div class="carrier-name">
+                FedEx Express
+                <span class="fast-tag">最快</span>
+              </div>
+              <div class="carrier-eta">
+                <i data-lucide="clock" style="width:13px;height:13px"></i>
+                预计 2-3 个工作日
+              </div>
+            </div>
+            <div class="carrier-price">$12.99</div>
+          </div>
+
+          <!-- DHL International -->
+          <div class="carrier-card" data-carrier="dhl" onclick="selectCarrier(this)">
+            <div class="carrier-radio">
+              <div class="radio-inner"></div>
+            </div>
+            <div class="carrier-info">
+              <div class="carrier-name">
+                DHL International
+              </div>
+              <div class="carrier-eta">
+                <i data-lucide="clock" style="width:13px;height:13px"></i>
+                预计 3-5 个工作日
+              </div>
+            </div>
+            <div class="carrier-price">$18.50</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 运费说明折叠面板 -->
+      <div class="accordion">
+        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+          <span>运费说明</span>
+          <i data-lucide="chevron-down" class="chevron" style="width:18px;height:18px"></i>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="info-row">
+              <i data-lucide="gift" style="width:15px;height:15px"></i>
+              <span>订单满 $99.00 即可享美国境内免费标准配送（USPS），免邮金额不含运费本身。</span>
+            </div>
+            <div class="info-row">
+              <i data-lucide="map" style="width:15px;height:15px"></i>
+              <span>阿拉斯加、夏威夷及 Puerto Rico 等偏远地区可能收取额外附加费，以结算页最终金额为准。</span>
+            </div>
+            <div class="info-row">
+              <i data-lucide="globe" style="width:15px;height:15px"></i>
+              <span>国际运费根据目的地与包裹重量实时计算，关税及进口税费由收件人承担，具体费用请咨询当地海关。</span>
+            </div>
+            <div class="info-row">
+              <i data-lucide="info" style="width:15px;height:15px"></i>
+              <span>预计送达时间为工作日，不含周末及法定节假日，实际送达可能因天气或承运商原因有所延迟。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 底部操作栏 -->
+    <div class="bottom-bar">
+      <button class="btn-secondary-action">返回购物车</button>
+      <button class="btn-primary" id="select-shipping-btn">
+        选择 $5.99 USPS 配送
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    // 初始化 Lucide 图标
+    lucide.createIcons();
+
+    // 当前选中的承运商数据
+    var carrierData = {
+      usps: { name: 'USPS', price: '$5.99', priceNum: 5.99 },
+      fedex: { name: 'FedEx', price: '$12.99', priceNum: 12.99 },
+      dhl: { name: 'DHL', price: '$18.50', priceNum: 18.50 }
+    };
+    var selectedCarrier = 'usps';
+
+    // 选择承运商
+    function selectCarrier(card) {
+      // 移除所有选中状态
+      var allCards = document.querySelectorAll('.carrier-card');
+      allCards.forEach(function(c) {
+        c.classList.remove('selected');
+      });
+      // 添加当前选中
+      card.classList.add('selected');
+
+      // 更新底部按钮文案
+      selectedCarrier = card.getAttribute('data-carrier');
+      var data = carrierData[selectedCarrier];
+      var btn = document.getElementById('select-shipping-btn');
+      btn.textContent = '选择 ' + data.price + ' ' + data.name + ' 配送';
+    }
+
+    // 折叠面板切换
+    function toggleAccordion(trigger) {
+      var body = trigger.nextElementSibling;
+      var isOpen = trigger.classList.contains('open');
+      trigger.classList.toggle('open');
+      body.classList.toggle('open');
+    }
+
+    // 邮编输入模拟自动填充城市/州
+    var zipInput = document.getElementById('zip-input');
+    var stateInput = document.getElementById('state-input');
+    var cityInput = document.getElementById('city-input');
+
+    // 常见邮编对应数据（模拟）
+    var zipLookup = {
+      '10001': { city: 'New York', state: 'NY' },
+      '90210': { city: 'Beverly Hills', state: 'CA' },
+      '60601': { city: 'Chicago', state: 'IL' },
+      '02101': { city: 'Boston', state: 'MA' },
+      '98101': { city: 'Seattle', state: 'WA' },
+      '33101': { city: 'Miami', state: 'FL' },
+      '77001': { city: 'Houston', state: 'TX' },
+      '85001': { city: 'Phoenix', state: 'AZ' }
+    };
+
+    zipInput.addEventListener('input', function() {
+      var zip = this.value.trim();
+      var match = zipLookup[zip];
+      if (match) {
+        cityInput.value = match.city;
+        stateInput.value = match.state;
+      } else {
+        cityInput.value = '';
+        stateInput.value = '';
+      }
+    });
+  </script>
+</body>
+</html>

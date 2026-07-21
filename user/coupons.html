@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 优惠券</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background: var(--background-200); color: var(--text-800); max-width: 375px; margin: 0 auto;">
+
+    <main>
+      <!-- 顶部导航 -->
+      <nav style="display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 0 16px; background: var(--background-50); position: sticky; top: 0; z-index: 10;">
+        <button data-dom-id="back-previous" style="display: flex; align-items: center; gap: 4px; background: none; border: none; color: var(--brand-500); font-size: 15px; font-weight: 500; cursor: pointer; padding: 0;" aria-label="返回">
+          <i data-lucide="chevron-left" style="width: 22px; height: 22px;"></i>
+        </button>
+        <span style="font-size: 17px; font-weight: 600; color: var(--text-800); letter-spacing: -0.02em;">优惠券</span>
+        <a href="#" style="font-size: 13px; font-weight: 500; color: var(--brand-500); text-decoration: none;">领券中心</a>
+      </nav>
+
+      <!-- 统计摘要 -->
+      <section style="display: flex; justify-content: space-around; padding: 20px 16px; background: var(--background-50); margin: 12px 16px; border-radius: 16px; box-shadow: var(--shadow-sm);">
+        <div style="text-align: center;">
+          <div style="font-size: 24px; font-weight: 700; color: var(--brand-500); line-height: 1.1; font-variant-numeric: tabular-nums;">3</div>
+          <div style="font-size: 12px; color: var(--text-400); margin-top: 4px;">可用</div>
+        </div>
+        <div style="width: 1px; background: var(--background-300);"></div>
+        <div style="text-align: center;">
+          <div style="font-size: 24px; font-weight: 700; color: var(--text-400); line-height: 1.1; font-variant-numeric: tabular-nums;">5</div>
+          <div style="font-size: 12px; color: var(--text-400); margin-top: 4px;">已使用</div>
+        </div>
+        <div style="width: 1px; background: var(--background-300);"></div>
+        <div style="text-align: center;">
+          <div style="font-size: 24px; font-weight: 700; color: var(--text-400); line-height: 1.1; font-variant-numeric: tabular-nums;">2</div>
+          <div style="font-size: 12px; color: var(--text-400); margin-top: 4px;">已过期</div>
+        </div>
+      </section>
+
+      <!-- Tab 栏 -->
+      <div style="display: flex; gap: 0; margin: 0 16px; padding: 0; background: var(--background-200); border-radius: 12px; overflow: hidden;" role="tablist">
+        <button role="tab" aria-selected="true" class="coupon-tab coupon-tab-active" style="flex: 1; height: 40px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color .16s ease, color .16s ease;">未使用</button>
+        <button role="tab" aria-selected="false" class="coupon-tab" style="flex: 1; height: 40px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; background: transparent; color: var(--text-400); transition: background-color .16s ease, color .16s ease;">已使用</button>
+        <button role="tab" aria-selected="false" class="coupon-tab" style="flex: 1; height: 40px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; background: transparent; color: var(--text-400); transition: background-color .16s ease, color .16s ease;">已过期</button>
+      </div>
+
+      <!-- 优惠券列表 -->
+      <div style="padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+
+        <!-- 优惠券1: ¥20 满199 全品类通用 -->
+        <div class="coupon-card coupon-card-usable" style="position: relative; display: flex; background: var(--background-50); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm);">
+          <!-- 左侧圆形缺口装饰 -->
+          <div class="coupon-cutout-left" style="position: absolute; left: 108px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--background-200);"></div>
+          <div class="coupon-cutout-right" style="position: absolute; right: 108px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--background-200);"></div>
+          <!-- 左侧金额区 -->
+          <div style="width: 108px; min-width: 108px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 12px; background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+            <div style="display: flex; align-items: baseline; gap: 1px;">
+              <span style="font-size: 16px; font-weight: 600; color: var(--background-50);">¥</span>
+              <span style="font-size: 36px; font-weight: 700; color: var(--background-50); line-height: 1; font-variant-numeric: tabular-nums;">20</span>
+            </div>
+            <span style="font-size: 11px; color: var(--brand-100); margin-top: 4px;">满199可用</span>
+          </div>
+          <!-- 中间虚线分隔 -->
+          <div style="width: 1px; border-left: 1.5px dashed var(--background-300);"></div>
+          <!-- 右侧信息区 -->
+          <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 16px;">
+            <div style="font-size: 15px; font-weight: 600; color: var(--text-800); margin-bottom: 4px;">全品类通用</div>
+            <div style="font-size: 12px; color: var(--text-400); margin-bottom: 12px;">有效期至 2026-08-15</div>
+            <button data-dom-id="cta-use-coupon" class="btn btn-primary" style="align-self: flex-start; height: 32px; padding: 0 16px; font-size: 12px; border-radius: 999px;">立即使用</button>
+          </div>
+        </div>
+
+        <!-- 优惠券2: ¥30 满299 GEAR装备专属 -->
+        <div class="coupon-card coupon-card-usable" style="position: relative; display: flex; background: var(--background-50); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm);">
+          <div class="coupon-cutout-left" style="position: absolute; left: 108px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--background-200);"></div>
+          <div class="coupon-cutout-right" style="position: absolute; right: 108px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--background-200);"></div>
+          <div style="width: 108px; min-width: 108px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 12px; background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+            <div style="display: flex; align-items: baseline; gap: 1px;">
+              <span style="font-size: 16px; font-weight: 600; color: var(--background-50);">¥</span>
+              <span style="font-size: 36px; font-weight: 700; color: var(--background-50); line-height: 1; font-variant-numeric: tabular-nums;">30</span>
+            </div>
+            <span style="font-size: 11px; color: var(--brand-100); margin-top: 4px;">满299可用</span>
+          </div>
+          <div style="width: 1px; border-left: 1.5px dashed var(--background-300);"></div>
+          <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 16px;">
+            <div style="font-size: 15px; font-weight: 600; color: var(--text-800); margin-bottom: 4px;">GEAR装备专属</div>
+            <div style="font-size: 12px; color: var(--text-400); margin-bottom: 12px;">有效期至 2026-08-31</div>
+            <button data-dom-id="cta-use-coupon" class="btn btn-primary" style="align-self: flex-start; height: 32px; padding: 0 16px; font-size: 12px; border-radius: 999px;">立即使用</button>
+          </div>
+        </div>
+
+        <!-- 优惠券3: 8折券 新会员专享 -->
+        <div class="coupon-card coupon-card-usable" style="position: relative; display: flex; background: var(--background-50); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm);">
+          <div class="coupon-cutout-left" style="position: absolute; left: 108px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--background-200);"></div>
+          <div class="coupon-cutout-right" style="position: absolute; right: 108px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--background-200);"></div>
+          <div style="width: 108px; min-width: 108px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 12px; background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+            <div style="display: flex; align-items: baseline; gap: 1px;">
+              <span style="font-size: 28px; font-weight: 700; color: var(--background-50); line-height: 1;">8折</span>
+            </div>
+            <span style="font-size: 11px; color: var(--brand-100); margin-top: 4px;">无门槛</span>
+          </div>
+          <div style="width: 1px; border-left: 1.5px dashed var(--background-300);"></div>
+          <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 16px;">
+            <div style="font-size: 15px; font-weight: 600; color: var(--text-800); margin-bottom: 4px;">新会员专享</div>
+            <div style="font-size: 12px; color: var(--text-400); margin-bottom: 12px;">有效期至 2026-09-30</div>
+            <button data-dom-id="cta-use-coupon" class="btn btn-primary" style="align-self: flex-start; height: 32px; padding: 0 16px; font-size: 12px; border-radius: 999px;">立即使用</button>
+          </div>
+        </div>
+
+        <!-- 优惠券4: 已使用 - ¥10 满99 -->
+        <div class="coupon-card coupon-card-disabled" style="position: relative; display: flex; background: var(--background-50); border-radius: 12px; overflow: hidden; opacity: 0.5;">
+          <div class="coupon-cutout-left" style="position: absolute; left: 108px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--background-200);"></div>
+          <div class="coupon-cutout-right" style="position: absolute; right: 108px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--background-200);"></div>
+          <div style="width: 108px; min-width: 108px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 12px; background: var(--background-300);">
+            <div style="display: flex; align-items: baseline; gap: 1px;">
+              <span style="font-size: 16px; font-weight: 600; color: var(--text-400);">¥</span>
+              <span style="font-size: 36px; font-weight: 700; color: var(--text-400); line-height: 1; font-variant-numeric: tabular-nums;">10</span>
+            </div>
+            <span style="font-size: 11px; color: var(--text-300); margin-top: 4px;">满99可用</span>
+          </div>
+          <div style="width: 1px; border-left: 1.5px dashed var(--background-400);"></div>
+          <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 16px;">
+            <div style="font-size: 15px; font-weight: 600; color: var(--text-400); margin-bottom: 4px;">零食玩具</div>
+            <div style="font-size: 12px; color: var(--text-300); margin-bottom: 12px;">有效期至 2026-06-30</div>
+            <span style="align-self: flex-start; display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 16px; font-size: 12px; border-radius: 999px; background: var(--background-200); color: var(--text-400); font-weight: 600;">已使用</span>
+          </div>
+        </div>
+
+        <!-- 优惠券5: 已过期 - ¥15 满159 -->
+        <div class="coupon-card coupon-card-disabled" style="position: relative; display: flex; background: var(--background-50); border-radius: 12px; overflow: hidden; opacity: 0.5;">
+          <div class="coupon-cutout-left" style="position: absolute; left: 108px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--background-200);"></div>
+          <div class="coupon-cutout-right" style="position: absolute; right: 108px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--background-200);"></div>
+          <div style="width: 108px; min-width: 108px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 12px; background: var(--background-300);">
+            <div style="display: flex; align-items: baseline; gap: 1px;">
+              <span style="font-size: 16px; font-weight: 600; color: var(--text-400);">¥</span>
+              <span style="font-size: 36px; font-weight: 700; color: var(--text-400); line-height: 1; font-variant-numeric: tabular-nums;">15</span>
+            </div>
+            <span style="font-size: 11px; color: var(--text-300); margin-top: 4px;">满159可用</span>
+          </div>
+          <div style="width: 1px; border-left: 1.5px dashed var(--background-400);"></div>
+          <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 16px;">
+            <div style="font-size: 15px; font-weight: 600; color: var(--text-400); margin-bottom: 4px;">洗护保健</div>
+            <div style="font-size: 12px; color: var(--text-300); margin-bottom: 12px;">有效期至 2026-05-31</div>
+            <span style="align-self: flex-start; display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 16px; font-size: 12px; border-radius: 999px; background: var(--background-200); color: var(--text-400); font-weight: 600;">已过期</span>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <style>
+      /* 优惠券 Tab 样式 */
+      .coupon-tab-active {
+        background: var(--background-50);
+        color: var(--brand-500) !important;
+        box-shadow: var(--shadow-sm);
+      }
+      .coupon-tab-active:first-child {
+        border-radius: 12px 0 0 12px;
+      }
+      .coupon-tab-active:last-child {
+        border-radius: 0 12px 12px 0;
+      }
+
+      /* 可用优惠券按钮 hover */
+      .coupon-card-usable .btn-primary:hover {
+        filter: brightness(0.96);
+      }
+      .coupon-card-usable .btn-primary:active {
+        transform: scale(0.97);
+      }
+
+      /* 禁用卡片内按钮样式 */
+      .coupon-card-disabled {
+        pointer-events: none;
+      }
+    </style>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

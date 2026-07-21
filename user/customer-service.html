@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 在线客服</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="flex flex-col h-screen" style="max-width:375px;margin:0 auto;background:var(--background-50);">
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30 flex items-center justify-between px-4 h-11 border-b" style="background:var(--background-50);border-color:var(--background-300);">
+        <button data-dom-id="back-previous" class="inline-flex items-center justify-center w-8 h-8 rounded-lg" style="color:var(--brand-500);" aria-label="返回">
+          <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <span class="text-base font-semibold tracking-tight" style="color:var(--text-800);">MOYUYO智能客服</span>
+        <button class="inline-flex items-center justify-center w-8 h-8 rounded-lg" style="color:var(--text-400);" aria-label="更多">
+          <i data-lucide="ellipsis" class="w-5 h-5"></i>
+        </button>
+      </header>
+
+      <!-- 聊天消息区域 -->
+      <div class="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3 no-scrollbar" style="padding-bottom:72px;">
+
+        <!-- 机器人消息1 -->
+        <div class="flex gap-2 items-start max-w-[88%]">
+          <img src="../assets/cs-avatar.jpg" alt="客服头像" class="w-8 h-8 rounded-full shrink-0 object-cover" style="border:1px solid var(--background-300);">
+          <div class="flex flex-col gap-1">
+            <div class="rounded-2xl rounded-tl-md px-3 py-2.5" style="background:var(--background-200);color:var(--text-800);font-size:14px;line-height:1.55;">
+              您好！我是MOYUYO智能客服小助手，很高兴为您服务！请问有什么可以帮您的？
+            </div>
+            <span class="text-xs pl-1" style="color:var(--text-400);">14:30</span>
+          </div>
+        </div>
+
+        <!-- 快捷回复按钮 -->
+        <div class="flex gap-2 overflow-x-auto no-scrollbar pl-10">
+          <button class="shrink-0 inline-flex items-center justify-center h-8 px-3 rounded-full text-xs font-medium whitespace-nowrap" style="border:1px solid var(--background-300);color:var(--text-600);background:var(--background-50);">查询订单</button>
+          <button class="shrink-0 inline-flex items-center justify-center h-8 px-3 rounded-full text-xs font-medium whitespace-nowrap" style="border:1px solid var(--background-300);color:var(--text-600);background:var(--background-50);">退换货</button>
+          <button class="shrink-0 inline-flex items-center justify-center h-8 px-3 rounded-full text-xs font-medium whitespace-nowrap" style="border:1px solid var(--background-300);color:var(--text-600);background:var(--background-50);">物流查询</button>
+          <button class="shrink-0 inline-flex items-center justify-center h-8 px-3 rounded-full text-xs font-medium whitespace-nowrap" style="border:1px solid var(--background-300);color:var(--text-600);background:var(--background-50);">优惠活动</button>
+          <button class="shrink-0 inline-flex items-center justify-center h-8 px-3 rounded-full text-xs font-medium whitespace-nowrap" style="border:1px solid var(--background-300);color:var(--text-600);background:var(--background-50);">人工客服</button>
+        </div>
+
+        <!-- 用户消息 -->
+        <div class="flex justify-end">
+          <div class="flex flex-col gap-1 items-end max-w-[82%]">
+            <div class="rounded-2xl rounded-tr-md px-3 py-2.5" style="background:var(--brand-500);color:var(--background-50);font-size:14px;line-height:1.55;">
+              我想查询一下订单MOY20260710002的物流信息
+            </div>
+            <span class="text-xs pr-1" style="color:var(--text-400);">14:31</span>
+          </div>
+        </div>
+
+        <!-- 机器人消息2 -->
+        <div class="flex gap-2 items-start max-w-[88%]">
+          <img src="../assets/cs-avatar.jpg" alt="客服头像" class="w-8 h-8 rounded-full shrink-0 object-cover" style="border:1px solid var(--background-300);">
+          <div class="flex flex-col gap-1">
+            <div class="rounded-2xl rounded-tl-md px-3 py-2.5" style="background:var(--background-200);color:var(--text-800);font-size:14px;line-height:1.55;">
+              已为您查询到订单信息
+            </div>
+            <span class="text-xs pl-1" style="color:var(--text-400);">14:31</span>
+          </div>
+        </div>
+
+        <!-- 订单卡片 -->
+        <div class="flex gap-2 items-start max-w-[88%] pl-10">
+          <div class="w-full rounded-xl border p-3 flex flex-col gap-2" style="border-color:var(--background-300);background:var(--background-50);">
+            <span class="text-sm font-semibold" style="color:var(--text-800);">经典尼龙宠物牵引套装</span>
+            <div class="flex flex-col gap-1 text-xs" style="color:var(--text-500);">
+              <span>订单状态: <span class="font-medium" style="color:var(--brand-500);">待收货</span></span>
+              <span>快递: 顺丰速运 SF1234567890</span>
+            </div>
+            <button class="inline-flex items-center justify-center self-start h-7 px-3 rounded-lg text-xs font-medium whitespace-nowrap" style="background:var(--background-200);color:var(--brand-500);">查看详情</button>
+          </div>
+        </div>
+
+        <!-- 机器人消息3 -->
+        <div class="flex gap-2 items-start max-w-[88%]">
+          <img src="../assets/cs-avatar.jpg" alt="客服头像" class="w-8 h-8 rounded-full shrink-0 object-cover" style="border:1px solid var(--background-300);">
+          <div class="flex flex-col gap-1">
+            <div class="rounded-2xl rounded-tl-md px-3 py-2.5" style="background:var(--background-200);color:var(--text-800);font-size:14px;line-height:1.55;">
+              您的包裹正在配送中，预计7月12日送达。还有其他问题吗？
+            </div>
+            <span class="text-xs pl-1" style="color:var(--text-400);">14:31</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 底部输入栏 -->
+      <div class="fixed bottom-0 inset-x-0 z-30 border-t" style="background:var(--background-50);border-color:var(--background-300);max-width:375px;margin:0 auto;">
+        <div class="flex items-center gap-2 px-3 py-2">
+          <input type="text" placeholder="输入您的问题..." class="flex-1 h-10 px-3 rounded-full text-sm outline-none" style="background:var(--background-200);color:var(--text-800);border:none;" aria-label="消息输入">
+          <button class="inline-flex items-center justify-center w-9 h-9 rounded-full shrink-0" style="color:var(--text-400);" aria-label="拍照">
+            <i data-lucide="camera" class="w-5 h-5"></i>
+          </button>
+          <button data-dom-id="cta-send-message" class="inline-flex items-center justify-center w-9 h-9 rounded-full shrink-0" style="background:var(--brand-500);color:var(--background-50);" aria-label="发送">
+            <i data-lucide="send-horizontal" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 健康日历</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+
+      <!-- iOS 状态栏模拟 -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--foreground);"></span>
+          </div>
+        </div>
+
+        <!-- 顶部导航栏 -->
+        <div class="h-11 flex items-center justify-between px-4">
+          <!-- 返回按钮 -->
+          <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--background-200); border: none;" data-dom-id="cta-back" aria-label="返回">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--text-800);"></span>
+          </button>
+          <!-- 页面标题 -->
+          <h1 class="text-base font-semibold" style="color: var(--text-800);">健康日历</h1>
+          <!-- 添加记录按钮 -->
+          <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--brand-500); border: none;" aria-label="添加记录">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); color: var(--primary-foreground);"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 宠物切换横向滚动栏 -->
+      <section class="px-4 pt-3 pb-2" aria-label="宠物切换">
+        <div class="flex gap-4 overflow-x-auto no-scrollbar py-1">
+          <!-- 宠物 1（当前选中） -->
+          <div class="flex flex-col items-center gap-1.5 flex-shrink-0">
+            <div class="pet-avatar active">
+              <div class="pet-avatar-placeholder">
+                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--icon-400);"></span>
+              </div>
+            </div>
+            <span class="text-xs font-medium" style="color: var(--primary);">豆豆</span>
+          </div>
+          <!-- 宠物 2 -->
+          <div class="flex flex-col items-center gap-1.5 flex-shrink-0">
+            <div class="pet-avatar">
+              <div class="pet-avatar-placeholder">
+                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--icon-400);"></span>
+              </div>
+            </div>
+            <span class="text-xs font-medium" style="color: var(--text-500);">咪咪</span>
+          </div>
+          <!-- 宠物 3 -->
+          <div class="flex flex-col items-center gap-1.5 flex-shrink-0">
+            <div class="pet-avatar">
+              <div class="pet-avatar-placeholder">
+                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--icon-400);"></span>
+              </div>
+            </div>
+            <span class="text-xs font-medium" style="color: var(--text-500);">旺财</span>
+          </div>
+          <!-- 添加宠物 -->
+          <div class="flex flex-col items-center gap-1.5 flex-shrink-0">
+            <div class="pet-avatar" style="border: 2px dashed var(--background-300);">
+              <div class="pet-avatar-placeholder">
+                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); color: var(--icon-300);"></span>
+              </div>
+            </div>
+            <span class="text-xs font-medium" style="color: var(--text-400);">添加</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 月度日历视图 -->
+      <section class="mx-4 mt-2 rounded-[var(--radius)] p-4" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid var(--border);" aria-label="月度日历">
+        <!-- 月份切换 -->
+        <div class="flex items-center justify-between mb-4">
+          <button class="w-8 h-8 flex items-center justify-center rounded-full" style="background: var(--background-200); border: none;" aria-label="上个月" data-dom-id="prev-month">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--text-600);"></span>
+          </button>
+          <h2 class="text-base font-semibold" style="color: var(--text-800);" id="calendar-month-label">2026年7月</h2>
+          <button class="w-8 h-8 flex items-center justify-center rounded-full" style="background: var(--background-200); border: none;" aria-label="下个月" data-dom-id="next-month">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--text-600);"></span>
+          </button>
+        </div>
+
+        <!-- 星期标题行 -->
+        <div class="calendar-grid mb-1">
+          <div class="text-center text-xs font-medium py-1" style="color: var(--state-error);">日</div>
+          <div class="text-center text-xs font-medium py-1" style="color: var(--text-500);">一</div>
+          <div class="text-center text-xs font-medium py-1" style="color: var(--text-500);">二</div>
+          <div class="text-center text-xs font-medium py-1" style="color: var(--text-500);">三</div>
+          <div class="text-center text-xs font-medium py-1" style="color: var(--text-500);">四</div>
+          <div class="text-center text-xs font-medium py-1" style="color: var(--text-500);">五</div>
+          <div class="text-center text-xs font-medium py-1" style="color: var(--state-error);">六</div>
+        </div>
+
+        <!-- 日期网格（2026年7月） -->
+        <!-- 7月1日=周三，前面填充周二和周一 -->
+        <div class="calendar-grid">
+          <!-- 上月占位 -->
+          <div class="calendar-cell other-month"><span class="day-number">29</span></div>
+          <div class="calendar-cell other-month"><span class="day-number">30</span></div>
+          <!-- 7月 -->
+          <div class="calendar-cell"><span class="day-number">1</span></div>
+          <div class="calendar-cell"><span class="day-number">2</span></div>
+          <div class="calendar-cell">
+            <span class="day-number">3</span>
+            <div class="dot-indicators"><span class="dot-indicator type-bath"></span></div>
+          </div>
+          <div class="calendar-cell"><span class="day-number">4</span></div>
+          <div class="calendar-cell"><span class="day-number">5</span></div>
+
+          <!-- 第二周 -->
+          <div class="calendar-cell"><span class="day-number">6</span></div>
+          <div class="calendar-cell">
+            <span class="day-number">7</span>
+            <div class="dot-indicators"><span class="dot-indicator type-diary"></span></div>
+          </div>
+          <div class="calendar-cell"><span class="day-number">8</span></div>
+          <div class="calendar-cell today selected">
+            <span class="day-number">9</span>
+            <div class="dot-indicators"><span class="dot-indicator type-deworm"></span></div>
+          </div>
+          <div class="calendar-cell"><span class="day-number">10</span></div>
+          <div class="calendar-cell"><span class="day-number">11</span></div>
+          <div class="calendar-cell">
+            <span class="day-number">12</span>
+            <div class="dot-indicators">
+              <span class="dot-indicator type-vaccine"></span>
+              <span class="dot-indicator type-bath"></span>
+            </div>
+          </div>
+
+          <!-- 第三周 -->
+          <div class="calendar-cell"><span class="day-number">13</span></div>
+          <div class="calendar-cell">
+            <span class="day-number">14</span>
+            <div class="dot-indicators"><span class="dot-indicator type-checkup"></span></div>
+          </div>
+          <div class="calendar-cell"><span class="day-number">15</span></div>
+          <div class="calendar-cell"><span class="day-number">16</span></div>
+          <div class="calendar-cell">
+            <span class="day-number">17</span>
+            <div class="dot-indicators"><span class="dot-indicator type-bath"></span></div>
+          </div>
+          <div class="calendar-cell"><span class="day-number">18</span></div>
+          <div class="calendar-cell"><span class="day-number">19</span></div>
+
+          <!-- 第四周 -->
+          <div class="calendar-cell">
+            <span class="day-number">20</span>
+            <div class="dot-indicators"><span class="dot-indicator type-diary"></span></div>
+          </div>
+          <div class="calendar-cell"><span class="day-number">21</span></div>
+          <div class="calendar-cell"><span class="day-number">22</span></div>
+          <div class="calendar-cell"><span class="day-number">23</span></div>
+          <div class="calendar-cell"><span class="day-number">24</span></div>
+          <div class="calendar-cell">
+            <span class="day-number">25</span>
+            <div class="dot-indicators"><span class="dot-indicator type-vaccine"></span></div>
+          </div>
+          <div class="calendar-cell"><span class="day-number">26</span></div>
+
+          <!-- 第五周 -->
+          <div class="calendar-cell"><span class="day-number">27</span></div>
+          <div class="calendar-cell"><span class="day-number">28</span></div>
+          <div class="calendar-cell">
+            <span class="day-number">29</span>
+            <div class="dot-indicators"><span class="dot-indicator type-bath"></span></div>
+          </div>
+          <div class="calendar-cell"><span class="day-number">30</span></div>
+          <div class="calendar-cell"><span class="day-number">31</span></div>
+          <!-- 下月占位 -->
+          <div class="calendar-cell other-month"><span class="day-number">1</span></div>
+          <div class="calendar-cell other-month"><span class="day-number">2</span></div>
+        </div>
+
+        <!-- 图例 -->
+        <div class="flex items-center gap-3 mt-4 pt-3" style="border-top: 1px solid var(--border);">
+          <div class="flex items-center gap-1">
+            <span class="w-2.5 h-2.5 rounded-full type-bath"></span>
+            <span class="text-[10px]" style="color: var(--text-500);">洗澡</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-2.5 h-2.5 rounded-full type-vaccine"></span>
+            <span class="text-[10px]" style="color: var(--text-500);">疫苗</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-2.5 h-2.5 rounded-full type-deworm"></span>
+            <span class="text-[10px]" style="color: var(--text-500);">驱虫</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-2.5 h-2.5 rounded-full type-checkup"></span>
+            <span class="text-[10px]" style="color: var(--text-500);">体检</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-2.5 h-2.5 rounded-full type-diary"></span>
+            <span class="text-[10px]" style="color: var(--text-500);">日记</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 当日记录详情 -->
+      <section class="mx-4 mt-3 rounded-[var(--radius)] p-4" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid var(--border);" aria-label="当日记录">
+        <!-- 日期与宠物名标题 -->
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold" style="color: var(--text-800);">7月9日</span>
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full" style="background: var(--brand-50); color: var(--brand-600);">今天</span>
+          </div>
+          <span class="text-xs" style="color: var(--text-500);">豆豆</span>
+        </div>
+
+        <!-- 护理记录列表 -->
+        <div class="flex flex-col gap-2.5">
+          <!-- 记录 1：驱虫 -->
+          <div class="flex items-start gap-3 p-3 rounded-xl" style="background: var(--background-200);">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--state-warning); opacity: 0.12;">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/shield.svg'); mask-image: url('../assets/icons/dl-builtin-apple/shield.svg'); color: var(--state-warning);"></span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-semibold px-2 py-0.5 rounded-md tag-deworm">驱虫</span>
+                <span class="text-[10px]" style="color: var(--text-400);">10:30</span>
+              </div>
+              <p class="text-xs" style="color: var(--text-600);">体内驱虫，服用拜宠清 1 片</p>
+            </div>
+          </div>
+
+          <!-- 记录 2：体重记录 -->
+          <div class="flex items-start gap-3 p-3 rounded-xl" style="background: var(--background-200);">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--brand-50);">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-down.svg'); color: var(--brand-500);"></span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-semibold px-2 py-0.5 rounded-md" style="background: var(--brand-50); color: var(--brand-600);">体重</span>
+                <span class="text-[10px]" style="color: var(--text-400);">09:15</span>
+              </div>
+              <p class="text-xs" style="color: var(--text-600);">4.2 kg（较上月 -0.1 kg）</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 近期提醒列表 -->
+      <section class="mx-4 mt-3 rounded-[var(--radius)] p-4" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid var(--border);" aria-label="近期提醒">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-semibold" style="color: var(--text-800);">近期提醒</h3>
+          <span class="text-xs" style="color: var(--text-400);">查看全部</span>
+        </div>
+
+        <div class="flex flex-col gap-2.5">
+          <!-- 提醒 1：已过期 -->
+          <div class="flex items-center gap-3 p-3 rounded-xl reminder-overdue" style="background: var(--state-error-surface);">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--state-error); opacity: 0.12;">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/droplets.svg'); mask-image: url('../assets/icons/dl-builtin-apple/droplets.svg'); color: var(--state-error);"></span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-0.5">
+                <span class="text-xs font-semibold px-2 py-0.5 rounded-md" style="background: rgba(255,59,48,0.1); color: var(--state-error);">洗澡</span>
+                <span class="text-[10px] font-semibold" style="color: var(--state-error);">已过期 3 天</span>
+              </div>
+              <p class="text-[11px]" style="color: var(--text-500);">预计日期：7月6日</p>
+            </div>
+          </div>
+
+          <!-- 提醒 2：即将到来 -->
+          <div class="flex items-center gap-3 p-3 rounded-xl" style="background: var(--background-200);">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--state-success-surface);">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/syringe.svg'); mask-image: url('../assets/icons/dl-builtin-apple/syringe.svg'); color: var(--state-success);"></span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-0.5">
+                <span class="text-xs font-semibold px-2 py-0.5 rounded-md tag-vaccine">疫苗</span>
+                <span class="text-[10px] font-medium" style="color: var(--state-warning);">还剩 6 天</span>
+              </div>
+              <p class="text-[11px]" style="color: var(--text-500);">预计日期：7月15日 · 狂犬疫苗加强</p>
+            </div>
+          </div>
+
+          <!-- 提醒 3 -->
+          <div class="flex items-center gap-3 p-3 rounded-xl" style="background: var(--background-200);">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--state-success-surface);">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/shield.svg'); mask-image: url('../assets/icons/dl-builtin-apple/shield.svg'); color: var(--state-success);"></span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-0.5">
+                <span class="text-xs font-semibold px-2 py-0.5 rounded-md tag-deworm">驱虫</span>
+                <span class="text-[10px] font-medium" style="color: var(--text-500);">还剩 18 天</span>
+              </div>
+              <p class="text-[11px]" style="color: var(--text-500);">预计日期：7月27日 · 体外驱虫</p>
+            </div>
+          </div>
+
+          <!-- 提醒 4 -->
+          <div class="flex items-center gap-3 p-3 rounded-xl" style="background: var(--background-200);">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: #f0f0ff;">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/stethoscope.svg'); mask-image: url('../assets/icons/dl-builtin-apple/stethoscope.svg'); color: var(--chart-4);"></span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-0.5">
+                <span class="text-xs font-semibold px-2 py-0.5 rounded-md tag-checkup">体检</span>
+                <span class="text-[10px] font-medium" style="color: var(--text-500);">还剩 25 天</span>
+              </div>
+              <p class="text-[11px]" style="color: var(--text-500);">预计日期：8月3日 · 半年度体检</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 护理统计本月概览 -->
+      <section class="mx-4 mt-3 mb-4 rounded-[var(--radius)] p-4" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid var(--border);" aria-label="本月统计">
+        <h3 class="text-sm font-semibold mb-3" style="color: var(--text-800);">本月概览</h3>
+        <div class="grid grid-cols-3 gap-3">
+          <!-- 洗澡统计 -->
+          <div class="flex flex-col items-center gap-1.5 py-3 rounded-xl" style="background: var(--brand-50);">
+            <span class="stat-number" style="color: var(--brand-500);">3</span>
+            <span class="text-[10px] font-medium" style="color: var(--brand-600);">洗澡</span>
+            <div class="w-1 h-1 rounded-full" style="background: var(--brand-200);"></div>
+          </div>
+          <!-- 疫苗统计 -->
+          <div class="flex flex-col items-center gap-1.5 py-3 rounded-xl" style="background: var(--state-success-surface);">
+            <span class="stat-number" style="color: var(--state-success);">1</span>
+            <span class="text-[10px] font-medium" style="color: var(--state-success);">疫苗</span>
+            <div class="w-1 h-1 rounded-full" style="background: #b5f0c2;"></div>
+          </div>
+          <!-- 驱虫统计 -->
+          <div class="flex flex-col items-center gap-1.5 py-3 rounded-xl" style="background: #fff5e6;">
+            <span class="stat-number" style="color: var(--state-warning);">1</span>
+            <span class="text-[10px] font-medium" style="color: var(--state-warning);">驱虫</span>
+            <div class="w-1 h-1 rounded-full" style="background: #ffd699;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 底部 TabBar -->
+      <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="主导航">
+        <div class="flex items-stretch justify-around h-[49px]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+          <!-- 首页 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="首页">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
+            <span class="text-[10px] font-medium">首页</span>
+          </button>
+          <!-- 分类 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-category" aria-label="分类">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/grip.svg'); mask-image: url('../assets/icons/dl-builtin-apple/grip.svg');"></span>
+            <span class="text-[10px] font-medium">分类</span>
+          </button>
+          <!-- Pet Hub（活跃） -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--primary);" aria-label="Pet Hub" aria-current="page">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+            <span class="text-[10px] font-medium">Pet Hub</span>
+          </button>
+          <!-- 社区 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="社区">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+            <span class="text-[10px] font-medium">社区</span>
+          </button>
+          <!-- 我的 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-profile" aria-label="个人中心">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
+            <span class="text-[10px] font-medium">我的</span>
+          </button>
+        </div>
+        <!-- Safe area -->
+        <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.88);"></div>
+      </nav>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

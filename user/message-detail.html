@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 消息详情</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+
+        <!-- 顶部导航栏 -->
+        <header class="sticky top-0 z-30 flex h-11 items-center border-b" style="border-color: var(--border); background: var(--background-50);">
+            <!-- 返回按钮 -->
+            <button data-dom-id="cta-back" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="color: var(--brand-500);" aria-label="返回消息列表">
+                <span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+            </button>
+            <!-- 页面标题 -->
+            <div class="min-w-0 flex-1 text-center text-[17px] font-semibold" style="color: var(--text-800);">消息详情</div>
+            <!-- 标星按钮 -->
+            <button data-dom-id="cta-star" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="color: var(--text-400);" aria-label="标星消息">
+                <i data-lucide="star" class="h-5 w-5"></i>
+            </button>
+        </header>
+
+        <!-- 消息内容区 -->
+        <div class="p-4">
+
+            <!-- 消息类型标签 + 标题 + 时间 -->
+            <div class="flex items-center gap-2 mb-3">
+                <!-- 消息类型图标 -->
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background: var(--background-200);">
+                    <span data-icon class="h-4.5 w-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--brand-500);"></span>
+                </div>
+                <!-- 消息类型标签 -->
+                <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-semibold" style="background: var(--brand-50); color: var(--brand-500);">订单通知</span>
+            </div>
+
+            <!-- 消息标题 -->
+            <h1 class="text-[18px] font-semibold leading-snug" style="color: var(--text-800);">您的订单已发货</h1>
+
+            <!-- 消息时间 -->
+            <p class="mt-1.5 text-[13px]" style="color: var(--text-400);">2026-07-08 10:30</p>
+
+            <!-- 分隔线 -->
+            <div class="my-4 h-px" style="background: var(--background-200);"></div>
+
+            <!-- 消息正文 -->
+            <div class="space-y-4">
+
+                <!-- 正文文字 -->
+                <p class="text-[14px] leading-relaxed" style="color: var(--text-600);">亲爱的用户，您的订单 #MOY2026070812 已发货。</p>
+
+                <!-- 物流信息卡片 -->
+                <div class="rounded-xl p-4" style="background: var(--background-200); border: 1px solid var(--border);">
+                    <h2 class="mb-3 text-[14px] font-semibold" style="color: var(--text-800);">物流信息</h2>
+                    <div class="space-y-2.5">
+                        <!-- 承运商 -->
+                        <div class="flex items-center justify-between">
+                            <span class="text-[13px]" style="color: var(--text-400);">承运商</span>
+                            <span class="text-[14px] font-medium" style="color: var(--text-800);">FedEx</span>
+                        </div>
+                        <!-- 运单号 -->
+                        <div class="flex items-center justify-between">
+                            <span class="text-[13px]" style="color: var(--text-400);">运单号</span>
+                            <span class="text-[14px] font-medium" style="color: var(--text-800);">794644790132</span>
+                        </div>
+                        <!-- 预计送达 -->
+                        <div class="flex items-center justify-between">
+                            <span class="text-[13px]" style="color: var(--text-400);">预计送达</span>
+                            <span class="text-[14px] font-medium" style="color: var(--text-800);">2026-07-12</span>
+                        </div>
+                        <!-- 查看物流链接 -->
+                        <div class="pt-1">
+                            <button data-dom-id="cta-track" class="inline-flex items-center gap-1 text-[14px] font-medium" style="color: var(--brand-500); background: none; border: none; padding: 0; cursor: pointer;">
+                                查看物流
+                                <span data-icon class="h-4 w-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg');"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分隔线 -->
+                <div class="h-px" style="background: var(--background-200);"></div>
+
+                <!-- 商品信息 -->
+                <div>
+                    <h2 class="mb-3 text-[14px] font-semibold" style="color: var(--text-800);">商品信息</h2>
+                    <div class="flex gap-3 rounded-xl p-3" style="background: var(--background-200); border: 1px solid var(--border);">
+                        <!-- 商品缩略图 -->
+                        <img src="../assets/product-harness-gear.jpg" alt="经典尼龙宠物牵引套装" class="h-16 w-16 shrink-0 rounded-lg object-cover" style="border: 1px solid var(--border);">
+                        <!-- 商品详情 -->
+                        <div class="flex min-w-0 flex-1 flex-col justify-between">
+                            <p class="truncate text-[14px] font-medium" style="color: var(--text-800);">经典尼龙宠物牵引套装</p>
+                            <p class="text-[12px]" style="color: var(--text-400);">x1</p>
+                        </div>
+                        <!-- 金额 -->
+                        <span class="shrink-0 self-center text-[14px] font-semibold" style="color: var(--text-800);">¥89.00</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 底部操作栏 -->
+    <div class="fixed bottom-0 inset-x-0 z-30 px-4 pb-[env(safe-area-inset-bottom,0px)] pt-3" style="background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);">
+        <div class="flex flex-col gap-2">
+            <!-- 查看订单按钮 -->
+            <a data-dom-id="cta-view-order" href="order-detail.html" class="btn btn-primary flex w-full items-center justify-center rounded-full text-[15px]" style="height: 48px; text-decoration: none;">查看订单</a>
+            <!-- 删除消息按钮 -->
+            <button data-dom-id="cta-delete" class="flex items-center justify-center text-[14px] font-medium" style="color: var(--text-400); background: none; border: none; padding: 4px 0; cursor: pointer;">删除消息</button>
+        </div>
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

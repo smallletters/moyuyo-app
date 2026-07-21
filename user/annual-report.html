@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>MOYUYO 2025 年度报告</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="report-page report-scroll">
+  <!-- 顶部装饰光晕 -->
+  <div class="report-glow"></div>
+
+  <!-- iOS 状态栏模拟 -->
+  <div class="sticky top-0 z-30" style="background: rgba(0,0,0,0.0);">
+    <div class="h-11 flex items-center justify-between px-5">
+      <span class="text-sm font-semibold" style="color: var(--report-text-primary);">9:41</span>
+      <div class="flex items-center gap-1.5">
+        <i data-lucide="signal" class="w-4 h-4" style="color: var(--report-text-primary);"></i>
+        <i data-lucide="wifi" class="w-4 h-4" style="color: var(--report-text-primary);"></i>
+        <i data-lucide="battery-full" class="w-5 h-3" style="color: var(--report-text-primary);"></i>
+      </div>
+    </div>
+  </div>
+
+  <main class="relative px-5 pb-32 pt-2">
+
+    <!-- ========== 顶部：年份标题 ========== -->
+    <header class="text-center pt-4 pb-6">
+      <p class="text-xs font-semibold tracking-widest uppercase mb-2" style="color: var(--brand-300);">Annual Report</p>
+      <h1 class="text-3xl font-extrabold tracking-tight" style="color: var(--report-text-primary);">2025 年度报告</h1>
+      <p class="text-sm mt-2" style="color: var(--report-text-muted);">你和宠物的这一年</p>
+    </header>
+
+    <!-- ========== 核心数据卡片 ========== -->
+    <section class="report-card p-6 mb-5" aria-label="核心数据">
+      <div class="flex items-center justify-around">
+        <!-- 年度消费总额 -->
+        <div class="text-center">
+          <div class="stat-number" style="color: var(--brand-300);">
+            <span style="font-size: 20px; font-weight: 600;">¥</span>8,642
+          </div>
+          <div class="stat-label">年度消费</div>
+          <div class="stat-sub">较去年 +12%</div>
+        </div>
+        <!-- 累计订单数 -->
+        <div class="text-center">
+          <div class="stat-number">67</div>
+          <div class="stat-label">累计订单</div>
+          <div class="stat-sub">平均每月 5.6 单</div>
+        </div>
+        <!-- 节省金额 -->
+        <div class="text-center">
+          <div class="stat-number" style="color: var(--state-success);">
+            <span style="font-size: 20px; font-weight: 600;">¥</span>1,280
+          </div>
+          <div class="stat-label">累计节省</div>
+          <div class="stat-sub">会员 + 优惠券</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 消费品类分布 ========== -->
+    <section class="mb-5" aria-label="消费品类分布">
+      <h2 class="section-title">消费品类分布</h2>
+      <p class="section-subtitle">看看钱都花在哪儿了</p>
+
+      <div class="report-card p-5">
+        <!-- 环形图 -->
+        <div class="donut-chart mb-5">
+          <div class="donut-center">
+            <div class="donut-center-label">全年消费</div>
+            <div class="donut-center-value">4 个品类</div>
+          </div>
+        </div>
+
+        <!-- 图例列表 -->
+        <div class="flex flex-col gap-3 mt-4">
+          <!-- GEAR 出行装备 - MILO 蓝系 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="legend-dot" style="background: var(--ip-milo);"></div>
+              <div>
+                <span class="text-sm font-medium" style="color: var(--report-text-primary);">GEAR 出行装备</span>
+                <span class="text-xs ml-1.5" style="color: var(--report-text-muted);">MILO 蓝系</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-sm font-semibold" style="color: var(--report-text-primary);">¥3,450</span>
+              <span class="text-xs ml-1" style="color: var(--report-text-muted);">35%</span>
+            </div>
+          </div>
+          <!-- CARE 洗护护理 - LUNA 粉系 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="legend-dot" style="background: var(--ip-luna);"></div>
+              <div>
+                <span class="text-sm font-medium" style="color: var(--report-text-primary);">CARE 洗护护理</span>
+                <span class="text-xs ml-1.5" style="color: var(--report-text-muted);">LUNA 粉系</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-sm font-semibold" style="color: var(--report-text-primary);">¥2,430</span>
+              <span class="text-xs ml-1" style="color: var(--report-text-muted);">25%</span>
+            </div>
+          </div>
+          <!-- PLAY 玩具娱乐 - ATLAS 绿系 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="legend-dot" style="background: var(--ip-atlas);"></div>
+              <div>
+                <span class="text-sm font-medium" style="color: var(--report-text-primary);">PLAY 玩具娱乐</span>
+                <span class="text-xs ml-1.5" style="color: var(--report-text-muted);">ATLAS 绿系</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-sm font-semibold" style="color: var(--report-text-primary);">¥2,088</span>
+              <span class="text-xs ml-1" style="color: var(--report-text-muted);">20%</span>
+            </div>
+          </div>
+          <!-- HOME 家居时尚 - OLIVE 暖系 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="legend-dot" style="background: var(--ip-olive);"></div>
+              <div>
+                <span class="text-sm font-medium" style="color: var(--report-text-primary);">HOME 家居时尚</span>
+                <span class="text-xs ml-1.5" style="color: var(--report-text-muted);">OLIVE 暖系</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-sm font-semibold" style="color: var(--report-text-primary);">¥1,764</span>
+              <span class="text-xs ml-1" style="color: var(--report-text-muted);">20%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 最爱 IP 统计 ========== -->
+    <section class="mb-5" aria-label="最爱 IP 统计">
+      <h2 class="section-title">最爱 IP 排名</h2>
+      <p class="section-subtitle">你购买最多的联名款 IP</p>
+
+      <div class="report-card p-5 flex flex-col gap-4">
+        <!-- 第1名 MILO -->
+        <div class="flex items-center gap-3">
+          <div class="rank-medal" style="background: var(--ip-milo-surface); color: var(--ip-milo);">1</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-sm font-semibold" style="color: var(--report-text-primary);">MILO 蓝系</span>
+              <span class="text-xs font-medium" style="color: var(--report-text-muted);">28 件</span>
+            </div>
+            <div class="ip-rank-bar">
+              <div class="ip-rank-fill" style="width: 100%; background: var(--ip-milo);"></div>
+            </div>
+          </div>
+        </div>
+        <!-- 第2名 LUNA -->
+        <div class="flex items-center gap-3">
+          <div class="rank-medal" style="background: var(--ip-luna-surface); color: var(--ip-luna);">2</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-sm font-semibold" style="color: var(--report-text-primary);">LUNA 粉系</span>
+              <span class="text-xs font-medium" style="color: var(--report-text-muted);">21 件</span>
+            </div>
+            <div class="ip-rank-bar">
+              <div class="ip-rank-fill" style="width: 75%; background: var(--ip-luna);"></div>
+            </div>
+          </div>
+        </div>
+        <!-- 第3名 ATLAS -->
+        <div class="flex items-center gap-3">
+          <div class="rank-medal" style="background: var(--ip-atlas-surface); color: var(--ip-atlas);">3</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-sm font-semibold" style="color: var(--report-text-primary);">ATLAS 绿系</span>
+              <span class="text-xs font-medium" style="color: var(--report-text-muted);">12 件</span>
+            </div>
+            <div class="ip-rank-bar">
+              <div class="ip-rank-fill" style="width: 43%; background: var(--ip-atlas);"></div>
+            </div>
+          </div>
+        </div>
+        <!-- 第4名 OLIVE -->
+        <div class="flex items-center gap-3">
+          <div class="rank-medal" style="background: var(--ip-olive-surface); color: var(--ip-olive);">4</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-sm font-semibold" style="color: var(--report-text-primary);">OLIVE 暖系</span>
+              <span class="text-xs font-medium" style="color: var(--report-text-muted);">6 件</span>
+            </div>
+            <div class="ip-rank-bar">
+              <div class="ip-rank-fill" style="width: 21%; background: var(--ip-olive);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 宠物成长回顾 ========== -->
+    <section class="mb-5" aria-label="宠物成长回顾">
+      <h2 class="section-title">宠物成长回顾</h2>
+      <p class="section-subtitle">记录毛孩子的健康足迹</p>
+
+      <!-- 宠物信息卡 -->
+      <div class="report-card p-5 mb-3">
+        <div class="flex items-center gap-4 mb-4">
+          <!-- 宠物头像 -->
+          <div class="growth-avatar" style="background: var(--ip-milo-surface);">
+            <i data-lucide="dog" class="w-7 h-7" style="color: var(--ip-milo);"></i>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2">
+              <span class="text-lg font-bold" style="color: var(--report-text-primary);">团子</span>
+              <span class="text-xs px-2 py-0.5 rounded-full" style="background: var(--ip-milo-surface); color: var(--ip-milo);">金毛</span>
+            </div>
+            <p class="text-xs mt-0.5" style="color: var(--report-text-muted);">2 岁 · 男孩</p>
+          </div>
+        </div>
+
+        <!-- 体重变化 -->
+        <div class="flex items-center justify-between p-3 rounded-2xl mb-4" style="background: rgba(255, 255, 255, 0.04);">
+          <div class="text-center flex-1">
+            <p class="text-xs" style="color: var(--report-text-muted);">年初体重</p>
+            <p class="text-lg font-bold mt-0.5" style="color: var(--report-text-primary);">28.5 kg</p>
+          </div>
+          <div class="flex flex-col items-center px-4">
+            <i data-lucide="move-right" class="w-5 h-5" style="color: var(--report-text-muted);"></i>
+            <div class="weight-change mt-1" style="background: var(--state-success-surface); color: var(--state-success);">
+              <i data-lucide="trending-up" class="w-3 h-3"></i>
+              +1.2 kg
+            </div>
+          </div>
+          <div class="text-center flex-1">
+            <p class="text-xs" style="color: var(--report-text-muted);">年末体重</p>
+            <p class="text-lg font-bold mt-0.5" style="color: var(--report-text-primary);">29.7 kg</p>
+          </div>
+        </div>
+
+        <!-- 护理统计 -->
+        <div class="grid grid-cols-4 gap-2">
+          <div class="growth-stat">
+            <i data-lucide="droplets" class="w-5 h-5 mb-1" style="color: var(--ip-milo);"></i>
+            <span class="growth-stat-value">24</span>
+            <span class="growth-stat-label">洗澡</span>
+          </div>
+          <div class="growth-stat">
+            <i data-lucide="syringe" class="w-5 h-5 mb-1" style="color: var(--ip-luna);"></i>
+            <span class="growth-stat-value">3</span>
+            <span class="growth-stat-label">疫苗</span>
+          </div>
+          <div class="growth-stat">
+            <i data-lucide="bug" class="w-5 h-5 mb-1" style="color: var(--ip-atlas);"></i>
+            <span class="growth-stat-value">12</span>
+            <span class="growth-stat-label">驱虫</span>
+          </div>
+          <div class="growth-stat">
+            <i data-lucide="stethoscope" class="w-5 h-5 mb-1" style="color: var(--ip-olive);"></i>
+            <span class="growth-stat-value">4</span>
+            <span class="growth-stat-label">体检</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 日记数量卡 -->
+      <div class="report-card p-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background: var(--ip-luna-surface);">
+            <i data-lucide="book-open" class="w-5 h-5" style="color: var(--ip-luna);"></i>
+          </div>
+          <div class="flex-1">
+            <span class="text-sm font-medium" style="color: var(--report-text-primary);">成长日记</span>
+            <p class="text-xs" style="color: var(--report-text-muted);">记录了 86 个精彩瞬间</p>
+          </div>
+          <span class="text-xl font-bold" style="color: var(--ip-luna);">86</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 月度消费趋势 ========== -->
+    <section class="mb-5" aria-label="月度消费趋势">
+      <h2 class="section-title">月度消费趋势</h2>
+      <p class="section-subtitle">12 个月的消费节奏</p>
+
+      <div class="report-card p-5">
+        <div class="bar-chart">
+          <!-- 1月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 45%;"></div>
+            <span class="bar-month">1月</span>
+          </div>
+          <!-- 2月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 30%;"></div>
+            <span class="bar-month">2月</span>
+          </div>
+          <!-- 3月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 60%;"></div>
+            <span class="bar-month">3月</span>
+          </div>
+          <!-- 4月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 72%;"></div>
+            <span class="bar-month">4月</span>
+          </div>
+          <!-- 5月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 55%;"></div>
+            <span class="bar-month">5月</span>
+          </div>
+          <!-- 6月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 90%;"></div>
+            <span class="bar-month">6月</span>
+          </div>
+          <!-- 7月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 85%;"></div>
+            <span class="bar-month">7月</span>
+          </div>
+          <!-- 8月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 65%;"></div>
+            <span class="bar-month">8月</span>
+          </div>
+          <!-- 9月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 50%;"></div>
+            <span class="bar-month">9月</span>
+          </div>
+          <!-- 10月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 78%;"></div>
+            <span class="bar-month">10月</span>
+          </div>
+          <!-- 11月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 100%;"></div>
+            <span class="bar-month">11月</span>
+          </div>
+          <!-- 12月 -->
+          <div class="bar-col">
+            <div class="bar-fill" style="height: 68%;"></div>
+            <span class="bar-month">12月</span>
+          </div>
+        </div>
+        <!-- 月均消费提示 -->
+        <div class="flex items-center justify-center gap-1.5 mt-4 pt-3" style="border-top: 1px solid var(--report-card-border);">
+          <i data-lucide="info" class="w-3.5 h-3.5" style="color: var(--report-text-muted);"></i>
+          <span class="text-xs" style="color: var(--report-text-muted);">月均消费 ¥720 · 最高月份 11月 (¥1,320)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 底部：分享 & 查看报告 ========== -->
+    <section class="pt-2 pb-8 text-center" aria-label="操作区域">
+      <!-- 分享按钮 -->
+      <button class="share-btn w-full mb-3" style="background: var(--brand-500); color: var(--background-50);" aria-label="分享年度报告">
+        <i data-lucide="share-2" class="w-5 h-5"></i>
+        分享我的年度报告
+      </button>
+      <!-- 查看详细报告 -->
+      <button class="share-btn w-full" style="background: var(--report-card-bg); color: var(--report-text-primary); border: 1px solid var(--report-card-border);" aria-label="查看详细报告">
+        <i data-lucide="file-text" class="w-5 h-5"></i>
+        查看详细报告
+      </button>
+      <!-- 底部品牌标识 -->
+      <div class="mt-6 flex items-center justify-center gap-1.5">
+        <i data-lucide="paw-print" class="w-4 h-4" style="color: var(--brand-500); opacity: 0.6;"></i>
+        <span class="text-xs font-semibold tracking-wide" style="color: var(--report-text-muted); opacity: 0.6;">MOYUYO PET</span>
+      </div>
+      <p class="text-xs mt-1" style="color: var(--report-text-muted); opacity: 0.4;">2025 年度消费账单 · 数据截至 12 月 31 日</p>
+    </section>
+
+  </main>
+
+  <!-- 初始化 Lucide 图标 -->
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

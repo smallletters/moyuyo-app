@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30 flex h-11 items-center border-b border-[var(--border)] bg-[var(--background)]/95 px-4 backdrop-blur">
+        <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" aria-label="返回">
+          <span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+        </button>
+        <h1 class="min-w-0 flex-1 text-center text-[16px] font-semibold tracking-[-0.02em] text-[var(--foreground)]">意见反馈</h1>
+        <div class="w-8"></div>
+      </header>
+
+      <!-- 页面内容区 -->
+      <div class="px-4 pt-5">
+
+        <!-- 反馈类型选择 -->
+        <section class="mb-5">
+          <h2 class="mb-3 text-[15px] font-semibold text-[var(--foreground)]">反馈类型</h2>
+          <div class="flex flex-wrap gap-2">
+            <button class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--primary)] px-3 text-[13px] font-medium text-[var(--primary-foreground)] transition-colors duration-150">功能Bug</button>
+            <button class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">体验建议</button>
+            <button class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">商品问题</button>
+            <button class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">物流问题</button>
+            <button class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">其他</button>
+          </div>
+        </section>
+
+        <!-- 问题描述 -->
+        <section class="mb-5">
+          <div class="rounded-xl border border-[var(--border)] bg-[var(--card)]">
+            <textarea class="w-full resize-none bg-transparent px-3 py-3 text-[14px] leading-[1.6] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]" rows="6" placeholder="请详细描述您遇到的问题或建议..." maxlength="500"></textarea>
+            <div class="flex justify-end border-t border-[var(--border)] px-3 py-2">
+              <span class="text-[12px] text-[var(--muted-foreground)]">0/500</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 上传截图 -->
+        <section class="mb-5">
+          <h2 class="mb-3 text-[15px] font-semibold text-[var(--foreground)]">上传截图（选填，最多3张）</h2>
+          <div class="flex gap-3">
+            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="上传截图">
+              <span data-icon class="h-6 w-6 text-[var(--muted-foreground)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg');"></span>
+              <span class="text-[11px] text-[var(--muted-foreground)]">添加</span>
+            </button>
+            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="上传截图">
+              <span data-icon class="h-6 w-6 text-[var(--muted-foreground)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg');"></span>
+              <span class="text-[11px] text-[var(--muted-foreground)]">添加</span>
+            </button>
+            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="上传截图">
+              <span data-icon class="h-6 w-6 text-[var(--muted-foreground)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg');"></span>
+              <span class="text-[11px] text-[var(--muted-foreground)]">添加</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- 联系方式 -->
+        <section class="mb-6">
+          <div class="flex h-11 items-center rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 transition-colors duration-150 focus-within:border-[var(--ring)] focus-within:shadow-[0_0_0_1px_var(--ring)]">
+            <span data-icon class="mr-2 h-4 w-4 shrink-0 text-[var(--icon-muted)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/mail.svg'); mask-image: url('../assets/icons/dl-builtin-apple/mail.svg');"></span>
+            <input class="min-w-0 flex-1 border-0 bg-transparent text-[14px] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]" placeholder="联系方式（选填：手机号/邮箱，方便我们回复您）" />
+          </div>
+        </section>
+
+        <!-- 历史反馈 -->
+        <section>
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="text-[15px] font-semibold text-[var(--foreground)]">历史反馈</h2>
+            <a href="#" class="text-[13px] font-medium text-[var(--primary)] transition-opacity duration-150 hover:opacity-70">查看全部</a>
+          </div>
+          <div class="space-y-3">
+            <!-- 历史反馈条目 1 -->
+            <div class="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
+              <div class="mb-2 flex items-center justify-between gap-2">
+                <span class="min-w-0 truncate text-[14px] font-medium text-[var(--foreground)]">功能建议: 希望增加宠物社交功能</span>
+                <span class="shrink-0 rounded-md bg-[var(--brand-100)] px-2 py-0.5 text-[11px] font-medium text-[var(--brand-500)]">处理中</span>
+              </div>
+              <span class="text-[12px] text-[var(--muted-foreground)]">2026-07-01</span>
+            </div>
+            <!-- 历史反馈条目 2 -->
+            <div class="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
+              <div class="mb-2 flex items-center justify-between gap-2">
+                <span class="min-w-0 truncate text-[14px] font-medium text-[var(--foreground)]">商品问题: 狗衣服尺码偏小</span>
+                <span class="shrink-0 rounded-md bg-[var(--state-success-surface)] px-2 py-0.5 text-[11px] font-medium text-[var(--state-success)]">已回复</span>
+              </div>
+              <span class="text-[12px] text-[var(--muted-foreground)]">2026-06-25</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- 底部固定提交栏 -->
+      <div class="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--border)] bg-[var(--background)]/95 px-4 pb-[env(safe-area-inset-bottom,16px)] pt-3 backdrop-blur">
+        <button data-dom-id="cta-submit-feedback" class="btn btn-primary flex h-11 w-full items-center justify-center rounded-full px-6 text-[15px] font-semibold transition-transform duration-150 active:scale-[0.98]">提交反馈</button>
+      </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

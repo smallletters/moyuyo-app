@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 分享商品</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-8">
+
+      <!-- iOS 状态栏模拟 -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--foreground);"></span>
+          </div>
+        </div>
+
+        <!-- 顶部导航栏 -->
+        <div class="h-11 flex items-center justify-between px-4" style="border-bottom: 1px solid var(--border);">
+          <button class="w-9 h-9 flex items-center justify-center -ml-1" style="background: none; border: none;" data-dom-id="cta-back" aria-label="返回">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--primary);"></span>
+          </button>
+          <span class="text-base font-semibold" style="color: var(--foreground);">分享</span>
+          <button class="w-9 h-9 flex items-center justify-center -mr-1" style="background: none; border: none;" data-dom-id="cta-close" aria-label="关闭">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/x.svg'); mask-image: url('../assets/icons/dl-builtin-apple/x.svg'); color: var(--primary);"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 分享预览卡片 -->
+      <section class="px-4 pt-5 pb-3" aria-label="分享预览">
+        <div class="share-card-wrapper max-w-[320px] mx-auto">
+          <!-- 商品大图区域 -->
+          <div class="relative overflow-hidden">
+            <img src="../assets/product-shampoo-bottle.jpg" alt="高端宠物洗护套装" class="w-full aspect-[4/3] object-cover">
+            <!-- 品牌水印 -->
+            <div class="brand-watermark">MOYUYO</div>
+          </div>
+
+          <!-- 商品信息区域 -->
+          <div class="p-4" style="border-top: 1px solid var(--border);">
+            <!-- 商品名称 + 价格 -->
+            <h3 class="text-base font-semibold leading-snug" style="color: var(--text-800);">高端宠物洗护套装</h3>
+            <p class="text-xs mt-1" style="color: var(--text-400);">温和清洁 持久留香</p>
+            <div class="flex items-baseline gap-1.5 mt-2">
+              <span class="text-lg font-bold" style="color: var(--primary);">¥189</span>
+              <span class="text-xs line-through" style="color: var(--text-300);">¥259</span>
+            </div>
+
+            <!-- 分隔线 -->
+            <div class="my-3" style="height: 1px; background: var(--border);"></div>
+
+            <!-- 二维码 + 文字 + 分享者信息 -->
+            <div class="flex items-center gap-3">
+              <!-- CSS 占位二维码 -->
+              <div class="qr-placeholder w-20 h-20 flex-shrink-0">
+                <!-- 模拟 11x11 QR 码矩阵图案 -->
+                <div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div>
+                <div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div>
+                <div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div>
+                <div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div>
+                <div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div>
+                <div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div>
+                <div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div>
+                <div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div>
+                <div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div>
+                <div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div>
+                <div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell empty"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div><div class="qr-cell filled"></div>
+              </div>
+              <!-- 右侧文字信息 -->
+              <div class="flex-1 min-w-0">
+                <p class="text-xs font-medium" style="color: var(--text-600);">扫码查看详情</p>
+                <div class="mt-1.5 flex items-center gap-1.5">
+                  <div class="w-4 h-4 rounded-full flex items-center justify-center" style="background: var(--background-200);">
+                    <span data-icon class="w-2.5 h-2.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); color: var(--text-500);"></span>
+                  </div>
+                  <span class="text-xs" style="color: var(--text-400);">推荐人：宠物爱好者</span>
+                </div>
+                <p class="text-[10px] mt-1" style="color: var(--text-400);">来自 MOYUYO 宠物商城</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 分享渠道按钮行 -->
+      <section class="px-4 py-4" aria-label="分享渠道">
+        <div class="flex items-center justify-between px-1">
+          <button class="flex flex-col items-center gap-1.5 min-w-[56px]" style="background: none; border: none; cursor: pointer;" aria-label="通过 Email 分享">
+            <div class="w-14 h-14 rounded-full flex items-center justify-center" style="background: var(--background-200);">
+              <span data-icon class="w-6 h-6" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/mail.svg'); mask-image: url('../assets/icons/dl-builtin-apple/mail.svg'); color: var(--primary);"></span>
+            </div>
+            <span class="text-[11px] font-medium" style="color: var(--text-500);">Email</span>
+          </button>
+          <button class="flex flex-col items-center gap-1.5 min-w-[56px]" style="background: none; border: none; cursor: pointer;" aria-label="通过 Messages 分享">
+            <div class="w-14 h-14 rounded-full flex items-center justify-center" style="background: var(--state-success-surface);">
+              <span data-icon class="w-6 h-6" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); color: var(--state-success);"></span>
+            </div>
+            <span class="text-[11px] font-medium" style="color: var(--text-500);">Messages</span>
+          </button>
+          <button class="flex flex-col items-center gap-1.5 min-w-[56px]" style="background: none; border: none; cursor: pointer;" aria-label="通过 WhatsApp 分享">
+            <div class="w-14 h-14 rounded-full flex items-center justify-center" style="background: var(--state-success-surface);">
+              <span data-icon class="w-6 h-6" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/send-horizontal.svg'); mask-image: url('../assets/icons/dl-builtin-apple/send-horizontal.svg'); color: var(--state-success);"></span>
+            </div>
+            <span class="text-[11px] font-medium" style="color: var(--text-500);">WhatsApp</span>
+          </button>
+          <button class="flex flex-col items-center gap-1.5 min-w-[56px]" style="background: none; border: none; cursor: pointer;" aria-label="通过 Twitter 分享">
+            <div class="w-14 h-14 rounded-full flex items-center justify-center" style="background: var(--background-200);">
+              <span data-icon class="w-6 h-6" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); color: var(--text-700);"></span>
+            </div>
+            <span class="text-[11px] font-medium" style="color: var(--text-500);">X</span>
+          </button>
+          <button class="flex flex-col items-center gap-1.5 min-w-[56px]" style="background: none; border: none; cursor: pointer;" aria-label="复制链接">
+            <div class="w-14 h-14 rounded-full flex items-center justify-center" style="background: var(--brand-50);">
+              <span data-icon class="w-6 h-6" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/link.svg'); color: var(--primary);"></span>
+            </div>
+            <span class="text-[11px] font-medium" style="color: var(--text-500);">复制链接</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 分享设置（iOS 列表风格） -->
+      <section class="px-4 pb-5" aria-label="分享设置">
+        <div class="rounded-[var(--radius)] overflow-hidden" style="background: var(--card); border: 1px solid var(--border);">
+          <!-- 添加分享文案 -->
+          <div class="flex items-center justify-between px-4 h-[50px]" style="border-bottom: 1px solid var(--border);">
+            <span class="text-sm" style="color: var(--foreground);">添加分享文案</span>
+            <div class="toggle-track" role="switch" aria-checked="false" tabindex="0">
+              <div class="toggle-thumb"></div>
+            </div>
+          </div>
+          <!-- 显示价格（默认开） -->
+          <div class="flex items-center justify-between px-4 h-[50px]" style="border-bottom: 1px solid var(--border);">
+            <span class="text-sm" style="color: var(--foreground);">显示价格</span>
+            <div class="toggle-track active" role="switch" aria-checked="true" tabindex="0">
+              <div class="toggle-thumb"></div>
+            </div>
+          </div>
+          <!-- 添加水印（默认开） -->
+          <div class="flex items-center justify-between px-4 h-[50px]">
+            <span class="text-sm" style="color: var(--foreground);">添加水印</span>
+            <div class="toggle-track active" role="switch" aria-checked="true" tabindex="0">
+              <div class="toggle-thumb"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 生成分享图片按钮 -->
+      <section class="px-4 pb-6">
+        <button class="w-full h-[52px] rounded-full flex items-center justify-center gap-2 text-base font-semibold" style="background: var(--primary); color: var(--primary-foreground); border: none; box-shadow: var(--shadow-sm); cursor: pointer;" data-dom-id="cta-share">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/share.svg'); mask-image: url('../assets/icons/dl-builtin-apple/share.svg');"></span>
+          生成分享图片
+        </button>
+      </section>
+
+    </main>
+
+    <script>
+      // 初始化 Lucide 图标
+      lucide.createIcons();
+
+      // Toggle 开关交互逻辑
+      document.querySelectorAll('.toggle-track').forEach(function(track) {
+        // 点击切换状态
+        track.addEventListener('click', function() {
+          this.classList.toggle('active');
+          var isActive = this.classList.contains('active');
+          this.setAttribute('aria-checked', isActive ? 'true' : 'false');
+        });
+        // 键盘支持：空格或回车切换
+        track.addEventListener('keydown', function(e) {
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            this.click();
+          }
+        });
+      });
+    </script>
+</body>
+</html>

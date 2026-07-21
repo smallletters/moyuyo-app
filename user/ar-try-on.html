@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR 虚拟试穿 - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+  <main class="relative w-full min-h-screen max-w-[430px] mx-auto overflow-hidden" style="background: #000;">
+
+    <!-- iOS 状态栏模拟（深色半透明） -->
+    <div class="sticky top-0 z-30" style="background: rgba(0,0,0,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
+      <div class="h-11 flex items-center justify-between px-5">
+        <span class="text-sm font-semibold" style="color: rgba(255,255,255,0.85);">9:41</span>
+        <div class="flex items-center gap-1.5">
+          <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: rgba(255,255,255,0.85);"></span>
+          <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: rgba(255,255,255,0.85);"></span>
+          <span class="w-6 h-3 rounded-sm" style="background: rgba(255,255,255,0.85);"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 顶部工具栏 -->
+    <div class="absolute top-11 left-0 right-0 z-20 flex items-center justify-between px-4 h-12" style="background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 100%);">
+      <!-- 返回按钮 -->
+      <button class="w-9 h-9 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.9);" aria-label="返回">
+        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+      </button>
+
+      <!-- 商品名称 -->
+      <span class="text-sm font-semibold truncate max-w-[160px]" style="color: rgba(255,255,255,0.95);">
+        经典款宠物风衣
+      </span>
+
+      <!-- 分享按钮 -->
+      <button class="w-9 h-9 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.9);" aria-label="分享">
+        <i data-lucide="share" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- 相机预览区（全屏沉浸） -->
+    <div class="relative w-full flex-1 ar-camera-preview" style="height: calc(100vh - 240px); min-height: 400px;">
+      <!-- 取景框圆角边框 -->
+      <div class="absolute inset-4 rounded-3xl overflow-hidden" style="border: 1px solid rgba(255,255,255,0.15);">
+        <!-- 相机预览模拟内容 -->
+        <div class="w-full h-full ar-camera-preview relative flex items-center justify-center">
+          <!-- 模拟相机画面中的网格辅助线 -->
+          <div class="absolute inset-0 grid grid-cols-3 grid-rows-3 pointer-events-none" style="opacity: 0.08;">
+            <div class="border-r border-b" style="border-color: rgba(255,255,255,1);"></div>
+            <div class="border-r border-b" style="border-color: rgba(255,255,255,1);"></div>
+            <div class="border-b" style="border-color: rgba(255,255,255,1);"></div>
+            <div class="border-r border-b" style="border-color: rgba(255,255,255,1);"></div>
+            <div class="border-r border-b" style="border-color: rgba(255,255,255,1);"></div>
+            <div class="border-b" style="border-color: rgba(255,255,255,1);"></div>
+            <div class="border-r" style="border-color: rgba(255,255,255,1);"></div>
+            <div class="border-r" style="border-color: rgba(255,255,255,1);"></div>
+            <div></div>
+          </div>
+
+          <!-- 对焦指示器（中央） -->
+          <div class="focus-indicator w-28 h-28 rounded-lg" style="border: 1.5px solid rgba(255,255,255,0.5); opacity: 0.6;">
+            <!-- 四角标记 -->
+            <div class="absolute top-0 left-0 w-5 h-0.5 rounded-full" style="background: var(--primary);"></div>
+            <div class="absolute top-0 left-0 w-0.5 h-5 rounded-full" style="background: var(--primary);"></div>
+            <div class="absolute top-0 right-0 w-5 h-0.5 rounded-full" style="background: var(--primary);"></div>
+            <div class="absolute top-0 right-0 w-0.5 h-5 rounded-full" style="background: var(--primary);"></div>
+            <div class="absolute bottom-0 left-0 w-5 h-0.5 rounded-full" style="background: var(--primary);"></div>
+            <div class="absolute bottom-0 left-0 w-0.5 h-5 rounded-full" style="background: var(--primary);"></div>
+            <div class="absolute bottom-0 right-0 w-5 h-0.5 rounded-full" style="background: var(--primary);"></div>
+            <div class="absolute bottom-0 right-0 w-0.5 h-5 rounded-full" style="background: var(--primary);"></div>
+          </div>
+
+          <!-- AI 识别提示 -->
+          <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 rounded-full" style="background: rgba(0,0,0,0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
+            <i data-lucide="scan" class="w-3.5 h-3.5" style="color: var(--primary);"></i>
+            <span class="text-xs font-medium" style="color: rgba(255,255,255,0.85);">AI 体型识别中</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧工具按钮 -->
+      <div class="absolute right-3 top-1/2 -translate-y-1/2 flex flex-col gap-4">
+        <!-- 闪光灯 -->
+        <button class="w-10 h-10 rounded-full flex items-center justify-center" style="background: rgba(0,0,0,0.4); color: rgba(255,255,255,0.8);" aria-label="闪光灯">
+          <i data-lucide="zap" class="w-4.5 h-4.5"></i>
+        </button>
+        <!-- 定时器 -->
+        <button class="w-10 h-10 rounded-full flex items-center justify-center" style="background: rgba(0,0,0,0.4); color: rgba(255,255,255,0.8);" aria-label="定时拍摄">
+          <i data-lucide="timer" class="w-4.5 h-4.5"></i>
+        </button>
+        <!-- AR 效果切换 -->
+        <button class="w-10 h-10 rounded-full flex items-center justify-center" style="background: rgba(0,0,0,0.4); color: var(--primary);" aria-label="AR 效果">
+          <i data-lucide="sparkles" class="w-4.5 h-4.5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- 底部操作面板 -->
+    <div class="absolute bottom-0 left-0 right-0 z-20" style="background: linear-gradient(0deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.7) 60%, transparent 100%); padding-bottom: env(safe-area-inset-bottom, 0px);">
+
+      <!-- 颜色选择器 -->
+      <div class="flex items-center justify-center gap-3 px-6 pt-6 pb-3">
+        <span class="text-xs font-medium mr-1" style="color: var(--text-300);">颜色</span>
+        <!-- 红色（选中态） -->
+        <button class="w-7 h-7 rounded-full color-dot-selected" style="background: #FF3B30;" aria-label="红色" data-color="red"></button>
+        <!-- 蓝色 -->
+        <button class="w-7 h-7 rounded-full" style="background: #007AFF; box-shadow: 0 0 0 1px rgba(255,255,255,0.15);" aria-label="蓝色" data-color="blue"></button>
+        <!-- 绿色 -->
+        <button class="w-7 h-7 rounded-full" style="background: #34C759; box-shadow: 0 0 0 1px rgba(255,255,255,0.15);" aria-label="绿色" data-color="green"></button>
+        <!-- 黄色 -->
+        <button class="w-7 h-7 rounded-full" style="background: #FFCC00; box-shadow: 0 0 0 1px rgba(255,255,255,0.15);" aria-label="黄色" data-color="yellow"></button>
+        <!-- 黑色 -->
+        <button class="w-7 h-7 rounded-full" style="background: #1c1c1e; box-shadow: 0 0 0 1px rgba(255,255,255,0.15);" aria-label="黑色" data-color="black"></button>
+        <!-- 白色 -->
+        <button class="w-7 h-7 rounded-full" style="background: #f5f5f7; box-shadow: 0 0 0 1px rgba(255,255,255,0.15);" aria-label="白色" data-color="white"></button>
+      </div>
+
+      <!-- 款式切换 -->
+      <div class="flex items-center gap-3 px-6 pb-4">
+        <span class="text-xs font-medium shrink-0" style="color: var(--text-300);">款式</span>
+        <div class="flex gap-2 overflow-x-auto no-scrollbar flex-1">
+          <!-- 款式 1（选中态） -->
+          <button class="shrink-0 w-14 h-14 rounded-xl overflow-hidden style-thumb-selected" style="background: linear-gradient(135deg, #3a3a3c 0%, #1c1c1e 100%); border: 1px solid rgba(255,255,255,0.1);" aria-label="经典款">
+            <div class="w-full h-full flex items-center justify-center">
+              <i data-lucide="shirt" class="w-6 h-6" style="color: rgba(255,255,255,0.6);"></i>
+            </div>
+          </button>
+          <!-- 款式 2 -->
+          <button class="shrink-0 w-14 h-14 rounded-xl overflow-hidden" style="background: linear-gradient(135deg, #3a3a3c 0%, #1c1c1e 100%); border: 1px solid rgba(255,255,255,0.06);" aria-label="连帽款">
+            <div class="w-full h-full flex items-center justify-center">
+              <i data-lucide="vest" class="w-6 h-6" style="color: rgba(255,255,255,0.35);"></i>
+            </div>
+          </button>
+          <!-- 款式 3 -->
+          <button class="shrink-0 w-14 h-14 rounded-xl overflow-hidden" style="background: linear-gradient(135deg, #3a3a3c 0%, #1c1c1e 100%); border: 1px solid rgba(255,255,255,0.06);" aria-label="背心款">
+            <div class="w-full h-full flex items-center justify-center">
+              <i data-lucide="layers" class="w-6 h-6" style="color: rgba(255,255,255,0.35);"></i>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 拍摄操作栏 -->
+      <div class="flex items-center justify-center gap-10 px-6 pb-5">
+        <!-- 上传照片 -->
+        <button class="w-11 h-11 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85);" aria-label="上传照片">
+          <i data-lucide="image-plus" class="w-5 h-5"></i>
+        </button>
+
+        <!-- 拍摄按钮（大圆形） -->
+        <button class="shutter-btn w-[72px] h-[72px] rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.95); border: 4px solid rgba(255,255,255,0.3);" aria-label="拍摄">
+          <div class="w-[56px] h-[56px] rounded-full" style="background: #fff; border: 2px solid rgba(0,0,0,0.08);"></div>
+        </button>
+
+        <!-- 切换摄像头 -->
+        <button class="w-11 h-11 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85);" aria-label="切换摄像头">
+          <i data-lucide="switch-camera" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- 首次使用引导覆盖层 -->
+    <div id="guideOverlay" class="guide-overlay absolute inset-0 z-50 flex flex-col items-center justify-center" style="background: rgba(0,0,0,0.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
+      <!-- 引导图标区 -->
+      <div class="flex flex-col items-center gap-4 mb-8">
+        <!-- 宠物轮廓图标 -->
+        <div class="w-20 h-20 rounded-full flex items-center justify-center" style="background: rgba(46,141,255,0.15); border: 1px solid rgba(46,141,255,0.25);">
+          <i data-lucide="dog" class="w-10 h-10" style="color: var(--primary);"></i>
+        </div>
+
+        <h2 class="text-xl font-semibold text-center" style="color: rgba(255,255,255,0.95);">
+          AR 虚拟试穿
+        </h2>
+        <p class="text-sm text-center max-w-[260px] leading-relaxed" style="color: rgba(255,255,255,0.6);">
+          拍摄宠物正面照片，AI 将自动识别体型并为您展示服饰试穿效果
+        </p>
+      </div>
+
+      <!-- 引导步骤 -->
+      <div class="flex flex-col items-start gap-3.5 w-[260px] mb-8">
+        <!-- 步骤 1 -->
+        <div class="flex items-start gap-3">
+          <div class="shrink-0 w-7 h-7 rounded-full flex items-center justify-center mt-0.5" style="background: var(--primary);">
+            <span class="text-xs font-bold" style="color: #fff;">1</span>
+          </div>
+          <div>
+            <p class="text-sm font-medium" style="color: rgba(255,255,255,0.9);">正面朝向</p>
+            <p class="text-xs mt-0.5" style="color: rgba(255,255,255,0.45);">确保宠物面向镜头，保持自然站姿</p>
+          </div>
+        </div>
+        <!-- 步骤 2 -->
+        <div class="flex items-start gap-3">
+          <div class="shrink-0 w-7 h-7 rounded-full flex items-center justify-center mt-0.5" style="background: var(--primary);">
+            <span class="text-xs font-bold" style="color: #fff;">2</span>
+          </div>
+          <div>
+            <p class="text-sm font-medium" style="color: rgba(255,255,255,0.9);">全身入镜</p>
+            <p class="text-xs mt-0.5" style="color: rgba(255,255,255,0.45);">将宠物完整身体纳入取景框范围</p>
+          </div>
+        </div>
+        <!-- 步骤 3 -->
+        <div class="flex items-start gap-3">
+          <div class="shrink-0 w-7 h-7 rounded-full flex items-center justify-center mt-0.5" style="background: var(--primary);">
+            <span class="text-xs font-bold" style="color: #fff;">3</span>
+          </div>
+          <div>
+            <p class="text-sm font-medium" style="color: rgba(255,255,255,0.9);">光线充足</p>
+            <p class="text-xs mt-0.5" style="color: rgba(255,255,255,0.45);">选择明亮环境，避免逆光或阴影遮挡</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 开始按钮 -->
+      <button id="guideDismiss" class="h-12 px-10 rounded-full text-sm font-semibold" style="background: var(--primary); color: #fff;">
+        开始试穿
+      </button>
+    </div>
+
+  </main>
+
+  <!-- 交互脚本 -->
+  <script>
+    lucide.createIcons();
+
+    // 引导层关闭逻辑
+    var guideOverlay = document.getElementById('guideOverlay');
+    var guideDismiss = document.getElementById('guideDismiss');
+
+    if (guideDismiss && guideOverlay) {
+      guideDismiss.addEventListener('click', function() {
+        guideOverlay.style.transition = 'opacity 0.3s ease-out';
+        guideOverlay.style.opacity = '0';
+        setTimeout(function() {
+          guideOverlay.style.display = 'none';
+        }, 300);
+      });
+    }
+
+    // 颜色选择器交互
+    var colorDots = document.querySelectorAll('[data-color]');
+    colorDots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        // 移除所有选中态
+        colorDots.forEach(function(d) {
+          d.classList.remove('color-dot-selected');
+          d.style.boxShadow = '0 0 0 1px rgba(255,255,255,0.15)';
+        });
+        // 添加当前选中态
+        dot.classList.add('color-dot-selected');
+        dot.style.boxShadow = '';
+      });
+    });
+
+    // 款式切换交互
+    var styleThumbs = document.querySelectorAll('.style-thumb-selected, [aria-label="连帽款"], [aria-label="背心款"]');
+    var styleButtons = document.querySelectorAll('[aria-label="经典款"], [aria-label="连帽款"], [aria-label="背心款"]');
+    styleButtons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        styleButtons.forEach(function(b) {
+          b.classList.remove('style-thumb-selected');
+          b.style.borderColor = 'rgba(255,255,255,0.06)';
+          // 将内部图标颜色变淡
+          var icon = b.querySelector('svg, [data-lucide]');
+          if (icon) icon.style.color = 'rgba(255,255,255,0.35)';
+        });
+        btn.classList.add('style-thumb-selected');
+        btn.style.borderColor = '';
+        var activeIcon = btn.querySelector('svg, [data-lucide]');
+        if (activeIcon) activeIcon.style.color = 'rgba(255,255,255,0.6)';
+      });
+    });
+  </script>
+</body>
+</html>

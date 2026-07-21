@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>限时秒杀 - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+
+      <!-- 顶部导航栏：返回箭头 + 标题 -->
+      <nav class="sticky top-0 z-30 flex items-center justify-between h-11 px-4"
+           style="background: var(--background-800);">
+        <button class="flex items-center justify-center w-9 h-9 -ml-1 rounded-full"
+                style="color: var(--background-50);"
+                aria-label="返回">
+          <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <span class="text-base font-semibold"
+              style="color: var(--background-50);">限时秒杀</span>
+        <button class="flex items-center justify-center w-9 h-9 -mr-1 rounded-full"
+                style="color: var(--background-50);"
+                aria-label="分享">
+          <i data-lucide="share" class="w-5 h-5"></i>
+        </button>
+      </nav>
+
+      <!-- 秒杀倒计时横幅 -->
+      <div class="flex items-center justify-center gap-2 py-3 px-4"
+           style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+        <i data-lucide="clock" class="w-4 h-4" style="color: #ffffff;"></i>
+        <span class="text-sm font-medium" style="color: rgba(255, 255, 255, 0.85);">距结束</span>
+        <div class="flex items-center gap-1">
+          <span class="countdown-digit">02</span>
+          <span class="text-sm font-bold" style="color: #ffffff;">:</span>
+          <span class="countdown-digit">15</span>
+          <span class="text-sm font-bold" style="color: #ffffff;">:</span>
+          <span class="countdown-digit">30</span>
+        </div>
+      </div>
+
+      <!-- 商品主图区（CSS渐变占位） -->
+      <div class="w-full aspect-square"
+           style="background: linear-gradient(160deg, var(--brand-50), var(--background-100), var(--brand-100));">
+        <!-- 商品标签浮层 -->
+        <div class="absolute top-4 left-4">
+          <span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-bold"
+                style="background: var(--state-error); color: var(--state-error-foreground);">
+            5折
+          </span>
+        </div>
+      </div>
+
+      <!-- 价格与名称区 -->
+      <section class="px-4 pt-4 pb-3"
+               style="background: var(--background);">
+        <h1 class="text-lg font-bold leading-snug" style="color: var(--text-800);">
+          MOYUYO 舒适宠物窝 可拆洗深度睡眠垫
+        </h1>
+        <p class="mt-1 text-sm" style="color: var(--muted-foreground);">
+          360度包裹设计 / 记忆棉内芯 / 防滑底部
+        </p>
+
+        <!-- 秒杀价格 -->
+        <div class="flex items-end gap-2 mt-3">
+          <span class="text-2xl font-extrabold"
+                style="color: var(--state-error);">$19.99</span>
+          <span class="text-sm line-through" style="color: var(--muted-foreground);">
+            $39.99
+          </span>
+          <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-bold"
+                style="background: var(--state-error); color: var(--state-error-foreground);">
+            省$20.00
+          </span>
+        </div>
+
+        <!-- 秒杀专属标签 -->
+        <div class="flex items-center gap-2 mt-2">
+          <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-semibold"
+                style="background: var(--brand-100); color: var(--brand-600);">
+            秒杀专享
+          </span>
+          <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-semibold"
+                style="background: var(--state-success-surface); color: var(--state-success);">
+            正品保障
+          </span>
+          <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-semibold"
+                style="background: var(--background-200); color: var(--muted-foreground);">
+           包邮
+          </span>
+        </div>
+      </section>
+
+      <!-- 分隔线 -->
+      <div class="h-2" style="background: var(--background-100);"></div>
+
+      <!-- 库存进度条 -->
+      <section class="px-4 py-4" style="background: var(--background);">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm font-semibold" style="color: var(--text-800);">
+            限量抢购
+          </span>
+          <span class="text-xs font-medium" style="color: var(--state-error);">
+            已抢 80%，剩余 20 件
+          </span>
+        </div>
+        <div class="w-full h-2 rounded-full overflow-hidden"
+             style="background: var(--background-200);">
+          <div class="stock-bar-fill h-full rounded-full"
+               style="width: 80%; background: linear-gradient(90deg, var(--state-error), #ff6b5a);"></div>
+        </div>
+      </section>
+
+      <!-- 分隔线 -->
+      <div class="h-2" style="background: var(--background-100);"></div>
+
+      <!-- 规格选择区 -->
+      <section class="px-4 py-4" style="background: var(--background);">
+        <!-- 颜色选择 -->
+        <div class="mb-4">
+          <span class="text-sm font-semibold block mb-2.5" style="color: var(--text-800);">
+            颜色
+          </span>
+          <div class="flex items-center gap-2.5">
+            <button class="spec-btn active flex items-center gap-2 h-9 px-3.5 rounded-full text-sm font-medium border"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              <span class="w-4 h-4 rounded-full border"
+                    style="background: linear-gradient(135deg, #4a90d9, #007aff); border-color: var(--border);"></span>
+              蓝色
+            </button>
+            <button class="spec-btn flex items-center gap-2 h-9 px-3.5 rounded-full text-sm font-medium border"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              <span class="w-4 h-4 rounded-full border"
+                    style="background: linear-gradient(135deg, #f5a0b8, #ff6b8a); border-color: var(--border);"></span>
+              粉色
+            </button>
+            <button class="spec-btn flex items-center gap-2 h-9 px-3.5 rounded-full text-sm font-medium border"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              <span class="w-4 h-4 rounded-full border"
+                    style="background: linear-gradient(135deg, #555555, #1d1d1f); border-color: var(--border);"></span>
+              黑色
+            </button>
+          </div>
+        </div>
+
+        <!-- 尺寸选择 -->
+        <div>
+          <span class="text-sm font-semibold block mb-2.5" style="color: var(--text-800);">
+            尺寸
+          </span>
+          <div class="flex items-center gap-2.5">
+            <button class="spec-btn h-9 w-9 rounded-full text-sm font-medium border flex items-center justify-center"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              S
+            </button>
+            <button class="spec-btn active h-9 w-9 rounded-full text-sm font-medium border flex items-center justify-center"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              M
+            </button>
+            <button class="spec-btn h-9 w-9 rounded-full text-sm font-medium border flex items-center justify-center"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              L
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 分隔线 -->
+      <div class="h-2" style="background: var(--background-100);"></div>
+
+      <!-- 商品详情折叠面板 -->
+      <section class="px-4 py-4" style="background: var(--background);">
+        <button class="collapse-toggle flex items-center justify-between w-full" data-collapse="detail">
+          <span class="text-sm font-semibold" style="color: var(--text-800);">
+            商品详情
+          </span>
+          <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300" style="color: var(--icon-muted);"></i>
+        </button>
+        <div class="collapse-content" id="detail">
+          <div class="pt-3 space-y-3">
+            <div class="w-full aspect-video rounded-xl"
+                 style="background: linear-gradient(135deg, var(--brand-50), var(--background-200));"></div>
+            <p class="text-sm leading-relaxed" style="color: var(--text-600);">
+              采用优质记忆棉材质，为爱宠提供极致舒适的睡眠体验。360度包裹设计让宠物更有安全感，可拆洗外套方便日常清洁。底部防滑设计，确保宠物窝稳固不移位。
+            </p>
+            <ul class="space-y-1.5">
+              <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
+                <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
+                高密度记忆棉内芯，慢回弹支撑
+              </li>
+              <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
+                <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
+                防水防污面料，易清洁打理
+              </li>
+              <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
+                <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
+                底部硅胶防滑颗粒，安全稳固
+              </li>
+              <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
+                <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
+                全方位可拆洗设计，支持机洗
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 分隔线 -->
+      <div class="h-2" style="background: var(--background-100);"></div>
+
+      <!-- 商品评价摘要 -->
+      <section class="px-4 py-4" style="background: var(--background);">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-sm font-semibold" style="color: var(--text-800);">
+            用户评价
+          </span>
+          <div class="flex items-center gap-1">
+            <span class="text-sm font-bold" style="color: var(--brand-500);">98%</span>
+            <span class="text-sm" style="color: var(--muted-foreground);">好评</span>
+            <span class="mx-1 text-xs" style="color: var(--background-400);">|</span>
+            <span class="text-sm" style="color: var(--muted-foreground);">256 条评价</span>
+            <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--icon-muted);"></i>
+          </div>
+        </div>
+
+        <!-- 评价标签 -->
+        <div class="flex flex-wrap gap-2 mb-3">
+          <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
+                style="background: var(--brand-50); border-color: var(--brand-200); color: var(--brand-600);">
+            质量好 (89)
+          </span>
+          <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
+                style="background: var(--brand-50); border-color: var(--brand-200); color: var(--brand-600);">
+            舒适度佳 (76)
+          </span>
+          <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
+                style="background: var(--background-100); border-color: var(--border); color: var(--text-500);">
+            易清洗 (63)
+          </span>
+          <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
+                style="background: var(--background-100); border-color: var(--border); color: var(--text-500);">
+            颜色正 (45)
+          </span>
+        </div>
+
+        <!-- 单条评价示例 -->
+        <div class="rounded-xl p-3" style="background: var(--background-100);">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-8 h-8 rounded-full"
+                 style="background: linear-gradient(135deg, var(--brand-200), var(--brand-100));"></div>
+            <div class="flex-1">
+              <span class="text-sm font-medium" style="color: var(--text-700);">J***n</span>
+              <div class="flex items-center gap-0.5 mt-0.5">
+                <i data-lucide="star" class="w-3 h-3" style="color: #ff9500; fill: #ff9500;"></i>
+                <i data-lucide="star" class="w-3 h-3" style="color: #ff9500; fill: #ff9500;"></i>
+                <i data-lucide="star" class="w-3 h-3" style="color: #ff9500; fill: #ff9500;"></i>
+                <i data-lucide="star" class="w-3 h-3" style="color: #ff9500; fill: #ff9500;"></i>
+                <i data-lucide="star" class="w-3 h-3" style="color: #ff9500; fill: #ff9500;"></i>
+              </div>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">3天前</span>
+          </div>
+          <p class="text-sm leading-relaxed" style="color: var(--text-600);">
+            非常舒适，我家金毛特别喜欢！记忆棉回弹很好，面料摸起来很柔软。蓝色也很耐脏，强烈推荐。
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 底部固定操作栏 -->
+    <footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full z-40"
+            style="max-width: 430px; background: var(--background); border-top: 1px solid var(--border); padding-bottom: env(safe-area-inset-bottom);">
+      <div class="flex items-center gap-3 px-4 py-3">
+        <!-- 客服按钮 -->
+        <button class="flex flex-col items-center justify-center gap-0.5 w-12 shrink-0"
+                style="background: transparent; border: none; cursor: pointer;"
+                aria-label="客服">
+          <i data-lucide="headphones" class="w-5 h-5" style="color: var(--icon-muted);"></i>
+          <span class="text-xs" style="color: var(--muted-foreground);">客服</span>
+        </button>
+
+        <!-- 收藏按钮 -->
+        <button class="flex flex-col items-center justify-center gap-0.5 w-12 shrink-0"
+                style="background: transparent; border: none; cursor: pointer;"
+                aria-label="收藏">
+          <i data-lucide="heart" class="w-5 h-5" style="color: var(--icon-muted);"></i>
+          <span class="text-xs" style="color: var(--muted-foreground);">收藏</span>
+        </button>
+
+        <!-- 立即抢购按钮 -->
+        <button class="btn btn-primary btn-lg flex-1"
+                style="height: 48px; border-radius: 12px; font-size: 16px; font-weight: 700;"
+                aria-label="立即抢购">
+          立即抢购
+        </button>
+      </div>
+    </footer>
+
+    <script>
+      // 初始化 Lucide 图标
+      lucide.createIcons();
+
+      // 折叠面板交互逻辑
+      document.querySelectorAll('.collapse-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function() {
+          var targetId = this.getAttribute('data-collapse');
+          var content = document.getElementById(targetId);
+          var chevron = this.querySelector('[data-lucide="chevron-down"]');
+
+          if (content) {
+            content.classList.toggle('open');
+            // 旋转箭头图标
+            if (chevron) {
+              if (content.classList.contains('open')) {
+                chevron.style.transform = 'rotate(180deg)';
+              } else {
+                chevron.style.transform = 'rotate(0deg)';
+              }
+            }
+          }
+        });
+      });
+
+      // 规格选择交互逻辑
+      document.querySelectorAll('.spec-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          // 同级按钮取消选中
+          this.parentElement.querySelectorAll('.spec-btn').forEach(function(sibling) {
+            sibling.classList.remove('active');
+          });
+          // 当前按钮选中
+          this.classList.add('active');
+        });
+      });
+
+      // 倒计时功能（模拟）
+      (function() {
+        var totalSeconds = 2 * 3600 + 15 * 60 + 30;
+        var digits = document.querySelectorAll('.countdown-digit');
+
+        function updateCountdown() {
+          if (totalSeconds <= 0) return;
+          totalSeconds--;
+
+          var hours = Math.floor(totalSeconds / 3600);
+          var minutes = Math.floor((totalSeconds % 3600) / 60);
+          var seconds = totalSeconds % 60;
+
+          var timeStr = [
+            String(hours).padStart(2, '0'),
+            String(minutes).padStart(2, '0'),
+            String(seconds).padStart(2, '0')
+          ];
+
+          digits.forEach(function(digit, index) {
+            digit.textContent = timeStr[index];
+          });
+        }
+
+        setInterval(updateCountdown, 1000);
+      })();
+    </script>
+</body>
+</html>

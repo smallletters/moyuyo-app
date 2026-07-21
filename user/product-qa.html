@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 商品问答</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30 flex items-center justify-between border-b border-[var(--border)] bg-[var(--background)]/95 px-4 h-11 backdrop-blur">
+        <!-- 返回按钮 -->
+        <button data-dom-id="cta-back" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--background)]" aria-label="返回">
+          <i data-lucide="chevron-left" class="h-5 w-5 text-[var(--icon-600)]"></i>
+        </button>
+        <h1 class="text-base font-semibold tracking-tight text-[var(--foreground)]">商品问答</h1>
+        <!-- 我要提问按钮 -->
+        <button data-dom-id="cta-ask" class="inline-flex items-center justify-center h-8 px-3 rounded-full bg-[var(--primary)] text-xs font-semibold text-[var(--primary-foreground)] whitespace-nowrap" aria-label="我要提问">
+          我要提问
+        </button>
+      </header>
+
+      <!-- 热门问题标签（横向滚动） -->
+      <section class="px-4 pt-3 pb-1" aria-label="热门问题">
+        <div class="flex gap-2 overflow-x-auto no-scrollbar">
+          <button class="shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-[var(--primary)] bg-[var(--brand-50)] text-xs font-medium text-[var(--primary)] whitespace-nowrap">
+            <i data-lucide="flame" class="h-3.5 w-3.5"></i>
+            成分安全吗
+          </button>
+          <button class="shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-[var(--border)] bg-[var(--background)] text-xs font-medium text-[var(--text-600)] whitespace-nowrap">
+            适合多大宠物
+          </button>
+          <button class="shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-[var(--border)] bg-[var(--background)] text-xs font-medium text-[var(--text-600)] whitespace-nowrap">
+            多久发货
+          </button>
+          <button class="shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-[var(--border)] bg-[var(--background)] text-xs font-medium text-[var(--text-600)] whitespace-nowrap">
+            可以混用吗
+          </button>
+        </div>
+      </section>
+
+      <!-- 筛选 Tab + 排序 -->
+      <section class="px-4 pt-2 pb-1 flex items-center justify-between">
+        <!-- 筛选 Tab -->
+        <div class="flex items-center gap-1 bg-[var(--background-200)] rounded-full p-0.5" role="tablist" aria-label="问答筛选">
+          <button class="qa-filter-tab h-7 px-3 rounded-full text-xs font-medium bg-[var(--background)] text-[var(--text-800)] shadow-sm" role="tab" aria-selected="true">全部</button>
+          <button class="qa-filter-tab h-7 px-3 rounded-full text-xs font-medium text-[var(--text-500)]" role="tab" aria-selected="false">已回答</button>
+          <button class="qa-filter-tab h-7 px-3 rounded-full text-xs font-medium text-[var(--text-500)]" role="tab" aria-selected="false">我的提问</button>
+        </div>
+        <!-- 排序 -->
+        <button class="inline-flex items-center gap-1 text-xs text-[var(--text-500)]" aria-label="排序方式">
+          <i data-lucide="arrow-up-down" class="h-3.5 w-3.5"></i>
+          <span>最有帮助</span>
+        </button>
+      </section>
+
+      <!-- 问答列表 -->
+      <div class="mx-auto max-w-lg px-4 pt-3 space-y-3">
+
+        <!-- Q&A 1：有回答 -->
+        <article class="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
+          <!-- 问题内容 -->
+          <p class="text-sm font-semibold text-[var(--foreground)] leading-relaxed">这款洗护套装的成分对猫咪皮肤敏感的情况适用吗？我家猫咪之前用过其他品牌会红肿。</p>
+          <!-- 提问者信息 -->
+          <div class="flex items-center gap-2 mt-3">
+            <div class="h-6 w-6 rounded-full bg-[var(--background-200)] flex items-center justify-center shrink-0">
+              <i data-lucide="user" class="h-3.5 w-3.5 text-[var(--text-400)]"></i>
+            </div>
+            <span class="text-xs text-[var(--text-500)]">小猫咪的铲屎官</span>
+            <span class="text-xs text-[var(--text-400)]">2025-06-12</span>
+          </div>
+          <!-- 回答区域 -->
+          <div class="mt-3 ml-1 pl-3 border-l-2 border-[var(--background-300)]">
+            <!-- 回答者标签 + 内容 -->
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="inline-flex items-center h-5 px-2 rounded-full bg-[var(--brand-50)] text-[10px] font-semibold text-[var(--primary)]">商家</span>
+              <span class="text-xs text-[var(--text-400)]">MOYUYO 官方</span>
+              <span class="text-xs text-[var(--text-400)]">2025-06-13</span>
+            </div>
+            <p class="text-sm text-[var(--text-600)] leading-relaxed">您好！本产品采用天然植物萃取成分，不含人工香精、色素和防腐剂，经过皮肤科兽医测试，敏感肌猫咪也可以放心使用。建议首次使用时先在小面积皮肤试用观察24小时。</p>
+            <!-- 有帮助按钮 -->
+            <div class="flex items-center gap-3 mt-2.5">
+              <button class="helpful-btn inline-flex items-center gap-1 text-xs text-[var(--text-500)]" aria-label="标记为有帮助">
+                <i data-lucide="thumbs-up" class="h-3.5 w-3.5"></i>
+                <span>有帮助</span>
+              </button>
+              <span class="text-xs text-[var(--text-400)]">32 人觉得有帮助</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q&A 2：有回答 -->
+        <article class="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
+          <!-- 问题内容 -->
+          <p class="text-sm font-semibold text-[var(--foreground)] leading-relaxed">3个月大的金毛幼犬可以用这款吗？用量大概是多少？</p>
+          <!-- 提问者信息 -->
+          <div class="flex items-center gap-2 mt-3">
+            <div class="h-6 w-6 rounded-full bg-[var(--background-200)] flex items-center justify-center shrink-0">
+              <i data-lucide="user" class="h-3.5 w-3.5 text-[var(--text-400)]"></i>
+            </div>
+            <span class="text-xs text-[var(--text-500)]">金毛妈妈</span>
+            <span class="text-xs text-[var(--text-400)]">2025-06-10</span>
+          </div>
+          <!-- 回答区域 -->
+          <div class="mt-3 ml-1 pl-3 border-l-2 border-[var(--background-300)]">
+            <!-- 回答者标签 + 内容 -->
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="inline-flex items-center h-5 px-2 rounded-full bg-[var(--success-surface)] text-[10px] font-semibold text-[var(--success)]">已购用户</span>
+              <span class="text-xs text-[var(--text-400)]">柴柴酱的主人</span>
+              <span class="text-xs text-[var(--text-400)]">2025-06-11</span>
+            </div>
+            <p class="text-sm text-[var(--text-600)] leading-relaxed">我家柴犬从2个月就开始用了，完全没有问题。幼犬用量大概是成年犬的三分之一到一半，具体看狗狗体型。可以先买小包装试试。</p>
+            <!-- 有帮助按钮 -->
+            <div class="flex items-center gap-3 mt-2.5">
+              <button class="helpful-btn inline-flex items-center gap-1 text-xs text-[var(--text-500)]" aria-label="标记为有帮助">
+                <i data-lucide="thumbs-up" class="h-3.5 w-3.5"></i>
+                <span>有帮助</span>
+              </button>
+              <span class="text-xs text-[var(--text-400)]">18 人觉得有帮助</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q&A 3：有回答 -->
+        <article class="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
+          <!-- 问题内容 -->
+          <p class="text-sm font-semibold text-[var(--foreground)] leading-relaxed">这款洗护套装和你们家的护毛素可以一起用吗？会不会冲突？</p>
+          <!-- 提问者信息 -->
+          <div class="flex items-center gap-2 mt-3">
+            <div class="h-6 w-6 rounded-full bg-[var(--background-200)] flex items-center justify-center shrink-0">
+              <i data-lucide="user" class="h-3.5 w-3.5 text-[var(--text-400)]"></i>
+            </div>
+            <span class="text-xs text-[var(--text-500)]">布偶猫铲屎官</span>
+            <span class="text-xs text-[var(--text-400)]">2025-06-08</span>
+          </div>
+          <!-- 回答区域 -->
+          <div class="mt-3 ml-1 pl-3 border-l-2 border-[var(--background-300)]">
+            <!-- 回答者标签 + 内容 -->
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="inline-flex items-center h-5 px-2 rounded-full bg-[var(--brand-50)] text-[10px] font-semibold text-[var(--primary)]">商家</span>
+              <span class="text-xs text-[var(--text-400)]">MOYUYO 官方</span>
+              <span class="text-xs text-[var(--text-400)]">2025-06-08</span>
+            </div>
+            <p class="text-sm text-[var(--text-600)] leading-relaxed">可以的！我们的洗护套装和护毛素是同一系列产品，配方互相兼容。使用顺序是先用洗护套装清洁，冲洗干净后再使用护毛素，效果更佳。</p>
+            <!-- 有帮助按钮 -->
+            <div class="flex items-center gap-3 mt-2.5">
+              <button class="helpful-btn inline-flex items-center gap-1 text-xs text-[var(--text-500)]" aria-label="标记为有帮助">
+                <i data-lucide="thumbs-up" class="h-3.5 w-3.5"></i>
+                <span>有帮助</span>
+              </button>
+              <span class="text-xs text-[var(--text-400)]">9 人觉得有帮助</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q&A 4：无回答 -->
+        <article class="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
+          <!-- 问题内容 -->
+          <p class="text-sm font-semibold text-[var(--foreground)] leading-relaxed">请问这款套装包含几瓶？保质期是多久？开封后需要多久用完？</p>
+          <!-- 提问者信息 -->
+          <div class="flex items-center gap-2 mt-3">
+            <div class="h-6 w-6 rounded-full bg-[var(--background-200)] flex items-center justify-center shrink-0">
+              <i data-lucide="user" class="h-3.5 w-3.5 text-[var(--text-400)]"></i>
+            </div>
+            <span class="text-xs text-[var(--text-500)]">新手铲屎官</span>
+            <span class="text-xs text-[var(--text-400)]">2025-07-02</span>
+          </div>
+          <!-- 无回答提示 -->
+          <div class="mt-3 ml-1 pl-3 border-l-2 border-[var(--background-300)]">
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="clock" class="h-3.5 w-3.5 text-[var(--text-400)]"></i>
+              <span class="text-xs text-[var(--text-400)]">暂无回答，等待商家或用户回复</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Q&A 5：无回答 -->
+        <article class="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
+          <!-- 问题内容 -->
+          <p class="text-sm font-semibold text-[var(--foreground)] leading-relaxed">有没有试用装可以买？想先试试味道和效果再买正装。</p>
+          <!-- 提问者信息 -->
+          <div class="flex items-center gap-2 mt-3">
+            <div class="h-6 w-6 rounded-full bg-[var(--background-200)] flex items-center justify-center shrink-0">
+              <i data-lucide="user" class="h-3.5 w-3.5 text-[var(--text-400)]"></i>
+            </div>
+            <span class="text-xs text-[var(--text-500)]">哈士奇爸爸</span>
+            <span class="text-xs text-[var(--text-400)]">2025-07-06</span>
+          </div>
+          <!-- 无回答提示 -->
+          <div class="mt-3 ml-1 pl-3 border-l-2 border-[var(--background-300)]">
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="clock" class="h-3.5 w-3.5 text-[var(--text-400)]"></i>
+              <span class="text-xs text-[var(--text-400)]">暂无回答，等待商家或用户回复</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+    </main>
+
+    <!-- 底部 FAB 提问按钮 -->
+    <button data-dom-id="cta-ask" class="fixed bottom-6 right-5 z-40 inline-flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary)] shadow-lg text-[var(--primary-foreground)]" aria-label="提问">
+      <i data-lucide="message-circle-plus" class="h-5 w-5"></i>
+    </button>
+
+    <!-- 初始化 Lucide 图标 -->
+    <script>
+      lucide.createIcons();
+    </script>
+</body>
+</html>

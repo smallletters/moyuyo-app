@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品评价 - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      /* 隐藏滚动条 */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      /* Lucide 图标容器 */
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+      /* 星级分布条形图 */
+      .rating-bar-bg {
+        height: 6px;
+        border-radius: 3px;
+        background: var(--background-200);
+      }
+      .rating-bar-fill {
+        height: 100%;
+        border-radius: 3px;
+        background: var(--brand-500);
+        transition: width 0.3s ease;
+      }
+      /* 评价图片占位 */
+      .review-img-placeholder {
+        width: 80px;
+        height: 80px;
+        border-radius: calc(var(--radius) - 4px);
+        border: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="max-width: 430px; margin: 0 auto;">
+
+  <main class="pb-8">
+
+    <!-- 顶部导航栏（深色） -->
+    <header class="sticky top-0 z-30" style="background: var(--background-800);">
+      <!-- iOS 状态栏模拟 -->
+      <div class="h-11 flex items-center justify-between px-5">
+        <span class="text-sm font-semibold" style="color: var(--text-50);">9:41</span>
+        <div class="flex items-center gap-1.5">
+          <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--text-50);"></span>
+          <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--text-50);"></span>
+          <span class="w-6 h-3 rounded-sm" style="background: var(--text-50);"></span>
+        </div>
+      </div>
+      <!-- 导航栏标题行 -->
+      <div class="h-[44px] flex items-center px-4 gap-3">
+        <!-- 返回箭头 -->
+        <button class="w-8 h-8 flex items-center justify-center rounded-full" style="color: var(--text-50);" aria-label="返回">
+          <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <h1 class="text-base font-semibold flex-1 text-center pr-8" style="color: var(--text-50);">商品评价（256条）</h1>
+      </div>
+      <!-- Safe area -->
+      <div class="h-[env(safe-area-inset-top,0px)]" style="background: var(--background-800);"></div>
+    </header>
+
+    <!-- 评价概览区 -->
+    <section class="mx-4 mt-4 p-4 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);" aria-label="评价概览">
+      <div class="flex gap-5">
+        <!-- 左侧：综合评分 -->
+        <div class="flex flex-col items-center justify-center flex-shrink-0">
+          <span class="text-3xl font-bold" style="color: var(--foreground);">4.8</span>
+          <!-- 星级展示 -->
+          <div class="flex gap-0.5 mt-1.5">
+            <i data-lucide="star" class="w-4 h-4" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+            <i data-lucide="star" class="w-4 h-4" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+            <i data-lucide="star" class="w-4 h-4" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+            <i data-lucide="star" class="w-4 h-4" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+            <i data-lucide="star" class="w-4 h-4" style="color: var(--background-300);"></i>
+          </div>
+          <span class="text-xs mt-1" style="color: var(--muted-foreground);">256 条评价</span>
+        </div>
+
+        <!-- 右侧：星级分布条形图 -->
+        <div class="flex-1 flex flex-col justify-center gap-1.5">
+          <!-- 5星 85% -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs w-6 text-right flex-shrink-0" style="color: var(--muted-foreground);">5星</span>
+            <div class="flex-1 rating-bar-bg">
+              <div class="rating-bar-fill" style="width: 85%;"></div>
+            </div>
+            <span class="text-xs w-7 text-right flex-shrink-0" style="color: var(--muted-foreground);">85%</span>
+          </div>
+          <!-- 4星 10% -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs w-6 text-right flex-shrink-0" style="color: var(--muted-foreground);">4星</span>
+            <div class="flex-1 rating-bar-bg">
+              <div class="rating-bar-fill" style="width: 10%;"></div>
+            </div>
+            <span class="text-xs w-7 text-right flex-shrink-0" style="color: var(--muted-foreground);">10%</span>
+          </div>
+          <!-- 3星 3% -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs w-6 text-right flex-shrink-0" style="color: var(--muted-foreground);">3星</span>
+            <div class="flex-1 rating-bar-bg">
+              <div class="rating-bar-fill" style="width: 3%;"></div>
+            </div>
+            <span class="text-xs w-7 text-right flex-shrink-0" style="color: var(--muted-foreground);">3%</span>
+          </div>
+          <!-- 2星 1% -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs w-6 text-right flex-shrink-0" style="color: var(--muted-foreground);">2星</span>
+            <div class="flex-1 rating-bar-bg">
+              <div class="rating-bar-fill" style="width: 1%;"></div>
+            </div>
+            <span class="text-xs w-7 text-right flex-shrink-0" style="color: var(--muted-foreground);">1%</span>
+          </div>
+          <!-- 1星 1% -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs w-6 text-right flex-shrink-0" style="color: var(--muted-foreground);">1星</span>
+            <div class="flex-1 rating-bar-bg">
+              <div class="rating-bar-fill" style="width: 1%;"></div>
+            </div>
+            <span class="text-xs w-7 text-right flex-shrink-0" style="color: var(--muted-foreground);">1%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 筛选标签横向滚动 -->
+    <div class="mt-4 px-4 flex gap-2 overflow-x-auto no-scrollbar" aria-label="评价筛选">
+      <!-- 全部（默认选中） -->
+      <button class="flex-shrink-0 h-8 px-4 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">全部</button>
+      <!-- 好评 -->
+      <button class="flex-shrink-0 h-8 px-4 rounded-full text-xs font-medium" style="background: var(--background-200); color: var(--text-600);">好评</button>
+      <!-- 中评 -->
+      <button class="flex-shrink-0 h-8 px-4 rounded-full text-xs font-medium" style="background: var(--background-200); color: var(--text-600);">中评</button>
+      <!-- 差评 -->
+      <button class="flex-shrink-0 h-8 px-4 rounded-full text-xs font-medium" style="background: var(--background-200); color: var(--text-600);">差评</button>
+      <!-- 有图 -->
+      <button class="flex-shrink-0 h-8 px-4 rounded-full text-xs font-medium" style="background: var(--background-200); color: var(--text-600);">有图</button>
+      <!-- 追评 -->
+      <button class="flex-shrink-0 h-8 px-4 rounded-full text-xs font-medium" style="background: var(--background-200); color: var(--text-600);">追评</button>
+    </div>
+
+    <!-- 排序下拉 -->
+    <div class="mt-3 px-4 flex justify-end">
+      <button class="flex items-center gap-1 h-7 px-2.5 rounded-lg text-xs font-medium" style="color: var(--muted-foreground); background: var(--background-200);" aria-label="排序方式">
+        <span>默认排序</span>
+        <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+      </button>
+    </div>
+
+    <!-- 评价列表 -->
+    <div class="mt-3 px-4 flex flex-col gap-3">
+
+      <!-- 评价1：宠物达人Amy - 5星带图 -->
+      <article class="p-4 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);" aria-label="评价详情">
+        <!-- 用户信息行 -->
+        <div class="flex items-center gap-2.5">
+          <!-- 用户头像 CSS 渐变 -->
+          <div class="w-9 h-9 rounded-full flex-shrink-0" style="background: linear-gradient(135deg, var(--brand-200), var(--brand-500));"></div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium truncate" style="color: var(--foreground);">宠物达人Amy</span>
+              <span class="text-xs flex-shrink-0 ml-2" style="color: var(--muted-foreground);">2026-07-06</span>
+            </div>
+            <!-- 星级 -->
+            <div class="flex gap-0.5 mt-0.5">
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+            </div>
+          </div>
+        </div>
+        <!-- 评价文字 -->
+        <p class="text-sm mt-3 leading-relaxed" style="color: var(--foreground);">质量非常好，柯基穿了很合适，面料柔软舒适</p>
+        <!-- 评价图片 -->
+        <div class="flex gap-2 mt-3">
+          <div class="review-img-placeholder" style="background: linear-gradient(135deg, var(--brand-50), var(--brand-200));"></div>
+          <div class="review-img-placeholder" style="background: linear-gradient(135deg, var(--background-100), var(--brand-100));"></div>
+        </div>
+        <!-- 规格和有用 -->
+        <div class="flex items-center justify-between mt-3">
+          <span class="text-xs px-2 py-0.5 rounded-md" style="color: var(--muted-foreground); background: var(--background-200);">蓝色 M码</span>
+          <button class="flex items-center gap-1 text-xs" style="color: var(--muted-foreground);" aria-label="标记有用">
+            <i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i>
+            <span>有用 (32)</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 评价2：铲屎官小白 - 5星无图 -->
+      <article class="p-4 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);" aria-label="评价详情">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full flex-shrink-0" style="background: linear-gradient(135deg, var(--state-success-surface), var(--state-success));"></div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium truncate" style="color: var(--foreground);">铲屎官小白</span>
+              <span class="text-xs flex-shrink-0 ml-2" style="color: var(--muted-foreground);">2026-07-04</span>
+            </div>
+            <div class="flex gap-0.5 mt-0.5">
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+            </div>
+          </div>
+        </div>
+        <p class="text-sm mt-3 leading-relaxed" style="color: var(--foreground);">第二次买了，这次给朋友的狗狗也买了一条</p>
+        <div class="flex items-center justify-between mt-3">
+          <span class="text-xs px-2 py-0.5 rounded-md" style="color: var(--muted-foreground); background: var(--background-200);">粉色 S码</span>
+          <button class="flex items-center gap-1 text-xs" style="color: var(--muted-foreground);" aria-label="标记有用">
+            <i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i>
+            <span>有用 (18)</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 评价3：养宠日记 - 4星带图 -->
+      <article class="p-4 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);" aria-label="评价详情">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full flex-shrink-0" style="background: linear-gradient(135deg, #f5e6d3, #d4a574);"></div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium truncate" style="color: var(--foreground);">养宠日记</span>
+              <span class="text-xs flex-shrink-0 ml-2" style="color: var(--muted-foreground);">2026-07-02</span>
+            </div>
+            <div class="flex gap-0.5 mt-0.5">
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--background-300);"></i>
+            </div>
+          </div>
+        </div>
+        <p class="text-sm mt-3 leading-relaxed" style="color: var(--foreground);">整体不错，但是扣子有点紧，需要用力扣</p>
+        <div class="flex gap-2 mt-3">
+          <div class="review-img-placeholder" style="background: linear-gradient(135deg, #e8ddd0, #c4a882);"></div>
+        </div>
+        <div class="flex items-center justify-between mt-3">
+          <span class="text-xs px-2 py-0.5 rounded-md" style="color: var(--muted-foreground); background: var(--background-200);">黑色 L码</span>
+          <button class="flex items-center gap-1 text-xs" style="color: var(--muted-foreground);" aria-label="标记有用">
+            <i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i>
+            <span>有用 (8)</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 评价4：新手爸爸 - 5星无图 -->
+      <article class="p-4 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);" aria-label="评价详情">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full flex-shrink-0" style="background: linear-gradient(135deg, var(--brand-50), var(--background-300));"></div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium truncate" style="color: var(--foreground);">新手爸爸</span>
+              <span class="text-xs flex-shrink-0 ml-2" style="color: var(--muted-foreground);">2026-06-28</span>
+            </div>
+            <div class="flex gap-0.5 mt-0.5">
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+            </div>
+          </div>
+        </div>
+        <p class="text-sm mt-3 leading-relaxed" style="color: var(--foreground);">新手第一次给狗狗买胸背带，客服很耐心帮我选了尺码</p>
+        <div class="flex items-center justify-between mt-3">
+          <span class="text-xs px-2 py-0.5 rounded-md" style="color: var(--muted-foreground); background: var(--background-200);">蓝色 M码</span>
+          <button class="flex items-center gap-1 text-xs" style="color: var(--muted-foreground);" aria-label="标记有用">
+            <i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i>
+            <span>有用 (15)</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 评价5：宠物达人Amy - 追评 -->
+      <article class="p-4 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);" aria-label="追评详情">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full flex-shrink-0" style="background: linear-gradient(135deg, var(--brand-200), var(--brand-500));"></div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium truncate" style="color: var(--foreground);">宠物达人Amy</span>
+              <span class="text-xs flex-shrink-0 ml-2" style="color: var(--muted-foreground);">2026-07-08</span>
+            </div>
+            <div class="flex gap-0.5 mt-0.5">
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+              <i data-lucide="star" class="w-3.5 h-3.5" style="color: var(--brand-500); fill: var(--brand-500);"></i>
+            </div>
+          </div>
+        </div>
+        <!-- 追评标签 -->
+        <div class="mt-2.5">
+          <span class="inline-flex items-center h-5 px-2 rounded-md text-[11px] font-semibold" style="background: var(--brand-50); color: var(--brand-500);">追评</span>
+        </div>
+        <p class="text-sm mt-2.5 leading-relaxed" style="color: var(--foreground);">穿了一个月了，耐洗不掉色，推荐！</p>
+      </article>
+
+    </div>
+
+    <!-- 底部查看更多评价按钮 -->
+    <div class="px-4 mt-5 pb-4">
+      <button class="w-full h-12 rounded-[var(--radius)] text-sm font-semibold" style="background: var(--secondary); color: var(--secondary-foreground); border: none; cursor: pointer;">
+        查看更多评价
+      </button>
+    </div>
+
+  </main>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>

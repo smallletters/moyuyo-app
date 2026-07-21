@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 积分商城</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+
+      <!-- iOS 状态栏模拟 -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--foreground);"></span>
+          </div>
+        </div>
+
+        <!-- 导航栏 -->
+        <div class="flex items-center justify-between h-11 px-4">
+          <a href="profile.html" class="flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--background-200);" data-dom-id="cta-back" aria-label="返回">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--foreground);"></span>
+          </a>
+          <span class="text-base font-semibold" style="color: var(--foreground);">积分商城</span>
+          <div class="w-8 h-8"></div>
+        </div>
+      </div>
+
+      <!-- 积分余额卡片 -->
+      <section class="px-4 pt-2 pb-4" aria-label="积分余额">
+        <div class="rounded-[var(--radius)] p-5 relative overflow-hidden" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-700)); box-shadow: var(--shadow-md);">
+          <!-- 装饰圆形背景 -->
+          <div class="absolute -top-6 -right-6 w-28 h-28 rounded-full opacity-20" style="background: var(--brand-200);"></div>
+          <div class="absolute -bottom-4 -left-4 w-20 h-20 rounded-full opacity-15" style="background: var(--brand-100);"></div>
+
+          <div class="relative z-10">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium" style="color: var(--brand-100);">我的积分</span>
+              <div class="flex items-center gap-3">
+                <a href="wallet.html" class="text-xs font-medium" style="color: var(--brand-100); text-decoration: underline; text-underline-offset: 2px;" data-dom-id="cta-points-detail">积分明细</a>
+                <span class="text-xs" style="color: var(--brand-200);">|</span>
+                <a href="#" class="text-xs font-medium" style="color: var(--brand-100); text-decoration: underline; text-underline-offset: 2px;">兑换规则</a>
+              </div>
+            </div>
+            <!-- 大号积分数字 -->
+            <div class="mt-3 mb-1">
+              <span class="text-4xl font-bold tracking-tight" style="color: var(--background-50); font-variant-numeric: tabular-nums;">2,580</span>
+            </div>
+            <p class="text-xs" style="color: var(--brand-200);">100 积分 = $1，积分自获得起 12 个月有效</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 分类 Tab -->
+      <section class="px-4 pb-3" aria-label="礼品分类">
+        <div class="flex gap-0 border-b" style="border-color: var(--border);">
+          <button class="flex-1 h-10 flex items-center justify-center text-sm font-semibold relative" style="color: var(--primary);">
+            全部
+            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full" style="background: var(--primary);"></span>
+          </button>
+          <button class="flex-1 h-10 flex items-center justify-center text-sm font-medium" style="color: var(--text-400);">
+            优惠券
+          </button>
+          <button class="flex-1 h-10 flex items-center justify-center text-sm font-medium" style="color: var(--text-400);">
+            实物礼品
+          </button>
+          <button class="flex-1 h-10 flex items-center justify-center text-sm font-medium" style="color: var(--text-400);">
+            Pet Hub 场景
+          </button>
+        </div>
+      </section>
+
+      <!-- 商品/礼品网格（2列） -->
+      <section class="px-4 pt-3 pb-4" aria-label="积分礼品列表">
+        <div class="grid grid-cols-2 gap-3">
+
+          <!-- 礼品 1：$10 优惠券 -->
+          <div class="rounded-[var(--radius)] overflow-hidden border flex flex-col" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">
+            <!-- 礼品图片占位区：CSS 色块 + Lucide 图标 -->
+            <div class="aspect-square flex items-center justify-center" style="background: var(--brand-50);">
+              <span data-icon class="w-10 h-10" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); color: var(--primary);"></span>
+            </div>
+            <div class="p-3 flex flex-col gap-1.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">$10 优惠券</h3>
+              <span class="text-sm font-bold" style="color: var(--primary); font-variant-numeric: tabular-nums;">500 积分</span>
+              <div class="flex items-center justify-between mt-1">
+                <span class="text-xs" style="color: var(--text-400);">剩余 23 份</span>
+                <button class="px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">兑换</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 礼品 2：免邮券 -->
+          <div class="rounded-[var(--radius)] overflow-hidden border flex flex-col" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">
+            <div class="aspect-square flex items-center justify-center" style="background: var(--state-success-surface);">
+              <span data-icon class="w-10 h-10" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--state-success);"></span>
+            </div>
+            <div class="p-3 flex flex-col gap-1.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">免邮券</h3>
+              <span class="text-sm font-bold" style="color: var(--primary); font-variant-numeric: tabular-nums;">200 积分</span>
+              <div class="flex items-center justify-between mt-1">
+                <span class="text-xs" style="color: var(--text-400);">剩余 56 份</span>
+                <button class="px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">兑换</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 礼品 3：MOYUYO 定制宠物碗 -->
+          <div class="rounded-[var(--radius)] overflow-hidden border flex flex-col" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">
+            <div class="aspect-square flex items-center justify-center" style="background: var(--background-100);">
+              <span data-icon class="w-10 h-10" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--brand-600);"></span>
+            </div>
+            <div class="p-3 flex flex-col gap-1.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">MOYUYO 定制宠物碗</h3>
+              <span class="text-sm font-bold" style="color: var(--primary); font-variant-numeric: tabular-nums;">1,200 积分</span>
+              <div class="flex items-center justify-between mt-1">
+                <span class="text-xs" style="color: var(--text-400);">剩余 8 份</span>
+                <button class="px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">兑换</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 礼品 4：IP 联名牵引绳 -->
+          <div class="rounded-[var(--radius)] overflow-hidden border flex flex-col" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">
+            <div class="aspect-square flex items-center justify-center" style="background: var(--background-100);">
+              <span data-icon class="w-10 h-10" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-700);"></span>
+            </div>
+            <div class="p-3 flex flex-col gap-1.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">IP 联名牵引绳</h3>
+              <span class="text-sm font-bold" style="color: var(--primary); font-variant-numeric: tabular-nums;">2,000 积分</span>
+              <div class="flex items-center justify-between mt-1">
+                <span class="text-xs" style="color: var(--text-400);">剩余 5 份</span>
+                <button class="px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">兑换</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 礼品 5：Pet Hub 森林场景 -->
+          <div class="rounded-[var(--radius)] overflow-hidden border flex flex-col" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">
+            <div class="aspect-square flex items-center justify-center" style="background: var(--background-100);">
+              <span data-icon class="w-10 h-10" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); color: var(--state-success);"></span>
+            </div>
+            <div class="p-3 flex flex-col gap-1.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">Pet Hub 森林场景</h3>
+              <span class="text-sm font-bold" style="color: var(--primary); font-variant-numeric: tabular-nums;">800 积分</span>
+              <div class="flex items-center justify-between mt-1">
+                <span class="text-xs" style="color: var(--text-400);">剩余 15 份</span>
+                <button class="px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">兑换</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 礼品 6：$20 优惠券 -->
+          <div class="rounded-[var(--radius)] overflow-hidden border flex flex-col" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">
+            <div class="aspect-square flex items-center justify-center" style="background: var(--brand-50);">
+              <span data-icon class="w-10 h-10" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); color: var(--brand-600);"></span>
+            </div>
+            <div class="p-3 flex flex-col gap-1.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">$20 优惠券</h3>
+              <span class="text-sm font-bold" style="color: var(--primary); font-variant-numeric: tabular-nums;">1,000 积分</span>
+              <div class="flex items-center justify-between mt-1">
+                <span class="text-xs" style="color: var(--text-400);">剩余 12 份</span>
+                <button class="px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">兑换</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 底部提示 -->
+      <section class="px-4 pb-6" aria-label="积分说明">
+        <div class="rounded-[var(--radius)] p-4 flex items-start gap-2.5" style="background: var(--secondary);">
+          <span data-icon class="w-4 h-4 shrink-0 mt-0.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); color: var(--text-500);"></span>
+          <p class="text-xs leading-relaxed" style="color: var(--text-500);">100 积分 = $1，积分自获得起 12 个月有效。积分不可转让、不可提现，逾期自动清零。</p>
+        </div>
+      </section>
+
+      <!-- 底部 TabBar -->
+      <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="主导航">
+        <div class="flex items-stretch justify-around h-[49px]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+          <!-- 首页 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="首页">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
+            <span class="text-[10px] font-medium">首页</span>
+          </button>
+          <!-- 分类 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-category" aria-label="分类">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/grip.svg'); mask-image: url('../assets/icons/dl-builtin-apple/grip.svg');"></span>
+            <span class="text-[10px] font-medium">分类</span>
+          </button>
+          <!-- Pet Hub -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-pet-hub" aria-label="Pet Hub">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+            <span class="text-[10px] font-medium">Pet Hub</span>
+          </button>
+          <!-- 社区 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="社区">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+            <span class="text-[10px] font-medium">社区</span>
+          </button>
+          <!-- 我的 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--primary);" data-dom-id="nav-profile" aria-label="个人中心" aria-current="page">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
+            <span class="text-[10px] font-medium">我的</span>
+          </button>
+        </div>
+        <!-- Safe area -->
+        <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.88);"></div>
+      </nav>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

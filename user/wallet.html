@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 我的钱包</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="min-h-screen" style="background: var(--background);">
+
+        <!-- 顶部导航栏 -->
+        <header class="sticky top-0 z-30 flex h-14 items-center px-4" style="background: var(--background); border-bottom: 1px solid var(--border);">
+            <button data-dom-id="back-previous" class="inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-[var(--secondary)] focus-visible:outline-2 focus-visible:outline-[var(--ring)]" aria-label="返回">
+                <span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+            </button>
+            <h1 class="flex-1 text-center text-base font-semibold tracking-[-0.02em]" style="color: var(--foreground);">我的钱包</h1>
+            <div class="w-9"></div>
+        </header>
+
+        <div class="px-4 pb-8 pt-5">
+
+            <!-- 余额卡片 -->
+            <section class="relative overflow-hidden" style="border-radius: var(--radius); min-height: 180px;">
+                <!-- 背景图 -->
+                <img src="../assets/wallet-pattern.jpg" alt="" class="absolute inset-0 h-full w-full object-cover" aria-hidden="true">
+                <!-- 遮罩 -->
+                <div class="absolute inset-0 bg-black/40"></div>
+                <!-- 内容 -->
+                <div class="relative z-10 flex flex-col justify-between p-5" style="min-height: 180px;">
+                    <!-- 标签行 -->
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm" style="color: rgba(255,255,255,0.7);">账户余额</span>
+                        <!-- 眼睛切换图标 -->
+                        <button class="inline-flex h-8 w-8 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-white" aria-label="显示/隐藏余额">
+                            <i data-lucide="eye" class="h-4 w-4" style="color: rgba(255,255,255,0.7);"></i>
+                        </button>
+                    </div>
+                    <!-- 金额 -->
+                    <div class="mt-2">
+                        <span class="text-3xl font-semibold tracking-tight" style="color: #ffffff; font-variant-numeric: tabular-nums;">¥326.50</span>
+                    </div>
+                    <!-- 按钮行 -->
+                    <div class="mt-5 flex gap-3">
+                        <button data-dom-id="cta-topup" class="btn btn-primary flex-1 rounded-full transition-all duration-150 hover:brightness-110 active:scale-[0.98]" style="background: #ffffff; color: var(--brand-500); box-shadow: none; height: 40px; font-weight: 600; font-size: 14px;">
+                            充值
+                        </button>
+                        <button data-dom-id="cta-withdraw" class="btn flex-1 rounded-full border border-white/40 transition-all duration-150 hover:bg-white/10 active:scale-[0.98]" style="background: transparent; color: #ffffff; box-shadow: none; height: 40px; font-weight: 600; font-size: 14px;">
+                            提现
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 钱包功能 2x2 网格 -->
+            <section class="mt-5 grid grid-cols-2 gap-3">
+                <!-- 积分 -->
+                <div class="flex items-center justify-between p-4 transition-colors duration-150 hover:bg-[var(--secondary)]" style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);">
+                    <div>
+                        <div class="text-xs" style="color: var(--muted-foreground);">积分</div>
+                        <div class="mt-1 text-lg font-semibold" style="color: var(--foreground); font-variant-numeric: tabular-nums;">1,280</div>
+                    </div>
+                    <span data-icon class="h-4 w-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--muted-foreground);"></span>
+                </div>
+                <!-- 优惠券 -->
+                <div class="flex items-center justify-between p-4 transition-colors duration-150 hover:bg-[var(--secondary)]" style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);">
+                    <div>
+                        <div class="text-xs" style="color: var(--muted-foreground);">优惠券</div>
+                        <div class="mt-1 text-lg font-semibold" style="color: var(--foreground); font-variant-numeric: tabular-nums;">3张</div>
+                    </div>
+                    <span data-icon class="h-4 w-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--muted-foreground);"></span>
+                </div>
+                <!-- 礼品卡 -->
+                <div class="flex items-center justify-between p-4 transition-colors duration-150 hover:bg-[var(--secondary)]" style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);">
+                    <div>
+                        <div class="text-xs" style="color: var(--muted-foreground);">礼品卡</div>
+                        <div class="mt-1 text-lg font-semibold" style="color: var(--foreground); font-variant-numeric: tabular-nums;">1张</div>
+                    </div>
+                    <span data-icon class="h-4 w-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--muted-foreground);"></span>
+                </div>
+                <!-- 余额宝 -->
+                <div class="flex items-center justify-between p-4 transition-colors duration-150 hover:bg-[var(--secondary)]" style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);">
+                    <div>
+                        <div class="text-xs" style="color: var(--muted-foreground);">余额宝</div>
+                        <div class="mt-1 text-lg font-semibold" style="color: var(--foreground); font-variant-numeric: tabular-nums;">¥0.00</div>
+                    </div>
+                    <span data-icon class="h-4 w-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--muted-foreground);"></span>
+                </div>
+            </section>
+
+            <!-- 交易记录 -->
+            <section class="mt-6">
+                <!-- 标题行 -->
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-base font-semibold tracking-[-0.02em]" style="color: var(--foreground);">交易记录</h2>
+                    <button class="text-sm transition-colors duration-150 hover:text-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--ring)]" style="color: var(--primary); font-weight: 500;">
+                        查看全部
+                    </button>
+                </div>
+                <!-- 交易列表 -->
+                <div class="flex flex-col" style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+
+                    <!-- 07-15 订单支付 -->
+                    <div class="flex items-center justify-between px-4 py-3.5" style="border-bottom: 1px solid var(--border);">
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-medium truncate" style="color: var(--foreground);">订单支付</div>
+                            <div class="mt-0.5 text-xs" style="color: var(--muted-foreground);">07-15</div>
+                        </div>
+                        <span class="ml-4 shrink-0 text-sm font-semibold tabular-nums" style="color: var(--text-500);">-¥128.00</span>
+                    </div>
+
+                    <!-- 07-10 订单退款 -->
+                    <div class="flex items-center justify-between px-4 py-3.5" style="border-bottom: 1px solid var(--border);">
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-medium truncate" style="color: var(--foreground);">订单退款</div>
+                            <div class="mt-0.5 text-xs" style="color: var(--muted-foreground);">07-10</div>
+                        </div>
+                        <span class="ml-4 shrink-0 text-sm font-semibold tabular-nums" style="color: var(--state-success);">+¥89.00</span>
+                    </div>
+
+                    <!-- 07-05 积分兑换 -->
+                    <div class="flex items-center justify-between px-4 py-3.5" style="border-bottom: 1px solid var(--border);">
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-medium truncate" style="color: var(--foreground);">积分兑换</div>
+                            <div class="mt-0.5 text-xs" style="color: var(--muted-foreground);">07-05</div>
+                        </div>
+                        <span class="ml-4 shrink-0 text-sm font-semibold tabular-nums" style="color: var(--text-500);">-¥200.00</span>
+                    </div>
+
+                    <!-- 07-01 充值 -->
+                    <div class="flex items-center justify-between px-4 py-3.5" style="border-bottom: 1px solid var(--border);">
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-medium truncate" style="color: var(--foreground);">充值</div>
+                            <div class="mt-0.5 text-xs" style="color: var(--muted-foreground);">07-01</div>
+                        </div>
+                        <span class="ml-4 shrink-0 text-sm font-semibold tabular-nums" style="color: var(--state-success);">+¥500.00</span>
+                    </div>
+
+                    <!-- 06-28 订单支付 -->
+                    <div class="flex items-center justify-between px-4 py-3.5">
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-medium truncate" style="color: var(--foreground);">订单支付</div>
+                            <div class="mt-0.5 text-xs" style="color: var(--muted-foreground);">06-28</div>
+                        </div>
+                        <span class="ml-4 shrink-0 text-sm font-semibold tabular-nums" style="color: var(--text-500);">-¥167.00</span>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+    <script src="shared/api.js"></script><script>lucide.createIcons();</script>
+  <script>
+    (function () {
+      async function loadWallet() {
+        try {
+          var res = await moyuyoAPI.get('/api/v1/user/wallet');
+          if (res.code === 0 && res.data) {
+            var data = res.data;
+            // 更新余额
+            var balanceEl = document.querySelector('.text-3xl.font-semibold');
+            if (balanceEl && data.balance != null) {
+              balanceEl.textContent = (data.currency || '¥') + (data.balance / 100).toFixed(2);
+            }
+            // 更新积分
+            var pointsEl = document.querySelectorAll('.grid.grid-cols-2 .text-lg.font-semibold')[0];
+            if (pointsEl && data.points != null) pointsEl.textContent = Number(data.points).toLocaleString();
+            // 更新优惠券
+            var couponEl = document.querySelectorAll('.grid.grid-cols-2 .text-lg.font-semibold')[1];
+            if (couponEl && data.couponCount != null) couponEl.textContent = data.couponCount + '张';
+            // 更新礼品卡
+            var giftCardEl = document.querySelectorAll('.grid.grid-cols-2 .text-lg.font-semibold')[2];
+            if (giftCardEl && data.giftCardCount != null) giftCardEl.textContent = data.giftCardCount + '张';
+          }
+        } catch (e) {
+          console.log('[MOYUYO] Wallet unavailable, showing static content');
+        }
+
+        // 加载交易记录
+        try {
+          var txRes = await moyuyoAPI.get('/api/v1/user/transactions?page=1&pageSize=3');
+          if (txRes.code === 0 && txRes.data) {
+            var txs = txRes.data.transactions || txRes.data.list || txRes.data.records || [];
+            var txList = document.querySelector('.flex.flex-col[style*="overflow:hidden"]');
+            if (txList && txs.length > 0) {
+              txList.innerHTML = '';
+              txs.forEach(function (tx, i) {
+                var div = document.createElement('div');
+                div.className = 'flex items-center justify-between px-4 py-3.5';
+                if (i < txs.length - 1) div.style.borderBottom = '1px solid var(--border)';
+                var typeLabel = tx.type === 'RECHARGE' ? '充值' : tx.type === 'PAYMENT' ? '订单支付' : tx.type === 'REFUND' ? '退款' : tx.type || '';
+                var amount = tx.amount != null ? (tx.amount / 100).toFixed(2) : '';
+                var prefix = tx.type === 'RECHARGE' || tx.type === 'REFUND' ? '+' : '-';
+                div.innerHTML =
+                  '<div class="flex-1 min-w-0"><p class="text-[13px] font-medium truncate" style="color:var(--text-800)">' + typeLabel + '</p><p class="text-xs mt-0.5" style="color:var(--text-400)">' + (tx.createTime || tx.createdAt || '').substring(0, 10) + '</p></div>' +
+                  '<span class="text-[14px] font-semibold whitespace-nowrap" style="color:' + (prefix === '+' ? 'var(--state-success)' : 'var(--text-800)') + '">' + prefix + '¥' + amount + '</span>';
+                txList.appendChild(div);
+              });
+            }
+          }
+        } catch (e) {
+          console.log('[MOYUYO] Transactions unavailable');
+        }
+      }
+
+      loadWallet();
+    })();
+  </script>
+</body>
+</html>

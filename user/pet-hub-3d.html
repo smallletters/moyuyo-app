@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Pet Hub 3D — 设计稿</title>
+  <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+  <style>
+    /* Pet Hub 3D scene accent colors */
+    :root {
+      --scene-grass: #4cd964;
+      --scene-living: #ff9500;
+      --scene-training: #5856d6;
+      --scene-studio: #ff2d55;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+  <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+  <style type="text/tailwindcss">
+    @theme inline {
+      --color-foreground: var(--card-foreground);
+    }
+    @layer base {
+      body { background: var(--background); color: var(--foreground); }
+    }
+  </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+  <main class="pb-24">
+    <!-- 顶部导航栏 -->
+    <header class="sticky top-0 z-30 flex h-14 items-center justify-between px-4 border-b glass-strong" style="border-color: var(--border);">
+      <div class="flex items-center gap-3">
+        <button class="inline-flex h-9 w-9 items-center justify-center rounded-xl transition-colors duration-150 hover:bg-[var(--background-200)]" aria-label="返回" id="backBtn">
+          <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--icon);"></i>
+        </button>
+        <h1 class="text-lg font-semibold tracking-tight" style="color: var(--text-800);">Pet Hub 3D</h1>
+      </div>
+      <div class="flex items-center gap-1">
+        <button class="inline-flex h-9 w-9 items-center justify-center rounded-xl transition-colors duration-150 hover:bg-[var(--background-200)]" aria-label="分享" id="shareBtn">
+          <i data-lucide="share-2" class="w-4.5 h-4.5" style="color: var(--icon);"></i>
+        </button>
+        <button class="inline-flex h-9 w-9 items-center justify-center rounded-xl transition-colors duration-150 hover:bg-[var(--background-200)]" aria-label="更多" id="moreBtn">
+          <i data-lucide="ellipsis" class="w-4.5 h-4.5" style="color: var(--icon);"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="px-4 pt-4 space-y-5">
+      <!-- ===== 3D 模型展示区域 ===== -->
+      <section class="relative overflow-hidden rounded-3xl model-placeholder" style="border: 1px solid var(--border); box-shadow: var(--shadow-lg);" id="modelViewport">
+        <!-- 场景装饰光效 -->
+        <div class="absolute inset-0 pointer-events-none">
+          <div class="absolute top-1/4 left-1/3 w-32 h-32 rounded-full" style="background: radial-gradient(circle, rgba(176,138,96,0.10) 0%, transparent 70%);"></div>
+          <div class="absolute bottom-1/4 right-1/4 w-24 h-24 rounded-full" style="background: radial-gradient(circle, rgba(176,138,96,0.06) 0%, transparent 70%);"></div>
+        </div>
+
+        <!-- 3D 模型占位 -->
+        <div class="relative flex items-center justify-center h-[420px]">
+          <!-- 模型渐变示意 -->
+          <div class="relative scene-float" style="perspective: 800px;">
+            <!-- 线框网格（示意 3D 模型） -->
+            <div class="spin-slow" style="transform-style: preserve-3d;">
+              <!-- 外层环 -->
+              <div class="absolute inset-0 rounded-full" style="border: 1.5px dashed rgba(176,138,96,0.15); width: 180px; height: 180px; transform: translate(-90px, -90px) rotateX(60deg);"></div>
+              <div class="absolute inset-0 rounded-full" style="border: 1px dashed rgba(176,138,96,0.10); width: 240px; height: 240px; transform: translate(-120px, -120px) rotateX(75deg);"></div>
+              <!-- 轴向辅助线 -->
+              <div class="absolute top-1/2 left-1/2 w-40 h-px" style="background: linear-gradient(90deg, transparent, rgba(176,138,96,0.12), transparent); transform: translate(-50%, -50%);"></div>
+              <div class="absolute top-1/2 left-1/2 h-40 w-px" style="background: linear-gradient(180deg, transparent, rgba(176,138,96,0.12), transparent); transform: translate(-50%, -50%);"></div>
+            </div>
+
+            <!-- 主体轮廓（宠物剪影示意） -->
+            <div class="relative flex items-center justify-center" style="width: 140px; height: 160px;">
+              <!-- 身体 -->
+              <div class="absolute w-28 h-24 rounded-[40%] bottom-0" style="background: linear-gradient(145deg, var(--brand-300), var(--brand-500)); opacity: 0.25; box-shadow: 0 8px 32px rgba(176,138,96,0.15);"></div>
+              <!-- 头部 -->
+              <div class="absolute w-16 h-16 rounded-full top-1" style="background: linear-gradient(145deg, var(--brand-200), var(--brand-400)); opacity: 0.30;"></div>
+              <!-- 耳朵左 -->
+              <div class="absolute w-6 h-8 rounded-t-full top-0 left-3" style="background: var(--brand-300); opacity: 0.20; transform: rotate(-15deg);"></div>
+              <!-- 耳朵右 -->
+              <div class="absolute w-6 h-8 rounded-t-full top-0 right-3" style="background: var(--brand-300); opacity: 0.20; transform: rotate(15deg);"></div>
+              <!-- 眼睛发光点 -->
+              <div class="absolute w-2 h-2 rounded-full top-7 left-8" style="background: var(--brand-500); opacity: 0.5; animation: pulse-glow 2s ease-in-out infinite;"></div>
+              <div class="absolute w-2 h-2 rounded-full top-7 right-8" style="background: var(--brand-500); opacity: 0.5; animation: pulse-glow 2s ease-in-out infinite 0.5s;"></div>
+              <!-- 尾巴 -->
+              <div class="absolute -right-6 bottom-4 w-10 h-2 rounded-full" style="background: var(--brand-300); opacity: 0.20; transform: rotate(20deg);"></div>
+            </div>
+
+            <!-- 底部光环 -->
+            <div class="absolute -bottom-4 left-1/2 w-32 h-3 rounded-full" style="background: radial-gradient(ellipse, rgba(176,138,96,0.12) 0%, transparent 70%); transform: translateX(-50%);"></div>
+          </div>
+
+          <!-- 3D 标签 -->
+          <div class="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold glass" style="color: var(--text-500); border: 0.5px solid var(--border);">
+            <i data-lucide="box" class="w-3 h-3"></i>
+            3D 预览
+          </div>
+
+          <!-- 旋转/缩放控制组 -->
+          <div class="absolute bottom-4 right-4 flex flex-col gap-2">
+            <button class="ctrl-btn w-9 h-9 rounded-full glass inline-flex items-center justify-center text-sm" style="border: 0.5px solid var(--border); color: var(--icon);" aria-label="旋转" id="rotateBtn">
+              <i data-lucide="rotate-3d" class="w-4 h-4"></i>
+            </button>
+            <button class="ctrl-btn w-9 h-9 rounded-full glass inline-flex items-center justify-center text-sm" style="border: 0.5px solid var(--border); color: var(--icon);" aria-label="缩放" id="zoomInBtn">
+              <i data-lucide="zoom-in" class="w-4 h-4"></i>
+            </button>
+            <button class="ctrl-btn w-9 h-9 rounded-full glass inline-flex items-center justify-center text-sm" style="border: 0.5px solid var(--border); color: var(--icon);" aria-label="缩小" id="zoomOutBtn">
+              <i data-lucide="zoom-out" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- AR 模式切换 -->
+          <button class="absolute top-3 right-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold glass transition-all duration-200 hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)]" style="border: 0.5px solid var(--border); color: var(--text-600);" id="arToggle">
+            <i data-lucide="scan" class="w-3.5 h-3.5"></i>
+            AR
+          </button>
+        </div>
+
+        <!-- 底部信息卡片（叠加在 3D 区域底部） -->
+        <div class="absolute bottom-0 left-0 right-0 p-4" style="background: linear-gradient(transparent, rgba(0,0,0,0.03));">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-semibold" style="color: var(--text-800);" id="petNameDisplay">MILO</p>
+              <p class="text-xs" style="color: var(--text-400);">金毛寻回犬 · 3岁</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1 text-xs" style="color: var(--text-400);">
+                <i data-lucide="map-pin" class="w-3 h-3"></i>
+                <span id="sceneLabel">草地</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== IP 场景切换（横向滚动） ===== -->
+      <section>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold tracking-tight" style="color: var(--text-800);">场景切换</h2>
+          <span class="text-xs" style="color: var(--muted-foreground);">IP 环境</span>
+        </div>
+        <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1" id="sceneList">
+          <!-- 草地 -->
+          <button class="scene-chip active inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap" style="border: 1px solid var(--border); background: var(--card); color: var(--text-700);" data-scene="grass">
+            <span class="w-3.5 h-3.5 rounded-full" style="background: var(--scene-grass);"></span>
+            草地
+          </button>
+          <!-- 起居室 -->
+          <button class="scene-chip inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap" style="border: 1px solid var(--border); background: var(--card); color: var(--text-700);" data-scene="living">
+            <span class="w-3.5 h-3.5 rounded-full" style="background: var(--scene-living);"></span>
+            起居室
+          </button>
+          <!-- 训练场 -->
+          <button class="scene-chip inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap" style="border: 1px solid var(--border); background: var(--card); color: var(--text-700);" data-scene="training">
+            <span class="w-3.5 h-3.5 rounded-full" style="background: var(--scene-training);"></span>
+            训练场
+          </button>
+          <!-- 工作室 -->
+          <button class="scene-chip inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap" style="border: 1px solid var(--border); background: var(--card); color: var(--text-700);" data-scene="studio">
+            <span class="w-3.5 h-3.5 rounded-full" style="background: var(--scene-studio);"></span>
+            工作室
+          </button>
+        </div>
+      </section>
+
+      <!-- ===== MOYUYO Companions + 我的宠物 切换 ===== -->
+      <section>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold tracking-tight" style="color: var(--text-800);">Companions</h2>
+          <button class="inline-flex items-center gap-1 text-xs font-medium" style="color: var(--primary);">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            添加宠物
+          </button>
+        </div>
+        <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2" id="companionList">
+          <!-- Atlas — 守护者 -->
+          <button class="companion-tab active relative flex flex-col items-center gap-2 shrink-0 px-3 py-3 rounded-2xl transition-all duration-200" style="border: 1px solid var(--border); background: var(--card); min-width: 80px;" data-companion="atlas">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, var(--accent-green-100), var(--accent-green-200)); color: var(--accent-green-500);">
+              <span class="text-lg">🛡</span>
+            </div>
+            <div class="text-center">
+              <p class="text-xs font-semibold" style="color: var(--text-800);">Atlas</p>
+              <p class="text-[10px] uppercase tracking-wide" style="color: var(--accent-green-500);">Guardian</p>
+            </div>
+          </button>
+          <!-- Noma — 治愈者 -->
+          <button class="companion-tab relative flex flex-col items-center gap-2 shrink-0 px-3 py-3 rounded-2xl transition-all duration-200" style="border: 1px solid var(--border); background: var(--card); min-width: 80px;" data-companion="noma">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-200)); color: var(--brand-500);">
+              <span class="text-lg">✨</span>
+            </div>
+            <div class="text-center">
+              <p class="text-xs font-semibold" style="color: var(--text-800);">Noma</p>
+              <p class="text-[10px] uppercase tracking-wide" style="color: var(--brand-500);">Healer</p>
+            </div>
+          </button>
+          <!-- Mira — 探索者 -->
+          <button class="companion-tab relative flex flex-col items-center gap-2 shrink-0 px-3 py-3 rounded-2xl transition-all duration-200" style="border: 1px solid var(--border); background: var(--card); min-width: 80px;" data-companion="mira">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, #fdf3e0, #f5e0c0); color: #c49a6c;">
+              <span class="text-lg">🧭</span>
+            </div>
+            <div class="text-center">
+              <p class="text-xs font-semibold" style="color: var(--text-800);">Mira</p>
+              <p class="text-[10px] uppercase tracking-wide" style="color: #c49a6c;">Explorer</p>
+            </div>
+          </button>
+          <!-- Luno — 梦想家 -->
+          <button class="companion-tab relative flex flex-col items-center gap-2 shrink-0 px-3 py-3 rounded-2xl transition-all duration-200" style="border: 1px solid var(--border); background: var(--card); min-width: 80px;" data-companion="luno">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, #e8ecf4, #d0d8e8); color: #5b6e8a;">
+              <span class="text-lg">🌙</span>
+            </div>
+            <div class="text-center">
+              <p class="text-xs font-semibold" style="color: var(--text-800);">Luno</p>
+              <p class="text-[10px] uppercase tracking-wide" style="color: #5b6e8a;">Dreamer</p>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <!-- ===== 我的宠物 ===== -->
+      <section>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold tracking-tight" style="color: var(--text-800);">我的宠物</h2>
+        </div>
+        <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1" id="petList">
+          <button class="pet-tab active relative flex flex-col items-center gap-2 shrink-0 px-3 py-3 rounded-2xl transition-all duration-200" style="border: 1px solid var(--border); background: var(--card); min-width: 80px;" data-pet="MILO">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-200)); color: var(--brand-500);">
+              M
+            </div>
+            <div class="text-center">
+              <p class="text-xs font-semibold" style="color: var(--text-800);">MILO</p>
+              <p class="text-[10px]" style="color: var(--text-400);">金毛</p>
+            </div>
+          </button>
+          <button class="pet-tab relative flex flex-col items-center gap-2 shrink-0 px-3 py-3 rounded-2xl transition-all duration-200" style="border: 1px solid var(--border); background: var(--card); min-width: 80px;" data-pet="LUNA">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, var(--state-success-surface), #d4f5dc); color: var(--state-success);">
+              L
+            </div>
+            <div class="text-center">
+              <p class="text-xs font-semibold" style="color: var(--text-800);">LUNA</p>
+              <p class="text-[10px]" style="color: var(--text-400);">布偶猫</p>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <!-- ===== 属性面板 ===== -->
+      <section>
+        <div class="rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <div class="p-4 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold" style="color: var(--text-800);">属性</h3>
+              <span class="text-[10px] px-2 py-0.5 rounded-full" style="background: var(--brand-100); color: var(--brand-500); font-weight: 600;">Lv.12</span>
+            </div>
+
+            <!-- 活跃度 -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs" style="color: var(--text-500);">
+                  <i data-lucide="zap" class="w-3.5 h-3.5 inline mr-1"></i>活跃度
+                </span>
+                <span class="text-xs font-semibold" style="color: var(--text-700);">85/100</span>
+              </div>
+              <div class="h-1.5 rounded-full" style="background: var(--background-200); overflow: hidden;">
+                <div class="h-full rounded-full stat-fill" style="width: 85%; background: linear-gradient(90deg, var(--brand-400), var(--brand-500)); border-radius: inherit;"></div>
+              </div>
+            </div>
+
+            <!-- 亲密度 -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs" style="color: var(--text-500);">
+                  <i data-lucide="heart" class="w-3.5 h-3.5 inline mr-1"></i>亲密度
+                </span>
+                <span class="text-xs font-semibold" style="color: var(--text-700);">72/100</span>
+              </div>
+              <div class="h-1.5 rounded-full" style="background: var(--background-200); overflow: hidden;">
+                <div class="h-full rounded-full stat-fill" style="width: 72%; background: linear-gradient(90deg, var(--state-success), #30d158); border-radius: inherit;"></div>
+              </div>
+            </div>
+
+            <!-- 智力 -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs" style="color: var(--text-500);">
+                  <i data-lucide="brain" class="w-3.5 h-3.5 inline mr-1"></i>智力
+                </span>
+                <span class="text-xs font-semibold" style="color: var(--text-700);">68/100</span>
+              </div>
+              <div class="h-1.5 rounded-full" style="background: var(--background-200); overflow: hidden;">
+                <div class="h-full rounded-full stat-fill" style="width: 68%; background: linear-gradient(90deg, #5856d6, #5e5ce6); border-radius: inherit;"></div>
+              </div>
+            </div>
+
+            <!-- 社交 -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs" style="color: var(--text-500);">
+                  <i data-lucide="users" class="w-3.5 h-3.5 inline mr-1"></i>社交
+                </span>
+                <span class="text-xs font-semibold" style="color: var(--text-700);">90/100</span>
+              </div>
+              <div class="h-1.5 rounded-full" style="background: var(--background-200); overflow: hidden;">
+                <div class="h-full rounded-full stat-fill" style="width: 90%; background: linear-gradient(90deg, #ff9500, #ff9f0a); border-radius: inherit;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 交互按钮组 -->
+          <div class="px-4 pb-4 flex gap-2">
+            <button class="flex-1 inline-flex items-center justify-center gap-1.5 h-9 rounded-xl text-xs font-medium transition-all duration-150" style="background: var(--primary); color: var(--primary-foreground);" id="playBtn">
+              <i data-lucide="play" class="w-3.5 h-3.5"></i>
+              互动玩耍
+            </button>
+            <button class="flex-1 inline-flex items-center justify-center gap-1.5 h-9 rounded-xl text-xs font-medium transition-all duration-150" style="background: var(--background-200); color: var(--text-800);" id="feedBtn">
+              <i data-lucide="utensils-crossed" class="w-3.5 h-3.5"></i>
+              喂食
+            </button>
+            <button class="flex-1 inline-flex items-center justify-center gap-1.5 h-9 rounded-xl text-xs font-medium transition-all duration-150" style="background: var(--background-200); color: var(--text-800);" id="groomBtn">
+              <i data-lucide="scissors" class="w-3.5 h-3.5"></i>
+              护理
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 最近互动记录 ===== -->
+      <section>
+        <h3 class="text-base font-semibold tracking-tight mb-3" style="color: var(--text-800);">最近互动</h3>
+        <div class="space-y-2" id="activityList">
+          <!-- 互动条目 1 -->
+          <div class="flex items-center gap-3 p-3 rounded-xl" style="background: var(--card); border: 1px solid var(--border);">
+            <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style="background: var(--brand-100);">
+              <i data-lucide="play" class="w-4 h-4" style="color: var(--brand-500);"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold" style="color: var(--text-800);">玩了丢球游戏</p>
+              <p class="text-xs" style="color: var(--text-400);">10 分钟前 · 活跃度 +15</p>
+            </div>
+            <span class="text-xs font-medium" style="color: var(--state-success);">+15</span>
+          </div>
+          <!-- 互动条目 2 -->
+          <div class="flex items-center gap-3 p-3 rounded-xl" style="background: var(--card); border: 1px solid var(--border);">
+            <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style="background: var(--state-success-surface);">
+              <i data-lucide="utensils-crossed" class="w-4 h-4" style="color: var(--state-success);"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold" style="color: var(--text-800);">吃了鸡胸肉</p>
+              <p class="text-xs" style="color: var(--text-400);">1 小时前 · 饱腹度 +20</p>
+            </div>
+            <span class="text-xs font-medium" style="color: var(--state-success);">+20</span>
+          </div>
+          <!-- 互动条目 3 -->
+          <div class="flex items-center gap-3 p-3 rounded-xl" style="background: var(--card); border: 1px solid var(--border);">
+            <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style="background: var(--brand-100);">
+              <i data-lucide="scissors" class="w-4 h-4" style="color: var(--brand-500);"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold" style="color: var(--text-800);">梳毛护理</p>
+              <p class="text-xs" style="color: var(--text-400);">3 小时前 · 亲密度 +10</p>
+            </div>
+            <span class="text-xs font-medium" style="color: var(--state-success);">+10</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 底部 TabBar -->
+    <nav class="fixed bottom-0 inset-x-0 z-40 border-t glass-strong" style="border-color: var(--border); padding-bottom: env(safe-area-inset-bottom, 0px);">
+      <div class="flex items-center justify-around h-14">
+        <a href="#" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-full transition-colors duration-150" style="color: var(--text-400);" aria-label="首页">
+          <i data-lucide="house" class="w-5 h-5"></i>
+          <span class="text-[10px]">首页</span>
+        </a>
+        <a href="#" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-full transition-colors duration-150" style="color: var(--text-400);" aria-label="发现">
+          <i data-lucide="compass" class="w-5 h-5"></i>
+          <span class="text-[10px]">发现</span>
+        </a>
+        <a href="#" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-full transition-colors duration-150" style="color: var(--primary);" aria-label="Pet Hub 3D" data-active="true">
+          <i data-lucide="cube" class="w-5 h-5"></i>
+          <span class="text-[10px] font-semibold">3D</span>
+        </a>
+        <a href="#" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-full transition-colors duration-150" style="color: var(--text-400);" aria-label="社区">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+          <span class="text-[10px]">社区</span>
+        </a>
+        <a href="#" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-full transition-colors duration-150" style="color: var(--text-400);" aria-label="我的">
+          <i data-lucide="user" class="w-5 h-5"></i>
+          <span class="text-[10px]">我的</span>
+        </a>
+      </div>
+    </nav>
+  </main>
+
+  <!-- ===== Toast 提示容器 ===== -->
+  <div id="toastContainer" class="fixed top-20 left-1/2 z-50 pointer-events-none" style="transform: translateX(-50%);"></div>
+
+  <script>
+    lucide.createIcons();
+
+    // ===== 交互逻辑 =====
+
+    // Toast 提示
+    function showToast(message) {
+      var container = document.getElementById('toastContainer');
+      var toast = document.createElement('div');
+      toast.className = 'glass-strong px-4 py-2 rounded-full text-xs font-medium shadow-lg';
+      toast.style.cssText = 'color: var(--text-700); border: 0.5px solid var(--border); animation: slide-up 0.3s ease-out; margin-bottom: 8px;';
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(function () {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(function () { toast.remove(); }, 300);
+      }, 1800);
+    }
+
+    // AR 切换
+    var arBtn = document.getElementById('arToggle');
+    var arActive = false;
+    arBtn.addEventListener('click', function () {
+      arActive = !arActive;
+      arBtn.style.background = arActive ? 'var(--primary)' : '';
+      arBtn.style.color = arActive ? 'var(--primary-foreground)' : '';
+      arBtn.style.borderColor = arActive ? 'var(--primary)' : '';
+      showToast(arActive ? 'AR 模式已开启' : 'AR 模式已关闭');
+    });
+
+    // 场景切换
+    var scenes = document.querySelectorAll('.scene-chip');
+    var currentScene = 'grass';
+    var sceneColors = {
+      grass: 'var(--scene-grass)',
+      living: 'var(--scene-living)',
+      training: 'var(--scene-training)',
+      studio: 'var(--scene-studio)'
+    };
+    var sceneLabels = {
+      grass: '草地',
+      living: '起居室',
+      training: '训练场',
+      studio: '工作室'
+    };
+
+    scenes.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        scenes.forEach(function (s) { s.classList.remove('active'); s.style.background = 'var(--card)'; s.style.color = ''; });
+        chip.classList.add('active');
+        chip.style.background = 'var(--primary)';
+        chip.style.color = 'var(--primary-foreground)';
+        currentScene = chip.getAttribute('data-scene');
+        document.getElementById('sceneLabel').textContent = sceneLabels[currentScene];
+        showToast('已切换到 ' + sceneLabels[currentScene]);
+      });
+    });
+
+    // 宠物切换（仅 UI 演示）
+    var pets = document.querySelectorAll('.pet-tab');
+    var petNames = { MILO: 'MILO', LUNA: 'LUNA' };
+    var petBreeds = { MILO: '金毛寻回犬', LUNA: '布偶猫' };
+    var petAges = { MILO: '3岁', LUNA: '2岁' };
+
+    pets.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        pets.forEach(function (p) { p.classList.remove('active'); p.style.borderColor = 'var(--border)'; p.style.transform = 'scale(1)'; });
+        tab.classList.add('active');
+        tab.style.borderColor = 'var(--primary)';
+        tab.style.transform = 'scale(1.02)';
+        var name = tab.getAttribute('data-pet');
+        document.getElementById('petNameDisplay').textContent = name;
+        showToast('已切换至 ' + name);
+      });
+    });
+
+    // Companion 切换
+    var companions = document.querySelectorAll('.companion-tab');
+    var companionData = {
+      atlas: { name: 'Atlas', title: 'The Guardian', color: 'var(--accent-green-500)', bg: 'var(--accent-green-100)', desc: '守护你的宠物健康' },
+      noma:  { name: 'Noma',  title: 'The Healer',  color: 'var(--brand-500)', bg: 'var(--brand-100)', desc: '温柔疗愈每一天' },
+      mira:  { name: 'Mira',  title: 'The Explorer', color: '#c49a6c', bg: '#fdf3e0', desc: '探索新世界' },
+      luno:  { name: 'Luno',  title: 'The Dreamer',  color: '#5b6e8a', bg: '#e8ecf4', desc: '梦境中的奇幻旅程' }
+    };
+
+    companions.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        companions.forEach(function (c) { c.classList.remove('active'); c.style.borderColor = 'var(--border)'; c.style.transform = 'scale(1)'; });
+        tab.classList.add('active');
+        tab.style.borderColor = 'var(--primary)';
+        tab.style.transform = 'scale(1.02)';
+        var id = tab.getAttribute('data-companion');
+        var data = companionData[id];
+        document.getElementById('petNameDisplay').textContent = data.name;
+        showToast(data.name + ' · ' + data.title + ' — ' + data.desc);
+      });
+    });
+
+    // URL 参数自动选择 Companion
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var comp = params.get('companion');
+      if (comp && companionData[comp]) {
+        var target = document.querySelector('[data-companion="' + comp + '"]');
+        if (target) target.click();
+      }
+    })();
+
+    // 3D 控制按钮
+    document.getElementById('rotateBtn').addEventListener('click', function () {
+      var vp = document.getElementById('modelViewport');
+      var placeholder = vp.querySelector('.scene-float');
+      placeholder.style.transition = 'transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
+      placeholder.style.transform = 'rotateY(180deg)';
+      setTimeout(function () {
+        placeholder.style.transform = 'rotateY(360deg)';
+        setTimeout(function () { placeholder.style.transform = ''; }, 800);
+      }, 800);
+      showToast('360° 旋转展示');
+    });
+
+    document.getElementById('zoomInBtn').addEventListener('click', function () {
+      var el = document.querySelector('#modelViewport .scene-float');
+      var current = el.style.transform || '';
+      el.style.transition = 'transform 0.3s ease';
+      el.style.transform = current + ' scale(1.15)';
+      showToast('已放大');
+    });
+
+    document.getElementById('zoomOutBtn').addEventListener('click', function () {
+      var el = document.querySelector('#modelViewport .scene-float');
+      el.style.transition = 'transform 0.3s ease';
+      el.style.transform = 'scale(1)';
+      showToast('已还原');
+    });
+
+    // 互动按钮
+    document.getElementById('playBtn').addEventListener('click', function () {
+      showToast('🎾 正在和 ' + document.getElementById('petNameDisplay').textContent + ' 玩耍...');
+    });
+    document.getElementById('feedBtn').addEventListener('click', function () {
+      showToast('🍗 正在喂食 ' + document.getElementById('petNameDisplay').textContent);
+    });
+    document.getElementById('groomBtn').addEventListener('click', function () {
+      showToast('🛁 正在为 ' + document.getElementById('petNameDisplay').textContent + ' 护理');
+    });
+
+    // 分享按钮
+    document.getElementById('shareBtn').addEventListener('click', function () {
+      showToast('📤 分享链接已复制');
+    });
+
+    // 返回按钮
+    document.getElementById('backBtn').addEventListener('click', function () {
+      showToast('⬅ 返回上一页');
+    });
+
+    // 更多按钮
+    document.getElementById('moreBtn').addEventListener('click', function () {
+      showToast('更多选项');
+    });
+
+    // 添加宠物
+    document.querySelector('[data-pet]').parentElement.querySelector('[data-pet]').closest('section').querySelector('button:last-child').addEventListener('click', function () {
+      showToast('🐾 添加新宠物');
+    });
+  </script>
+</body>
+</html>

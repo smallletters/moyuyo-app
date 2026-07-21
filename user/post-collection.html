@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>笔记合集 - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="max-width: 430px; margin: 0 auto;">
+    <main class="pb-24">
+
+      <!-- 顶部导航栏 -->
+      <div class="sticky top-0 z-30" style="background: var(--background-800);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--text-50);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="signal" class="w-4 h-4" style="color: var(--text-50);"></i>
+            <i data-lucide="wifi" class="w-4 h-4" style="color: var(--text-50);"></i>
+            <i data-lucide="battery-full" class="w-4 h-4" style="color: var(--text-50);"></i>
+          </div>
+        </div>
+        <div class="flex items-center justify-between h-12 px-4" style="background: var(--background-800);">
+          <!-- 返回箭头 -->
+          <button class="flex items-center justify-center w-9 h-9 rounded-full" style="color: var(--primary);" aria-label="返回">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+          </button>
+          <!-- 页面标题 -->
+          <h1 class="text-base font-semibold" style="color: var(--text-50);">笔记合集</h1>
+          <!-- 创建新合集按钮 -->
+          <button class="flex items-center gap-1 px-3 py-1.5 rounded-full" style="background: var(--brand-500); color: var(--primary-foreground);" aria-label="创建新合集">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span class="text-xs font-semibold">创建</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 官方专栏区域 -->
+      <section class="px-4 pt-5 pb-2" aria-label="官方专栏">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold" style="color: var(--foreground);">官方专栏</h2>
+          <button class="flex items-center gap-0.5 text-xs font-medium" style="color: var(--primary);" aria-label="查看全部专栏">
+            <span>查看全部</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+        <div class="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-1">
+
+          <!-- 专栏卡片1: 新手养宠指南 -->
+          <div class="shrink-0 w-40 snap-start rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="relative h-28" style="background: linear-gradient(135deg, #a8d8ea 0%, #aa96da 50%, #fcbad3 100%);">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <i data-lucide="book-open" class="w-10 h-10" style="color: rgba(255,255,255,0.7);"></i>
+              </div>
+              <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-semibold" style="background: rgba(0,0,0,0.25); color: var(--primary-foreground);">官方</div>
+            </div>
+            <div class="p-3">
+              <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">新手养宠指南</h3>
+              <p class="text-xs mt-1 truncate" style="color: var(--muted-foreground);">从入门到精通的养宠手册</p>
+              <div class="flex items-center gap-1 mt-2">
+                <i data-lucide="file-text" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                <span class="text-xs" style="color: var(--muted-foreground);">12篇笔记</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 专栏卡片2: 洗护百科全书 -->
+          <div class="shrink-0 w-40 snap-start rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="relative h-28" style="background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <i data-lucide="droplets" class="w-10 h-10" style="color: rgba(255,255,255,0.7);"></i>
+              </div>
+              <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-semibold" style="background: rgba(0,0,0,0.25); color: var(--primary-foreground);">官方</div>
+            </div>
+            <div class="p-3">
+              <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">洗护百科全书</h3>
+              <p class="text-xs mt-1 truncate" style="color: var(--muted-foreground);">科学洗护让宠物更健康</p>
+              <div class="flex items-center gap-1 mt-2">
+                <i data-lucide="file-text" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                <span class="text-xs" style="color: var(--muted-foreground);">8篇笔记</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 专栏卡片3: 训练小课堂 -->
+          <div class="shrink-0 w-40 snap-start rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="relative h-28" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <i data-lucide="graduation-cap" class="w-10 h-10" style="color: rgba(255,255,255,0.7);"></i>
+              </div>
+              <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-semibold" style="background: rgba(0,0,0,0.25); color: var(--primary-foreground);">官方</div>
+            </div>
+            <div class="p-3">
+              <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">训练小课堂</h3>
+              <p class="text-xs mt-1 truncate" style="color: var(--muted-foreground);">简单实用的训练技巧</p>
+              <div class="flex items-center gap-1 mt-2">
+                <i data-lucide="file-text" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                <span class="text-xs" style="color: var(--muted-foreground);">6篇笔记</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 分隔线 -->
+      <div class="h-2 mt-2" style="background: var(--background-100);"></div>
+
+      <!-- 我的合集区域 -->
+      <section class="px-4 pt-4" aria-label="我的合集">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold" style="color: var(--foreground);">我的合集</h2>
+          <span class="text-xs" style="color: var(--muted-foreground);">3个合集</span>
+        </div>
+        <div class="flex flex-col gap-3">
+
+          <!-- 合集卡片1: 猫咪洗澡教程 -->
+          <div class="rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="flex">
+              <!-- 封面图（CSS渐变） -->
+              <div class="shrink-0 w-28 h-28 relative" style="background: linear-gradient(145deg, #c4b5fd 0%, #818cf8 40%, #6366f1 100%);">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <i data-lucide="cat" class="w-10 h-10" style="color: rgba(255,255,255,0.6);"></i>
+                </div>
+              </div>
+              <!-- 内容信息 -->
+              <div class="flex flex-col justify-between flex-1 min-w-0 p-3">
+                <div>
+                  <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">猫咪洗澡教程</h3>
+                  <p class="text-xs mt-1 line-clamp-2" style="color: var(--muted-foreground);">从准备工作到沐浴技巧，手把手教你给猫咪洗澡</p>
+                </div>
+                <div class="flex items-center gap-3 mt-2">
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="layers" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">5篇笔记</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="users" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">128人订阅</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 底部操作栏 -->
+            <div class="flex items-center justify-between px-3 py-2.5" style="border-top: 1px solid var(--border);">
+              <span class="text-[10px]" style="color: var(--muted-foreground);">更新于 3天前</span>
+              <div class="flex items-center gap-3">
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="分享合集">
+                  <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                  <span class="text-xs">分享</span>
+                </button>
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="管理合集">
+                  <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 合集卡片2: 狗狗穿搭灵感 -->
+          <div class="rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="flex">
+              <!-- 封面图（CSS渐变） -->
+              <div class="shrink-0 w-28 h-28 relative" style="background: linear-gradient(145deg, #fca5a5 0%, #f97316 50%, #fb923c 100%);">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <i data-lucide="dog" class="w-10 h-10" style="color: rgba(255,255,255,0.6);"></i>
+                </div>
+              </div>
+              <!-- 内容信息 -->
+              <div class="flex flex-col justify-between flex-1 min-w-0 p-3">
+                <div>
+                  <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">狗狗穿搭灵感</h3>
+                  <p class="text-xs mt-1 line-clamp-2" style="color: var(--muted-foreground);">四季潮流搭配，让你的狗狗成为街拍明星</p>
+                </div>
+                <div class="flex items-center gap-3 mt-2">
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="layers" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">3篇笔记</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="users" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">56人订阅</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 底部操作栏 -->
+            <div class="flex items-center justify-between px-3 py-2.5" style="border-top: 1px solid var(--border);">
+              <span class="text-[10px]" style="color: var(--muted-foreground);">更新于 1周前</span>
+              <div class="flex items-center gap-3">
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="分享合集">
+                  <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                  <span class="text-xs">分享</span>
+                </button>
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="管理合集">
+                  <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 合集卡片3: 宠物健康食谱 -->
+          <div class="rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="flex">
+              <!-- 封面图（CSS渐变） -->
+              <div class="shrink-0 w-28 h-28 relative" style="background: linear-gradient(145deg, #86efac 0%, #22c55e 40%, #16a34a 100%);">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <i data-lucide="salad" class="w-10 h-10" style="color: rgba(255,255,255,0.6);"></i>
+                </div>
+              </div>
+              <!-- 内容信息 -->
+              <div class="flex flex-col justify-between flex-1 min-w-0 p-3">
+                <div>
+                  <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">宠物健康食谱</h3>
+                  <p class="text-xs mt-1 line-clamp-2" style="color: var(--muted-foreground);">自制营养餐食，为毛孩子提供均衡膳食</p>
+                </div>
+                <div class="flex items-center gap-3 mt-2">
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="layers" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">7篇笔记</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="users" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">203人订阅</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 底部操作栏 -->
+            <div class="flex items-center justify-between px-3 py-2.5" style="border-top: 1px solid var(--border);">
+              <span class="text-[10px]" style="color: var(--muted-foreground);">更新于 5天前</span>
+              <div class="flex items-center gap-3">
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="分享合集">
+                  <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                  <span class="text-xs">分享</span>
+                </button>
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="管理合集">
+                  <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 底部浮动创建合集按钮 -->
+    <button class="fixed z-40 flex items-center justify-center shadow-lg" style="bottom: 100px; right: max(calc((100% - 430px)/2 + 20px), 20px); width: 48px; height: 48px; border-radius: 9999px; background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-lg);" aria-label="创建新合集">
+      <i data-lucide="plus" class="w-6 h-6"></i>
+    </button>
+
+    <!-- 底部 TabBar -->
+    <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="主导航">
+      <div class="flex items-stretch justify-around h-[49px]" style="max-width: 430px; margin: 0 auto; padding-bottom: env(safe-area-inset-bottom, 0px);">
+        <!-- 首页 -->
+        <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="首页">
+          <i data-lucide="house" class="w-5 h-5"></i>
+          <span class="text-[10px] font-medium">首页</span>
+        </button>
+        <!-- 分类 -->
+        <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="分类">
+          <i data-lucide="layout-grid" class="w-5 h-5"></i>
+          <span class="text-[10px] font-medium">分类</span>
+        </button>
+        <!-- Pet Hub -->
+        <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="Pet Hub">
+          <i data-lucide="heart" class="w-5 h-5"></i>
+          <span class="text-[10px] font-medium">Pet Hub</span>
+        </button>
+        <!-- 社区 -->
+        <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--primary);" aria-label="社区" aria-current="page">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+          <span class="text-[10px] font-medium">社区</span>
+        </button>
+        <!-- 我的 -->
+        <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="个人中心">
+          <i data-lucide="user" class="w-5 h-5"></i>
+          <span class="text-[10px] font-medium">我的</span>
+        </button>
+      </div>
+      <!-- Safe area -->
+      <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.88);"></div>
+    </nav>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

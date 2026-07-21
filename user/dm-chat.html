@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 私信</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="dm-page">
+
+      <!-- iOS 状态栏模拟 -->
+      <div class="dm-header sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--foreground);"></span>
+          </div>
+        </div>
+
+        <!-- 导航栏：返回 + 用户名 + 更多 -->
+        <div class="flex items-center justify-between h-[44px] px-4" style="border-bottom: 1px solid var(--border);">
+          <!-- 返回按钮 -->
+          <a href="community.html" class="flex items-center gap-0.5" style="color: var(--primary); text-decoration: none;" data-dom-id="cta-back" aria-label="返回社区">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+            <span class="text-sm font-medium">社区</span>
+          </a>
+          <!-- 用户名 -->
+          <span class="text-base font-semibold" style="color: var(--foreground);">PetLover_Kate</span>
+          <!-- 更多按钮 -->
+          <button class="w-8 h-8 flex items-center justify-center rounded-full" style="background: transparent; border: none; color: var(--icon);" aria-label="更多选项">
+            <i data-lucide="ellipsis" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 聊天主体区域（可滚动） -->
+      <div class="dm-body no-scrollbar" style="background: var(--background-200);">
+
+        <!-- 对方信息卡片（可折叠） -->
+        <div class="mx-4 mt-3 mb-2 rounded-[var(--radius)] border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">
+          <!-- 折叠切换头部 -->
+          <button class="w-full flex items-center justify-between px-4 py-3" id="profileToggle" aria-label="展开或收起用户信息" style="background: transparent; border: none; cursor: pointer;">
+            <div class="flex items-center gap-3">
+              <!-- CSS 首字母圆形头像 -->
+              <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0" style="background: var(--primary); color: var(--primary-foreground);">
+                K
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-semibold" style="color: var(--foreground);">PetLover_Kate</span>
+                <!-- 已关注标签 -->
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold" style="background: var(--state-success-surface); color: var(--state-success);">已关注</span>
+              </div>
+            </div>
+            <span data-icon class="w-4 h-4 profile-card-chevron" id="profileChevron" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); color: var(--icon-muted);"></span>
+          </button>
+          <!-- 可折叠内容 -->
+          <div class="profile-card-body" id="profileCardBody" style="padding: 0 16px 12px;">
+            <a href="#" class="flex items-center justify-center w-full h-9 rounded-full text-xs font-semibold" style="background: var(--secondary); color: var(--secondary-foreground); text-decoration: none;" data-dom-id="cta-view-profile" aria-label="查看用户主页">
+              查看主页
+              <span data-icon class="w-3.5 h-3.5 ml-1" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg');"></span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 消息气泡区域 -->
+        <div class="flex-1 px-4 pb-4">
+
+          <!-- 时间戳分隔 -->
+          <div class="flex items-center justify-center my-4">
+            <span class="px-3 py-1 rounded-full text-[11px] font-medium" style="background: var(--background-300); color: var(--text-500);">今天 14:30</span>
+          </div>
+
+          <!-- 消息1：Kate -->
+          <div class="flex items-end gap-2 mb-3">
+            <!-- 对方头像 -->
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0" style="background: var(--primary); color: var(--primary-foreground);">
+              K
+            </div>
+            <div class="bubble-remote px-3.5 py-2.5 text-[13px] leading-relaxed" style="font-family: var(--font-sans);">
+              Hi! 你的猫咪好可爱！是什么品种呀？
+            </div>
+          </div>
+
+          <!-- 消息2：我 -->
+          <div class="flex items-end gap-2 mb-3 flex-row-reverse">
+            <div class="bubble-self px-3.5 py-2.5 text-[13px] leading-relaxed" style="font-family: var(--font-sans);">
+              谢谢！她是一只英短金渐层，叫 Luna
+            </div>
+          </div>
+
+          <!-- 消息3：Kate -->
+          <div class="flex items-end gap-2 mb-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0" style="background: var(--primary); color: var(--primary-foreground);">
+              K
+            </div>
+            <div class="bubble-remote px-3.5 py-2.5 text-[13px] leading-relaxed" style="font-family: var(--font-sans);">
+              我家也有一只金渐层！你平时用什么猫粮？
+            </div>
+          </div>
+
+          <!-- 消息4：我 -->
+          <div class="flex items-end gap-2 mb-3 flex-row-reverse">
+            <div class="bubble-self px-3.5 py-2.5 text-[13px] leading-relaxed" style="font-family: var(--font-sans);">
+              我最近在用 MOYUYO 的温和沐浴露，很不错
+            </div>
+          </div>
+
+          <!-- 消息5：Kate -->
+          <div class="flex items-end gap-2 mb-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0" style="background: var(--primary); color: var(--primary-foreground);">
+              K
+            </div>
+            <div class="bubble-remote px-3.5 py-2.5 text-[13px] leading-relaxed" style="font-family: var(--font-sans);">
+              真的吗？我正好想给猫咪换沐浴露，链接发我看看
+            </div>
+          </div>
+
+          <!-- 消息6：我 -->
+          <div class="flex items-end gap-2 mb-3 flex-row-reverse">
+            <div class="bubble-self px-3.5 py-2.5 text-[13px] leading-relaxed" style="font-family: var(--font-sans);">
+              好的，稍等我找一下
+            </div>
+          </div>
+
+          <!-- 消息7：商品卡片（我的消息） -->
+          <div class="flex items-end gap-2 mb-3 flex-row-reverse">
+            <div class="max-w-[75%]">
+              <!-- 商品卡片：右对齐，归属"我" -->
+              <div class="rounded-2xl overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-sm);">
+                <a href="product-detail.html" class="block" style="text-decoration: none;" data-dom-id="cta-product-link" aria-label="查看商品详情">
+                  <!-- 商品图片 -->
+                  <div class="aspect-[16/10] overflow-hidden">
+                    <img src="../assets/product-shampoo-bottle.jpg" alt="MOYUYO 温和宠物沐浴露" class="w-full h-full object-cover">
+                  </div>
+                  <!-- 商品信息 -->
+                  <div class="p-3">
+                    <h4 class="text-[13px] font-semibold truncate" style="color: var(--foreground);">MOYUYO 温和宠物沐浴露</h4>
+                    <p class="text-[11px] mt-0.5 truncate" style="color: var(--text-400);">植物配方 温和不刺激 500ml</p>
+                    <div class="flex items-center justify-between mt-2">
+                      <span class="text-sm font-bold" style="color: var(--primary);">¥89</span>
+                      <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold" style="background: var(--primary); color: var(--primary-foreground);">查看详情</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 消息8：Kate -->
+          <div class="flex items-end gap-2 mb-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0" style="background: var(--primary); color: var(--primary-foreground);">
+              K
+            </div>
+            <div class="bubble-remote px-3.5 py-2.5 text-[13px] leading-relaxed" style="font-family: var(--font-sans);">
+              看起来不错！有折扣吗？
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 底部输入栏 -->
+      <div class="dm-input-bar" style="background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);">
+        <div class="flex items-center gap-2.5 px-4 py-2" style="padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));">
+          <!-- 添加按钮（+） -->
+          <button class="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style="background: var(--secondary); border: none; color: var(--icon);" aria-label="添加图片">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+          <!-- 文本输入框 -->
+          <div class="flex-1 h-9 rounded-full flex items-center px-4" style="background: var(--secondary); border: 1px solid var(--border);">
+            <input type="text" placeholder="发送消息..." class="w-full text-sm outline-none" style="background: transparent; color: var(--foreground); font-family: var(--font-sans);" aria-label="输入消息">
+          </div>
+          <!-- 发送按钮 -->
+          <button class="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style="background: var(--primary); border: none; color: var(--primary-foreground);" data-dom-id="cta-send" aria-label="发送">
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+    <script>
+      // 初始化 Lucide 图标
+      lucide.createIcons();
+
+      // 信息卡片折叠切换
+      var profileToggle = document.getElementById('profileToggle');
+      var profileCardBody = document.getElementById('profileCardBody');
+      var profileChevron = document.getElementById('profileChevron');
+
+      if (profileToggle && profileCardBody && profileChevron) {
+        profileToggle.addEventListener('click', function() {
+          var isCollapsed = profileCardBody.classList.toggle('collapsed');
+          profileChevron.classList.toggle('rotated', isCollapsed);
+        });
+      }
+    </script>
+</body>
+</html>

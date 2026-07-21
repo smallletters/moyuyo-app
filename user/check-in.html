@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 每日签到</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-8">
+
+      <!-- iOS 状态栏模拟 -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--foreground);"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 顶部导航栏 -->
+      <div class="sticky top-11 z-20 flex items-center justify-center h-12 px-4" style="background: var(--background); border-bottom: 1px solid var(--border);">
+        <a href="profile.html" class="absolute left-4 flex items-center justify-center w-9 h-9 rounded-full" style="background: var(--background-200);" data-dom-id="cta-back" aria-label="返回个人中心">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-left.svg'); color: var(--foreground);"></span>
+        </a>
+        <span class="text-base font-semibold" style="color: var(--foreground);">每日签到</span>
+      </div>
+
+      <!-- 页面内容区 -->
+      <div class="px-4 pt-4 flex flex-col gap-4">
+
+        <!-- 签到日历卡片 -->
+        <section class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);" aria-label="签到日历">
+          <!-- 月份标题与切换 -->
+          <div class="flex items-center justify-between mb-4">
+            <button class="flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--background-200);" aria-label="上个月">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--icon-700);"></span>
+            </button>
+            <span class="text-base font-semibold" style="color: var(--foreground);">2026年7月</span>
+            <button class="flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--background-200);" aria-label="下个月">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--icon-700);"></span>
+            </button>
+          </div>
+
+          <!-- 星期标题行 -->
+          <div class="grid grid-cols-7 gap-1 mb-2">
+            <span class="text-center text-xs font-medium py-1" style="color: var(--text-400);">日</span>
+            <span class="text-center text-xs font-medium py-1" style="color: var(--text-400);">一</span>
+            <span class="text-center text-xs font-medium py-1" style="color: var(--text-400);">二</span>
+            <span class="text-center text-xs font-medium py-1" style="color: var(--text-400);">三</span>
+            <span class="text-center text-xs font-medium py-1" style="color: var(--text-400);">四</span>
+            <span class="text-center text-xs font-medium py-1" style="color: var(--text-400);">五</span>
+            <span class="text-center text-xs font-medium py-1" style="color: var(--text-400);">六</span>
+          </div>
+
+          <!-- 日历网格 -->
+          <!-- 2026年7月: 1号是周三(偏移3格), 共31天 -->
+          <div class="grid grid-cols-7 gap-1">
+            <!-- 前面的空白占位 (1号周三, 偏移3格) -->
+            <div class="aspect-square"></div>
+            <div class="aspect-square"></div>
+            <div class="aspect-square"></div>
+
+            <!-- 1日 - 已签到 -->
+            <div class="aspect-square flex items-center justify-center">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+            </div>
+            <!-- 2日 - 已签到 -->
+            <div class="aspect-square flex items-center justify-center">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+            </div>
+            <!-- 3日 - 已签到 -->
+            <div class="aspect-square flex items-center justify-center">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+            </div>
+            <!-- 4日 - 已签到 -->
+            <div class="aspect-square flex items-center justify-center">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+            </div>
+
+            <!-- 5日 - 已签到 -->
+            <div class="aspect-square flex items-center justify-center">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+            </div>
+            <!-- 6日 - 已签到 -->
+            <div class="aspect-square flex items-center justify-center">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+            </div>
+            <!-- 7日 - 已签到 -->
+            <div class="aspect-square flex items-center justify-center">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+            </div>
+            <!-- 8日 - 今天（待签到） -->
+            <div class="aspect-square flex items-center justify-center">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center" style="border: 2px dashed var(--primary);">
+                <span class="text-xs font-bold" style="color: var(--primary);">签</span>
+              </div>
+            </div>
+            <!-- 9-31日 - 未来日期 -->
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">9</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">10</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">11</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">12</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">13</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">14</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">15</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">16</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">17</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">18</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">19</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">20</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">21</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">22</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">23</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">24</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">25</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">26</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">27</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">28</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">29</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">30</span></div>
+            <div class="aspect-square flex items-center justify-center"><span class="text-sm font-medium" style="color: var(--text-300);">31</span></div>
+          </div>
+        </section>
+
+        <!-- 连续签到信息卡片 -->
+        <section class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);" aria-label="连续签到信息">
+          <div class="flex items-center gap-2 mb-3">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--primary);"></span>
+            <span class="text-base font-semibold" style="color: var(--foreground);">已连续签到 7 天</span>
+          </div>
+          <p class="text-sm mb-3" style="color: var(--text-500);">连续 7 天签到积分 x2 倍率</p>
+          <!-- 进度条 -->
+          <div class="w-full h-2 rounded-full overflow-hidden" style="background: var(--background-200);">
+            <div class="h-full rounded-full" style="width: 100%; background: var(--primary);"></div>
+          </div>
+          <div class="flex items-center justify-between mt-1.5">
+            <span class="text-xs" style="color: var(--text-400);">本周进度</span>
+            <span class="text-xs font-semibold" style="color: var(--primary);">7 / 7</span>
+          </div>
+        </section>
+
+        <!-- 签到奖励预览 -->
+        <section class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);" aria-label="本周签到奖励">
+          <h2 class="text-sm font-semibold mb-3" style="color: var(--foreground);">本周签到奖励</h2>
+          <div class="grid grid-cols-7 gap-2">
+            <!-- 第1天 - 已签到 -->
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+              <span class="text-[10px] font-medium" style="color: var(--text-500);">第1天</span>
+              <span class="text-xs font-bold" style="color: var(--primary);">+5</span>
+            </div>
+            <!-- 第2天 - 已签到 -->
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+              <span class="text-[10px] font-medium" style="color: var(--text-500);">第2天</span>
+              <span class="text-xs font-bold" style="color: var(--primary);">+5</span>
+            </div>
+            <!-- 第3天 - 已签到 -->
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+              <span class="text-[10px] font-medium" style="color: var(--text-500);">第3天</span>
+              <span class="text-xs font-bold" style="color: var(--primary);">+5</span>
+            </div>
+            <!-- 第4天 - 已签到 -->
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+              <span class="text-[10px] font-medium" style="color: var(--text-500);">第4天</span>
+              <span class="text-xs font-bold" style="color: var(--primary);">+5</span>
+            </div>
+            <!-- 第5天 - 已签到 -->
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+              <span class="text-[10px] font-medium" style="color: var(--text-500);">第5天</span>
+              <span class="text-xs font-bold" style="color: var(--primary);">+5</span>
+            </div>
+            <!-- 第6天 - 已签到 -->
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); color: var(--primary-foreground);"></span>
+              </div>
+              <span class="text-[10px] font-medium" style="color: var(--text-500);">第6天</span>
+              <span class="text-xs font-bold" style="color: var(--primary);">+5</span>
+            </div>
+            <!-- 第7天 - 未签到（今天待签, x2倍率） -->
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="border: 2px dashed var(--primary);">
+                <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--primary);"></span>
+              </div>
+              <span class="text-[10px] font-medium" style="color: var(--text-500);">第7天</span>
+              <div class="flex items-center gap-0.5">
+                <span class="text-xs font-bold" style="color: var(--primary);">+10</span>
+                <span class="text-[10px] font-bold" style="color: var(--state-success);">(x2)</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 立即签到按钮 -->
+        <button class="w-full h-12 rounded-full flex items-center justify-center text-base font-semibold" style="background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-md);" data-dom-id="cta-check-in" aria-label="立即签到">
+          立即签到
+        </button>
+
+        <!-- 签到成功动画区域（默认隐藏） -->
+        <div id="checkInSuccess" class="hidden flex flex-col items-center justify-center py-8">
+          <div class="check-in-success-anim w-16 h-16 rounded-full flex items-center justify-center mb-3" style="background: var(--state-success);">
+            <span data-icon class="w-8 h-8" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--success-foreground);"></span>
+          </div>
+          <p class="text-base font-semibold" style="color: var(--state-success);">签到成功</p>
+          <p class="text-sm mt-1" style="color: var(--text-500);">获得 +10 积分 (x2 倍率)</p>
+        </div>
+
+        <!-- 底部提示 -->
+        <p class="text-center text-xs pb-4" style="color: var(--text-400);">每月可免费补签 1 次，之后 50 积分/次</p>
+
+      </div>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

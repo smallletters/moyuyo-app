@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 开屏营销弹窗</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+
+    <!-- 模拟首页背景（半透明遮罩下方的内容） -->
+    <main class="pb-24">
+      <!-- 简化的首页占位背景 -->
+      <div class="flex flex-col items-center justify-center min-h-screen gap-4" style="color: var(--muted-foreground);">
+        <i data-lucide="home" class="w-12 h-12"></i>
+        <span class="text-sm">MOYUYO 首页</span>
+      </div>
+    </main>
+
+    <!-- ===== 开屏营销弹窗 ===== -->
+    <div id="splashOverlay" class="fixed inset-0 z-50 flex items-center justify-center"
+         style="background: rgba(0,0,0,0.5);"
+         role="dialog" aria-modal="true" aria-label="夏日大促活动弹窗">
+
+      <!-- 点击遮罩区域关闭弹窗 -->
+      <div class="absolute inset-0" id="overlayBackdrop"></div>
+
+      <!-- 弹窗卡片 -->
+      <div class="relative w-80 rounded-2xl overflow-hidden"
+           style="max-width: 320px; background: var(--card); box-shadow: var(--shadow-2xl);">
+
+        <!-- 关闭按钮 -->
+        <button id="closePopup" class="absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center rounded-full"
+                style="background: rgba(0,0,0,0.25); color: var(--primary-foreground);"
+                aria-label="关闭弹窗">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+
+        <!-- 顶部营销图片区（CSS 渐变占位，品牌色调渐变） -->
+        <div class="relative flex flex-col items-center justify-center text-center"
+             style="height: 200px; background: linear-gradient(135deg, var(--brand-400) 0%, var(--brand-600) 50%, var(--brand-800) 100%);">
+          <!-- 装饰元素 -->
+          <div class="absolute top-4 left-4 w-16 h-16 rounded-full opacity-20"
+               style="background: var(--background-50);"></div>
+          <div class="absolute bottom-6 right-6 w-24 h-24 rounded-full opacity-10"
+               style="background: var(--background-50);"></div>
+
+          <!-- 活动标签 -->
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wide mb-2"
+                style="background: rgba(255,255,255,0.2); color: var(--primary-foreground);">
+            SUMMER SALE
+          </span>
+          <!-- 活动主标题 -->
+          <h1 class="text-xl font-bold leading-tight px-6"
+              style="color: var(--primary-foreground);">
+            夏日限定<br>全场 8 折
+          </h1>
+        </div>
+
+        <!-- 弹窗正文区域 -->
+        <div class="px-6 py-5 flex flex-col gap-4">
+
+          <!-- 弹窗描述 -->
+          <p class="text-sm leading-relaxed" style="color: var(--muted-foreground);">
+            夏日清凉季，精选洗护/出行/服饰商品限时折扣，不容错过！
+          </p>
+
+          <!-- 优惠券预览卡片 -->
+          <div class="relative flex items-center overflow-hidden rounded-xl"
+               style="border: 1.5px solid var(--destructive); background: var(--destructive-surface);">
+
+            <!-- 左侧金额区 -->
+            <div class="flex flex-col items-center justify-center px-4 py-3"
+                 style="min-width: 80px; border-right: 2px dashed var(--destructive);">
+              <span class="text-xs font-medium" style="color: var(--destructive);">满$50减</span>
+              <span class="text-2xl font-bold" style="color: var(--destructive); line-height: 1.1;">$10</span>
+            </div>
+
+            <!-- 右侧说明区 -->
+            <div class="flex flex-col justify-center px-4 py-3 gap-1">
+              <span class="text-xs font-semibold" style="color: var(--foreground);">
+                夏日专享优惠券
+              </span>
+              <span class="text-xs" style="color: var(--muted-foreground);">
+                全场通用 / 限领 1 张
+              </span>
+            </div>
+
+            <!-- 领取标记图标 -->
+            <div class="absolute right-3 top-1/2 -translate-y-1/2">
+              <i data-lucide="ticket" class="w-5 h-5" style="color: var(--destructive); opacity: 0.5;"></i>
+            </div>
+          </div>
+
+          <!-- 操作按钮 -->
+          <div class="flex flex-col gap-2.5 pt-1">
+            <!-- 主按钮：立即领取 -->
+            <button id="claimBtn"
+                    class="w-full h-12 rounded-xl text-base font-semibold flex items-center justify-center gap-2"
+                    style="background: var(--primary); color: var(--primary-foreground); border: none; cursor: pointer; transition: filter 0.18s ease;"
+                    onmouseenter="this.style.filter='brightness(0.96)'"
+                    onmouseleave="this.style.filter='none'">
+              <i data-lucide="gift" class="w-4 h-4"></i>
+              立即领取
+            </button>
+
+            <!-- 次级按钮：暂不需要 -->
+            <button id="dismissBtn"
+                    class="w-full h-12 rounded-xl text-base font-medium flex items-center justify-center"
+                    style="background: var(--secondary); color: var(--secondary-foreground); border: none; cursor: pointer; transition: background 0.18s ease;"
+                    onmouseenter="this.style.background='var(--muted)'"
+                    onmouseleave="this.style.background='var(--secondary)'">
+              暂不需要
+            </button>
+          </div>
+
+          <!-- 不再显示链接 -->
+          <div class="flex justify-center pt-1">
+            <button id="neverShowBtn" class="text-xs underline cursor-pointer"
+                    style="background: none; border: none; color: var(--muted-foreground);"
+                    onmouseenter="this.style.color='var(--foreground)'"
+                    onmouseleave="this.style.color='var(--muted-foreground)'">
+              不再显示此活动
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 弹窗交互逻辑 -->
+    <script>
+      // 获取弹窗相关元素
+      const overlay = document.getElementById('splashOverlay');
+      const backdrop = document.getElementById('overlayBackdrop');
+      const closeBtn = document.getElementById('closePopup');
+      const claimBtn = document.getElementById('claimBtn');
+      const dismissBtn = document.getElementById('dismissBtn');
+      const neverShowBtn = document.getElementById('neverShowBtn');
+
+      /**
+       * 关闭弹窗并显示提示
+       * @param {string} message - 提示消息内容
+       */
+      function closePopup(message) {
+        // 添加淡出动画
+        overlay.style.transition = 'opacity 0.25s ease';
+        overlay.style.opacity = '0';
+
+        setTimeout(() => {
+          overlay.style.display = 'none';
+
+          // 在页面底部显示操作反馈提示
+          if (message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+              position: fixed;
+              bottom: 100px;
+              left: 50%;
+              transform: translateX(-50%);
+              padding: 10px 20px;
+              border-radius: 12px;
+              background: var(--foreground);
+              color: var(--background);
+              font-size: 13px;
+              font-weight: 500;
+              z-index: 9999;
+              box-shadow: var(--shadow-lg);
+              opacity: 0;
+              transition: opacity 0.3s ease;
+            `;
+            document.body.appendChild(toast);
+
+            // 淡入提示
+            requestAnimationFrame(() => { toast.style.opacity = '1'; });
+
+            // 2.5 秒后自动移除提示
+            setTimeout(() => {
+              toast.style.opacity = '0';
+              setTimeout(() => toast.remove(), 300);
+            }, 2500);
+          }
+        }, 250);
+      }
+
+      // 关闭按钮点击
+      closeBtn.addEventListener('click', () => closePopup(''));
+
+      // 遮罩区域点击关闭
+      backdrop.addEventListener('click', () => closePopup(''));
+
+      // 立即领取
+      claimBtn.addEventListener('click', () => closePopup('优惠券已领取，下单时自动抵扣'));
+
+      // 暂不需要
+      dismissBtn.addEventListener('click', () => closePopup(''));
+
+      // 不再显示此活动（模拟 localStorage 持久化）
+      neverShowBtn.addEventListener('click', () => {
+        // 将活动 ID 存入 localStorage，后续不再展示
+        const dismissedCampaigns = JSON.parse(localStorage.getItem('moyuyo_dismissed_campaigns') || '[]');
+        dismissedCampaigns.push('summer_sale_2025');
+        localStorage.setItem('moyuyo_dismissed_campaigns', JSON.stringify(dismissedCampaigns));
+        closePopup('已关闭，后续将不再展示此活动');
+      });
+
+      /**
+       * 频次控制检查（模拟）
+       * 规则：同一活动每人每天最多展示 1 次，每周最多 3 次
+       */
+      function checkFrequencyLimit() {
+        const key = 'moyuyo_popup_freq_summer_sale_2025';
+        const now = Date.now();
+        const data = JSON.parse(localStorage.getItem(key) || '{}');
+
+        // 当天展示记录
+        const today = new Date().toDateString();
+        const todayCount = (data.date === today) ? (data.dailyCount || 0) : 0;
+
+        // 本周展示记录
+        const weekStart = new Date();
+        weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+        weekStart.setHours(0, 0, 0, 0);
+        const weekCount = (data.weekStart === weekStart.getTime()) ? (data.weeklyCount || 0) : 0;
+
+        return {
+          canShow: todayCount < 1 && weekCount < 3,
+          dailyCount: todayCount,
+          weeklyCount: weekCount
+        };
+      }
+
+      // 初始化 Lucide 图标
+      lucide.createIcons();
+    </script>
+
+</body>
+</html>

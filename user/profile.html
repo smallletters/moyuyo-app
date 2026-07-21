@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 个人中心</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="font-family: var(--font-sans); background: var(--background-200);">
+    <main class="pb-20">
+
+      <!-- 用户摘要区 -->
+      <section class="px-4 pt-6 pb-4" style="background: var(--background-50);">
+        <div class="flex items-center gap-3">
+          <img src="../assets/pet-avatar-cat.jpg" alt="用户头像" class="w-16 h-16 rounded-full object-cover border-2" style="border-color: var(--border);">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="text-lg font-semibold truncate profile-name" style="color: var(--text-800);">宠物达人小雅</span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background: var(--brand-100); color: var(--brand-500);">金卡会员</span>
+            </div>
+            <div class="mt-2">
+              <div class="flex items-center justify-between text-xs mb-1" style="color: var(--text-500);">
+                <span>成长值 2800 / 5000</span>
+                <span>56%</span>
+              </div>
+              <div class="w-full h-1.5 rounded-full overflow-hidden" style="background: var(--background-200);">
+                <div class="h-full rounded-full" style="width: 56%; background: var(--primary);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 会员权益横幅 -->
+      <section class="px-4 py-3" style="background: var(--background-50);">
+        <div class="grid grid-cols-4 gap-2">
+          <!-- 积分加速 -->
+          <div class="flex flex-col items-center gap-1 py-2">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
+              <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+            </div>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">积分加速</span>
+          </div>
+          <!-- 专属折扣 -->
+          <div class="flex flex-col items-center gap-1 py-2">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
+              <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); background-color: var(--primary);"></span>
+            </div>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">专属折扣</span>
+          </div>
+          <!-- 生日礼品 -->
+          <div class="flex flex-col items-center gap-1 py-2">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
+              <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); background-color: var(--primary);"></span>
+            </div>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">生日礼品</span>
+          </div>
+          <!-- 优先发货 -->
+          <div class="flex flex-col items-center gap-1 py-2">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
+              <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); background-color: var(--primary);"></span>
+            </div>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">优先发货</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 分隔 -->
+      <div class="h-2" style="background: var(--background-200);"></div>
+
+      <!-- 订单管理区 -->
+      <section class="px-4 py-3" style="background: var(--background-50);">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-base font-semibold" style="color: var(--text-800);">我的订单</span>
+          <a href="#" class="flex items-center gap-0.5 text-xs" style="color: var(--text-500);">
+            <span>查看全部</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+        <div class="grid grid-cols-5 gap-1">
+          <!-- 全部 active -->
+          <a href="#" class="flex flex-col items-center gap-1.5 py-2 rounded-lg transition-colors duration-150" style="background: var(--brand-50);">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); background-color: var(--primary);"></span>
+            <span class="text-xs font-medium whitespace-nowrap" style="color: var(--primary);">全部</span>
+          </a>
+          <!-- 待付款 -->
+          <a href="#" class="flex flex-col items-center gap-1.5 py-2 rounded-lg transition-colors duration-150 hover:opacity-80">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/file.svg'); mask-image: url('../assets/icons/dl-builtin-apple/file.svg'); background-color: var(--text-500);"></span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">待付款</span>
+          </a>
+          <!-- 待发货 -->
+          <a href="#" class="flex flex-col items-center gap-1.5 py-2 rounded-lg transition-colors duration-150 hover:opacity-80">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/folder.svg'); mask-image: url('../assets/icons/dl-builtin-apple/folder.svg'); background-color: var(--text-500);"></span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">待发货</span>
+          </a>
+          <!-- 待收货 -->
+          <a href="#" class="flex flex-col items-center gap-1.5 py-2 rounded-lg transition-colors duration-150 hover:opacity-80">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/map-pin.svg'); mask-image: url('../assets/icons/dl-builtin-apple/map-pin.svg'); background-color: var(--text-500);"></span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">待收货</span>
+          </a>
+          <!-- 待评价 -->
+          <a href="#" class="flex flex-col items-center gap-1.5 py-2 rounded-lg transition-colors duration-150 hover:opacity-80">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); background-color: var(--text-500);"></span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">待评价</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 分隔 -->
+      <div class="h-2" style="background: var(--background-200);"></div>
+
+      <!-- 钱包区 -->
+      <section class="px-4 py-3" style="background: var(--background-50);">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-base font-semibold" style="color: var(--text-800);">我的钱包</span>
+        </div>
+        <div class="grid grid-cols-4 gap-2">
+          <!-- 余额 -->
+          <a href="#" class="flex flex-col items-center gap-1.5 py-3 rounded-lg border transition-colors duration-150 hover:border-[var(--primary)]" style="border-color: var(--border); background: var(--background-50);">
+            <span class="text-base font-semibold tabular-nums" style="color: var(--text-800);">326.50</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">余额</span>
+          </a>
+          <!-- 积分 -->
+          <a href="#" class="flex flex-col items-center gap-1.5 py-3 rounded-lg border transition-colors duration-150 hover:border-[var(--primary)]" style="border-color: var(--border); background: var(--background-50);">
+            <span class="text-base font-semibold tabular-nums" style="color: var(--text-800);">1,280</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">积分</span>
+          </a>
+          <!-- 优惠券 -->
+          <a href="#" class="flex flex-col items-center gap-1.5 py-3 rounded-lg border transition-colors duration-150 hover:border-[var(--primary)]" style="border-color: var(--border); background: var(--background-50);">
+            <span class="text-base font-semibold tabular-nums" style="color: var(--text-800);">3张</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">优惠券</span>
+          </a>
+          <!-- 礼品卡 -->
+          <a href="#" class="flex flex-col items-center gap-1.5 py-3 rounded-lg border transition-colors duration-150 hover:border-[var(--primary)]" style="border-color: var(--border); background: var(--background-50);">
+            <span class="text-base font-semibold tabular-nums" style="color: var(--text-800);">1张</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">礼品卡</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 分隔 -->
+      <div class="h-2" style="background: var(--background-200);"></div>
+
+      <!-- 常用功能宫格 -->
+      <section class="px-4 py-3" style="background: var(--background-50);">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-base font-semibold" style="color: var(--text-800);">常用功能</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <!-- 收货地址 -->
+          <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/map-pin.svg'); mask-image: url('../assets/icons/dl-builtin-apple/map-pin.svg'); background-color: var(--text-600);"></span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">收货地址</span>
+          </a>
+          <!-- 宠物档案 -->
+          <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); background-color: var(--text-600);"></span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">宠物档案</span>
+          </a>
+          <!-- 我的收藏 -->
+          <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); background-color: var(--text-600);"></span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">我的收藏</span>
+          </a>
+          <!-- 浏览足迹 -->
+          <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/mouse-pointer-click.svg'); mask-image: url('../assets/icons/dl-builtin-apple/mouse-pointer-click.svg'); background-color: var(--text-600);"></span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">浏览足迹</span>
+          </a>
+          <!-- 帮助中心 -->
+          <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); background-color: var(--text-600);"></span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">帮助中心</span>
+          </a>
+          <!-- 关于我们 -->
+          <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); background-color: var(--text-600);"></span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">关于我们</span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 底部 TabBar -->
+    <nav class="fixed bottom-0 inset-x-0 z-40 border-t backdrop-blur-lg" style="border-color: var(--border); background: rgba(255, 255, 255, 0.88); padding-bottom: env(safe-area-inset-bottom, 0px);">
+      <div class="flex items-center justify-around h-[50px]">
+        <!-- 首页 -->
+        <a href="#" data-dom-id="nav-home" class="flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors duration-150" style="color: var(--text-400);">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
+          <span class="text-[10px] whitespace-nowrap">首页</span>
+        </a>
+        <!-- 分类 -->
+        <a href="#" data-dom-id="nav-category" class="flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors duration-150" style="color: var(--text-400);">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/funnel.svg'); mask-image: url('../assets/icons/dl-builtin-apple/funnel.svg');"></span>
+          <span class="text-[10px] whitespace-nowrap">分类</span>
+        </a>
+        <!-- Pet Hub -->
+        <a href="#" data-dom-id="nav-pet-hub" class="flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors duration-150" style="color: var(--text-400);">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-play.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-play.svg');"></span>
+          <span class="text-[10px] whitespace-nowrap">Pet Hub</span>
+        </a>
+        <!-- 社区 -->
+        <a href="#" class="flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors duration-150" style="color: var(--text-400);">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+          <span class="text-[10px] whitespace-nowrap">社区</span>
+        </a>
+        <!-- 我的 active -->
+        <a href="#" data-active="true" class="flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors duration-150" style="color: var(--primary);">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
+          <span class="text-[10px] font-semibold whitespace-nowrap">我的</span>
+        </a>
+      </div>
+    </nav>
+
+    <script src="shared/api.js"></script><script>lucide.createIcons();</script>
+  <script>
+    (function () {
+      function addLevelClass() {
+        var levelSpan = document.querySelector('.inline-flex.items-center.px-2');
+        if (levelSpan) levelSpan.classList.add('profile-level');
+      }
+
+      async function loadProfile() {
+        try {
+          var res = await moyuyoAPI.get('/api/v1/user/profile');
+          if (res.code === 0 && res.data) {
+            var user = res.data;
+            var nameEl = document.querySelector('.profile-name');
+            if (nameEl && user.nickname) nameEl.textContent = user.nickname;
+            if (nameEl && user.name) nameEl.textContent = user.name;
+
+            var avatarEl = document.querySelector('img[alt="用户头像"]');
+            if (avatarEl && user.avatar) { avatarEl.src = user.avatar; }
+
+            var levelEl = document.querySelector('.profile-level');
+            if (levelEl && user.memberLevel) {
+              levelEl.textContent = user.memberLevel;
+              if (user.memberLevel === 'PRIME') {
+                levelEl.style.background = 'var(--accent-green-100)';
+                levelEl.style.color = 'var(--accent-green-600)';
+              } else if (user.memberLevel === 'GOLD') {
+                levelEl.style.background = 'var(--brand-100)';
+                levelEl.style.color = 'var(--brand-600)';
+              }
+            }
+
+            var walletRes = await moyuyoAPI.get('/api/v1/user/wallet');
+            if (walletRes.code === 0 && walletRes.data) {
+              var balanceEl = document.querySelector('.wallet-balance');
+              var pointsEl = document.querySelector('.wallet-points');
+              if (balanceEl && walletRes.data.balance) balanceEl.textContent = walletRes.data.balance.toFixed(2);
+              if (pointsEl && walletRes.data.points) pointsEl.textContent = walletRes.data.points.toLocaleString();
+            }
+
+            var orderRes = await moyuyoAPI.get('/api/v1/order/count');
+            if (orderRes.code === 0 && orderRes.data) {
+              var pendingPay = document.querySelector('.order-pending-pay');
+              var pendingShip = document.querySelector('.order-pending-ship');
+              var pendingReceive = document.querySelector('.order-pending-receive');
+              var pendingReview = document.querySelector('.order-pending-review');
+              if (pendingPay && orderRes.data.pendingPay > 0) pendingPay.textContent = orderRes.data.pendingPay;
+              if (pendingShip && orderRes.data.pendingShip > 0) pendingShip.textContent = orderRes.data.pendingShip;
+              if (pendingReceive && orderRes.data.pendingReceive > 0) pendingReceive.textContent = orderRes.data.pendingReceive;
+              if (pendingReview && orderRes.data.pendingReview > 0) pendingReview.textContent = orderRes.data.pendingReview;
+            }
+          }
+        } catch (e) {
+          console.log('[MOYUYO] Profile unavailable, showing static content');
+        }
+      }
+
+      async function logout() {
+        try {
+          await moyuyoAPI.post('/api/v1/user/logout');
+        } catch (e) {
+          console.log('[MOYUYO] Logout failed, clearing local');
+        }
+        moyuyoAPI.clearAuth();
+        window.location.href = 'login.html';
+      }
+
+      function updateWalletLabels() {
+        var balanceEl = document.querySelector('.grid.grid-cols-4.gap-2 a:first-child .text-base');
+        if (balanceEl) balanceEl.classList.add('wallet-balance');
+        var pointsEl = document.querySelector('.grid.grid-cols-4.gap-2 a:nth-child(2) .text-base');
+        if (pointsEl) pointsEl.classList.add('wallet-points');
+      }
+
+      function addOrderBadges() {
+        var orderLinks = document.querySelectorAll('.grid.grid-cols-5.gap-1 a');
+        if (orderLinks[1]) {
+          var badge = document.createElement('span');
+          badge.className = 'order-pending-pay';
+          badge.style.cssText = 'position:absolute;top:4px;right:8px;width:16px;height:16px;border-radius:50%;background:var(--state-error);color:white;font-size:10px;display:flex;align-items:center;justify-content:center;';
+          orderLinks[1].style.position = 'relative';
+          orderLinks[1].appendChild(badge);
+        }
+        if (orderLinks[2]) {
+          var badge = document.createElement('span');
+          badge.className = 'order-pending-ship';
+          badge.style.cssText = 'position:absolute;top:4px;right:8px;width:16px;height:16px;border-radius:50%;background:var(--state-error);color:white;font-size:10px;display:flex;align-items:center;justify-content:center;';
+          orderLinks[2].style.position = 'relative';
+          orderLinks[2].appendChild(badge);
+        }
+        if (orderLinks[3]) {
+          var badge = document.createElement('span');
+          badge.className = 'order-pending-receive';
+          badge.style.cssText = 'position:absolute;top:4px;right:8px;width:16px;height:16px;border-radius:50%;background:var(--state-error);color:white;font-size:10px;display:flex;align-items:center;justify-content:center;';
+          orderLinks[3].style.position = 'relative';
+          orderLinks[3].appendChild(badge);
+        }
+        if (orderLinks[4]) {
+          var badge = document.createElement('span');
+          badge.className = 'order-pending-review';
+          badge.style.cssText = 'position:absolute;top:4px;right:8px;width:16px;height:16px;border-radius:50%;background:var(--state-error);color:white;font-size:10px;display:flex;align-items:center;justify-content:center;';
+          orderLinks[4].style.position = 'relative';
+          orderLinks[4].appendChild(badge);
+        }
+      }
+
+      function fixNavLinks() {
+        var navHome = document.querySelector('a[data-dom-id="nav-home"]');
+        if (navHome) navHome.href = 'home.html';
+
+        var navCategory = document.querySelector('a[data-dom-id="nav-category"]');
+        if (navCategory) navCategory.href = 'category.html';
+
+        var navPetHub = document.querySelector('a[data-dom-id="nav-pet-hub"]');
+        if (navPetHub) navPetHub.href = 'pet-hub.html';
+
+        var navCommunity = document.querySelector('nav.fixed.bottom-0 a:nth-child(4)');
+        if (navCommunity) navCommunity.href = 'community.html';
+
+        var navProfile = document.querySelector('nav.fixed.bottom-0 a[data-active="true"]');
+        if (navProfile) navProfile.href = 'profile.html';
+
+        var commonLinks = document.querySelectorAll('section.px-4.py-3.grid.grid-cols-3 a');
+        if (commonLinks[0]) commonLinks[0].href = 'address-list.html';
+        if (commonLinks[1]) commonLinks[1].href = 'pet-profile.html';
+        if (commonLinks[2]) commonLinks[2].href = 'favorites.html';
+        if (commonLinks[3]) commonLinks[3].href = 'browsing-history.html';
+        if (commonLinks[4]) commonLinks[4].href = 'help-center.html';
+        if (commonLinks[5]) commonLinks[5].href = 'about.html';
+
+        var orderLinks = document.querySelectorAll('.grid.grid-cols-5.gap-1 a');
+        if (orderLinks[0]) orderLinks[0].href = 'order-list.html';
+        if (orderLinks[1]) orderLinks[1].href = 'order-list.html?status=pending_pay';
+        if (orderLinks[2]) orderLinks[2].href = 'order-list.html?status=pending_ship';
+        if (orderLinks[3]) orderLinks[3].href = 'order-list.html?status=pending_receive';
+        if (orderLinks[4]) orderLinks[4].href = 'order-list.html?status=pending_review';
+
+        var walletLinks = document.querySelectorAll('.grid.grid-cols-4.gap-2 a');
+        if (walletLinks[0]) walletLinks[0].href = 'wallet.html';
+        if (walletLinks[1]) walletLinks[1].href = 'points-detail.html';
+        if (walletLinks[2]) walletLinks[2].href = 'coupons.html';
+        if (walletLinks[3]) walletLinks[3].href = 'gift-cards.html';
+      }
+
+      function addLogoutMenu() {
+        var header = document.querySelector('section.px-4.pt-6.pb-4');
+        if (header) {
+          var logoutBtn = document.createElement('button');
+          logoutBtn.innerHTML = '<i data-lucide="log-out" style="width:20px;height:20px;"></i>';
+          logoutBtn.style.cssText = 'width:40px;height:40px;border-radius:50%;border:none;background:transparent;color:var(--text-500);cursor:pointer;transition:background-color 0.18s ease;';
+          logoutBtn.style.marginLeft = 'auto';
+          logoutBtn.onmouseover = function() { this.style.background = 'var(--background-200)'; };
+          logoutBtn.onmouseout = function() { this.style.background = 'transparent'; };
+          logoutBtn.addEventListener('click', function() {
+            if (confirm('确定要退出登录吗？')) {
+              logout();
+            }
+          });
+          header.querySelector('.flex.items-center.gap-3').appendChild(logoutBtn);
+          lucide.createIcons();
+        }
+      }
+
+      addLevelClass();
+      updateWalletLabels();
+      addOrderBadges();
+      fixNavLinks();
+      addLogoutMenu();
+      loadProfile();
+    })();
+  </script>
+</body>
+</html>

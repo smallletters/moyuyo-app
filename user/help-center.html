@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 帮助中心</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="min-h-screen" style="background: var(--background);">
+
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30 flex items-center justify-between px-4" style="height: 44px; background: var(--background); border-bottom: 1px solid var(--border);">
+        <button data-dom-id="back-previous" class="inline-flex items-center justify-center" style="width: 32px; height: 32px;" aria-label="返回上一页">
+          <i data-lucide="chevron-left" class="h-5 w-5" style="color: var(--foreground);"></i>
+        </button>
+        <h1 class="text-base font-semibold tracking-tight" style="color: var(--foreground);">帮助中心</h1>
+        <div style="width: 32px;"></div>
+      </header>
+
+      <!-- 头部插图区域 -->
+      <section class="px-4 pt-4 pb-2">
+        <div class="w-full overflow-hidden" style="border-radius: calc(var(--radius) * 1.2); aspect-ratio: 16/7;">
+          <img src="../assets/help-center-bg.jpg" alt="帮助中心" class="w-full h-full object-cover" loading="eager">
+        </div>
+      </section>
+
+      <!-- 搜索栏 -->
+      <section class="px-4 pt-3 pb-2">
+        <div class="field" style="width: 100%; min-width: 0;">
+          <i data-lucide="search" class="h-4 w-4" style="color: var(--icon-muted); flex-shrink: 0;"></i>
+          <input class="control" type="text" placeholder="搜索常见问题" aria-label="搜索常见问题">
+        </div>
+      </section>
+
+      <!-- 快捷操作按钮 2x2 -->
+      <section class="px-4 pt-2 pb-1">
+        <div class="grid grid-cols-2 gap-3">
+          <!-- 在线客服 -->
+          <button class="flex flex-col items-center justify-center gap-2" style="padding: 16px 8px; border-radius: calc(var(--radius) * 1.2); background: var(--brand-50); border: 1px solid var(--brand-100); box-shadow: var(--shadow-xs); transition: transform 0.18s ease, box-shadow 0.18s ease;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
+            <i data-lucide="message-circle" class="h-5 w-5" style="color: var(--brand-500);"></i>
+            <span class="text-xs font-semibold whitespace-nowrap" style="color: var(--brand-500);">在线客服</span>
+          </button>
+          <!-- 电话客服 -->
+          <button class="flex flex-col items-center justify-center gap-2" style="padding: 16px 8px; border-radius: calc(var(--radius) * 1.2); background: var(--brand-50); border: 1px solid var(--brand-100); box-shadow: var(--shadow-xs); transition: transform 0.18s ease, box-shadow 0.18s ease;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
+            <i data-lucide="phone" class="h-5 w-5" style="color: var(--brand-500);"></i>
+            <span class="text-xs font-semibold whitespace-nowrap" style="color: var(--brand-500);">电话客服</span>
+          </button>
+          <!-- 意见反馈 -->
+          <button class="flex flex-col items-center justify-center gap-2" style="padding: 16px 8px; border-radius: calc(var(--radius) * 1.2); background: var(--brand-50); border: 1px solid var(--brand-100); box-shadow: var(--shadow-xs); transition: transform 0.18s ease, box-shadow 0.18s ease;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
+            <i data-lucide="message-square-plus" class="h-5 w-5" style="color: var(--brand-500);"></i>
+            <span class="text-xs font-semibold whitespace-nowrap" style="color: var(--brand-500);">意见反馈</span>
+          </button>
+          <!-- 售后政策 -->
+          <button class="flex flex-col items-center justify-center gap-2" style="padding: 16px 8px; border-radius: calc(var(--radius) * 1.2); background: var(--brand-50); border: 1px solid var(--brand-100); box-shadow: var(--shadow-xs); transition: transform 0.18s ease, box-shadow 0.18s ease;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
+            <i data-lucide="shield-check" class="h-5 w-5" style="color: var(--brand-500);"></i>
+            <span class="text-xs font-semibold whitespace-nowrap" style="color: var(--brand-500);">售后政策</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- FAQ 分类列表 -->
+      <section class="px-4 pt-4 pb-2">
+        <h2 class="text-sm font-semibold tracking-tight mb-3" style="color: var(--foreground);">常见问题</h2>
+
+        <!-- 分类1: 订单相关 -->
+        <div class="faq-category mb-2" style="border-radius: calc(var(--radius) * 1.2); border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-xs);">
+          <button class="faq-toggle flex items-center justify-between w-full px-4" style="height: 48px; transition: background-color 0.16s ease;" onclick="toggleFaq(this)" aria-expanded="true">
+            <span class="flex items-center gap-2">
+              <i data-lucide="package" class="h-4 w-4" style="color: var(--brand-500);"></i>
+              <span class="text-sm font-medium" style="color: var(--foreground);">订单相关</span>
+            </span>
+            <i data-lucide="chevron-down" class="h-4 w-4 faq-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+          </button>
+          <div class="faq-content" style="overflow: hidden; transition: max-height 0.32s cubic-bezier(0.3, 0, 0, 1); max-height: 300px;">
+            <!-- 子项1: 默认展开显示详情 -->
+            <div class="faq-item active px-4 pb-3" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="true">
+                <span class="text-sm" style="color: var(--brand-500);">如何查看订单?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--brand-500); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 200px;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">进入"我的"页面，点击"我的订单"即可查看全部历史订单，支持按状态筛选和搜索。</p>
+              </div>
+            </div>
+            <!-- 子项2 -->
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">如何取消订单?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">在订单详情页，未发货的订单可点击"取消订单"，款项将在1-3个工作日内原路退回。</p>
+              </div>
+            </div>
+            <!-- 子项3 -->
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">订单状态说明</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">待付款、待发货、已发货、已完成、已取消，五种状态分别对应订单流转的不同阶段。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 分类2: 支付与退款 -->
+        <div class="faq-category mb-2" style="border-radius: calc(var(--radius) * 1.2); border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-xs);">
+          <button class="faq-toggle flex items-center justify-between w-full px-4" style="height: 48px; transition: background-color 0.16s ease;" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="flex items-center gap-2">
+              <i data-lucide="credit-card" class="h-4 w-4" style="color: var(--brand-500);"></i>
+              <span class="text-sm font-medium" style="color: var(--foreground);">支付与退款</span>
+            </span>
+            <i data-lucide="chevron-down" class="h-4 w-4 faq-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+          </button>
+          <div class="faq-content" style="overflow: hidden; transition: max-height 0.32s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">如何申请退款?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">进入订单详情，点击"申请退款"并填写原因，审核通过后退款将在1-5个工作日内到账。</p>
+              </div>
+            </div>
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">退款时效?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">原路退款一般1-5个工作日，不同支付渠道到账时间略有差异，具体以银行通知为准。</p>
+              </div>
+            </div>
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">支付方式说明</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">目前支持微信支付、支付宝、银行卡支付，后续将开放更多支付渠道。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 分类3: 物流配送 -->
+        <div class="faq-category mb-2" style="border-radius: calc(var(--radius) * 1.2); border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-xs);">
+          <button class="faq-toggle flex items-center justify-between w-full px-4" style="height: 48px; transition: background-color 0.16s ease;" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="flex items-center gap-2">
+              <i data-lucide="truck" class="h-4 w-4" style="color: var(--brand-500);"></i>
+              <span class="text-sm font-medium" style="color: var(--foreground);">物流配送</span>
+            </span>
+            <i data-lucide="chevron-down" class="h-4 w-4 faq-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+          </button>
+          <div class="faq-content" style="overflow: hidden; transition: max-height 0.32s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">查看物流信息?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">在订单详情页点击"查看物流"可实时追踪包裹位置和配送进度。</p>
+              </div>
+            </div>
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">配送时效?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">一般发货后1-3天送达，偏远地区3-5天，具体以实际物流信息为准。</p>
+              </div>
+            </div>
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">配送范围</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">支持全国大部分地区配送，港澳台及海外地区暂不支持，结算时将自动校验地址。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 分类4: 账号与安全 -->
+        <div class="faq-category mb-2" style="border-radius: calc(var(--radius) * 1.2); border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-xs);">
+          <button class="faq-toggle flex items-center justify-between w-full px-4" style="height: 48px; transition: background-color 0.16s ease;" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="flex items-center gap-2">
+              <i data-lucide="lock" class="h-4 w-4" style="color: var(--brand-500);"></i>
+              <span class="text-sm font-medium" style="color: var(--foreground);">账号与安全</span>
+            </span>
+            <i data-lucide="chevron-down" class="h-4 w-4 faq-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+          </button>
+          <div class="faq-content" style="overflow: hidden; transition: max-height 0.32s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">修改密码?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">前往"我的" > "设置" > "账号安全" > "修改密码"，验证原密码后即可设置新密码。</p>
+              </div>
+            </div>
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">账号注销?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">在"设置" > "账号安全" > "账号注销"提交申请，注销后数据将永久删除且无法恢复。</p>
+              </div>
+            </div>
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">隐私设置</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">可在"设置" > "隐私设置"中管理个人信息展示权限、消息通知偏好和数据授权。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 分类5: 会员与积分 -->
+        <div class="faq-category mb-2" style="border-radius: calc(var(--radius) * 1.2); border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-xs);">
+          <button class="faq-toggle flex items-center justify-between w-full px-4" style="height: 48px; transition: background-color 0.16s ease;" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="flex items-center gap-2">
+              <i data-lucide="crown" class="h-4 w-4" style="color: var(--brand-500);"></i>
+              <span class="text-sm font-medium" style="color: var(--foreground);">会员与积分</span>
+            </span>
+            <i data-lucide="chevron-down" class="h-4 w-4 faq-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+          </button>
+          <div class="faq-content" style="overflow: hidden; transition: max-height 0.32s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">积分规则?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">每消费1元获得1积分，签到、评价、分享也可获取额外积分，积分有效期为12个月。</p>
+              </div>
+            </div>
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">会员等级说明?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">会员分为普通、银卡、金卡、钻石四个等级，等级越高享受的折扣和专属权益越多。</p>
+              </div>
+            </div>
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">积分兑换</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">在"积分商城"中可使用积分兑换优惠券、宠物用品和专属礼品，不定期更新兑换商品。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 分类6: Pet Hub功能 -->
+        <div class="faq-category mb-2" style="border-radius: calc(var(--radius) * 1.2); border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-xs);">
+          <button class="faq-toggle flex items-center justify-between w-full px-4" style="height: 48px; transition: background-color 0.16s ease;" onclick="toggleFaq(this)" aria-expanded="false">
+            <span class="flex items-center gap-2">
+              <i data-lucide="paw-print" class="h-4 w-4" style="color: var(--brand-500);"></i>
+              <span class="text-sm font-medium" style="color: var(--foreground);">Pet Hub功能</span>
+            </span>
+            <i data-lucide="chevron-down" class="h-4 w-4 faq-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+          </button>
+          <div class="faq-content" style="overflow: hidden; transition: max-height 0.32s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">如何添加宠物?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">在Pet Hub首页点击"+"按钮，填写宠物昵称、品种、生日等信息即可创建宠物档案。</p>
+              </div>
+            </div>
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">护理提醒设置?</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">在宠物档案中选择"护理提醒"，可自定义疫苗接种、驱虫、洗澡等提醒周期和通知方式。</p>
+              </div>
+            </div>
+            <div class="faq-item px-4" style="border-top: 1px solid var(--border);">
+              <button class="faq-sub-toggle flex items-center justify-between w-full py-3" style="transition: background-color 0.16s ease;" onclick="toggleFaqSub(this)" aria-expanded="false">
+                <span class="text-sm" style="color: var(--foreground);">健康数据</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 faq-sub-chevron" style="color: var(--muted-foreground); transition: transform 0.24s cubic-bezier(0.3, 0, 0, 1);"></i>
+              </button>
+              <div class="faq-sub-content" style="overflow: hidden; transition: max-height 0.28s cubic-bezier(0.3, 0, 0, 1); max-height: 0;">
+                <p class="text-xs leading-relaxed pb-1" style="color: var(--muted-foreground);">支持记录体重、饮食、就医等健康数据，自动生成趋势图表，帮助追踪宠物健康状况。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 底部：没有找到答案 -->
+      <section class="px-4 pt-4 pb-8">
+        <div class="flex items-center justify-center gap-1">
+          <span class="text-sm" style="color: var(--muted-foreground);">没有找到答案？</span>
+          <button data-dom-id="cta-contact-cs" class="text-sm font-semibold whitespace-nowrap" style="color: var(--brand-500); background: transparent; border: none; padding: 0; transition: opacity 0.16s ease;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">联系客服</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FAQ 展开/收起交互逻辑（仅修改 style，不修改 DOM 结构） -->
+    <script>
+      // 分类展开/收起
+      function toggleFaq(btn) {
+        var content = btn.parentElement.querySelector('.faq-content');
+        var chevron = btn.querySelector('.faq-chevron');
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          content.style.maxHeight = '0';
+          chevron.style.transform = 'rotate(0deg)';
+          btn.setAttribute('aria-expanded', 'false');
+        } else {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          chevron.style.transform = 'rotate(180deg)';
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      }
+
+      // 子项展开/收起
+      function toggleFaqSub(btn) {
+        var content = btn.nextElementSibling;
+        var chevron = btn.querySelector('.faq-sub-chevron');
+        var titleSpan = btn.querySelector('span');
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          content.style.maxHeight = '0';
+          chevron.style.transform = 'rotate(0deg)';
+          chevron.style.color = 'var(--muted-foreground)';
+          titleSpan.style.color = 'var(--foreground)';
+          btn.setAttribute('aria-expanded', 'false');
+        } else {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          chevron.style.transform = 'rotate(180deg)';
+          chevron.style.color = 'var(--brand-500)';
+          titleSpan.style.color = 'var(--brand-500)';
+          btn.setAttribute('aria-expanded', 'true');
+        }
+        // 更新父容器高度以适应子项展开
+        var parentContent = btn.closest('.faq-content');
+        if (parentContent) {
+          setTimeout(function() {
+            parentContent.style.maxHeight = parentContent.scrollHeight + 'px';
+          }, 10);
+        }
+      }
+    </script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
