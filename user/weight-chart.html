@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 体重记录</title>
+    <title>MOYUYO - Weight Tracker</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -66,77 +66,77 @@
 
     <main class="pb-28">
 
-      <!-- 顶部导航栏 -->
+      <!-- Top Navigation Bar -->
       <div class="sticky top-0 z-30" style="background: var(--background);">
         <div class="h-11 flex items-center justify-between px-4">
-          <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--background-200); border: none;" data-dom-id="cta-back" aria-label="返回">
+          <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--background-200); border: none;" data-dom-id="cta-back" aria-label="Back">
             <i data-lucide="chevron-left" class="w-5 h-5" style="color: var(--text-800);"></i>
           </button>
-          <h1 class="text-base font-semibold" style="color: var(--text-800);">体重记录</h1>
+          <h1 class="text-base font-semibold" style="color: var(--text-800);">Weight Tracker</h1>
           <div class="w-9 h-9"></div>
         </div>
       </div>
 
-      <!-- 宠物切换横向滚动栏 -->
-      <section class="px-4 pt-3 pb-2" aria-label="宠物切换">
+      <!-- Pet Switcher Horizontal Scroll -->
+      <section class="px-4 pt-3 pb-2" aria-label="Pet Switcher">
         <div class="flex gap-4 overflow-x-auto no-scrollbar py-1" id="pet-switcher">
-          <!-- 动态渲染 -->
+          <!-- Dynamic rendering -->
         </div>
       </section>
 
-      <!-- 体重趋势图 -->
-      <section class="mx-4 mt-2 rounded-xl p-4" style="background: var(--card); border: 1px solid var(--border);" aria-label="体重趋势图">
-        <h2 class="text-base font-semibold mb-3" style="color: var(--text-800);">体重趋势</h2>
+      <!-- Weight Trend Chart -->
+      <section class="mx-4 mt-2 rounded-xl p-4" style="background: var(--card); border: 1px solid var(--border);" aria-label="Weight Trend Chart">
+        <h2 class="text-base font-semibold mb-3" style="color: var(--text-800);">Weight Trend</h2>
         <div class="w-full" style="height: 200px; position: relative;">
           <canvas id="weight-chart" class="w-full h-full"></canvas>
         </div>
       </section>
 
-      <!-- 体重统计卡片 -->
-      <section class="mx-4 mt-3" aria-label="体重统计">
+      <!-- Weight Statistics Cards -->
+      <section class="mx-4 mt-3" aria-label="Weight Statistics">
         <div class="grid grid-cols-4 gap-2">
           <div class="rounded-xl p-3 flex flex-col items-center" style="background: var(--card); border: 1px solid var(--border);">
-            <span class="text-[10px] font-medium" style="color: var(--text-500);">当前体重</span>
+            <span class="text-[10px] font-medium" style="color: var(--text-500);">Current Weight</span>
             <span id="stat-current" class="text-base font-semibold mt-1" style="color: var(--brand-500);">--</span>
             <span class="text-[10px]" style="color: var(--text-400);">kg</span>
           </div>
           <div class="rounded-xl p-3 flex flex-col items-center" style="background: var(--card); border: 1px solid var(--border);">
-            <span class="text-[10px] font-medium" style="color: var(--text-500);">最低体重</span>
+            <span class="text-[10px] font-medium" style="color: var(--text-500);">Minimum Weight</span>
             <span id="stat-min" class="text-base font-semibold mt-1" style="color: var(--state-success);">--</span>
             <span class="text-[10px]" style="color: var(--text-400);">kg</span>
           </div>
           <div class="rounded-xl p-3 flex flex-col items-center" style="background: var(--card); border: 1px solid var(--border);">
-            <span class="text-[10px] font-medium" style="color: var(--text-500);">最高体重</span>
+            <span class="text-[10px] font-medium" style="color: var(--text-500);">Maximum Weight</span>
             <span id="stat-max" class="text-base font-semibold mt-1" style="color: var(--state-error);">--</span>
             <span class="text-[10px]" style="color: var(--text-400);">kg</span>
           </div>
           <div class="rounded-xl p-3 flex flex-col items-center" style="background: var(--card); border: 1px solid var(--border);">
-            <span class="text-[10px] font-medium" style="color: var(--text-500);">平均体重</span>
+            <span class="text-[10px] font-medium" style="color: var(--text-500);">Average Weight</span>
             <span id="stat-avg" class="text-base font-semibold mt-1" style="color: var(--text-800);">--</span>
             <span class="text-[10px]" style="color: var(--text-400);">kg</span>
           </div>
         </div>
       </section>
 
-      <!-- 体重记录列表 -->
-      <section class="mx-4 mt-3 mb-4 rounded-xl p-4" style="background: var(--card); border: 1px solid var(--border);" aria-label="体重记录列表">
-        <h2 class="text-base font-semibold mb-3" style="color: var(--text-800);">记录列表</h2>
+      <!-- Weight Records List -->
+      <section class="mx-4 mt-3 mb-4 rounded-xl p-4" style="background: var(--card); border: 1px solid var(--border);" aria-label="Weight Records">
+        <h2 class="text-base font-semibold mb-3" style="color: var(--text-800);">Records</h2>
         <div id="weight-records" class="flex flex-col gap-2">
-          <!-- 动态渲染 -->
+          <!-- Dynamic rendering -->
         </div>
         <div id="weight-empty" class="hidden flex flex-col items-center justify-center py-10">
           <i data-lucide="inbox" class="w-10 h-10" style="color: var(--text-300);"></i>
-          <p class="text-sm mt-2" style="color: var(--text-400);">暂无体重记录</p>
+          <p class="text-sm mt-2" style="color: var(--text-400);">No weight records yet</p>
         </div>
       </section>
 
     </main>
 
-    <!-- 底部悬浮添加按钮 -->
+    <!-- Floating Add Button -->
     <button class="fixed bottom-8 right-5 z-40 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
             style="background: var(--brand-500); border: none;"
             data-dom-id="cta-fab-add"
-            aria-label="添加体重记录">
+            aria-label="Add Weight Record">
       <i data-lucide="plus" class="w-6 h-6" style="color: var(--primary-foreground);"></i>
     </button>
 
@@ -148,12 +148,12 @@
 
   const api = window.moyuyoAPI;
 
-  /* ===== 状态 ===== */
+  /* ===== State ===== */
   let currentPetId = null;
   let pets = [];
   let weightData = null;
 
-  /* ===== 初始化 ===== */
+  /* ===== Initialization ===== */
   function init() {
     const params = new URLSearchParams(window.location.search);
     currentPetId = params.get('petId') || 'pet-1';
@@ -161,7 +161,7 @@
     loadPetAndWeight();
   }
 
-  /* ===== 加载宠物列表 ===== */
+  /* ===== Load Pet List ===== */
   async function loadPetList() {
     try {
       const res = await api.get('/api/v1/pet/list');
@@ -170,11 +170,11 @@
         renderPetSwitcher();
       }
     } catch (e) {
-      console.error('加载宠物列表失败:', e);
+      console.error('Failed to load pet list:', e);
     }
   }
 
-  /* ===== 加载宠物信息和体重数据 ===== */
+  /* ===== Load Pet Info and Weight Data ===== */
   async function loadPetAndWeight() {
     try {
       const [petRes, weightRes] = await Promise.all([
@@ -193,17 +193,17 @@
         renderRecords();
       }
     } catch (e) {
-      console.error('加载数据失败:', e);
+      console.error('Failed to load data:', e);
     }
   }
 
-  /* ===== 更新宠物信息 ===== */
+  /* ===== Update Pet Info ===== */
   function updatePetInfo(pet) {
-    // 高亮当前宠物
+    // Highlight current pet
     renderPetSwitcher();
   }
 
-  /* ===== 渲染宠物切换栏 ===== */
+  /* ===== Render Pet Switcher ===== */
   function renderPetSwitcher() {
     const container = document.getElementById('pet-switcher');
     if (!container) return;
@@ -221,21 +221,21 @@
       html += '</div>';
     });
 
-    // 添加宠物按钮
+    // Add pet button
     html += '<div class="flex flex-col items-center gap-1.5 flex-shrink-0 cursor-pointer">';
     html += '  <div class="pet-avatar" style="border: 2px dashed var(--background-300);">';
     html += '    <div class="pet-avatar-placeholder">';
     html += '      <i data-lucide="circle-plus" class="w-5 h-5" style="color: var(--icon-300);"></i>';
     html += '    </div>';
     html += '  </div>';
-    html += '  <span class="text-xs font-medium" style="color: var(--text-400);">添加</span>';
+    html += '  <span class="text-xs font-medium" style="color: var(--text-400);">Add</span>';
     html += '</div>';
 
     container.innerHTML = html;
     lucide.createIcons();
   }
 
-  /* ===== 切换宠物 ===== */
+  /* ===== Switch Pet ===== */
   window._switchPet = function(petId) {
     if (petId === currentPetId) return;
     currentPetId = petId;
@@ -243,7 +243,7 @@
     loadPetAndWeight();
   };
 
-  /* ===== 绘制折线图 ===== */
+  /* ===== Draw Line Chart ===== */
   function drawChart() {
     var canvas = document.getElementById('weight-chart');
     if (!canvas || !weightData || !weightData.records || weightData.records.length === 0) return;
@@ -267,7 +267,7 @@
     var chartW = width - padding.left - padding.right;
     var chartH = height - padding.top - padding.bottom;
 
-    // 计算 Y 轴范围
+    // Calculate Y-axis range
     var values = records.map(function(r) { return r.value; });
     var minVal = Math.min.apply(null, values);
     var maxVal = Math.max.apply(null, values);
@@ -277,10 +277,10 @@
     var yMax = Math.ceil(maxVal + range * 0.2);
     var yRange = yMax - yMin;
 
-    // 清除
+    // Clear
     ctx.clearRect(0, 0, width, height);
 
-    // 绘制 Y 轴刻度线和标签
+    // Draw Y-axis grid lines and labels
     var ySteps = 4;
     ctx.fillStyle = 'var(--text-400)';
     ctx.font = '10px sans-serif';
@@ -301,7 +301,7 @@
       }
     }
 
-    // 绘制 X 轴标签
+    // Draw X-axis labels
     ctx.fillStyle = 'var(--text-400)';
     ctx.font = '10px sans-serif';
     ctx.textAlign = 'center';
@@ -313,7 +313,7 @@
       ctx.fillText(label, xPos, padding.top + chartH + 8);
     });
 
-    // 计算数据点坐标
+    // Calculate data point coordinates
     var points = records.map(function(rec, idx) {
       return {
         x: padding.left + xStep * idx,
@@ -321,7 +321,7 @@
       };
     });
 
-    // 绘制渐变填充
+    // Draw gradient fill
     var gradient = ctx.createLinearGradient(0, padding.top, 0, padding.top + chartH);
     gradient.addColorStop(0, getComputedStyle(document.documentElement).getPropertyValue('--brand-50').trim() || 'rgba(0,122,255,0.08)');
     gradient.addColorStop(1, 'rgba(255,255,255,0)');
@@ -336,7 +336,7 @@
     ctx.fillStyle = gradient;
     ctx.fill();
 
-    // 绘制折线 - 分段绘制实现圆角效果
+    // Draw line - segment drawing for rounded effect
     var brandColor = getComputedStyle(document.documentElement).getPropertyValue('--brand-500').trim() || '#007AFF';
     ctx.strokeStyle = brandColor;
     ctx.lineWidth = 2;
@@ -349,7 +349,7 @@
     }
     ctx.stroke();
 
-    // 绘制数据点
+    // Draw data points
     points.forEach(function(p) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
@@ -361,7 +361,7 @@
     });
   }
 
-  /* ===== 更新统计卡片 ===== */
+  /* ===== Update Statistics Cards ===== */
   function updateStats() {
     if (!weightData || !weightData.stats) return;
 
@@ -372,7 +372,7 @@
     document.getElementById('stat-avg').textContent = stats.avg != null ? stats.avg.toFixed(1) : '--';
   }
 
-  /* ===== 渲染记录列表 ===== */
+  /* ===== Render Records List ===== */
   function renderRecords() {
     var container = document.getElementById('weight-records');
     var emptyEl = document.getElementById('weight-empty');
@@ -386,7 +386,7 @@
 
     emptyEl.classList.add('hidden');
 
-    // 按日期倒序排列
+    // Sort by date descending
     var records = weightData.records.slice().sort(function(a, b) {
       return b.date.localeCompare(a.date);
     });
@@ -407,7 +407,7 @@
         }
       }
 
-      var dateLabel = rec.date.replace(/^\d{4}-/, '').replace('-', '月') + '日';
+      var dateLabel = rec.date.replace(/^\d{4}-/, '').replace('-', '/');
 
       html += '<div class="flex items-center justify-between p-3 rounded-xl" style="background: var(--background-200);">';
       html += '  <div class="flex items-center gap-3">';
@@ -427,14 +427,14 @@
     lucide.createIcons();
   }
 
-  /* ===== 工具函数 ===== */
+  /* ===== Utility Functions ===== */
   function escapeHtml(str) {
     var div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
   }
 
-  /* ===== 窗口 resize 时重绘图表 ===== */
+  /* ===== Redraw chart on window resize ===== */
   var resizeTimer;
   window.addEventListener('resize', function() {
     clearTimeout(resizeTimer);
@@ -443,7 +443,7 @@
     }, 200);
   });
 
-  /* ===== 启动 ===== */
+  /* ===== Start ===== */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
