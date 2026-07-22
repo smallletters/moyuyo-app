@@ -162,6 +162,136 @@
             <button class="btn btn-primary flex-1 rounded-full text-[14px]" aria-label="确认收货">确认收货</button>
         </div>
     </div>
-    <script>lucide.createIcons();</script>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      (function() {
+        function getOrderNo() {
+          var params = new URLSearchParams(window.location.search);
+          return params.get('orderNo') || 'MOY20260710002';
+        }
+
+        function statusInfo(status) {
+          var map = {
+            PENDING: { label: '待付款', bg: 'var(--background-200)', color: 'var(--text-500)', desc: '订单创建成功，请尽快完成支付' },
+            PAID: { label: '待发货', bg: 'var(--brand-50)', color: 'var(--brand-500)', desc: '商家正在准备您的商品' },
+            SHIPPED: { label: '待收货', bg: 'var(--brand-50)', color: 'var(--brand-500)', desc: '您的包裹正在配送中' },
+            COMPLETED: { label: '已完成', bg: 'var(--state-success-surface)', color: 'var(--state-success)', desc: '感谢您的购买' },
+            CANCELLED: { label: '已取消', bg: 'var(--text-200)', color: 'var(--text-400)', desc: '' },
+            REFUNDING: { label: '退款中', bg: 'var(--state-error-surface)', color: 'var(--state-error)', desc: '' }
+          };
+          return map[status] || { label: status, bg: 'var(--background-200)', color: 'var(--text-500)', desc: '' };
+        }
+
+        function loadOrderDetail() {
+          try {
+            moyuyoAPI.get('/api/v1/order/detail?orderNo=' + getOrderNo()).then(function(res) {
+              if (res.code !== 0 || !res.data) return;
+              var order = res.data;
+
+              // 更新状态卡片
+              var info = statusInfo(order.status);
+              var statusChip = document.querySelector('.bg-\\\\[var\\\\(--brand-500\\\\)\\\\]');
+              if (statusChip) {
+                statusChip.textContent = info.label;
+              }
+              var statusDesc = document.querySelector('section .text-\\\\[14px\\\\]');
+              if (statusDesc && order.etd) {
+                statusDesc.textContent = '预计 ' + order.etd + ' 送达';
+              }
+              if (statusDesc && !order.etd) {
+                statusDesc.textContent = info.desc;
+              }
+
+              // 更新物流
+              if (order.logistics && order.logistics.length) {
+                var logisticsSection = document.querySelector('.relative.pl-6');
+                if (logisticsSection) {
+                  logisticsSection.innerHTML = '<div class="absolute bottom-0 left-[7px] top-[6px] w-px bg-[var(--background-300)]"></div>';
+                  order.logistics.forEach(function(log, i) {
+                    var isLatest = i === 0;
+                    logisticsSection.innerHTML +=
+                      '<div class="relative pb-5">' +
+                      '<div class="absolute -left-6 top-0.5 flex items-center justify-center rounded-full" style="width:' + (isLatest ? '15px' : '10px') + ';height:' + (isLatest ? '15px' : '10px') + ';background:' + (isLatest ? 'var(--brand-500)' : 'var(--background-300)') + '">' +
+                      (isLatest ? '<span class="h-1.5 w-1.5 rounded-full bg-[var(--background-50)]"></span>' : '') +
+                      '</div>' +
+                      '<p class="text-[14px] font-semibold" style="color:' + (isLatest ? 'var(--text-800)' : 'var(--text-600)') + '">' + log.desc + '</p>' +
+                      '<p class="mt-0.5 text-[12px] text-[var(--text-400)]">' + log.time.replace('T', ' ').substring(0, 16) + '</p>' +
+                      '</div>';
+                  });
+                }
+              }
+
+              // 更新地址
+              if (order.address) {
+                var nameEl = document.querySelector('section:nth-of-type(3) .flex.items-center.gap-3 span.text-\\\\[14px\\\\]');
+                if (nameEl) nameEl.textContent = order.address.name;
+                var phoneEl = document.querySelector('section:nth-of-type(3) .flex.items-center.gap-3 span:nth-child(2)');
+                if (phoneEl) phoneEl.textContent = order.address.phone;
+                var addrEl = document.querySelector('section:nth-of-type(3) .flex.items-start.gap-3 span:nth-child(2)');
+                if (addrEl) addrEl.textContent = order.address.full;
+              }
+
+              // 更新订单信息
+              updateOrderInfo(order);
+
+              // 更新商品
+              updateProductItem(order);
+
+              // 更新价格明细
+              updatePriceDetail(order);
+            });
+          } catch (e) {
+            console.log('[MOYUYO] Order detail unavailable');
+          }
+        }
+
+        function updateOrderInfo(order) {
+          var infoSection = document.querySelectorAll('.flex.items-center.gap-3');
+          infoSection.forEach(function(row) {
+            var label = row.querySelector('span:first-child');
+            if (!label) return;
+            var text = label.textContent;
+            var value = row.querySelector('span:last-child');
+            if (text === '订单编号' && value) value.textContent = order.orderNo;
+            if (text === '下单时间' && value && order.createdAt) value.textContent = order.createdAt.replace('T', ' ').substring(0, 16);
+            if (text === '支付方式' && value) value.textContent = order.paymentMethod || '在线支付';
+          });
+        }
+
+        function updateProductItem(order) {
+          var item = (order.items && order.items[0]) || {};
+          var img = document.querySelector('.flex.gap-3 img');
+          if (img && item.image) img.src = item.image;
+          var nameEl = document.querySelector('.flex.gap-3 .truncate');
+          if (nameEl && item.name) nameEl.textContent = item.name;
+          var qtyEl = document.querySelector('.flex.gap-3 .text-\\\\[12px\\\\]');
+          if (qtyEl && item.quantity) qtyEl.textContent = 'x' + item.quantity;
+          var priceEl = document.querySelector('.flex.gap-3 .shrink-0');
+          if (priceEl && item.price) priceEl.textContent = '¥' + (item.price / 100).toFixed(2);
+        }
+
+        function updatePriceDetail(order) {
+          var priceRows = document.querySelectorAll('.space-y-2 .flex.items-center.justify-between');
+          priceRows.forEach(function(row) {
+            var label = row.querySelector('span:first-child');
+            var value = row.querySelector('span:last-child');
+            if (!label || !value) return;
+            var text = label.textContent;
+            if (text === '运费') value.textContent = '¥' + ((order.shippingFee || 0) / 100).toFixed(2);
+            if (text === '优惠') value.textContent = '-¥' + ((order.discount || 0) / 100).toFixed(2);
+            if (text === '实付') value.textContent = '¥' + ((order.paidAmount || order.totalAmount || 0) / 100).toFixed(2);
+          });
+        }
+
+        // 返回按钮
+        var backBtn = document.querySelector('[data-dom-id="back-previous"]');
+        if (backBtn) {
+          backBtn.addEventListener('click', function() { window.history.back(); });
+        }
+
+        loadOrderDetail();
+      })();
+    </script>
 </body>
 </html>

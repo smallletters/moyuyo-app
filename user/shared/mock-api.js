@@ -406,7 +406,108 @@
       if (!token || !mockDB.tokens[token]) {
         return error(1001, '未登录');
       }
-      return success({ cartId: 'cart-' + Date.now(), skuId: body.skuId, quantity: body.quantity });
+      // 确保购物车数据存在
+      var userId = mockDB.tokens[token].userId;
+      if (!mockDB.carts) mockDB.carts = {};
+      if (!mockDB.carts[userId]) mockDB.carts[userId] = [];
+      mockDB.carts[userId].push({
+        id: 'cart-' + mockDB.carts[userId].length, skuId: body.skuId, quantity: body.quantity || 1,
+        name: '宠物洗护套装', price: 12800, image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&q=60', spec: '香草白 / 500ml'
+      });
+      return success({ cartId: 'cart-' + mockDB.carts[userId].length, skuId: body.skuId, quantity: body.quantity });
+    },
+
+    'GET /api/v1/cart/list': function() {
+      var token = localStorage.getItem('moyuyo_access_token');
+      if (!token || !mockDB.tokens[token]) {
+        return error(1001, '未登录');
+      }
+      var userId = mockDB.tokens[token].userId;
+      if (!mockDB.carts) mockDB.carts = {};
+      if (!mockDB.carts[userId]) {
+        mockDB.carts[userId] = [
+          { id: 'cart-1', skuId: 'sku-101-1', quantity: 1, name: '温和植物萃取宠物洗护套装', price: 12800, image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&q=60', spec: '香草白 / 250ml' },
+          { id: 'cart-2', skuId: 'sku-102-2', quantity: 1, name: '城市探索者宠物牵引套装', price: 9900, image: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=200&q=60', spec: '石墨黑 / M' },
+          { id: 'cart-3', skuId: 'sku-103-1', quantity: 2, name: '云端猫爬架', price: 29900, image: 'https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=200&q=60', spec: '标准款' }
+        ];
+      }
+      return success({
+        items: mockDB.carts[userId],
+        total: mockDB.carts[userId].reduce(function(sum, item) { return sum + item.price * item.quantity; }, 0),
+        count: mockDB.carts[userId].length
+      });
+    },
+
+    'GET /api/v1/cart/preview': function() {
+      var token = localStorage.getItem('moyuyo_access_token');
+      if (!token || !mockDB.tokens[token]) {
+        return error(1001, '未登录');
+      }
+      var userId = mockDB.tokens[token].userId;
+      if (!mockDB.carts) mockDB.carts = {};
+      if (!mockDB.carts[userId]) {
+        mockDB.carts[userId] = [
+          { id: 'cart-1', skuId: 'sku-101-1', quantity: 1, name: '温和植物萃取宠物洗护套装', price: 12800, image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&q=60', spec: '香草白 / 250ml' },
+          { id: 'cart-2', skuId: 'sku-102-2', quantity: 1, name: '城市探索者宠物牵引套装', price: 9900, image: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=200&q=60', spec: '石墨黑 / M' }
+        ];
+      }
+      return success({
+        items: mockDB.carts[userId],
+        subtotal: mockDB.carts[userId].reduce(function(sum, item) { return sum + item.price * item.quantity; }, 0),
+        shippingFee: 0,
+        discount: 2000,
+        total: mockDB.carts[userId].reduce(function(sum, item) { return sum + item.price * item.quantity; }, 0) - 2000,
+        addressId: 'addr-1',
+        address: { name: '小雅', phone: '138****6789', full: '上海市浦东新区陆家嘴环路1088号' }
+      });
+    },
+
+    'POST /api/v1/order': function(body) {
+      return success({
+        orderNo: 'MOY' + Date.now(),
+        orderId: 'order-' + Date.now(),
+        totalAmount: 22700,
+        status: 'PAID',
+        payUrl: 'https://pay.example.com/order/MOY' + Date.now()
+      });
+    },
+
+    'GET /api/v1/order/list': function() {
+      return success({
+        orders: [
+          { id: 'order-1', orderNo: 'MOY20260715001', status: 'COMPLETED', totalAmount: 12800, createdAt: '2026-07-15T10:30:00Z', items: [{ name: '温和植物萃取宠物洗护套装', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&q=60', quantity: 1, price: 12800 }] },
+          { id: 'order-2', orderNo: 'MOY20260718002', status: 'SHIPPED', totalAmount: 9900, createdAt: '2026-07-18T14:20:00Z', items: [{ name: '城市探索者宠物牵引套装', image: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=200&q=60', quantity: 1, price: 9900 }] },
+          { id: 'order-3', orderNo: 'MOY20260720003', status: 'PENDING', totalAmount: 59800, createdAt: '2026-07-20T09:15:00Z', items: [{ name: '云端猫爬架', image: 'https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=200&q=60', quantity: 2, price: 29900 }] },
+          { id: 'order-4', orderNo: 'MOY20260721004', status: 'PAID', totalAmount: 16800, createdAt: '2026-07-21T16:45:00Z', items: [{ name: '全价无谷犬粮', image: 'https://images.unsplash.com/photo-1589924691195-41432c84c161?w=200&q=60', quantity: 1, price: 16800 }] }
+        ],
+        total: 4,
+        page: 1,
+        pageSize: 20
+      });
+    },
+
+    'GET /api/v1/order/detail': function() {
+      return success({
+        orderNo: 'MOY20260710002',
+        status: 'SHIPPED',
+        totalAmount: 8900,
+        shippingFee: 0,
+        discount: 2000,
+        paidAmount: 6900,
+        paymentMethod: '微信支付',
+        createdAt: '2026-07-10T15:22:00Z',
+        etd: '2026年7月12日',
+        address: { name: '小雅', phone: '138****8888', full: '上海市浦东新区张江高科技园区碧波路690号' },
+        items: [
+          { name: '经典尼龙宠物牵引套装', image: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=200&q=60', quantity: 1, price: 8900, spec: '海军蓝 / M码' }
+        ],
+        logistics: [
+          { time: '2026-07-11T14:30:00Z', status: '已到达', desc: '包裹已到达上海浦东配送站' },
+          { time: '2026-07-10T22:15:00Z', status: '运输中', desc: '包裹从杭州分拨中心发出' },
+          { time: '2026-07-10T08:00:00Z', status: '已发货', desc: '卖家已发货' },
+          { time: '2026-07-09T16:30:00Z', status: '已支付', desc: '订单已支付' }
+        ]
+      });
     },
 
     'POST /api/v1/favorites/toggle': function(body) {
