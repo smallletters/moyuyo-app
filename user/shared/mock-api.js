@@ -216,6 +216,37 @@
       });
     },
 
+    'GET /api/v1/user/transactions': function() {
+      return success({
+        records: [
+          { id: 'tx-1', type: 'INCOME', title: '购物返积分', amount: 350, balance: 12850, date: '2026-07-20 14:30', status: 'COMPLETED' },
+          { id: 'tx-2', type: 'EXPENSE', title: '订单支付', amount: -12800, balance: 12500, date: '2026-07-18 10:15', status: 'COMPLETED', orderNo: 'MOY1784683777099' },
+          { id: 'tx-3', type: 'INCOME', title: '好友邀请奖励', amount: 500, balance: 25300, date: '2026-07-15 09:00', status: 'COMPLETED' },
+          { id: 'tx-4', type: 'EXPENSE', title: '兑换优惠券', amount: -500, balance: 24800, date: '2026-07-10 16:00', status: 'COMPLETED' },
+          { id: 'tx-5', type: 'INCOME', title: '每日签到', amount: 50, balance: 25300, date: '2026-07-09 08:00', status: 'COMPLETED' }
+        ],
+        total: 12850
+      });
+    },
+
+    'POST /api/v1/user/account/delete': function() {
+      return success({ message: '账户注销申请已提交，7天内可撤销', deleted: false, pendingDays: 7 });
+    },
+
+    'POST /api/v1/user/data/export': function() {
+      return success({ message: '数据导出请求已提交，将在24小时内发送至您的邮箱', exportId: 'exp-' + Date.now() });
+    },
+
+    'GET /api/v1/address/list': function() {
+      return success({
+        addresses: [
+          { id: 'addr-1', name: '小雅', phone: '138****6789', province: '上海市', city: '上海市', district: '浦东新区', detail: '陆家嘴环路1088号', isDefault: true },
+          { id: 'addr-2', name: '小雅', phone: '138****6789', province: '浙江省', city: '杭州市', district: '余杭区', detail: '仓前街道MOYUYO物流园', isDefault: false },
+          { id: 'addr-3', name: '小明', phone: '139****1234', province: '北京市', city: '北京市', district: '朝阳区', detail: '望京SOHO T1 15层', isDefault: false }
+        ]
+      });
+    },
+
     'GET /api/v1/user/wallet': function() {
       var token = localStorage.getItem('moyuyo_access_token');
       var tokenData = mockDB.tokens[token];
