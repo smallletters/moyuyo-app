@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 确认订单</title>
+    <title>MOYUYO - Confirm Order</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -20,53 +20,53 @@
 </head>
 <body class="min-h-screen font-sans antialiased">
     <main class="pb-24">
-      <!-- 顶部导航 -->
+      <!-- Top Navigation -->
       <header class="sticky top-0 z-30 flex h-11 items-center border-b px-4" style="background:var(--background);border-color:var(--border)">
-        <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="background:var(--background)" aria-label="返回">
+        <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="background:var(--background)" aria-label="Back">
           <span data-icon class="h-5 w-5" style="-webkit-mask-image:url('../assets/icons/dl-builtin-apple/chevron-left.svg');mask-image:url('../assets/icons/dl-builtin-apple/chevron-left.svg')"></span>
         </button>
-        <h1 class="min-w-0 flex-1 text-center text-base font-semibold truncate" style="color:var(--text-800)">确认订单</h1>
+        <h1 class="min-w-0 flex-1 text-center text-base font-semibold truncate" style="color:var(--text-800)">Confirm Order</h1>
         <div class="w-8"></div>
       </header>
 
-      <!-- 收货地址 -->
+      <!-- Shipping Address -->
       <section class="mx-4 mt-3 rounded-xl p-3 border" style="background:var(--background);border-color:var(--border)">
         <div class="flex items-start gap-3">
           <span data-icon class="mt-0.5 h-5 w-5 shrink-0" style="-webkit-mask-image:url('../assets/icons/dl-builtin-apple/map-pin.svg');mask-image:url('../assets/icons/dl-builtin-apple/map-pin.svg');background-color:var(--brand-500)"></span>
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-2">
-              <span class="text-sm font-semibold" style="color:var(--text-800)">小雅</span>
+              <span class="text-sm font-semibold" style="color:var(--text-800)">Xiaoya</span>
               <span class="text-xs" style="color:var(--text-500)">138****6789</span>
             </div>
-            <p class="mt-1 text-xs leading-relaxed" style="color:var(--text-500)">上海市浦东新区陆家嘴环路1088号</p>
+            <p class="mt-1 text-xs leading-relaxed" style="color:var(--text-500)">1088 Lujiazui Ring Road, Pudong New Area, Shanghai</p>
           </div>
           <span data-icon class="mt-0.5 h-4 w-4 shrink-0" style="-webkit-mask-image:url('../assets/icons/dl-builtin-apple/chevron-right.svg');mask-image:url('../assets/icons/dl-builtin-apple/chevron-right.svg');background-color:var(--text-400)"></span>
         </div>
       </section>
 
-      <!-- 商品清单 -->
+      <!-- Order Items -->
       <section class="mx-4 mt-3 rounded-xl border overflow-hidden" id="checkout-items" style="background:var(--background);border-color:var(--border)">
         <div class="px-3 pt-3 pb-1">
-          <h2 class="text-sm font-semibold" style="color:var(--text-800)">商品清单</h2>
+          <h2 class="text-sm font-semibold" style="color:var(--text-800)">Order Items</h2>
         </div>
-        <!-- 商品由 API 动态渲染，无数据时显示静态占位 -->
+        <!-- Items rendered dynamically by API; static placeholder shown when no data -->
         <div class="flex items-center gap-3 px-3 py-3 border-b" style="border-color:var(--border)">
-          <img src="../assets/product-shampoo-bottle.jpg" alt="宠物洗护香波" class="h-16 w-16 shrink-0 rounded-lg object-cover border" style="border-color:var(--border)">
+          <img src="../assets/product-shampoo-bottle.jpg" alt="Pet Shampoo" class="h-16 w-16 shrink-0 rounded-lg object-cover border" style="border-color:var(--border)">
           <div class="min-w-0 flex-1">
-            <p class="text-sm font-medium truncate" style="color:var(--text-800)">宠物洗护香波 500ml</p>
-            <p class="mt-0.5 text-xs" style="color:var(--text-400)">淡雅花香 / 500ml</p>
+            <p class="text-sm font-medium truncate" style="color:var(--text-800)">Pet Shampoo 500ml</p>
+            <p class="mt-0.5 text-xs" style="color:var(--text-400)">Fresh Floral / 500ml</p>
             <div class="mt-1 flex items-center justify-between">
               <span class="text-xs" style="color:var(--text-500)">x1</span>
               <span class="text-sm font-semibold" style="color:var(--text-800)">¥128.00</span>
             </div>
           </div>
         </div>
-        <!-- 商品2 -->
+        <!-- Product 2 -->
         <div class="flex items-center gap-3 px-3 py-3">
-          <img src="../assets/product-harness-gear.jpg" alt="户外胸背带" class="h-16 w-16 shrink-0 rounded-lg object-cover border" style="border-color:var(--border)">
+          <img src="../assets/product-harness-gear.jpg" alt="Outdoor Harness" class="h-16 w-16 shrink-0 rounded-lg object-cover border" style="border-color:var(--border)">
           <div class="min-w-0 flex-1">
-            <p class="text-sm font-medium truncate" style="color:var(--text-800)">户外透气胸背带</p>
-            <p class="mt-0.5 text-xs" style="color:var(--text-400)">迷彩绿 / M码</p>
+            <p class="text-sm font-medium truncate" style="color:var(--text-800)">Breathable Outdoor Harness</p>
+            <p class="mt-0.5 text-xs" style="color:var(--text-400)">Camo Green / Size M</p>
             <div class="mt-1 flex items-center justify-between">
               <span class="text-xs" style="color:var(--text-500)">x1</span>
               <span class="text-sm font-semibold" style="color:var(--text-800)">¥89.00</span>
@@ -75,35 +75,35 @@
         </div>
       </section>
 
-      <!-- 配送方式 -->
+      <!-- Shipping Method -->
       <section class="mx-4 mt-3 rounded-xl border p-3" style="background:var(--background);border-color:var(--border)">
-        <h2 class="mb-2 text-sm font-semibold" style="color:var(--text-800)">配送方式</h2>
+        <h2 class="mb-2 text-sm font-semibold" style="color:var(--text-800)">Shipping Method</h2>
         <div class="flex gap-2">
           <label class="flex flex-1 cursor-pointer items-center gap-2 rounded-lg border p-2.5 transition-colors duration-150" style="border-color:var(--brand-500);background:var(--brand-50)">
             <div class="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2" style="border-color:var(--brand-500)">
               <div class="h-2 w-2 rounded-full" style="background:var(--brand-500)"></div>
             </div>
             <div class="min-w-0 flex-1">
-              <p class="text-xs font-medium" style="color:var(--text-800)">标准配送</p>
-              <p class="text-xs" style="color:var(--text-400)">3-5个工作日</p>
+              <p class="text-xs font-medium" style="color:var(--text-800)">Standard Shipping</p>
+              <p class="text-xs" style="color:var(--text-400)">3-5 business days</p>
             </div>
-            <span class="text-xs font-semibold" style="color:var(--brand-500)">免费</span>
+            <span class="text-xs font-semibold" style="color:var(--brand-500)">Free</span>
           </label>
           <label class="flex flex-1 cursor-pointer items-center gap-2 rounded-lg border p-2.5 transition-colors duration-150" style="border-color:var(--border);background:var(--background)">
             <div class="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2" style="border-color:var(--background-400)">
             </div>
             <div class="min-w-0 flex-1">
-              <p class="text-xs font-medium" style="color:var(--text-800)">极速配送</p>
-              <p class="text-xs" style="color:var(--text-400)">次日达</p>
+              <p class="text-xs font-medium" style="color:var(--text-800)">Express Shipping</p>
+              <p class="text-xs" style="color:var(--text-400)">Next Day Delivery</p>
             </div>
             <span class="text-xs font-semibold" style="color:var(--text-800)">¥12.00</span>
           </label>
         </div>
       </section>
 
-      <!-- 支付方式 -->
+      <!-- Payment Method -->
       <section class="mx-4 mt-3 rounded-xl border p-3" style="background:var(--background);border-color:var(--border)">
-        <h2 class="mb-2 text-sm font-semibold" style="color:var(--text-800)">支付方式</h2>
+        <h2 class="mb-2 text-sm font-semibold" style="color:var(--text-800)">Payment Method</h2>
         <div class="flex gap-2 overflow-x-auto no-scrollbar" id="payment-methods">
           <button class="flex shrink-0 flex-col items-center gap-1 rounded-lg border p-2.5 transition-colors duration-150" style="border-color:var(--brand-500);background:var(--brand-50);min-width:68px" data-payment="stripe">
             <span class="text-lg font-bold" style="color:var(--brand-500)">S</span>
@@ -124,46 +124,46 @@
         </div>
       </section>
 
-      <!-- 优惠券 -->
+      <!-- Coupon -->
       <section class="mx-4 mt-3 flex items-center justify-between rounded-xl border px-3 py-3" style="background:var(--background);border-color:var(--border)">
-        <span class="text-sm font-medium" style="color:var(--text-800)">优惠券</span>
+        <span class="text-sm font-medium" style="color:var(--text-800)">Coupon</span>
         <div class="flex items-center gap-1">
           <span class="text-sm font-semibold" style="color:var(--state-error)">-¥20.00</span>
           <span data-icon class="h-4 w-4" style="-webkit-mask-image:url('../assets/icons/dl-builtin-apple/chevron-right.svg');mask-image:url('../assets/icons/dl-builtin-apple/chevron-right.svg');background-color:var(--text-400)"></span>
         </div>
       </section>
 
-      <!-- 订单备注 -->
+      <!-- Order Note -->
       <section class="mx-4 mt-3 rounded-xl border p-3" style="background:var(--background);border-color:var(--border)">
-        <h2 class="mb-2 text-sm font-semibold" style="color:var(--text-800)">订单备注</h2>
-        <input type="text" placeholder="选填：备注信息（如特殊配送要求）" class="field small w-full" style="height:40px;font-size:13px">
+        <h2 class="mb-2 text-sm font-semibold" style="color:var(--text-800)">Order Note</h2>
+        <input type="text" placeholder="Optional: Note (e.g. special delivery instructions)" class="field small w-full" style="height:40px;font-size:13px">
       </section>
 
-      <!-- 价格明细 -->
+      <!-- Price Summary -->
       <section class="mx-4 mt-3 rounded-xl border p-3" style="background:var(--background);border-color:var(--border)">
         <div class="flex items-center justify-between py-1">
-          <span class="text-xs" style="color:var(--text-500)">商品合计</span>
+          <span class="text-xs" style="color:var(--text-500)">Subtotal</span>
           <span class="text-xs" style="color:var(--text-800)">¥217.00</span>
         </div>
         <div class="flex items-center justify-between py-1">
-          <span class="text-xs" style="color:var(--text-500)">运费</span>
+          <span class="text-xs" style="color:var(--text-500)">Shipping</span>
           <span class="text-xs" style="color:var(--text-800)">¥0.00</span>
         </div>
         <div class="flex items-center justify-between py-1">
-          <span class="text-xs" style="color:var(--text-500)">优惠</span>
+          <span class="text-xs" style="color:var(--text-500)">Discount</span>
           <span class="text-xs" style="color:var(--state-error)">-¥20.00</span>
         </div>
         <div class="my-2 border-t" style="border-color:var(--border)"></div>
         <div class="flex items-center justify-between">
-          <span class="text-sm font-semibold" style="color:var(--text-800)">应付</span>
+          <span class="text-sm font-semibold" style="color:var(--text-800)">Total</span>
           <a data-dom-id="link-order-detail" href="#" class="text-lg font-semibold" style="color:var(--text-800);text-decoration:none">¥197.00</a>
         </div>
       </section>
 
-      <!-- 固定底部提交栏 -->
+      <!-- Fixed Bottom Submit Bar -->
       <div class="fixed bottom-0 left-0 right-0 z-40 border-t px-4 pb-6 pt-3" style="background:var(--background);border-color:var(--border)">
         <button data-dom-id="cta-submit-order" class="btn btn-primary w-full" style="height:48px;border-radius:calc(var(--radius)*2);font-size:16px">
-          提交订单
+          Submit Order
         </button>
       </div>
     </main>
@@ -178,7 +178,7 @@
       var selectedPayment = 'stripe';
       var orderData = null;
 
-      // 支付方式切换
+      // Payment method switching
       if (paymentMethods) {
         paymentMethods.addEventListener('click', function (e) {
           var btn = e.target.closest('[data-payment]');
@@ -196,7 +196,7 @@
         });
       }
 
-      // 商品清单模板
+      // Order item template
       function itemRow(item, isLast) {
         var div = document.createElement('div');
         div.className = 'flex items-center gap-3 px-3 py-3' + (isLast ? '' : ' border-b');
@@ -218,7 +218,7 @@
         var shipping = document.querySelector('#checkout-items ~ section:nth-of-type(4) .flex:nth-child(2) .text-xs:last-child');
         var discount = document.querySelector('#checkout-items ~ section:nth-of-type(4) .flex:nth-child(3) .text-xs:last-child');
         var total = document.querySelector('#checkout-items ~ section:nth-of-type(4) .text-lg');
-        // 简化：使用 data 属性定位
+        // Simplified: use data attributes for positioning
         if (data) {
           var t = 0;
           (data.items || []).forEach(function (item) {
@@ -238,7 +238,7 @@
             orderData = res.data;
             var items = orderData.items || orderData.list || [];
             if (items.length > 0) {
-              // 清除静态占位（保留标题）
+              // Clear static placeholder (keep title)
               var title = itemsSection.querySelector('.px-3.pt-3');
               itemsSection.innerHTML = '';
               if (title) itemsSection.appendChild(title);
@@ -253,7 +253,7 @@
         }
       }
 
-      // 提交订单
+      // Submit order
       if (btnSubmit) {
         btnSubmit.addEventListener('click', async function () {
           if (!moyuyoAPI.isLoggedIn) {
@@ -273,7 +273,7 @@
             };
             var res = await moyuyoAPI.post('/api/v1/order', body);
             if (res.code === 0 && res.data) {
-              // 触发 WooCommerce 同步
+              // Trigger WooCommerce sync
               if (res.data.orderNo) {
                 moyuyoAPI.post('/api/v1/order/' + res.data.orderNo + '/sync-to-woocommerce', {}, { skipSign: false })
                   .catch(function () {});
@@ -285,7 +285,7 @@
           } catch (e) {
             alert('Network error. Please try again.');
           }
-          btnSubmit.textContent = '提交订单';
+          btnSubmit.textContent = 'Submit Order';
           btnSubmit.disabled = false;
         });
       }

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 订单详情</title>
+    <title>MOYUYO - Order Details</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -21,131 +21,131 @@
 <body class="min-h-screen font-sans antialiased">
     <main class="pb-20">
 
-        <!-- 顶部导航栏 -->
+        <!-- Top Navigation Bar -->
         <header class="sticky top-0 z-30 flex h-11 items-center justify-center border-b border-[var(--border)] bg-[var(--background)]/95 px-4 backdrop-blur">
-            <button data-dom-id="back-previous" class="absolute left-4 inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--background)] transition-transform duration-150 hover:scale-105 active:scale-95" aria-label="返回">
+            <button data-dom-id="back-previous" class="absolute left-4 inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--background)] transition-transform duration-150 hover:scale-105 active:scale-95" aria-label="Back">
                 <span data-icon class="h-4 w-4" style="mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
             </button>
-            <span class="text-[16px] font-semibold tracking-[-0.02em] text-[var(--text-800)]">订单详情</span>
+            <span class="text-[16px] font-semibold tracking-[-0.02em] text-[var(--text-800)]">Order Details</span>
         </header>
 
-        <!-- 订单状态卡片 -->
+        <!-- Order Status Card -->
         <section class="mx-4 mt-4 rounded-xl bg-[var(--brand-50)] p-4">
             <div class="flex items-center gap-2">
-                <span class="inline-flex items-center justify-center rounded-lg bg-[var(--brand-500)] px-2.5 py-1 text-[13px] font-semibold text-[var(--background-50)] whitespace-nowrap">待收货</span>
-                <span class="text-[14px] text-[var(--text-500)]">您的包裹正在配送中</span>
+                <span class="inline-flex items-center justify-center rounded-lg bg-[var(--brand-500)] px-2.5 py-1 text-[13px] font-semibold text-[var(--background-50)] whitespace-nowrap">Awaiting Delivery</span>
+                <span class="text-[14px] text-[var(--text-500)]">Your package is on the way</span>
             </div>
-            <p class="mt-2 text-[13px] text-[var(--text-400)]">预计 7月12日 送达</p>
+            <p class="mt-2 text-[13px] text-[var(--text-400)]">Estimated delivery: July 12</p>
         </section>
 
-        <!-- 物流时间线 -->
+        <!-- Tracking Timeline -->
         <section class="mx-4 mt-4 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
-            <h2 class="mb-4 text-[15px] font-semibold text-[var(--text-800)]">物流跟踪</h2>
+            <h2 class="mb-4 text-[15px] font-semibold text-[var(--text-800)]">Tracking</h2>
 
-            <!-- 时间线条目 -->
+            <!-- Timeline entries -->
             <div class="relative pl-6">
-                <!-- 竖线 -->
+                <!-- Vertical line -->
                 <div class="absolute bottom-0 left-[7px] top-[6px] w-px bg-[var(--background-300)]"></div>
 
-                <!-- 最新物流 -->
+                <!-- Latest tracking -->
                 <div class="relative pb-5">
                     <div class="absolute -left-6 top-0.5 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-[var(--brand-500)]">
                         <span class="h-1.5 w-1.5 rounded-full bg-[var(--background-50)]"></span>
                     </div>
-                    <p class="text-[14px] font-semibold text-[var(--text-800)]">包裹已到达上海浦东配送站</p>
-                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">7月11日 14:30</p>
+                    <p class="text-[14px] font-semibold text-[var(--text-800)]">Package arrived at Shanghai Pudong distribution station</p>
+                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">July 11 14:30</p>
                 </div>
 
-                <!-- 历史物流 -->
+                <!-- Historical tracking -->
                 <div class="relative pb-5">
                     <div class="absolute -left-6 top-1 flex h-[10px] w-[10px] items-center justify-center rounded-full bg-[var(--background-300)]"></div>
-                    <p class="text-[14px] text-[var(--text-600)]">包裹从杭州分拨中心发出</p>
-                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">7月10日 22:15</p>
+                    <p class="text-[14px] text-[var(--text-600)]">Package dispatched from Hangzhou sorting center</p>
+                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">July 10 22:15</p>
                 </div>
 
                 <div class="relative pb-5">
                     <div class="absolute -left-6 top-1 flex h-[10px] w-[10px] items-center justify-center rounded-full bg-[var(--background-300)]"></div>
-                    <p class="text-[14px] text-[var(--text-600)]">卖家已发货</p>
-                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">7月10日 08:00</p>
+                    <p class="text-[14px] text-[var(--text-600)]">Seller shipped</p>
+                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">July 10 08:00</p>
                 </div>
 
                 <div class="relative">
                     <div class="absolute -left-6 top-1 flex h-[10px] w-[10px] items-center justify-center rounded-full bg-[var(--background-300)]"></div>
-                    <p class="text-[14px] text-[var(--text-600)]">订单已支付</p>
-                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">7月9日 16:30</p>
+                    <p class="text-[14px] text-[var(--text-600)]">Order paid</p>
+                    <p class="mt-0.5 text-[12px] text-[var(--text-400)]">July 9 16:30</p>
                 </div>
             </div>
         </section>
 
-        <!-- 配送地图 -->
+        <!-- Delivery Map -->
         <section class="mx-4 mt-4">
-            <img src="../assets/order-tracking-map.jpg" alt="配送路线地图" class="aspect-[4/3] w-full rounded-xl border border-[var(--border)] object-cover">
+            <img src="../assets/order-tracking-map.jpg" alt="Delivery route map" class="aspect-[4/3] w-full rounded-xl border border-[var(--border)] object-cover">
         </section>
 
-        <!-- 收货信息 -->
+        <!-- Shipping Information -->
         <section class="mx-4 mt-4 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
-            <h2 class="mb-3 text-[15px] font-semibold text-[var(--text-800)]">收货信息</h2>
+            <h2 class="mb-3 text-[15px] font-semibold text-[var(--text-800)]">Shipping Information</h2>
             <div class="space-y-2">
                 <div class="flex items-center gap-3">
-                    <span class="w-14 shrink-0 text-[13px] text-[var(--text-400)]">收件人</span>
-                    <span class="text-[14px] text-[var(--text-800)]">小雅</span>
+                    <span class="w-14 shrink-0 text-[13px] text-[var(--text-400)]">Recipient</span>
+                    <span class="text-[14px] text-[var(--text-800)]">Xiaoya</span>
                     <span class="text-[14px] text-[var(--text-500)]">138****8888</span>
                 </div>
                 <div class="flex items-start gap-3">
-                    <span class="w-14 shrink-0 text-[13px] text-[var(--text-400)]">地址</span>
-                    <span class="text-[14px] leading-relaxed text-[var(--text-600)]">上海市浦东新区张江高科技园区碧波路690号</span>
+                    <span class="w-14 shrink-0 text-[13px] text-[var(--text-400)]">Address</span>
+                    <span class="text-[14px] leading-relaxed text-[var(--text-600)]">No. 690 Bibo Road, Zhangjiang Hi-Tech Park, Pudong New Area, Shanghai</span>
                 </div>
             </div>
         </section>
 
-        <!-- 订单信息 -->
+        <!-- Order Information -->
         <section class="mx-4 mt-4 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
-            <h2 class="mb-3 text-[15px] font-semibold text-[var(--text-800)]">订单信息</h2>
+            <h2 class="mb-3 text-[15px] font-semibold text-[var(--text-800)]">Order Information</h2>
             <div class="space-y-2">
                 <div class="flex items-center gap-3">
-                    <span class="w-16 shrink-0 text-[13px] text-[var(--text-400)]">订单编号</span>
+                    <span class="w-16 shrink-0 text-[13px] text-[var(--text-400)]">Order No.</span>
                     <span class="text-[14px] text-[var(--text-600)]">MOY20260710002</span>
                 </div>
                 <div class="flex items-center gap-3">
-                    <span class="w-16 shrink-0 text-[13px] text-[var(--text-400)]">下单时间</span>
+                    <span class="w-16 shrink-0 text-[13px] text-[var(--text-400)]">Order Time</span>
                     <span class="text-[14px] text-[var(--text-600)]">2026-07-10 15:22</span>
                 </div>
                 <div class="flex items-center gap-3">
-                    <span class="w-16 shrink-0 text-[13px] text-[var(--text-400)]">支付方式</span>
-                    <span class="text-[14px] text-[var(--text-600)]">微信支付</span>
+                    <span class="w-16 shrink-0 text-[13px] text-[var(--text-400)]">Payment Method</span>
+                    <span class="text-[14px] text-[var(--text-600)]">WeChat Pay</span>
                 </div>
             </div>
         </section>
 
-        <!-- 商品信息 -->
+        <!-- Order Items -->
         <section class="mx-4 mt-4 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
-            <h2 class="mb-3 text-[15px] font-semibold text-[var(--text-800)]">订单商品</h2>
+            <h2 class="mb-3 text-[15px] font-semibold text-[var(--text-800)]">Order Items</h2>
 
-            <!-- 商品条目 -->
+            <!-- Product item -->
             <div class="flex gap-3">
-                <img src="../assets/product-harness-gear.jpg" alt="经典尼龙宠物牵引套装" class="h-20 w-20 shrink-0 rounded-lg border border-[var(--border)] object-cover">
+                <img src="../assets/product-harness-gear.jpg" alt="Classic Nylon Pet Harness &amp; Leash Set" class="h-20 w-20 shrink-0 rounded-lg border border-[var(--border)] object-cover">
                 <div class="flex min-w-0 flex-1 flex-col justify-between">
-                    <p class="truncate text-[14px] font-medium text-[var(--text-800)]">经典尼龙宠物牵引套装</p>
+                    <p class="truncate text-[14px] font-medium text-[var(--text-800)]">Classic Nylon Pet Harness &amp; Leash Set</p>
                     <p class="text-[12px] text-[var(--text-400)]">x1</p>
                 </div>
                 <span class="shrink-0 text-[14px] font-semibold text-[var(--text-800)]">¥89.00</span>
             </div>
 
-            <!-- 分隔线 -->
+            <!-- Divider -->
             <div class="my-3 h-px bg-[var(--background-200)]"></div>
 
-            <!-- 价格明细 -->
+            <!-- Price Details -->
             <div class="space-y-2">
                 <div class="flex items-center justify-between">
-                    <span class="text-[13px] text-[var(--text-400)]">运费</span>
+                    <span class="text-[13px] text-[var(--text-400)]">Shipping</span>
                     <span class="text-[13px] text-[var(--text-600)]">¥0.00</span>
                 </div>
                 <div class="flex items-center justify-between">
-                    <span class="text-[13px] text-[var(--text-400)]">优惠</span>
+                    <span class="text-[13px] text-[var(--text-400)]">Discount</span>
                     <span class="text-[13px] text-[var(--state-success)]">-¥20.00</span>
                 </div>
                 <div class="flex items-center justify-between pt-2">
-                    <span class="text-[14px] font-semibold text-[var(--text-800)]">实付</span>
+                    <span class="text-[14px] font-semibold text-[var(--text-800)]">Total Paid</span>
                     <span class="text-[16px] font-semibold text-[var(--brand-500)]">¥69.00</span>
                 </div>
             </div>
@@ -153,13 +153,13 @@
 
     </main>
 
-    <!-- 底部操作栏 -->
+    <!-- Bottom Action Bar -->
     <div class="fixed bottom-0 inset-x-0 z-30 border-t border-[var(--border)] bg-[var(--background)]/95 px-4 pb-[env(safe-area-inset-bottom,0px)] pt-3 backdrop-blur">
         <div class="flex items-center gap-3">
-            <button class="btn btn-text h-11 text-[14px] text-[var(--text-600)]" aria-label="联系客服">
-                <i data-lucide="message-circle-more" class="mr-1 h-4 w-4"></i>联系客服
+            <button class="btn btn-text h-11 text-[14px] text-[var(--text-600)]" aria-label="Contact Support">
+                <i data-lucide="message-circle-more" class="mr-1 h-4 w-4"></i>Contact Support
             </button>
-            <button class="btn btn-primary flex-1 rounded-full text-[14px]" aria-label="确认收货">确认收货</button>
+            <button class="btn btn-primary flex-1 rounded-full text-[14px]" aria-label="Confirm Receipt">Confirm Receipt</button>
         </div>
     </div>
     <script src="shared/mock-api.js"></script>
@@ -173,12 +173,12 @@
 
         function statusInfo(status) {
           var map = {
-            PENDING: { label: '待付款', bg: 'var(--background-200)', color: 'var(--text-500)', desc: '订单创建成功，请尽快完成支付' },
-            PAID: { label: '待发货', bg: 'var(--brand-50)', color: 'var(--brand-500)', desc: '商家正在准备您的商品' },
-            SHIPPED: { label: '待收货', bg: 'var(--brand-50)', color: 'var(--brand-500)', desc: '您的包裹正在配送中' },
-            COMPLETED: { label: '已完成', bg: 'var(--state-success-surface)', color: 'var(--state-success)', desc: '感谢您的购买' },
-            CANCELLED: { label: '已取消', bg: 'var(--text-200)', color: 'var(--text-400)', desc: '' },
-            REFUNDING: { label: '退款中', bg: 'var(--state-error-surface)', color: 'var(--state-error)', desc: '' }
+            PENDING: { label: 'Pending Payment', bg: 'var(--background-200)', color: 'var(--text-500)', desc: 'Order created, please complete payment' },
+            PAID: { label: 'Awaiting Shipment', bg: 'var(--brand-50)', color: 'var(--brand-500)', desc: 'Seller is preparing your order' },
+            SHIPPED: { label: 'Awaiting Delivery', bg: 'var(--brand-50)', color: 'var(--brand-500)', desc: 'Your package is on the way' },
+            COMPLETED: { label: 'Completed', bg: 'var(--state-success-surface)', color: 'var(--state-success)', desc: 'Thank you for your purchase' },
+            CANCELLED: { label: 'Cancelled', bg: 'var(--text-200)', color: 'var(--text-400)', desc: '' },
+            REFUNDING: { label: 'Refunding', bg: 'var(--state-error-surface)', color: 'var(--state-error)', desc: '' }
           };
           return map[status] || { label: status, bg: 'var(--background-200)', color: 'var(--text-500)', desc: '' };
         }
@@ -189,7 +189,7 @@
               if (res.code !== 0 || !res.data) return;
               var order = res.data;
 
-              // 更新状态卡片
+              // Update status card
               var info = statusInfo(order.status);
               var statusChip = document.querySelector('.bg-\\\\[var\\\\(--brand-500\\\\)\\\\]');
               if (statusChip) {
@@ -197,13 +197,13 @@
               }
               var statusDesc = document.querySelector('section .text-\\\\[14px\\\\]');
               if (statusDesc && order.etd) {
-                statusDesc.textContent = '预计 ' + order.etd + ' 送达';
+                statusDesc.textContent = 'Estimated delivery: ' + order.etd;
               }
               if (statusDesc && !order.etd) {
                 statusDesc.textContent = info.desc;
               }
 
-              // 更新物流
+              // Update tracking
               if (order.logistics && order.logistics.length) {
                 var logisticsSection = document.querySelector('.relative.pl-6');
                 if (logisticsSection) {
@@ -222,7 +222,7 @@
                 }
               }
 
-              // 更新地址
+              // Update address
               if (order.address) {
                 var nameEl = document.querySelector('section:nth-of-type(3) .flex.items-center.gap-3 span.text-\\\\[14px\\\\]');
                 if (nameEl) nameEl.textContent = order.address.name;
@@ -232,13 +232,13 @@
                 if (addrEl) addrEl.textContent = order.address.full;
               }
 
-              // 更新订单信息
+              // Update order info
               updateOrderInfo(order);
 
-              // 更新商品
+              // Update product item
               updateProductItem(order);
 
-              // 更新价格明细
+              // Update price details
               updatePriceDetail(order);
             });
           } catch (e) {
@@ -253,9 +253,9 @@
             if (!label) return;
             var text = label.textContent;
             var value = row.querySelector('span:last-child');
-            if (text === '订单编号' && value) value.textContent = order.orderNo;
-            if (text === '下单时间' && value && order.createdAt) value.textContent = order.createdAt.replace('T', ' ').substring(0, 16);
-            if (text === '支付方式' && value) value.textContent = order.paymentMethod || '在线支付';
+            if (text === 'Order No.' && value) value.textContent = order.orderNo;
+            if (text === 'Order Time' && value && order.createdAt) value.textContent = order.createdAt.replace('T', ' ').substring(0, 16);
+            if (text === 'Payment Method' && value) value.textContent = order.paymentMethod || 'Online Payment';
           });
         }
 
@@ -278,13 +278,13 @@
             var value = row.querySelector('span:last-child');
             if (!label || !value) return;
             var text = label.textContent;
-            if (text === '运费') value.textContent = '¥' + ((order.shippingFee || 0) / 100).toFixed(2);
-            if (text === '优惠') value.textContent = '-¥' + ((order.discount || 0) / 100).toFixed(2);
-            if (text === '实付') value.textContent = '¥' + ((order.paidAmount || order.totalAmount || 0) / 100).toFixed(2);
+            if (text === 'Shipping') value.textContent = '¥' + ((order.shippingFee || 0) / 100).toFixed(2);
+            if (text === 'Discount') value.textContent = '-¥' + ((order.discount || 0) / 100).toFixed(2);
+            if (text === 'Total Paid') value.textContent = '¥' + ((order.paidAmount || order.totalAmount || 0) / 100).toFixed(2);
           });
         }
 
-        // 返回按钮
+        // Back button
         var backBtn = document.querySelector('[data-dom-id="back-previous"]');
         if (backBtn) {
           backBtn.addEventListener('click', function() { window.history.back(); });

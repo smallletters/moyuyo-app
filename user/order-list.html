@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 我的订单</title>
+    <title>MOYUYO - My Orders</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -20,130 +20,130 @@
 </head>
 <body class="min-h-screen font-sans antialiased">
     <main class="min-h-screen" style="background-color: var(--background-200);">
-      <!-- 顶部导航栏 -->
+      <!-- Top navigation bar -->
       <header class="sticky top-0 z-30" style="background-color: var(--background-50); border-bottom: 1px solid var(--border);">
         <div class="flex items-center justify-center h-11 px-4 relative">
-          <!-- 返回按钮 -->
-          <button data-dom-id="back-previous" class="absolute left-4 inline-flex h-8 w-8 items-center justify-center rounded-lg" style="border: 1px solid var(--border); background-color: var(--background-50);" aria-label="返回">
+          <!-- Back button -->
+          <button data-dom-id="back-previous" class="absolute left-4 inline-flex h-8 w-8 items-center justify-center rounded-lg" style="border: 1px solid var(--border); background-color: var(--background-50);" aria-label="Back">
             <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
           </button>
-          <!-- 页面标题 -->
-          <h1 class="text-base font-semibold" style="color: var(--text-800); letter-spacing: -0.02em;">我的订单</h1>
+          <!-- Page title -->
+          <h1 class="text-base font-semibold" style="color: var(--text-800); letter-spacing: -0.02em;">My Orders</h1>
         </div>
       </header>
 
-      <!-- Tab 筛选栏 -->
+      <!-- Tab filter bar -->
       <nav class="sticky top-11 z-20" style="background-color: var(--background-50);">
         <div class="flex no-scrollbar overflow-x-auto" style="border-bottom: 1px solid var(--border);">
           <button class="flex-shrink-0 flex flex-col items-center px-4 pt-2 pb-1.5 text-xs font-semibold" style="color: var(--brand-500); border-bottom: 2px solid var(--brand-500);">
-            全部
+            All
           </button>
           <button class="flex-shrink-0 flex flex-col items-center px-4 pt-2 pb-1.5 text-xs font-medium" style="color: var(--text-500); border-bottom: 2px solid transparent;">
-            待付款
+            Pending Payment
           </button>
           <button class="flex-shrink-0 flex flex-col items-center px-4 pt-2 pb-1.5 text-xs font-medium" style="color: var(--text-500); border-bottom: 2px solid transparent;">
-            待发货
+            Pending Shipment
           </button>
           <button class="flex-shrink-0 flex flex-col items-center px-4 pt-2 pb-1.5 text-xs font-medium" style="color: var(--text-500); border-bottom: 2px solid transparent;">
-            待收货
+            Pending Receipt
           </button>
           <button class="flex-shrink-0 flex flex-col items-center px-4 pt-2 pb-1.5 text-xs font-medium" style="color: var(--text-500); border-bottom: 2px solid transparent;">
-            待评价
+            To Review
           </button>
         </div>
       </nav>
 
-      <!-- 订单列表区域 -->
+      <!-- Order list area -->
       <div class="flex flex-col gap-3 p-4" id="order-list">
 
-        <!-- 订单卡片 1：已完成 -->
+        <!-- Order card 1: Completed -->
         <a data-dom-id="link-order-detail" href="#" class="block rounded-xl overflow-hidden" style="background-color: var(--background-50); border: 1px solid var(--border);">
-          <!-- 订单头部：状态 + 订单号 -->
+          <!-- Order header: status + order number -->
           <div class="flex items-center justify-between px-4 pt-3 pb-2">
             <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-xs font-semibold whitespace-nowrap" style="background-color: var(--state-success-surface); color: var(--state-success);">
-              已完成
+              Completed
             </span>
             <span class="text-xs whitespace-nowrap" style="color: var(--text-400);">MOY20260715001</span>
           </div>
-          <!-- 商品行 -->
+          <!-- Product row -->
           <div class="flex items-center gap-3 px-4 pb-3">
-            <img src="../assets/product-shampoo-bottle.jpg" alt="温和植物萃取宠物洗护套装" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" style="border: 1px solid var(--border);">
+            <img src="../assets/product-shampoo-bottle.jpg" alt="Gentle Plant-Based Pet Grooming Set" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" style="border: 1px solid var(--border);">
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium truncate" style="color: var(--text-800);">温和植物萃取宠物洗护套装</p>
+              <p class="text-sm font-medium truncate" style="color: var(--text-800);">Gentle Plant-Based Pet Grooming Set</p>
               <p class="text-xs mt-0.5" style="color: var(--text-400);">x1</p>
             </div>
             <span class="text-sm font-semibold flex-shrink-0 whitespace-nowrap" style="color: var(--text-800);">¥128.00</span>
           </div>
-          <!-- 分隔线 -->
+          <!-- Divider -->
           <div style="border-top: 1px solid var(--border);"></div>
-          <!-- 操作行 -->
+          <!-- Action row -->
           <div class="flex items-center justify-end gap-4 px-4 py-3">
-            <button class="text-xs font-medium whitespace-nowrap" style="color: var(--text-500);">查看物流</button>
-            <button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color: var(--brand-500); color: var(--background-50);">再次购买</button>
+            <button class="text-xs font-medium whitespace-nowrap" style="color: var(--text-500);">Track</button>
+            <button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color: var(--brand-500); color: var(--background-50);">Buy Again</button>
           </div>
-          <!-- 订单日期 -->
+          <!-- Order date -->
           <div class="px-4 pb-3">
             <span class="text-xs" style="color: var(--text-400);">2026-07-15</span>
           </div>
         </a>
 
-        <!-- 订单卡片 2：待收货 -->
+        <!-- Order card 2: Pending Receipt -->
         <a data-dom-id="link-order-detail" href="#" class="block rounded-xl overflow-hidden" style="background-color: var(--background-50); border: 1px solid var(--border);">
-          <!-- 订单头部：状态 + 订单号 -->
+          <!-- Order header: status + order number -->
           <div class="flex items-center justify-between px-4 pt-3 pb-2">
             <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-xs font-semibold whitespace-nowrap" style="background-color: var(--brand-50); color: var(--brand-500);">
-              待收货
+              Pending Receipt
             </span>
             <span class="text-xs whitespace-nowrap" style="color: var(--text-400);">MOY20260710002</span>
           </div>
-          <!-- 商品行 -->
+          <!-- Product row -->
           <div class="flex items-center gap-3 px-4 pb-3">
-            <img src="../assets/product-harness-gear.jpg" alt="经典尼龙宠物牵引套装" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" style="border: 1px solid var(--border);">
+            <img src="../assets/product-harness-gear.jpg" alt="Classic Nylon Pet Leash Set" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" style="border: 1px solid var(--border);">
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium truncate" style="color: var(--text-800);">经典尼龙宠物牵引套装</p>
+              <p class="text-sm font-medium truncate" style="color: var(--text-800);">Classic Nylon Pet Leash Set</p>
               <p class="text-xs mt-0.5" style="color: var(--text-400);">x1</p>
             </div>
             <span class="text-sm font-semibold flex-shrink-0 whitespace-nowrap" style="color: var(--text-800);">¥89.00</span>
           </div>
-          <!-- 分隔线 -->
+          <!-- Divider -->
           <div style="border-top: 1px solid var(--border);"></div>
-          <!-- 操作行 -->
+          <!-- Action row -->
           <div class="flex items-center justify-end gap-4 px-4 py-3">
-            <button class="text-xs font-medium whitespace-nowrap" style="color: var(--text-500);">查看物流</button>
-            <button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color: var(--brand-500); color: var(--background-50);">确认收货</button>
+            <button class="text-xs font-medium whitespace-nowrap" style="color: var(--text-500);">Track</button>
+            <button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color: var(--brand-500); color: var(--background-50);">Confirm Receipt</button>
           </div>
-          <!-- 订单日期 -->
+          <!-- Order date -->
           <div class="px-4 pb-3">
             <span class="text-xs" style="color: var(--text-400);">2026-07-10</span>
           </div>
         </a>
 
-        <!-- 订单卡片 3：待评价 -->
+        <!-- Order card 3: To Review -->
         <a data-dom-id="link-order-detail" href="#" class="block rounded-xl overflow-hidden" style="background-color: var(--background-50); border: 1px solid var(--border);">
-          <!-- 订单头部：状态 + 订单号 -->
+          <!-- Order header: status + order number -->
           <div class="flex items-center justify-between px-4 pt-3 pb-2">
             <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-xs font-semibold whitespace-nowrap" style="background-color: color-mix(in srgb, var(--chart-3) 12%, var(--background-50)); color: var(--chart-3);">
-              待评价
+              To Review
             </span>
             <span class="text-xs whitespace-nowrap" style="color: var(--text-400);">MOY20260705003</span>
           </div>
-          <!-- 商品行 -->
+          <!-- Product row -->
           <div class="flex items-center gap-3 px-4 pb-3">
-            <img src="../assets/product-pet-treats.jpg" alt="有机宠物零食礼盒" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" style="border: 1px solid var(--border);">
+            <img src="../assets/product-pet-treats.jpg" alt="Organic Pet Treats Gift Box" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" style="border: 1px solid var(--border);">
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium truncate" style="color: var(--text-800);">有机宠物零食礼盒</p>
+              <p class="text-sm font-medium truncate" style="color: var(--text-800);">Organic Pet Treats Gift Box</p>
               <p class="text-xs mt-0.5" style="color: var(--text-400);">x2</p>
             </div>
             <span class="text-sm font-semibold flex-shrink-0 whitespace-nowrap" style="color: var(--text-800);">¥56.00</span>
           </div>
-          <!-- 分隔线 -->
+          <!-- Divider -->
           <div style="border-top: 1px solid var(--border);"></div>
-          <!-- 操作行 -->
+          <!-- Action row -->
           <div class="flex items-center justify-end gap-4 px-4 py-3">
-            <button class="text-xs font-medium whitespace-nowrap" style="color: var(--text-500);">评价晒单</button>
-            <button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color: var(--brand-500); color: var(--background-50);">再次购买</button>
+            <button class="text-xs font-medium whitespace-nowrap" style="color: var(--text-500);">Review</button>
+            <button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color: var(--brand-500); color: var(--background-50);">Buy Again</button>
           </div>
-          <!-- 订单日期 -->
+          <!-- Order date -->
           <div class="px-4 pb-3">
             <span class="text-xs" style="color: var(--text-400);">2026-07-05</span>
           </div>
@@ -161,7 +161,7 @@
       var currentStatus = '';
 
       function statusLabel(status) {
-        var map = { PAID: '待发货', SHIPPED: '待收货', COMPLETED: '已完成', CANCELLED: '已取消', PENDING: '待付款', REFUNDING: '退款中' };
+        var map = { PAID: 'Pending Shipment', SHIPPED: 'Pending Receipt', COMPLETED: 'Completed', CANCELLED: 'Cancelled', PENDING: 'Pending Payment', REFUNDING: 'Refunding' };
         return map[status] || status;
       }
 
@@ -180,24 +180,24 @@
       function actionButtons(order) {
         var s = order.status;
         if (s === 'PAID' || s === 'PENDING') {
-          return '<button class="text-xs font-medium whitespace-nowrap" style="color:var(--text-500)">取消订单</button>' +
-            '<button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color:var(--brand-500);color:var(--background-50)">去支付</button>';
+          return '<button class="text-xs font-medium whitespace-nowrap" style="color:var(--text-500)">Cancel</button>' +
+            '<button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color:var(--brand-500);color:var(--background-50)">Pay Now</button>';
         }
         if (s === 'SHIPPED') {
-          return '<button class="text-xs font-medium whitespace-nowrap" style="color:var(--text-500)">查看物流</button>' +
-            '<button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color:var(--brand-500);color:var(--background-50)">确认收货</button>';
+          return '<button class="text-xs font-medium whitespace-nowrap" style="color:var(--text-500)">Track</button>' +
+            '<button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color:var(--brand-500);color:var(--background-50)">Confirm Receipt</button>';
         }
         if (s === 'COMPLETED') {
-          return '<button class="text-xs font-medium whitespace-nowrap" style="color:var(--text-500)">评价晒单</button>' +
-            '<button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color:var(--brand-500);color:var(--background-50)">再次购买</button>';
+          return '<button class="text-xs font-medium whitespace-nowrap" style="color:var(--text-500)">Review</button>' +
+            '<button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color:var(--brand-500);color:var(--background-50)">Buy Again</button>';
         }
-        return '<button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color:var(--brand-500);color:var(--background-50)">查看详情</button>';
+        return '<button class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background-color:var(--brand-500);color:var(--background-50)">View Details</button>';
       }
 
       function orderCard(order) {
         var items = order.items || order.orderItems || [];
         var firstItem = items[0] || {};
-        var more = items.length > 1 ? ' 等' + items.length + '件' : '';
+        var more = items.length > 1 ? ' + ' + items.length + ' items' : '';
         var card = document.createElement('a');
         card.href = 'order-detail.html?orderNo=' + encodeURIComponent(order.orderNo || order.id || '');
         card.className = 'block rounded-xl overflow-hidden';
@@ -224,7 +224,7 @@
         return card;
       }
 
-      // Tab 切换
+      // Tab switching
       tabs.forEach(function (tab) {
         tab.addEventListener('click', function () {
           tabs.forEach(function (t) {
@@ -236,7 +236,7 @@
           tab.style.borderBottomColor = 'var(--brand-500)';
           tab.style.fontWeight = '600';
           var text = tab.textContent.trim();
-          var map = { '全部': '', '待付款': 'PENDING', '待发货': 'PAID', '待收货': 'SHIPPED', '待评价': 'COMPLETED' };
+          var map = { 'All': '', 'Pending Payment': 'PENDING', 'Pending Shipment': 'PAID', 'Pending Receipt': 'SHIPPED', 'To Review': 'COMPLETED' };
           currentStatus = map[text] || '';
           loadOrders();
         });

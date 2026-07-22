@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 购物车</title>
+    <title>MOYUYO - Shopping Cart</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -21,175 +21,175 @@
 <body class="min-h-screen font-sans antialiased">
     <main class="pb-24">
 
-      <!-- 顶部导航栏 -->
+      <!-- Top navigation bar -->
       <header class="sticky top-0 z-30 flex h-11 items-center justify-between px-4 border-b border-[var(--border)] bg-[var(--background-50)]/95 backdrop-blur">
-        <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" aria-label="返回">
+        <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" aria-label="Back">
           <span data-icon class="h-5 w-5" style="mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
         </button>
-        <h1 class="text-base font-semibold tracking-[-0.02em]" style="color: var(--text-800);">购物车</h1>
-        <button class="text-sm font-medium" style="color: var(--brand-500);">编辑</button>
+        <h1 class="text-base font-semibold tracking-[-0.02em]" style="color: var(--text-800);">Shopping Cart</h1>
+        <button class="text-sm font-medium" style="color: var(--brand-500);">Edit</button>
       </header>
 
-      <!-- 降价提醒横幅 -->
+      <!-- Price drop alert banner -->
       <div class="mx-4 mt-3 flex items-center gap-2 rounded-xl px-3 py-2.5" style="background: var(--brand-50); border: 1px solid var(--brand-100);">
         <span data-icon class="h-4 w-4 shrink-0" style="mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); color: var(--brand-500);"></span>
-        <p class="flex-1 text-xs" style="color: var(--brand-600);">2件商品降价啦，已为您节省¥18.00</p>
-        <button class="shrink-0 inline-flex h-5 w-5 items-center justify-center rounded-full" style="background: var(--brand-200);" aria-label="关闭提醒">
+        <p class="flex-1 text-xs" style="color: var(--brand-600);">2 items dropped in price, saved ¥18.00 for you</p>
+        <button class="shrink-0 inline-flex h-5 w-5 items-center justify-center rounded-full" style="background: var(--brand-200);" aria-label="Close alert">
           <span data-icon class="h-3 w-3" style="mask-image: url('../assets/icons/dl-builtin-apple/x.svg'); color: var(--brand-500);"></span>
         </button>
       </div>
 
-      <!-- 有效商品列表 -->
+      <!-- Active items list -->
       <section class="mt-4 px-4" id="cart-active">
-        <!-- 商品由 API 动态渲染，无数据时显示静态占位 -->
+        <!-- Items rendered dynamically by API, static placeholder shown when no data -->
         <div class="flex gap-3 rounded-xl p-3" style="background: var(--card); border: 1px solid var(--border);">
           <label class="flex items-center pt-1">
             <input type="checkbox" checked class="h-4 w-4 rounded accent-[var(--brand-500)]">
           </label>
-          <img src="../assets/product-shampoo-bottle.jpg" alt="温和植物萃取宠物洗护套装" class="h-20 w-20 shrink-0 rounded-lg object-cover" style="background: var(--background-200);">
+          <img src="../assets/product-shampoo-bottle.jpg" alt="Gentle Plant-Based Pet Shampoo &amp; Conditioner Set" class="h-20 w-20 shrink-0 rounded-lg object-cover" style="background: var(--background-200);">
           <div class="flex min-w-0 flex-1 flex-col justify-between">
             <div>
-              <h3 class="truncate text-sm font-medium" style="color: var(--text-800);">温和植物萃取宠物洗护套装</h3>
-              <p class="mt-0.5 text-xs" style="color: var(--text-400);">香草白 / 500ml</p>
+              <h3 class="truncate text-sm font-medium" style="color: var(--text-800);">Gentle Plant-Based Pet Shampoo &amp; Conditioner Set</h3>
+              <p class="mt-0.5 text-xs" style="color: var(--text-400);">Vanilla White / 500ml</p>
             </div>
             <div class="flex items-center justify-between">
               <span class="text-sm font-semibold" style="color: var(--text-800);">¥128.00</span>
-              <!-- 数量加减器 -->
+              <!-- Quantity selector -->
               <div class="inline-flex h-7 items-center rounded-lg overflow-hidden" style="border: 1px solid var(--border);">
-                <button class="flex h-7 w-7 items-center justify-center text-sm" style="color: var(--text-500);" aria-label="减少数量">-</button>
+                <button class="flex h-7 w-7 items-center justify-center text-sm" style="color: var(--text-500);" aria-label="Decrease quantity">-</button>
                 <span class="flex h-7 w-8 items-center justify-center border-x text-sm font-medium" style="border-color: var(--border); color: var(--text-800);">1</span>
-                <button class="flex h-7 w-7 items-center justify-center text-sm" style="color: var(--text-800);" aria-label="增加数量">+</button>
+                <button class="flex h-7 w-7 items-center justify-center text-sm" style="color: var(--text-800);" aria-label="Increase quantity">+</button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 商品2 -->
+        <!-- Item 2 -->
         <div class="mt-2.5 flex gap-3 rounded-xl p-3" style="background: var(--card); border: 1px solid var(--border);">
           <label class="flex items-center pt-1">
             <input type="checkbox" checked class="h-4 w-4 rounded accent-[var(--brand-500)]">
           </label>
-          <img src="../assets/product-harness-gear.jpg" alt="经典尼龙宠物牵引套装" class="h-20 w-20 shrink-0 rounded-lg object-cover" style="background: var(--background-200);">
+          <img src="../assets/product-harness-gear.jpg" alt="Classic Nylon Pet Harness &amp; Leash Set" class="h-20 w-20 shrink-0 rounded-lg object-cover" style="background: var(--background-200);">
           <div class="flex min-w-0 flex-1 flex-col justify-between">
             <div>
-              <h3 class="truncate text-sm font-medium" style="color: var(--text-800);">经典尼龙宠物牵引套装</h3>
-              <p class="mt-0.5 text-xs" style="color: var(--text-400);">海军蓝 / M码</p>
+              <h3 class="truncate text-sm font-medium" style="color: var(--text-800);">Classic Nylon Pet Harness &amp; Leash Set</h3>
+              <p class="mt-0.5 text-xs" style="color: var(--text-400);">Navy Blue / Size M</p>
             </div>
             <div class="flex items-center justify-between">
               <span class="text-sm font-semibold" style="color: var(--text-800);">¥89.00</span>
               <div class="inline-flex h-7 items-center rounded-lg overflow-hidden" style="border: 1px solid var(--border);">
-                <button class="flex h-7 w-7 items-center justify-center text-sm" style="color: var(--text-500);" aria-label="减少数量">-</button>
+                <button class="flex h-7 w-7 items-center justify-center text-sm" style="color: var(--text-500);" aria-label="Decrease quantity">-</button>
                 <span class="flex h-7 w-8 items-center justify-center border-x text-sm font-medium" style="border-color: var(--border); color: var(--text-800);">1</span>
-                <button class="flex h-7 w-7 items-center justify-center text-sm" style="color: var(--text-800);" aria-label="增加数量">+</button>
+                <button class="flex h-7 w-7 items-center justify-center text-sm" style="color: var(--text-800);" aria-label="Increase quantity">+</button>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 失效商品区 -->
+      <!-- Unavailable items section -->
       <section class="mt-4 px-4">
         <button class="flex w-full items-center justify-between rounded-xl px-3 py-2.5" style="background: var(--background-200);">
-          <span class="text-xs font-medium" style="color: var(--text-400);">失效商品 (1)</span>
+          <span class="text-xs font-medium" style="color: var(--text-400);">Unavailable Items (1)</span>
           <span data-icon class="h-3.5 w-3.5 transition-transform" style="mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); color: var(--text-400);"></span>
         </button>
-        <!-- 折叠内容（默认隐藏） -->
+        <!-- Collapsible content (hidden by default) -->
         <div class="mt-2 flex gap-3 rounded-xl p-3 opacity-40" style="background: var(--card); border: 1px solid var(--border);">
-          <img src="../assets/product-pet-treats.jpg" alt="有机鸡肉训练零食" class="h-16 w-16 shrink-0 rounded-lg object-cover" style="background: var(--background-200);">
+          <img src="../assets/product-pet-treats.jpg" alt="Organic Chicken Training Treats" class="h-16 w-16 shrink-0 rounded-lg object-cover" style="background: var(--background-200);">
           <div class="flex min-w-0 flex-1 flex-col justify-between py-0.5">
             <div>
-              <h3 class="truncate text-sm" style="color: var(--text-400);">有机鸡肉训练零食</h3>
-              <p class="mt-0.5 text-xs" style="color: var(--text-400);">已下架</p>
+              <h3 class="truncate text-sm" style="color: var(--text-400);">Organic Chicken Training Treats</h3>
+              <p class="mt-0.5 text-xs" style="color: var(--text-400);">Delisted</p>
             </div>
             <span class="text-xs line-through" style="color: var(--text-400);">¥35.00</span>
           </div>
         </div>
       </section>
 
-      <!-- 凑单推荐区 -->
+      <!-- Add-on recommendations section -->
       <section class="mt-5">
         <div class="flex items-center justify-between px-4 mb-2.5">
-          <h2 class="text-sm font-semibold" style="color: var(--text-800);">凑单推荐</h2>
-          <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold" style="background: var(--state-error); color: var(--state-error-foreground);">满199减20</span>
+          <h2 class="text-sm font-semibold" style="color: var(--text-800);">Add-On Recommendations</h2>
+          <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold" style="background: var(--state-error); color: var(--state-error-foreground);">Save ¥20 on orders over ¥199</span>
         </div>
         <div class="flex gap-2.5 overflow-x-auto px-4 no-scrollbar pb-1">
-          <!-- 推荐卡片1 -->
+          <!-- Recommendation card 1 -->
           <div class="shrink-0 w-28 rounded-xl p-2" style="background: var(--card); border: 1px solid var(--border);">
             <div class="aspect-square rounded-lg mb-2 overflow-hidden" style="background: var(--background-200);">
-              <img src="../assets/product-pet-treats.jpg" alt="推荐商品" class="h-full w-full object-cover">
+              <img src="../assets/product-pet-treats.jpg" alt="Recommended product" class="h-full w-full object-cover">
             </div>
-            <p class="truncate text-xs font-medium" style="color: var(--text-800);">天然磨牙洁齿骨</p>
+            <p class="truncate text-xs font-medium" style="color: var(--text-800);">Natural Dental Chew Bone</p>
             <p class="mt-0.5 text-xs font-semibold" style="color: var(--state-error);">¥29.90</p>
           </div>
-          <!-- 推荐卡片2 -->
+          <!-- Recommendation card 2 -->
           <div class="shrink-0 w-28 rounded-xl p-2" style="background: var(--card); border: 1px solid var(--border);">
             <div class="aspect-square rounded-lg mb-2 overflow-hidden" style="background: var(--background-200);">
-              <img src="../assets/product-shampoo-bottle.jpg" alt="推荐商品" class="h-full w-full object-cover">
+              <img src="../assets/product-shampoo-bottle.jpg" alt="Recommended product" class="h-full w-full object-cover">
             </div>
-            <p class="truncate text-xs font-medium" style="color: var(--text-800);">宠物护毛精油喷雾</p>
+            <p class="truncate text-xs font-medium" style="color: var(--text-800);">Pet Coat Oil Spray</p>
             <p class="mt-0.5 text-xs font-semibold" style="color: var(--state-error);">¥58.00</p>
           </div>
-          <!-- 推荐卡片3 -->
+          <!-- Recommendation card 3 -->
           <div class="shrink-0 w-28 rounded-xl p-2" style="background: var(--card); border: 1px solid var(--border);">
             <div class="aspect-square rounded-lg mb-2 overflow-hidden" style="background: var(--background-200);">
-              <img src="../assets/product-harness-gear.jpg" alt="推荐商品" class="h-full w-full object-cover">
+              <img src="../assets/product-harness-gear.jpg" alt="Recommended product" class="h-full w-full object-cover">
             </div>
-            <p class="truncate text-xs font-medium" style="color: var(--text-800);">智能自动喂食器</p>
+            <p class="truncate text-xs font-medium" style="color: var(--text-800);">Smart Automatic Feeder</p>
             <p class="mt-0.5 text-xs font-semibold" style="color: var(--state-error);">¥199.00</p>
           </div>
-          <!-- 推荐卡片4 -->
+          <!-- Recommendation card 4 -->
           <div class="shrink-0 w-28 rounded-xl p-2" style="background: var(--card); border: 1px solid var(--border);">
             <div class="aspect-square rounded-lg mb-2 overflow-hidden" style="background: var(--background-200);">
-              <img src="../assets/product-pet-treats.jpg" alt="推荐商品" class="h-full w-full object-cover">
+              <img src="../assets/product-pet-treats.jpg" alt="Recommended product" class="h-full w-full object-cover">
             </div>
-            <p class="truncate text-xs font-medium" style="color: var(--text-800);">猫抓板瓦楞纸</p>
+            <p class="truncate text-xs font-medium" style="color: var(--text-800);">Cat Scratching Board (Corrugated)</p>
             <p class="mt-0.5 text-xs font-semibold" style="color: var(--state-error);">¥19.90</p>
           </div>
         </div>
       </section>
 
-      <!-- 价格汇总区 -->
+      <!-- Price summary section -->
       <section class="mx-4 mt-5 rounded-xl p-4" style="background: var(--card); border: 1px solid var(--border);">
-        <h2 class="text-sm font-semibold mb-3" style="color: var(--text-800);">订单摘要</h2>
+        <h2 class="text-sm font-semibold mb-3" style="color: var(--text-800);">Order Summary</h2>
         <div class="flex justify-between py-1.5" style="border-bottom: 1px solid var(--border);">
-          <span class="text-xs" style="color: var(--text-500);">商品合计</span>
+          <span class="text-xs" style="color: var(--text-500);">Items Subtotal</span>
           <span class="text-xs font-medium" style="color: var(--text-800);">¥217.00</span>
         </div>
         <div class="flex justify-between items-center py-1.5" style="border-bottom: 1px solid var(--border);">
-          <span class="text-xs" style="color: var(--text-500);">运费</span>
+          <span class="text-xs" style="color: var(--text-500);">Shipping</span>
           <div class="flex items-center gap-1.5">
             <span class="text-xs font-medium" style="color: var(--text-800);">¥0.00</span>
-            <span class="text-[10px] px-1 py-0.5 rounded" style="background: var(--state-success-surface); color: var(--state-success);">免运费</span>
+            <span class="text-[10px] px-1 py-0.5 rounded" style="background: var(--state-success-surface); color: var(--state-success);">Free Shipping</span>
           </div>
         </div>
         <div class="flex justify-between py-1.5" style="border-bottom: 1px solid var(--border);">
-          <span class="text-xs" style="color: var(--text-500);">优惠</span>
+          <span class="text-xs" style="color: var(--text-500);">Discount</span>
           <span class="text-xs font-medium" style="color: var(--state-success);">-¥20.00</span>
         </div>
         <div class="flex justify-between items-center pt-3">
-          <span class="text-sm font-semibold" style="color: var(--text-800);">应付金额</span>
+          <span class="text-sm font-semibold" style="color: var(--text-800);">Amount Due</span>
           <span class="text-lg font-bold" style="color: var(--text-800);">¥197.00</span>
         </div>
       </section>
 
-      <!-- 底部留白（为固定栏腾出空间） -->
+      <!-- Bottom spacing (room for fixed bar) -->
       <div class="h-4"></div>
 
     </main>
 
-    <!-- 底部固定栏 -->
+    <!-- Bottom fixed bar -->
     <div class="fixed bottom-0 inset-x-0 z-40 flex h-14 items-center justify-between border-t px-4" style="background: var(--background-50); border-color: var(--border);">
       <label class="flex items-center gap-2">
         <input type="checkbox" checked class="h-4 w-4 rounded accent-[var(--brand-500)]">
-        <span class="text-xs" style="color: var(--text-500);">全选</span>
+        <span class="text-xs" style="color: var(--text-500);">Select All</span>
       </label>
       <div class="flex items-center gap-3">
         <div class="text-right">
-          <span class="text-xs" style="color: var(--text-500);">合计: </span>
+          <span class="text-xs" style="color: var(--text-500);">Total: </span>
           <span class="text-base font-bold" style="color: var(--text-800);">¥197.00</span>
         </div>
         <button id="btn-checkout" class="flex h-9 items-center justify-center rounded-full px-6 text-sm font-semibold text-white" style="background: var(--brand-500);">
-          结算(2)
+          Checkout (2)
         </button>
       </div>
     </div>
@@ -203,7 +203,7 @@
       var totalEl = document.querySelector('.fixed.bottom-0 .text-base.font-bold');
       var selectAll = document.querySelector('.fixed.bottom-0 input[type=checkbox]');
 
-      // 购物车商品模板
+      // Shopping cart item template
       function cartItem(item) {
         var div = document.createElement('div');
         div.className = 'mt-2.5 flex gap-3 rounded-xl p-3';
@@ -222,9 +222,9 @@
           '<div class="flex items-center justify-between">' +
           '<span class="text-sm font-semibold" style="color:var(--text-800)">¥' + ((item.price || 0) / 100).toFixed(2) + '</span>' +
           '<div class="inline-flex h-7 items-center rounded-lg overflow-hidden" style="border:1px solid var(--border)">' +
-          '<button class="flex h-7 w-7 items-center justify-center text-sm" style="color:var(--text-500)" aria-label="减少数量">-</button>' +
+          '<button class="flex h-7 w-7 items-center justify-center text-sm" style="color:var(--text-500)" aria-label="Decrease quantity">-</button>' +
           '<span class="flex h-7 w-8 items-center justify-center border-x text-sm font-medium" style="border-color:var(--border);color:var(--text-800)">' + (item.quantity || item.qty || 1) + '</span>' +
-          '<button class="flex h-7 w-7 items-center justify-center text-sm" style="color:var(--text-800)" aria-label="增加数量">+</button>' +
+          '<button class="flex h-7 w-7 items-center justify-center text-sm" style="color:var(--text-800)" aria-label="Increase quantity">+</button>' +
           '</div></div></div>';
         return div;
       }
@@ -236,7 +236,7 @@
           count += 1;
         });
         if (totalEl) totalEl.textContent = '¥' + (total / 100).toFixed(2);
-        if (btnCheckout) btnCheckout.textContent = '结算(' + count + ')';
+        if (btnCheckout) btnCheckout.textContent = 'Checkout (' + count + ')';
       }
 
       function updateSelectAll() {
@@ -265,7 +265,7 @@
         }
       }
 
-      // 全选/取消
+      // Select All / Deselect All
       if (selectAll) {
         selectAll.addEventListener('change', function () {
           var checks = cartSection.querySelectorAll('input[type=checkbox]');
@@ -278,7 +278,7 @@
         });
       }
 
-      // 结算按钮
+      // Checkout button
       if (btnCheckout) {
         btnCheckout.addEventListener('click', function () {
           var checks = cartSection.querySelectorAll('input[type=checkbox]:checked');
