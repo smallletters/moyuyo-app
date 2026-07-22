@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 个人中心</title>
+    <title>MOYUYO - Personal Center</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -21,18 +21,18 @@
 <body class="min-h-screen font-sans antialiased" style="font-family: var(--font-sans); background: var(--background-200);">
     <main class="pb-20">
 
-      <!-- 用户摘要区 -->
+      <!-- User Summary -->
       <section class="px-4 pt-6 pb-4" style="background: var(--background-50);">
         <div class="flex items-center gap-3">
-          <img src="../assets/pet-avatar-cat.jpg" alt="用户头像" class="w-16 h-16 rounded-full object-cover border-2" style="border-color: var(--border);">
+          <img src="../assets/pet-avatar-cat.jpg" alt="User Avatar" class="w-16 h-16 rounded-full object-cover border-2" style="border-color: var(--border);">
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
-              <span class="text-lg font-semibold truncate profile-name" style="color: var(--text-800);">宠物达人小雅</span>
-              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background: var(--brand-100); color: var(--brand-500);">金卡会员</span>
+              <span class="text-lg font-semibold truncate profile-name" style="color: var(--text-800);">Pet Expert Xiaoya</span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold whitespace-nowrap" style="background: var(--brand-100); color: var(--brand-500);">Gold Member</span>
             </div>
             <div class="mt-2">
               <div class="flex items-center justify-between text-xs mb-1" style="color: var(--text-500);">
-                <span>成长值 2800 / 5000</span>
+                <span>Growth Value 2800 / 5000</span>
                 <span>56%</span>
               </div>
               <div class="w-full h-1.5 rounded-full overflow-hidden" style="background: var(--background-200);">
@@ -43,184 +43,184 @@
         </div>
       </section>
 
-      <!-- 会员权益横幅 -->
+      <!-- Member Benefits -->
       <section class="px-4 py-3" style="background: var(--background-50);">
         <div class="grid grid-cols-4 gap-2">
-          <!-- 积分加速 -->
+          <!-- Points Boost -->
           <div class="flex flex-col items-center gap-1 py-2">
             <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
               <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
             </div>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">积分加速</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">Points Boost</span>
           </div>
-          <!-- 专属折扣 -->
+          <!-- Exclusive Discount -->
           <div class="flex flex-col items-center gap-1 py-2">
             <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
               <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); background-color: var(--primary);"></span>
             </div>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">专属折扣</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">Exclusive Discount</span>
           </div>
-          <!-- 生日礼品 -->
+          <!-- Birthday Gift -->
           <div class="flex flex-col items-center gap-1 py-2">
             <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
               <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); background-color: var(--primary);"></span>
             </div>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">生日礼品</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">Birthday Gift</span>
           </div>
-          <!-- 优先发货 -->
+          <!-- Priority Shipping -->
           <div class="flex flex-col items-center gap-1 py-2">
             <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
               <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); background-color: var(--primary);"></span>
             </div>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">优先发货</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">Priority Shipping</span>
           </div>
         </div>
       </section>
 
-      <!-- 分隔 -->
+      <!-- Separator -->
       <div class="h-2" style="background: var(--background-200);"></div>
 
-      <!-- 订单管理区 -->
+      <!-- Order Management -->
       <section class="px-4 py-3" style="background: var(--background-50);">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-base font-semibold" style="color: var(--text-800);">我的订单</span>
+          <span class="text-base font-semibold" style="color: var(--text-800);">My Orders</span>
           <a href="#" class="flex items-center gap-0.5 text-xs" style="color: var(--text-500);">
-            <span>查看全部</span>
+            <span>View All</span>
             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
           </a>
         </div>
         <div class="grid grid-cols-5 gap-1">
-          <!-- 全部 active -->
+          <!-- All active -->
           <a href="#" class="flex flex-col items-center gap-1.5 py-2 rounded-lg transition-colors duration-150" style="background: var(--brand-50);">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); background-color: var(--primary);"></span>
-            <span class="text-xs font-medium whitespace-nowrap" style="color: var(--primary);">全部</span>
+            <span class="text-xs font-medium whitespace-nowrap" style="color: var(--primary);">All</span>
           </a>
-          <!-- 待付款 -->
+          <!-- Pending Payment -->
           <a href="#" class="flex flex-col items-center gap-1.5 py-2 rounded-lg transition-colors duration-150 hover:opacity-80">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/file.svg'); mask-image: url('../assets/icons/dl-builtin-apple/file.svg'); background-color: var(--text-500);"></span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">待付款</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">Pending Payment</span>
           </a>
-          <!-- 待发货 -->
+          <!-- Pending Shipment -->
           <a href="#" class="flex flex-col items-center gap-1.5 py-2 rounded-lg transition-colors duration-150 hover:opacity-80">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/folder.svg'); mask-image: url('../assets/icons/dl-builtin-apple/folder.svg'); background-color: var(--text-500);"></span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">待发货</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">Pending Shipment</span>
           </a>
-          <!-- 待收货 -->
+          <!-- Pending Receipt -->
           <a href="#" class="flex flex-col items-center gap-1.5 py-2 rounded-lg transition-colors duration-150 hover:opacity-80">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/map-pin.svg'); mask-image: url('../assets/icons/dl-builtin-apple/map-pin.svg'); background-color: var(--text-500);"></span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">待收货</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">Pending Receipt</span>
           </a>
-          <!-- 待评价 -->
+          <!-- Pending Review -->
           <a href="#" class="flex flex-col items-center gap-1.5 py-2 rounded-lg transition-colors duration-150 hover:opacity-80">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); background-color: var(--text-500);"></span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">待评价</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-600);">Pending Review</span>
           </a>
         </div>
       </section>
 
-      <!-- 分隔 -->
+      <!-- Separator -->
       <div class="h-2" style="background: var(--background-200);"></div>
 
-      <!-- 钱包区 -->
+      <!-- Wallet -->
       <section class="px-4 py-3" style="background: var(--background-50);">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-base font-semibold" style="color: var(--text-800);">我的钱包</span>
+          <span class="text-base font-semibold" style="color: var(--text-800);">My Wallet</span>
         </div>
         <div class="grid grid-cols-4 gap-2">
-          <!-- 余额 -->
+          <!-- Balance -->
           <a href="#" class="flex flex-col items-center gap-1.5 py-3 rounded-lg border transition-colors duration-150 hover:border-[var(--primary)]" style="border-color: var(--border); background: var(--background-50);">
             <span class="text-base font-semibold tabular-nums" style="color: var(--text-800);">326.50</span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">余额</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">Balance</span>
           </a>
-          <!-- 积分 -->
+          <!-- Points -->
           <a href="#" class="flex flex-col items-center gap-1.5 py-3 rounded-lg border transition-colors duration-150 hover:border-[var(--primary)]" style="border-color: var(--border); background: var(--background-50);">
             <span class="text-base font-semibold tabular-nums" style="color: var(--text-800);">1,280</span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">积分</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">Points</span>
           </a>
-          <!-- 优惠券 -->
+          <!-- Coupons -->
           <a href="#" class="flex flex-col items-center gap-1.5 py-3 rounded-lg border transition-colors duration-150 hover:border-[var(--primary)]" style="border-color: var(--border); background: var(--background-50);">
-            <span class="text-base font-semibold tabular-nums" style="color: var(--text-800);">3张</span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">优惠券</span>
+            <span class="text-base font-semibold tabular-nums" style="color: var(--text-800);">3</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">Coupons</span>
           </a>
-          <!-- 礼品卡 -->
+          <!-- Gift Card -->
           <a href="#" class="flex flex-col items-center gap-1.5 py-3 rounded-lg border transition-colors duration-150 hover:border-[var(--primary)]" style="border-color: var(--border); background: var(--background-50);">
-            <span class="text-base font-semibold tabular-nums" style="color: var(--text-800);">1张</span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">礼品卡</span>
+            <span class="text-base font-semibold tabular-nums" style="color: var(--text-800);">1</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">Gift Card</span>
           </a>
         </div>
       </section>
 
-      <!-- 分隔 -->
+      <!-- Separator -->
       <div class="h-2" style="background: var(--background-200);"></div>
 
-      <!-- 常用功能宫格 -->
+      <!-- Common Features Grid -->
       <section class="px-4 py-3" style="background: var(--background-50);">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-base font-semibold" style="color: var(--text-800);">常用功能</span>
+          <span class="text-base font-semibold" style="color: var(--text-800);">Common Features</span>
         </div>
         <div class="grid grid-cols-3 gap-2">
-          <!-- 收货地址 -->
+          <!-- Addresses -->
           <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/map-pin.svg'); mask-image: url('../assets/icons/dl-builtin-apple/map-pin.svg'); background-color: var(--text-600);"></span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">收货地址</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">Addresses</span>
           </a>
-          <!-- 宠物档案 -->
+          <!-- Pet Profile -->
           <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); background-color: var(--text-600);"></span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">宠物档案</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">Pet Profile</span>
           </a>
-          <!-- 我的收藏 -->
+          <!-- My Favorites -->
           <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); background-color: var(--text-600);"></span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">我的收藏</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">My Favorites</span>
           </a>
-          <!-- 浏览足迹 -->
+          <!-- Browsing History -->
           <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/mouse-pointer-click.svg'); mask-image: url('../assets/icons/dl-builtin-apple/mouse-pointer-click.svg'); background-color: var(--text-600);"></span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">浏览足迹</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">Browsing History</span>
           </a>
-          <!-- 帮助中心 -->
+          <!-- Help Center -->
           <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); background-color: var(--text-600);"></span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">帮助中心</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">Help Center</span>
           </a>
-          <!-- 关于我们 -->
+          <!-- About Us -->
           <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-lg transition-colors duration-150 hover:opacity-80">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); background-color: var(--text-600);"></span>
-            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">关于我们</span>
+            <span class="text-xs whitespace-nowrap" style="color: var(--text-700);">About Us</span>
           </a>
         </div>
       </section>
 
     </main>
 
-    <!-- 底部 TabBar -->
+    <!-- Bottom TabBar -->
     <nav class="fixed bottom-0 inset-x-0 z-40 border-t backdrop-blur-lg" style="border-color: var(--border); background: rgba(255, 255, 255, 0.88); padding-bottom: env(safe-area-inset-bottom, 0px);">
       <div class="flex items-center justify-around h-[50px]">
-        <!-- 首页 -->
+        <!-- Home -->
         <a href="#" data-dom-id="nav-home" class="flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors duration-150" style="color: var(--text-400);">
           <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
-          <span class="text-[10px] whitespace-nowrap">首页</span>
+          <span class="text-[10px] whitespace-nowrap">Home</span>
         </a>
-        <!-- 分类 -->
+        <!-- Categories -->
         <a href="#" data-dom-id="nav-category" class="flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors duration-150" style="color: var(--text-400);">
           <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/funnel.svg'); mask-image: url('../assets/icons/dl-builtin-apple/funnel.svg');"></span>
-          <span class="text-[10px] whitespace-nowrap">分类</span>
+          <span class="text-[10px] whitespace-nowrap">Categories</span>
         </a>
         <!-- Pet Hub -->
         <a href="#" data-dom-id="nav-pet-hub" class="flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors duration-150" style="color: var(--text-400);">
           <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-play.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-play.svg');"></span>
           <span class="text-[10px] whitespace-nowrap">Pet Hub</span>
         </a>
-        <!-- 社区 -->
+        <!-- Community -->
         <a href="#" class="flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors duration-150" style="color: var(--text-400);">
           <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
-          <span class="text-[10px] whitespace-nowrap">社区</span>
+          <span class="text-[10px] whitespace-nowrap">Community</span>
         </a>
-        <!-- 我的 active -->
+        <!-- Me active -->
         <a href="#" data-active="true" class="flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors duration-150" style="color: var(--primary);">
           <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
-          <span class="text-[10px] font-semibold whitespace-nowrap">我的</span>
+          <span class="text-[10px] font-semibold whitespace-nowrap">Me</span>
         </a>
       </div>
     </nav>
@@ -243,7 +243,7 @@
             if (nameEl && user.nickname) nameEl.textContent = user.nickname;
             if (nameEl && user.name) nameEl.textContent = user.name;
 
-            var avatarEl = document.querySelector('img[alt="用户头像"]');
+            var avatarEl = document.querySelector('img[alt="User Avatar"]');
             if (avatarEl && user.avatar) { avatarEl.src = user.avatar; }
 
             var levelEl = document.querySelector('.profile-level');
@@ -380,7 +380,7 @@
           logoutBtn.onmouseover = function() { this.style.background = 'var(--background-200)'; };
           logoutBtn.onmouseout = function() { this.style.background = 'transparent'; };
           logoutBtn.addEventListener('click', function() {
-            if (confirm('确定要退出登录吗？')) {
+            if (confirm('Are you sure you want to log out?')) {
               logout();
             }
           });

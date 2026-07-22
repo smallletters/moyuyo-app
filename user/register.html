@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 注册</title>
+    <title>MOYUYO - Register</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -21,53 +21,53 @@
 <body class="min-h-screen font-sans antialiased">
     <main class="relative min-h-screen overflow-hidden" style="width: 375px; margin: 0 auto;">
 
-      <!-- 全屏背景图 + 遮罩 -->
+      <!-- Fullscreen background image + overlay -->
       <img src="../assets/login-bg.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
       <div class="absolute inset-0" style="background: rgba(0, 0, 0, 0.45);"></div>
 
-      <!-- 页面内容容器 -->
+      <!-- Page content container -->
       <div class="relative z-10 min-h-screen flex flex-col">
 
-        <!-- 顶部导航：返回 + 标题 -->
+        <!-- Top nav: back + title -->
         <header class="flex items-center shrink-0" style="height: 56px; padding: 0 16px;">
           <button
             type="button"
             data-dom-id="back-previous"
             class="flex items-center justify-center"
             style="width: 40px; height: 40px; border-radius: 50%; border: none; background: rgba(0,0,0,0.2); color: var(--background-50); cursor: pointer; transition: background-color 0.18s ease;"
-            aria-label="返回"
+            aria-label="Go back"
             onmouseover="this.style.background='rgba(0,0,0,0.35)';"
             onmouseout="this.style.background='rgba(0,0,0,0.2)';"
           >
             <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
           </button>
-          <h1 class="flex-1 text-center" style="font-size: 17px; font-weight: 600; color: var(--background-50); letter-spacing: -0.01em;">注册</h1>
-          <!-- 右侧占位平衡 -->
+          <h1 class="flex-1 text-center" style="font-size: 17px; font-weight: 600; color: var(--background-50); letter-spacing: -0.01em;">Register</h1>
+          <!-- Spacer for balance -->
           <div style="width: 40px;"></div>
         </header>
 
-        <!-- 可滚动内容区 -->
+        <!-- Scrollable content area -->
         <div class="flex-1 overflow-y-auto" style="padding: 24px 32px 32px;">
 
-          <!-- 注册卡片 -->
+          <!-- Registration card -->
           <div style="background: var(--background-50); border-radius: calc(var(--radius) * 1.6); padding: 28px 24px 32px; box-shadow: var(--shadow-xl); animation: cardEnter 0.5s cubic-bezier(0.32, 0.72, 0, 1) forwards;">
 
-            <!-- 标题 -->
-            <h2 style="font-size: 24px; font-weight: 700; color: var(--text-800); text-align: center; margin-bottom: 4px; text-wrap: balance; word-break: keep-all;">创建账号</h2>
+            <!-- Title -->
+            <h2 style="font-size: 24px; font-weight: 700; color: var(--text-800); text-align: center; margin-bottom: 4px; text-wrap: balance; word-break: keep-all;">Create Account</h2>
 
-            <!-- 注册提示 -->
+            <!-- Registration prompt -->
             <p class="text-center" style="font-size: 12px; color: var(--text-400); margin-bottom: 24px;">
-              注册即同意
-              <a href="#" style="color: var(--brand-500); text-decoration: none;">用户协议</a>
-              和
-              <a href="#" style="color: var(--brand-500); text-decoration: none;">隐私政策</a>
+              By registering, you agree to the
+              <a href="#" style="color: var(--brand-500); text-decoration: none;">Terms of Service</a>
+              and
+              <a href="#" style="color: var(--brand-500); text-decoration: none;">Privacy Policy</a>
             </p>
 
-            <!-- 昵称输入 -->
+            <!-- Nickname input -->
             <div style="margin-bottom: 12px;">
               <input
                 type="text"
-                placeholder="设置昵称"
+                placeholder="Set nickname"
                 maxlength="20"
                 class="w-full"
                 style="height: 44px; padding: 0 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
@@ -76,7 +76,7 @@
               >
             </div>
 
-            <!-- 手机号/邮箱注册 Tab 切换 -->
+            <!-- Phone/Email registration tab switch -->
             <div class="flex rounded-lg overflow-hidden" style="height: 36px; background: var(--background-200); margin-bottom: 12px;">
               <button
                 id="reg-tab-phone"
@@ -85,7 +85,7 @@
                 style="font-size: 13px; font-weight: 600; border-radius: calc(var(--radius) * 0.8); background: var(--background-50); color: var(--text-800); box-shadow: var(--shadow-xs); border: none; cursor: pointer;"
                 onclick="switchRegTab('phone')"
               >
-                手机号注册
+                Register with Phone
               </button>
               <button
                 id="reg-tab-email"
@@ -94,19 +94,19 @@
                 style="font-size: 13px; font-weight: 500; border-radius: calc(var(--radius) * 0.8); background: transparent; color: var(--text-400); box-shadow: none; border: none; cursor: pointer;"
                 onclick="switchRegTab('email')"
               >
-                邮箱注册
+                Register with Email
               </button>
             </div>
 
-            <!-- 手机号注册表单 -->
+            <!-- Phone registration form -->
             <form id="reg-form-phone" onsubmit="return false;" autocomplete="off">
-              <!-- 手机号输入 -->
+              <!-- Phone number input -->
               <div class="flex items-center gap-2" style="margin-bottom: 12px;">
                 <button
                   type="button"
                   class="flex items-center justify-center shrink-0"
                   style="width: 64px; height: 44px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-100); color: var(--text-800); font-size: 14px; font-weight: 500; cursor: pointer;"
-                  aria-label="选择区号"
+                  aria-label="Select country code"
                 >
                   +86
                 </button>
@@ -114,7 +114,7 @@
                   type="tel"
                   inputmode="numeric"
                   pattern="[0-9]*"
-                  placeholder="手机号码"
+                  placeholder="Phone number"
                   maxlength="11"
                   class="flex-1"
                   style="height: 44px; padding: 0 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
@@ -122,12 +122,12 @@
                   onblur="this.style.borderColor='var(--input)'; this.style.boxShadow='none';"
                 >
               </div>
-              <!-- 验证码输入 -->
+              <!-- Verification code input -->
               <div class="flex items-center gap-2" style="margin-bottom: 12px;">
                 <input
                   type="text"
                   inputmode="numeric"
-                  placeholder="验证码"
+                  placeholder="Verification code"
                   maxlength="6"
                   class="flex-1"
                   style="height: 44px; padding: 0 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
@@ -141,30 +141,30 @@
                   onmouseover="this.style.opacity='0.8';"
                   onmouseout="this.style.opacity='1';"
                 >
-                  获取验证码
+                  Get Code
                 </button>
               </div>
             </form>
 
-            <!-- 邮箱注册表单（默认隐藏） -->
+            <!-- Email registration form (hidden by default) -->
             <form id="reg-form-email" onsubmit="return false;" autocomplete="off" style="display: none;">
-              <!-- 邮箱输入 -->
+              <!-- Email input -->
               <div style="margin-bottom: 12px;">
                 <input
                   type="email"
-                  placeholder="邮箱地址"
+                  placeholder="Email address"
                   class="w-full"
                   style="height: 44px; padding: 0 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
                   onfocus="this.style.borderColor='var(--ring)'; this.style.boxShadow='0 0 0 1px var(--ring)';"
                   onblur="this.style.borderColor='var(--input)'; this.style.boxShadow='none';"
                 >
               </div>
-              <!-- 邮箱验证码 -->
+              <!-- Email verification code -->
               <div class="flex items-center gap-2" style="margin-bottom: 12px;">
                 <input
                   type="text"
                   inputmode="numeric"
-                  placeholder="验证码"
+                  placeholder="Verification code"
                   maxlength="6"
                   class="flex-1"
                   style="height: 44px; padding: 0 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
@@ -178,17 +178,17 @@
                   onmouseover="this.style.opacity='0.8';"
                   onmouseout="this.style.opacity='1';"
                 >
-                  获取验证码
+                  Get Code
                 </button>
               </div>
             </form>
 
-            <!-- 密码输入（共用） -->
+            <!-- Password input (shared) -->
             <div class="relative" style="margin-bottom: 12px;">
               <input
                 id="reg-password"
                 type="password"
-                placeholder="设置密码"
+                placeholder="Set password"
                 class="w-full"
                 style="height: 44px; padding: 0 14px; padding-right: 44px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
                 onfocus="this.style.borderColor='var(--ring)'; this.style.boxShadow='0 0 0 1px var(--ring)';"
@@ -198,19 +198,19 @@
                 type="button"
                 class="absolute right-0 top-0 flex items-center justify-center"
                 style="width: 44px; height: 44px; border: none; background: transparent; color: var(--text-400); cursor: pointer;"
-                aria-label="显示密码"
+                aria-label="Show password"
                 onclick="toggleRegPassword('reg-password')"
               >
                 <i data-lucide="eye-off" style="width: 18px; height: 18px;"></i>
               </button>
             </div>
 
-            <!-- 确认密码输入 -->
+            <!-- Confirm password input -->
             <div class="relative" style="margin-bottom: 20px;">
               <input
                 id="reg-confirm-password"
                 type="password"
-                placeholder="确认密码"
+                placeholder="Confirm password"
                 class="w-full"
                 style="height: 44px; padding: 0 14px; padding-right: 44px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
                 onfocus="this.style.borderColor='var(--ring)'; this.style.boxShadow='0 0 0 1px var(--ring)';"
@@ -220,16 +220,16 @@
                 type="button"
                 class="absolute right-0 top-0 flex items-center justify-center"
                 style="width: 44px; height: 44px; border: none; background: transparent; color: var(--text-400); cursor: pointer;"
-                aria-label="显示确认密码"
+                aria-label="Show confirm password"
                 onclick="toggleRegPassword('reg-confirm-password')"
               >
                 <i data-lucide="eye-off" style="width: 18px; height: 18px;"></i>
               </button>
             </div>
 
-            <!-- 宠物偏好选择 -->
+            <!-- Pet preference selection -->
             <div style="margin-bottom: 24px;">
-              <p style="font-size: 13px; font-weight: 600; color: var(--text-800); margin-bottom: 10px;">选择你的宠物类型</p>
+              <p style="font-size: 13px; font-weight: 600; color: var(--text-800); margin-bottom: 10px;">Select your pet type</p>
               <div class="flex gap-2">
                 <button
                   type="button"
@@ -238,7 +238,7 @@
                   data-active="true"
                   style="flex: 1; height: 36px; border-radius: 999px; border: 1px solid var(--brand-500); background: var(--brand-50); color: var(--brand-500); font-size: 13px; font-weight: 600; font-family: var(--font-sans); cursor: pointer; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;"
                 >
-                  狗狗
+                  Dog
                 </button>
                 <button
                   type="button"
@@ -246,7 +246,7 @@
                   data-pet="cat"
                   style="flex: 1; height: 36px; border-radius: 999px; border: 1px solid var(--input); background: var(--background-50); color: var(--text-500); font-size: 13px; font-weight: 500; font-family: var(--font-sans); cursor: pointer; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;"
                 >
-                  猫咪
+                  Cat
                 </button>
                 <button
                   type="button"
@@ -254,12 +254,12 @@
                   data-pet="other"
                   style="flex: 1; height: 36px; border-radius: 999px; border: 1px solid var(--input); background: var(--background-50); color: var(--text-500); font-size: 13px; font-weight: 500; font-family: var(--font-sans); cursor: pointer; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;"
                 >
-                  其他
+                  Other
                 </button>
               </div>
             </div>
 
-            <!-- 注册按钮 -->
+            <!-- Register button -->
             <button
               type="button"
               data-dom-id="cta-register"
@@ -270,19 +270,19 @@
               onmousedown="this.style.transform='scale(0.98)';"
               onmouseup="this.style.transform='scale(1)';"
             >
-              注册
+              Register
             </button>
 
-            <!-- 底部登录引导 -->
+            <!-- Bottom login prompt -->
             <p class="text-center" style="font-size: 13px; color: var(--text-400); margin-top: 20px;">
-              已有账号？
+              Already have an account?
               <a
                 href="#"
                 data-dom-id="link-login"
                 style="color: var(--brand-500); font-weight: 600; text-decoration: none; transition: opacity 0.18s ease;"
                 onmouseover="this.style.opacity='0.8';"
                 onmouseout="this.style.opacity='1';"
-              >立即登录</a>
+              >Log in</a>
             </p>
           </div>
         </div>
@@ -378,7 +378,7 @@
 
       function setRegLoading(loading) {
         var btn = document.querySelector('button[data-dom-id="cta-register"]');
-        btn.textContent = loading ? 'Registering...' : '注册';
+        btn.textContent = loading ? 'Registering...' : 'Register';
         btn.disabled = loading;
         btn.style.opacity = loading ? '0.6' : '1';
       }
@@ -394,7 +394,7 @@
             clearInterval(regCodeTimer);
             btn.disabled = false;
             btn.style.opacity = '1';
-            btn.textContent = '获取验证码';
+            btn.textContent = 'Get Code';
           } else {
             btn.textContent = seconds + 's';
           }
@@ -402,18 +402,18 @@
       }
 
       function checkPasswordStrength(password) {
-        if (!password) return { valid: false, message: '请输入密码' };
-        if (password.length < 8) return { valid: false, message: '密码至少8位' };
-        if (!/(?=.*[a-zA-Z])/.test(password)) return { valid: false, message: '密码需包含字母' };
-        if (!/(?=.*[0-9])/.test(password)) return { valid: false, message: '密码需包含数字' };
+        if (!password) return { valid: false, message: 'Please enter a password' };
+        if (password.length < 8) return { valid: false, message: 'Password must be at least 8 characters' };
+        if (!/(?=.*[a-zA-Z])/.test(password)) return { valid: false, message: 'Password must contain letters' };
+        if (!/(?=.*[0-9])/.test(password)) return { valid: false, message: 'Password must contain numbers' };
         return { valid: true, message: '' };
       }
 
       document.querySelector('#reg-form-phone button:last-child').addEventListener('click', async function() {
         var phoneInput = document.querySelector('#reg-form-phone input[type="tel"]');
         var phone = phoneInput.value.trim();
-        if (!phone) { showRegError('请输入手机号码'); return; }
-        if (phone.length !== 11) { showRegError('请输入11位手机号码'); return; }
+        if (!phone) { showRegError('Please enter your phone number'); return; }
+        if (phone.length !== 11) { showRegError('Please enter an 11-digit phone number'); return; }
 
         try {
           await moyuyoAPI.post('/api/v1/user/sms/send', {
@@ -424,15 +424,15 @@
           startRegCodeTimer(this);
           clearRegError();
         } catch (e) {
-          showRegError('发送验证码失败');
+          showRegError('Failed to send verification code');
         }
       });
 
       document.querySelector('#reg-form-email button').addEventListener('click', async function() {
         var emailInput = document.querySelector('#reg-form-email input[type="email"]');
         var email = emailInput.value.trim();
-        if (!email) { showRegError('请输入邮箱地址'); return; }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showRegError('邮箱格式不正确'); return; }
+        if (!email) { showRegError('Please enter your email address'); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showRegError('Invalid email format'); return; }
 
         try {
           await moyuyoAPI.post('/api/v1/user/email/send', {
@@ -442,28 +442,28 @@
           startRegCodeTimer(this);
           clearRegError();
         } catch (e) {
-          showRegError('发送验证码失败');
+          showRegError('Failed to send verification code');
         }
       });
 
       document.querySelector('button[data-dom-id="cta-register"]').addEventListener('click', async function() {
         clearRegError();
-        var nickname = document.querySelector('#reg-form-phone').parentElement.parentElement.querySelector('input[placeholder="设置昵称"]').value.trim();
+        var nickname = document.querySelector('#reg-form-phone').parentElement.parentElement.querySelector('input[placeholder="Set nickname"]').value.trim();
         var password = document.getElementById('reg-password').value;
         var confirmPassword = document.getElementById('reg-confirm-password').value;
 
-        if (!nickname) { showRegError('请设置昵称'); return; }
+        if (!nickname) { showRegError('Please set a nickname'); return; }
 
         var pwdCheck = checkPasswordStrength(password);
         if (!pwdCheck.valid) { showRegError(pwdCheck.message); return; }
 
-        if (password !== confirmPassword) { showRegError('两次输入的密码不一致'); return; }
+        if (password !== confirmPassword) { showRegError('Passwords do not match'); return; }
 
         var selectedPets = [];
         document.querySelectorAll('.pet-chip[data-active="true"]').forEach(function(chip) {
           selectedPets.push(chip.getAttribute('data-pet'));
         });
-        if (selectedPets.length === 0) { showRegError('请选择宠物类型'); return; }
+        if (selectedPets.length === 0) { showRegError('Please select a pet type'); return; }
 
         setRegLoading(true);
 
@@ -482,20 +482,20 @@
             registerData.phone = document.querySelector('#reg-form-phone input[type="tel"]').value.trim();
             registerData.countryCode = '+86';
             registerData.code = document.querySelector('#reg-form-phone input[type="text"]').value.trim();
-            if (!registerData.code) { showRegError('请输入验证码'); setRegLoading(false); return; }
+            if (!registerData.code) { showRegError('Please enter verification code'); setRegLoading(false); return; }
 
             var res = await moyuyoAPI.post('/api/v1/user/register/phone', registerData, { skipSign: true });
             handleRegResult(res);
           } else {
             registerData.email = document.querySelector('#reg-form-email input[type="email"]').value.trim();
             registerData.code = document.querySelector('#reg-form-email input[type="text"]').value.trim();
-            if (!registerData.code) { showRegError('请输入验证码'); setRegLoading(false); return; }
+            if (!registerData.code) { showRegError('Please enter verification code'); setRegLoading(false); return; }
 
             var res = await moyuyoAPI.post('/api/v1/user/register/email', registerData, { skipSign: true });
             handleRegResult(res);
           }
         } catch (e) {
-          showRegError('网络错误，请检查网络连接');
+          showRegError('Network error, please check your connection');
         }
         setRegLoading(false);
       });
@@ -505,18 +505,18 @@
           localStorage.setItem('moyuyo_reg_email', res.data.email || '');
           localStorage.setItem('moyuyo_reg_verify_expire', res.data.verifyEmailExpire || '');
           showRegError('');
-          alert('注册成功！请验证邮箱后登录');
+          alert('Registration successful! Please verify your email and log in.');
           window.location.href = 'login.html';
         } else if (res.code === 1101) {
-          showRegError('该邮箱已被注册');
+          showRegError('This email is already registered');
         } else if (res.code === 1102) {
-          showRegError('密码强度不足（至少8位，需包含字母和数字）');
+          showRegError('Weak password (min. 8 characters, must include letters and numbers)');
         } else if (res.code === 1103) {
-          showRegError('未满最低年龄限制');
+          showRegError('You do not meet the minimum age requirement');
         } else if (res.code === 1104) {
-          showRegError('必须同意用户协议与隐私政策');
+          showRegError('You must agree to the Terms of Service and Privacy Policy');
         } else {
-          showRegError(res.message || '注册失败，请重试');
+          showRegError(res.message || 'Registration failed, please try again');
         }
       }
 
@@ -530,7 +530,7 @@
       });
     </script>
 
-    <!-- 入场动画 + reduced-motion -->
+    <!-- Entrance animation + reduced-motion -->
     <style>
       @keyframes cardEnter {
         from {
