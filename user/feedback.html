@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Untitled</title>
+    <title>MOYUYO - Feedback &amp; Suggestions</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -20,83 +20,83 @@
 </head>
 <body class="min-h-screen font-sans antialiased">
     <main class="pb-24">
-      <!-- 顶部导航栏 -->
+      <!-- Top Navigation Bar -->
       <header class="sticky top-0 z-30 flex h-11 items-center border-b border-[var(--border)] bg-[var(--background)]/95 px-4 backdrop-blur">
-        <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" aria-label="返回">
+        <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" aria-label="Back">
           <span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
         </button>
-        <h1 class="min-w-0 flex-1 text-center text-[16px] font-semibold tracking-[-0.02em] text-[var(--foreground)]">意见反馈</h1>
+        <h1 class="min-w-0 flex-1 text-center text-[16px] font-semibold tracking-[-0.02em] text-[var(--foreground)]">Feedback &amp; Suggestions</h1>
         <div class="w-8"></div>
       </header>
 
-      <!-- 页面内容区 -->
+      <!-- Page Content Area -->
       <div class="px-4 pt-5">
 
-        <!-- 反馈类型选择 -->
+        <!-- Feedback Type Selection -->
         <section id="feedback-type-section" class="mb-5">
-          <h2 class="mb-3 text-[15px] font-semibold text-[var(--foreground)]">反馈类型</h2>
+          <h2 class="mb-3 text-[15px] font-semibold text-[var(--foreground)]">Feedback Type</h2>
           <div class="flex flex-wrap gap-2">
-            <button data-type="功能Bug" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--primary)] px-3 text-[13px] font-medium text-[var(--primary-foreground)] transition-colors duration-150">功能Bug</button>
-            <button data-type="体验建议" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">体验建议</button>
-            <button data-type="商品问题" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">商品问题</button>
-            <button data-type="物流问题" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">物流问题</button>
-            <button data-type="其他" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">其他</button>
+            <button data-type="Bug Report" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--primary)] px-3 text-[13px] font-medium text-[var(--primary-foreground)] transition-colors duration-150">Bug Report</button>
+            <button data-type="Suggestion" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">Suggestion</button>
+            <button data-type="Product Issue" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">Product Issue</button>
+            <button data-type="Shipping Issue" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">Shipping Issue</button>
+            <button data-type="Other" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">Other</button>
           </div>
         </section>
 
-        <!-- 问题描述 -->
+        <!-- Issue Description -->
         <section class="mb-5">
           <div class="rounded-xl border border-[var(--border)] bg-[var(--card)]">
-            <textarea id="feedback-content" class="w-full resize-none bg-transparent px-3 py-3 text-[14px] leading-[1.6] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]" rows="6" placeholder="请详细描述您遇到的问题或建议..." maxlength="500"></textarea>
+            <textarea id="feedback-content" class="w-full resize-none bg-transparent px-3 py-3 text-[14px] leading-[1.6] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]" rows="6" placeholder="Please describe your issue or suggestion in detail..." maxlength="500"></textarea>
             <div class="flex justify-end border-t border-[var(--border)] px-3 py-2">
               <span id="feedback-char-count" class="text-[12px] text-[var(--muted-foreground)]">0/500</span>
             </div>
           </div>
         </section>
 
-        <!-- 上传截图 -->
+        <!-- Upload Screenshots -->
         <section class="mb-5">
-          <h2 class="mb-3 text-[15px] font-semibold text-[var(--foreground)]">上传截图（选填，最多3张）</h2>
+          <h2 class="mb-3 text-[15px] font-semibold text-[var(--foreground)]">Upload Screenshots (optional, up to 3)</h2>
           <div class="flex gap-3">
-            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="上传截图">
+            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="Upload screenshot">
               <span data-icon class="h-6 w-6 text-[var(--muted-foreground)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg');"></span>
-              <span class="text-[11px] text-[var(--muted-foreground)]">添加</span>
+              <span class="text-[11px] text-[var(--muted-foreground)]">Add</span>
             </button>
-            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="上传截图">
+            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="Upload screenshot">
               <span data-icon class="h-6 w-6 text-[var(--muted-foreground)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg');"></span>
-              <span class="text-[11px] text-[var(--muted-foreground)]">添加</span>
+              <span class="text-[11px] text-[var(--muted-foreground)]">Add</span>
             </button>
-            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="上传截图">
+            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="Upload screenshot">
               <span data-icon class="h-6 w-6 text-[var(--muted-foreground)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg');"></span>
-              <span class="text-[11px] text-[var(--muted-foreground)]">添加</span>
+              <span class="text-[11px] text-[var(--muted-foreground)]">Add</span>
             </button>
           </div>
         </section>
 
-        <!-- 联系方式 -->
+        <!-- Contact Information -->
         <section class="mb-6">
           <div class="flex h-11 items-center rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 transition-colors duration-150 focus-within:border-[var(--ring)] focus-within:shadow-[0_0_0_1px_var(--ring)]">
             <span data-icon class="mr-2 h-4 w-4 shrink-0 text-[var(--icon-muted)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/mail.svg'); mask-image: url('../assets/icons/dl-builtin-apple/mail.svg');"></span>
-            <input id="feedback-contact" class="min-w-0 flex-1 border-0 bg-transparent text-[14px] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]" placeholder="联系方式（选填：手机号/邮箱，方便我们回复您）" />
+            <input id="feedback-contact" class="min-w-0 flex-1 border-0 bg-transparent text-[14px] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]" placeholder="Contact (optional: phone/email, so we can get back to you)" />
           </div>
         </section>
 
-        <!-- 历史反馈 -->
+        <!-- Feedback History -->
         <section>
           <div class="mb-3 flex items-center justify-between">
-            <h2 class="text-[15px] font-semibold text-[var(--foreground)]">历史反馈</h2>
-            <a href="#" class="text-[13px] font-medium text-[var(--primary)] transition-opacity duration-150 hover:opacity-70">查看全部</a>
+            <h2 class="text-[15px] font-semibold text-[var(--foreground)]">Feedback History</h2>
+            <a href="#" class="text-[13px] font-medium text-[var(--primary)] transition-opacity duration-150 hover:opacity-70">View All</a>
           </div>
           <div id="feedback-history-list" class="space-y-3">
-            <!-- 动态渲染 -->
+            <!-- Dynamically rendered -->
           </div>
         </section>
 
       </div>
 
-      <!-- 底部固定提交栏 -->
+      <!-- Bottom Fixed Submit Bar -->
       <div class="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--border)] bg-[var(--background)]/95 px-4 pb-[env(safe-area-inset-bottom,16px)] pt-3 backdrop-blur">
-        <button data-dom-id="cta-submit-feedback" class="btn btn-primary flex h-11 w-full items-center justify-center rounded-full px-6 text-[15px] font-semibold transition-transform duration-150 active:scale-[0.98]">提交反馈</button>
+        <button data-dom-id="cta-submit-feedback" class="btn btn-primary flex h-11 w-full items-center justify-center rounded-full px-6 text-[15px] font-semibold transition-transform duration-150 active:scale-[0.98]">Submit Feedback</button>
       </div>
     </main>
     <script src="shared/mock-api.js"></script>
@@ -105,9 +105,9 @@
       (function () {
         var api = window.moyuyoAPI;
 
-        // 反馈类型选择
+        // Feedback type selection
         var typeButtons = document.querySelectorAll('#feedback-type-section [data-type]');
-        var selectedType = '功能Bug';
+        var selectedType = 'Bug Report';
 
         typeButtons.forEach(function (btn) {
           btn.addEventListener('click', function () {
@@ -119,7 +119,7 @@
           });
         });
 
-        // 字数统计
+        // Character count
         var textarea = document.getElementById('feedback-content');
         var charCount = document.getElementById('feedback-char-count');
 
@@ -127,7 +127,7 @@
           charCount.textContent = textarea.value.length + '/500';
         });
 
-        // Toast 提示
+        // Toast notification
         function showToast(message) {
           var toast = document.createElement('div');
           toast.textContent = message;
@@ -144,7 +144,7 @@
           }, 2000);
         }
 
-        // 加载历史反馈
+        // Load feedback history
         function loadFeedbackHistory() {
           var listContainer = document.getElementById('feedback-history-list');
           api.get('/api/v1/feedback/list').then(function (res) {
@@ -172,20 +172,20 @@
               lucide.createIcons();
             }
           }).catch(function (err) {
-            console.error('加载反馈列表失败:', err);
+            console.error('Failed to load feedback list:', err);
           });
         }
 
         loadFeedbackHistory();
 
-        // 提交反馈
+        // Submit feedback
         var submitBtn = document.querySelector('[data-dom-id="cta-submit-feedback"]');
         var contactInput = document.getElementById('feedback-contact');
 
         submitBtn.addEventListener('click', function () {
           var content = textarea.value.trim();
           if (!content) {
-            showToast('请输入反馈内容');
+            showToast('Please enter your feedback');
             return;
           }
           var contact = contactInput.value.trim();
@@ -195,18 +195,18 @@
             contact: contact
           }).then(function (res) {
             if (res.code === 0 && res.data) {
-              showToast(res.data.message || '反馈已提交');
+              showToast(res.data.message || 'Feedback submitted');
               textarea.value = '';
               charCount.textContent = '0/500';
               contactInput.value = '';
               loadFeedbackHistory();
             }
           }).catch(function (err) {
-            console.error('提交反馈失败:', err);
+            console.error('Failed to submit feedback:', err);
           });
         });
 
-        // 返回按钮
+        // Back button
         var backBtn = document.querySelector('[data-dom-id="back-previous"]');
         backBtn.addEventListener('click', function () {
           window.history.back();

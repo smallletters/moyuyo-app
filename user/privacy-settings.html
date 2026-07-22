@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 隐私设置</title>
+    <title>MOYUYO - Privacy Settings</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -45,59 +45,59 @@
 <body class="min-h-screen font-sans antialiased" style="background-color: var(--background-200);">
     <main class="mx-auto max-w-[375px] min-h-screen" style="background-color: var(--background-200);">
 
-      <!-- 顶部导航栏 -->
+      <!-- Top Navigation Bar -->
       <header class="sticky top-0 z-30 flex items-center justify-center px-4" style="height: 44px; background-color: var(--background-50); border-bottom: 1px solid var(--border);">
-        <a href="settings.html" data-dom-id="cta-back" class="absolute left-4 inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 hover:opacity-70" aria-label="返回设置">
+        <a href="settings.html" data-dom-id="cta-back" class="absolute left-4 inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 hover:opacity-70" aria-label="Back to Settings">
           <i data-lucide="chevron-left" class="h-5 w-5" style="color: var(--brand-500);"></i>
         </a>
-        <h1 class="text-base font-semibold" style="color: var(--text-800); letter-spacing: -0.02em;">隐私设置</h1>
+        <h1 class="text-base font-semibold" style="color: var(--text-800); letter-spacing: -0.02em;">Privacy Settings</h1>
       </header>
 
       <div class="px-4 pt-4 pb-8 flex flex-col gap-4">
 
-        <!-- 隐私概览卡片 -->
+        <!-- Privacy Overview Card -->
         <section class="rounded-xl p-4 flex items-center gap-4" style="background-color: var(--state-success-surface); border: 1px solid var(--state-success);">
           <div class="shrink-0 w-11 h-11 rounded-full flex items-center justify-center" style="background-color: var(--state-success);">
             <i data-lucide="shield-check" class="h-5 w-5" style="color: var(--state-success-foreground);"></i>
           </div>
           <div class="flex flex-col gap-0.5">
-            <span class="text-sm font-semibold" style="color: var(--text-800);">您的隐私保护等级：高</span>
-            <span class="text-xs" style="color: var(--text-500);">上次检查：2026-07-01</span>
+            <span class="text-sm font-semibold" style="color: var(--text-800);">Your Privacy Protection Level: High</span>
+            <span class="text-xs" style="color: var(--text-500);">Last Checked: 2026-07-01</span>
           </div>
         </section>
 
-        <!-- 数据收集分组 -->
+        <!-- Data Collection Section -->
         <div>
-          <h2 class="px-1 pb-1.5 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-500);">数据收集</h2>
+          <h2 class="px-1 pb-1.5 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-500);">Data Collection</h2>
           <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);">
-            <!-- 个性化推荐 - 默认开 -->
+            <!-- Personalized Recommendations - Default On -->
             <div class="flex items-center justify-between px-4" style="height: 52px;">
-              <span class="text-sm font-medium" style="color: var(--text-800);">个性化推荐</span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Personalized Recommendations</span>
               <div class="relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer rounded-full transition-colors duration-200" style="background-color: var(--brand-500);">
                 <div class="absolute top-[2px] shadow-sm" style="left: 22px; width: 27px; height: 27px; border-radius: 999px; background-color: var(--background-50); transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.15);"></div>
               </div>
             </div>
             <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
-            <!-- 使用数据分析 - 默认开 -->
+            <!-- Usage Data Analytics - Default On -->
             <div class="flex items-center justify-between px-4" style="height: 52px;">
-              <span class="text-sm font-medium" style="color: var(--text-800);">使用数据分析</span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Usage Data Analytics</span>
               <div class="relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer rounded-full transition-colors duration-200" style="background-color: var(--brand-500);">
                 <div class="absolute top-[2px] shadow-sm" style="left: 22px; width: 27px; height: 27px; border-radius: 999px; background-color: var(--background-50); transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.15);"></div>
               </div>
             </div>
             <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
-            <!-- 位置信息收集 - 默认关 -->
+            <!-- Location Data Collection - Default Off -->
             <div class="flex items-center justify-between px-4" style="height: 52px;">
-              <span class="text-sm font-medium" style="color: var(--text-800);">位置信息收集</span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Location Data Collection</span>
               <div class="relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer rounded-full transition-colors duration-200" style="background-color: var(--background-300);">
                 <div class="absolute top-[2px]" style="left: 2px; width: 27px; height: 27px; border-radius: 999px; background-color: var(--background-50); transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.15);"></div>
               </div>
             </div>
             <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
-            <!-- 广告追踪限制 - 默认开 (iOS ATT) -->
+            <!-- Ad Tracking Limitation - Default On (iOS ATT) -->
             <div class="flex items-center justify-between px-4" style="height: 52px;">
               <div class="flex flex-col gap-0.5">
-                <span class="text-sm font-medium" style="color: var(--text-800);">广告追踪限制</span>
+                <span class="text-sm font-medium" style="color: var(--text-800);">Ad Tracking Limitation</span>
                 <span class="text-[11px]" style="color: var(--text-400);">iOS App Tracking Transparency</span>
               </div>
               <div class="relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer rounded-full transition-colors duration-200" style="background-color: var(--brand-500);">
@@ -107,36 +107,36 @@
           </section>
         </div>
 
-        <!-- 数据管理分组 -->
+        <!-- Data Management Section -->
         <div>
-          <h2 class="px-1 pb-1.5 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-500);">数据管理</h2>
+          <h2 class="px-1 pb-1.5 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-500);">Data Management</h2>
           <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);">
-            <!-- 下载我的数据 -->
+            <!-- Download My Data -->
             <a href="#" data-dom-id="cta-export-data" class="flex items-center justify-between px-4" style="height: 52px; text-decoration: none;">
               <div class="flex items-center gap-3">
                 <i data-lucide="download" class="w-5 h-5 shrink-0" style="color: var(--icon-600);"></i>
-                <span class="text-sm font-medium" style="color: var(--text-800);">下载我的数据</span>
+                <span class="text-sm font-medium" style="color: var(--text-800);">Download My Data</span>
               </div>
               <div class="flex items-center gap-1">
-                <span class="text-xs" style="color: var(--text-400);">导出 PDF/JSON</span>
+                <span class="text-xs" style="color: var(--text-400);">Export PDF/JSON</span>
                 <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
               </div>
             </a>
             <div style="height: 1px; background-color: var(--border); margin-left: 52px;"></div>
-            <!-- 清除浏览记录 -->
+            <!-- Clear Browsing History -->
             <a href="#" data-dom-id="cta-clear-history" class="flex items-center justify-between px-4" style="height: 52px; text-decoration: none;">
               <div class="flex items-center gap-3">
                 <i data-lucide="trash-2" class="w-5 h-5 shrink-0" style="color: var(--icon-600);"></i>
-                <span class="text-sm font-medium" style="color: var(--text-800);">清除浏览记录</span>
+                <span class="text-sm font-medium" style="color: var(--text-800);">Clear Browsing History</span>
               </div>
               <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
             </a>
             <div style="height: 1px; background-color: var(--border); margin-left: 52px;"></div>
-            <!-- 清除缓存 -->
+            <!-- Clear Cache -->
             <a href="#" data-dom-id="cta-clear-cache" class="flex items-center justify-between px-4" style="height: 52px; text-decoration: none;">
               <div class="flex items-center gap-3">
                 <i data-lucide="hard-drive" class="w-5 h-5 shrink-0" style="color: var(--icon-600);"></i>
-                <span class="text-sm font-medium" style="color: var(--text-800);">清除缓存</span>
+                <span class="text-sm font-medium" style="color: var(--text-800);">Clear Cache</span>
               </div>
               <div class="flex items-center gap-1">
                 <span class="text-sm" style="color: var(--text-500);">23.4 MB</span>
@@ -146,37 +146,37 @@
           </section>
         </div>
 
-        <!-- 通信偏好分组 -->
+        <!-- Communication Preferences Section -->
         <div>
-          <h2 class="px-1 pb-1.5 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-500);">通信偏好</h2>
+          <h2 class="px-1 pb-1.5 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-500);">Communication Preferences</h2>
           <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);">
-            <!-- 推送通知 - 默认开 -->
+            <!-- Push Notifications - Default On -->
             <div class="flex items-center justify-between px-4" style="height: 52px;">
-              <span class="text-sm font-medium" style="color: var(--text-800);">推送通知</span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Push Notifications</span>
               <div class="relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer rounded-full transition-colors duration-200" style="background-color: var(--brand-500);">
                 <div class="absolute top-[2px] shadow-sm" style="left: 22px; width: 27px; height: 27px; border-radius: 999px; background-color: var(--background-50); transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.15);"></div>
               </div>
             </div>
             <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
-            <!-- 邮件通知 - 默认开 -->
+            <!-- Email Notifications - Default On -->
             <div class="flex items-center justify-between px-4" style="height: 52px;">
-              <span class="text-sm font-medium" style="color: var(--text-800);">邮件通知</span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Email Notifications</span>
               <div class="relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer rounded-full transition-colors duration-200" style="background-color: var(--brand-500);">
                 <div class="absolute top-[2px] shadow-sm" style="left: 22px; width: 27px; height: 27px; border-radius: 999px; background-color: var(--background-50); transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.15);"></div>
               </div>
             </div>
             <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
-            <!-- 短信通知 - 默认关 -->
+            <!-- SMS Notifications - Default Off -->
             <div class="flex items-center justify-between px-4" style="height: 52px;">
-              <span class="text-sm font-medium" style="color: var(--text-800);">短信通知</span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">SMS Notifications</span>
               <div class="relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer rounded-full transition-colors duration-200" style="background-color: var(--background-300);">
                 <div class="absolute top-[2px]" style="left: 2px; width: 27px; height: 27px; border-radius: 999px; background-color: var(--background-50); transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.15);"></div>
               </div>
             </div>
             <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
-            <!-- 营销邮件 - 默认关 -->
+            <!-- Marketing Emails - Default Off -->
             <div class="flex items-center justify-between px-4" style="height: 52px;">
-              <span class="text-sm font-medium" style="color: var(--text-800);">营销邮件</span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Marketing Emails</span>
               <div class="relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer rounded-full transition-colors duration-200" style="background-color: var(--background-300);">
                 <div class="absolute top-[2px]" style="left: 2px; width: 27px; height: 27px; border-radius: 999px; background-color: var(--background-50); transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.15);"></div>
               </div>
@@ -184,38 +184,38 @@
           </section>
         </div>
 
-        <!-- 隐私政策分组 -->
+        <!-- Privacy Policies Section -->
         <div>
-          <h2 class="px-1 pb-1.5 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-500);">隐私政策</h2>
+          <h2 class="px-1 pb-1.5 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-500);">Privacy Policies</h2>
           <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);">
-            <!-- 隐私政策 -->
+            <!-- Privacy Policy -->
             <a href="about.html" class="flex items-center justify-between px-4" style="height: 52px; text-decoration: none;">
-              <span class="text-sm font-medium" style="color: var(--text-800);">隐私政策</span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Privacy Policy</span>
               <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
             </a>
             <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
-            <!-- 用户协议 -->
+            <!-- Terms of Service -->
             <a href="about.html" class="flex items-center justify-between px-4" style="height: 52px; text-decoration: none;">
-              <span class="text-sm font-medium" style="color: var(--text-800);">用户协议</span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Terms of Service</span>
               <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
             </a>
             <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
-            <!-- Cookie 政策 -->
+            <!-- Cookie Policy -->
             <a href="#" class="flex items-center justify-between px-4" style="height: 52px; text-decoration: none;">
-              <span class="text-sm font-medium" style="color: var(--text-800);">Cookie 政策</span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Cookie Policy</span>
               <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
             </a>
             <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
-            <!-- GDPR 权利说明 -->
+            <!-- GDPR Rights -->
             <a href="#" class="flex items-center justify-between px-4" style="height: 52px; text-decoration: none;">
-              <span class="text-sm font-medium" style="color: var(--text-800);">GDPR 权利说明</span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">GDPR Rights</span>
               <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
             </a>
           </section>
         </div>
 
-        <!-- 底部合规提示 -->
-        <p class="pt-2 text-center text-xs" style="color: var(--text-400);">最后更新于 2026-07-01 · 符合 GDPR &amp; CCPA 规范</p>
+        <!-- Footer Compliance Notice -->
+        <p class="pt-2 text-center text-xs" style="color: var(--text-400);">Last updated on 2026-07-01 · GDPR &amp; CCPA Compliant</p>
 
       </div>
 
@@ -225,7 +225,7 @@
     <script>
       lucide.createIcons();
 
-      // GDPR 数据导出
+      // GDPR Data Export
       var exportBtn = document.querySelector('[data-dom-id="cta-export-data"]');
       if (exportBtn) {
         exportBtn.addEventListener('click', async function (e) {
@@ -239,14 +239,14 @@
             var res = await moyuyoAPI.post('/api/v1/user/data/export');
             if (res.code === 0) {
               if (statusEl) statusEl.textContent = 'Exported! Check your email';
-              setTimeout(function () { if (statusEl) statusEl.textContent = '导出 PDF/JSON'; exportBtn.style.opacity = '1'; exportBtn.style.pointerEvents = 'auto'; }, 3000);
+              setTimeout(function () { if (statusEl) statusEl.textContent = 'Export PDF/JSON'; exportBtn.style.opacity = '1'; exportBtn.style.pointerEvents = 'auto'; }, 3000);
             } else {
               if (statusEl) statusEl.textContent = 'Failed';
               exportBtn.style.opacity = '1';
               exportBtn.style.pointerEvents = 'auto';
             }
           } catch (e) {
-            if (statusEl) statusEl.textContent = '导出 PDF/JSON';
+            if (statusEl) statusEl.textContent = 'Export PDF/JSON';
             exportBtn.style.opacity = '1';
             exportBtn.style.pointerEvents = 'auto';
           }

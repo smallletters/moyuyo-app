@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 地址管理</title>
+    <title>MOYUYO - Address Management</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -21,32 +21,32 @@
 <body class="min-h-screen font-sans antialiased">
     <main class="min-h-screen" style="background-color: var(--background-200);">
 
-      <!-- 顶部导航栏 -->
+      <!-- Top navigation bar -->
       <header class="sticky top-0 z-30 border-b" style="border-color: var(--border); background-color: var(--background-50);">
         <div class="flex h-11 items-center px-4">
-          <!-- 返回按钮 -->
-          <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center" style="border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--background-50); color: var(--foreground); cursor: pointer; transition: background-color 0.16s ease;" aria-label="返回" onmouseover="this.style.backgroundColor='var(--secondary)'" onmouseout="this.style.backgroundColor='var(--background-50)'">
+          <!-- Back button -->
+          <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center" style="border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--background-50); color: var(--foreground); cursor: pointer; transition: background-color 0.16s ease;" aria-label="Back" onmouseover="this.style.backgroundColor='var(--secondary)'" onmouseout="this.style.backgroundColor='var(--background-50)'">
             <i data-lucide="chevron-left" class="h-4 w-4"></i>
           </button>
-          <!-- 居中标题 -->
+          <!-- Centered title -->
           <div class="min-w-0 flex-1 text-center text-base font-semibold" style="color: var(--text-800); letter-spacing: -0.02em;">
-            收货地址
+            Shipping Address
           </div>
-          <!-- 右侧占位平衡区域 -->
+          <!-- Right placeholder for balance -->
           <div class="w-8"></div>
         </div>
       </header>
 
-      <!-- 地址列表区域 -->
+      <!-- Address list area -->
       <div id="address-list-container" class="flex flex-col gap-3 p-4">
-        <!-- 由 JavaScript 动态渲染 -->
+        <!-- Rendered dynamically by JavaScript -->
       </div>
 
-      <!-- 底部新增地址按钮 -->
+      <!-- Bottom add address button -->
       <div class="p-4">
         <button data-dom-id="cta-add-address" class="flex w-full items-center justify-center whitespace-nowrap" style="height: 44px; border: 1px solid var(--brand-500); border-radius: 999px; background: transparent; color: var(--brand-500); font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.18s ease, color 0.18s ease;" onmouseover="this.style.backgroundColor='var(--brand-100)'; this.style.color='var(--brand-500)'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--brand-500)'" onfocus="this.style.outline='2px solid var(--ring)'; this.style.outlineOffset='2px'" onblur="this.style.outline='none'">
           <i data-lucide="plus" class="mr-1.5 h-4 w-4"></i>
-          新增收货地址
+          Add New Address
         </button>
       </div>
 
@@ -56,7 +56,7 @@
     <script>
       lucide.createIcons();
 
-      // Toast 提示
+      // Toast notification
       function showToast(msg) {
         var t = document.createElement('div');
         t.textContent = msg;
@@ -71,7 +71,7 @@
         setTimeout(function() { t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 2000);
       }
 
-      // ===== 地址数据管理 =====
+      // ===== Address data management =====
       function getAddresses() {
         try { return JSON.parse(localStorage.getItem('moyuyo_addresses')) || []; } catch(e) { return []; }
       }
@@ -82,13 +82,13 @@
         return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
       }
 
-      // ===== 渲染地址列表 =====
+      // ===== Render address list =====
       function renderAddressList() {
         var container = document.getElementById('address-list-container');
         var list = getAddresses();
 
         if (list.length === 0) {
-          container.innerHTML = '<div class="flex flex-col items-center justify-center py-16"><i data-lucide="map-pin" class="w-10 h-10 mb-3" style="color: var(--icon-300);"></i><p class="text-sm" style="color: var(--text-400);">暂无收货地址</p><p class="text-xs mt-1" style="color: var(--text-400);">点击下方按钮添加新地址</p></div>';
+          container.innerHTML = '<div class="flex flex-col items-center justify-center py-16"><i data-lucide="map-pin" class="w-10 h-10 mb-3" style="color: var(--icon-300);"></i><p class="text-sm" style="color: var(--text-400);">No shipping address yet</p><p class="text-xs mt-1" style="color: var(--text-400);">Click the button below to add a new address</p></div>';
           lucide.createIcons();
           return;
         }
@@ -105,13 +105,13 @@
             '<div class="flex items-center gap-2">' +
             '<span class="text-sm font-semibold" style="color: var(--text-800);">' + escapeHtml(addr.name) + '</span>' +
             '<span class="text-sm" style="color: var(--text-500);">' + escapeHtml(addr.phone) + '</span>' +
-            (isDefault ? '<span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium whitespace-nowrap" style="background-color: var(--brand-100); color: var(--brand-500); border-radius: 999px; height: 20px;">默认</span>' : '') +
+            (isDefault ? '<span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium whitespace-nowrap" style="background-color: var(--brand-100); color: var(--brand-500); border-radius: 999px; height: 20px;">Default</span>' : '') +
             '</div>' +
             '<p class="text-sm leading-relaxed" style="color: var(--text-500);">' + escapeHtml(addr.fullAddress) + '</p></div>' +
             '<div class="flex shrink-0 items-center gap-1">' +
-            '<button data-action="edit" class="inline-flex h-8 w-8 items-center justify-center" style="border-radius: calc(var(--radius) * 0.6); color: var(--icon-muted); cursor: pointer; transition: background-color 0.16s ease, color 0.16s ease;" aria-label="编辑" onmouseover="this.style.backgroundColor=\'var(--background-200)\'; this.style.color=\'var(--brand-500)\'" onmouseout="this.style.backgroundColor=\'transparent\'; this.style.color=\'var(--icon-muted)\'">' +
+            '<button data-action="edit" class="inline-flex h-8 w-8 items-center justify-center" style="border-radius: calc(var(--radius) * 0.6); color: var(--icon-muted); cursor: pointer; transition: background-color 0.16s ease, color 0.16s ease;" aria-label="Edit" onmouseover="this.style.backgroundColor=\'var(--background-200)\'; this.style.color=\'var(--brand-500)\'" onmouseout="this.style.backgroundColor=\'transparent\'; this.style.color=\'var(--icon-muted)\'">' +
             '<i data-lucide="pencil" class="h-4 w-4"></i></button>' +
-            '<button data-action="delete" class="inline-flex h-8 w-8 items-center justify-center" style="border-radius: calc(var(--radius) * 0.6); color: var(--icon-muted); cursor: pointer; transition: background-color 0.16s ease, color 0.16s ease;" aria-label="删除" onmouseover="this.style.backgroundColor=\'var(--state-error-surface)\'; this.style.color=\'var(--state-error)\'" onmouseout="this.style.backgroundColor=\'transparent\'; this.style.color=\'var(--icon-muted)\'">' +
+            '<button data-action="delete" class="inline-flex h-8 w-8 items-center justify-center" style="border-radius: calc(var(--radius) * 0.6); color: var(--icon-muted); cursor: pointer; transition: background-color 0.16s ease, color 0.16s ease;" aria-label="Delete" onmouseover="this.style.backgroundColor=\'var(--state-error-surface)\'; this.style.color=\'var(--state-error)\'" onmouseout="this.style.backgroundColor=\'transparent\'; this.style.color=\'var(--icon-muted)\'">' +
             '<i data-lucide="trash-2" class="h-4 w-4"></i></button></div></article>';
         }
         container.innerHTML = html;
@@ -119,16 +119,16 @@
         bindAddressEvents();
       }
 
-      // HTML 转义
+      // HTML escaping
       function escapeHtml(str) {
         var div = document.createElement('div');
         div.textContent = str || '';
         return div.innerHTML;
       }
 
-      // ===== 绑定地址卡片事件 =====
+      // ===== Bind address card events =====
       function bindAddressEvents() {
-        // 编辑按钮
+        // Edit button
         document.querySelectorAll('[data-action="edit"]').forEach(function(btn) {
           btn.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -136,13 +136,13 @@
             window.location.href = 'address-edit.html?id=' + id;
           });
         });
-        // 删除按钮
+        // Delete button
         document.querySelectorAll('[data-action="delete"]').forEach(function(btn) {
           btn.addEventListener('click', function(e) {
             e.stopPropagation();
             var article = this.closest('[data-addr-id]');
             var id = article.getAttribute('data-addr-id');
-            if (confirm('确定要删除该地址吗？')) {
+            if (confirm('Are you sure you want to delete this address?')) {
               var list = getAddresses();
               var idx = -1;
               for (var i = 0; i < list.length; i++) {
@@ -152,12 +152,12 @@
                 list.splice(idx, 1);
                 saveAddresses(list);
                 renderAddressList();
-                showToast('地址已删除');
+                showToast('Address deleted');
               }
             }
           });
         });
-        // 点击设为默认
+        // Click to set as default
         document.querySelectorAll('[data-addr-id]').forEach(function(card) {
           card.addEventListener('click', function() {
             var id = this.getAttribute('data-addr-id');
@@ -167,15 +167,15 @@
             }
             saveAddresses(list);
             renderAddressList();
-            showToast('已设为默认地址');
+            showToast('Set as default address');
           });
         });
       }
 
-      // ===== 初始化 =====
+      // ===== Initialization =====
       renderAddressList();
 
-      // 从 API 加载地址
+      // Load addresses from API
       (async function () {
         try {
           var res = await moyuyoAPI.get('/api/v1/address/list');
@@ -201,12 +201,12 @@
         }
       })();
 
-      // 返回按钮
+      // Back button
       document.getElementById('back-previous') && document.getElementById('back-previous').addEventListener('click', function() {
         window.history.length > 1 ? window.history.back() : window.location.href = 'settings.html';
       });
 
-      // 新增地址
+      // Add new address
       document.querySelector('[data-dom-id="cta-add-address"]').addEventListener('click', function() {
         window.location.href = 'address-edit.html';
       });
