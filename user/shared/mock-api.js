@@ -914,6 +914,130 @@
       });
     },
 
+    // ===== 社区模块 =====
+
+    'GET /api/v1/community/feed': function(body, url) {
+      var category = url.match(/category=(\w+)/);
+      category = category ? category[1] : 'ALL';
+      var allPosts = [
+        {
+          id: 'post-1', title: '第一次带猫猫去宠物医院，这些准备你一定要做好', author: { name: '养猫的小确幸', avatar: '', isVIP: true }, pet: '团子',
+          cover: '', tags: ['宠物日常', '养猫经验'], ipTags: ['MILO', 'OLIVE'],
+          likes: 328, comments: 56, stars: 142, time: '3小时前', category: 'EXPERIENCE',
+          isLiked: false, isStarred: false
+        },
+        {
+          id: 'post-2', title: 'MOYUYO 新出的宠物洗护套装也太好用了吧！', author: { name: '狗狗控小王', avatar: '', isVIP: false }, pet: '豆豆',
+          cover: '', tags: ['好物分享', '洗护'], ipTags: ['MILO'],
+          likes: 215, comments: 43, stars: 89, time: '5小时前', category: 'SHARE',
+          isLiked: false, isStarred: false
+        },
+        {
+          id: 'post-3', title: '周末带旺财去郊游，找到了超棒的宠物友好公园', author: { name: '户外达人阿杰', avatar: '', isVIP: false }, pet: '旺财',
+          cover: '', tags: ['户外', '宠物友好'], ipTags: ['OLIVE', 'LUNA'],
+          likes: 156, comments: 28, stars: 67, time: '8小时前', category: 'LIFE',
+          isLiked: false, isStarred: false
+        },
+        {
+          id: 'post-4', title: '猫咪行为解读：为什么猫咪总是把东西推下桌子？', author: { name: '宠物营养师Lucy', avatar: '', isVIP: true, isVerified: true }, pet: '团子',
+          cover: '', tags: ['科普', '猫咪行为'], ipTags: ['MILO'],
+          likes: 492, comments: 87, stars: 203, time: '12小时前', category: 'SCIENCE',
+          isLiked: false, isStarred: false
+        },
+        {
+          id: 'post-5', title: '狗狗换毛季来了！这几款梳子亲测好用', author: { name: '金毛妈咪', avatar: '', isVIP: false }, pet: '旺财',
+          cover: '', tags: ['好物分享', '换毛季'], ipTags: ['OLIVE'],
+          likes: 189, comments: 35, stars: 76, time: '1天前', category: 'SHARE',
+          isLiked: false, isStarred: false
+        },
+        {
+          id: 'post-6', title: '宠物体检全攻略：不同年龄段该查什么？', author: { name: '兽医小张', avatar: '', isVIP: true, isVerified: true }, pet: '豆豆',
+          cover: '', tags: ['科普', '体检'], ipTags: ['MILO', 'LUNA'],
+          likes: 367, comments: 62, stars: 145, time: '1天前', category: 'SCIENCE',
+          isLiked: false, isStarred: false
+        },
+        {
+          id: 'post-7', title: '新手养狗必看！从选品种到日常护理全攻略', author: { name: '新手铲屎官', avatar: '', isVIP: false }, pet: '旺财',
+          cover: '', tags: ['新手', '养狗'], ipTags: ['OLIVE'],
+          likes: 278, comments: 51, stars: 112, time: '2天前', category: 'EXPERIENCE',
+          isLiked: false, isStarred: false
+        },
+        {
+          id: 'post-8', title: '自制宠物零食：鸡肉干&胡萝卜脆片', author: { name: '宠物烘焙师', avatar: '', isVIP: true }, pet: '团子',
+          cover: '', tags: ['DIY', '零食'], ipTags: ['MILO'],
+          likes: 198, comments: 41, stars: 88, time: '2天前', category: 'LIFE',
+          isLiked: false, isStarred: false
+        }
+      ];
+
+      var filtered = category === 'ALL' ? allPosts : allPosts.filter(function(p) { return p.category === category; });
+      return success({ posts: filtered, total: allPosts.length, page: 1, pageSize: 20 });
+    },
+
+    'GET /api/v1/community/topics': function() {
+      return success({
+        topics: [
+          { id: 't1', name: '好物分享', icon: 'star', count: 2340, color: 'brand' },
+          { id: 't2', name: '养宠经验', icon: 'lightbulb', count: 1890, color: 'warning' },
+          { id: 't3', name: '萌宠日常', icon: 'camera', count: 3210, color: 'success' },
+          { id: 't4', name: '科普知识', icon: 'book-open', count: 1560, color: 'brand' },
+          { id: 't5', name: '户外活动', icon: 'map-pin', count: 890, color: 'success' },
+          { id: 't6', name: '求助问答', icon: 'help-circle', count: 670, color: 'warning' }
+        ]
+      });
+    },
+
+    'GET /api/v1/post/[^/?]+$': function(body, url) {
+      var id = url.match(/\/post\/([^/?]+)/)[1];
+      return success({
+        id: id,
+        title: '第一次带猫猫去宠物医院，这些准备你一定要做好',
+        author: { name: '养猫的小确幸', avatar: '', isVIP: true, level: 'PRIME', followers: 1280 },
+        pet: '团子',
+        content: '<p>上周带团子去做了第一次全面体检，分享一下经验给新手铲屎官们。其实只要提前做好准备，整个流程会比想象中顺利很多。</p><p>首先最重要的是选对医院。建议提前在网上看评价，选择有正规资质的宠物医院。可以关注医院的环境是否干净、医生的态度是否专业耐心。</p><p>出发前记得带上猫咪常用的毯子或玩具，这样能帮助它在陌生环境中保持安全感。如果有之前的疫苗本或健康记录，也一并带去方便医生了解情况。</p><p>费用方面，基础体检一般在 200-500 之间，如果需要额外检查可能会更高。建议提前和医生沟通好价格范围。</p>',
+        tags: ['宠物日常', '养猫经验'],
+        ipTags: ['MILO', 'OLIVE'],
+        images: 6,
+        likes: 328, comments: 56, stars: 142, shares: 23,
+        time: '3小时前',
+        isLiked: false, isStarred: false, isFollowed: false,
+        linkedProduct: { id: '101', name: '宠物便携航空箱 标准款', price: 25900, originalPrice: 35900 }
+      });
+    },
+
+    'GET /api/v1/post/[^/?]+/comments': function(body, url) {
+      return success({
+        total: 56,
+        comments: [
+          { id: 'c1', author: { name: '猫咪控小美', avatar: '', isVIP: false }, content: '超级实用！我家猫第一次去医院的时候紧张得不行，早看到这篇就好了。下次一定提前准备。', time: '2小时前', likes: 12, isLiked: false },
+          { id: 'c2', author: { name: '铲屎官日记', avatar: '', isVIP: false }, content: '请问体检大概需要多长时间？我预约的下午三点，担心来不及。', time: '1小时前', likes: 5, isLiked: false },
+          { id: 'c3', author: { name: '宠物营养师Lucy', avatar: '', isVIP: true, isVerified: true }, content: '补充一下，体检前最好让猫咪空腹 6-8 小时，这样血液检查结果更准确。另外幼猫和老年猫建议半年体检一次。', time: '45分钟前', likes: 28, isLiked: false },
+          { id: 'c4', author: { name: '爱宠达人', avatar: '', isVIP: false }, content: '收藏了！正好下周要带我家猫去做体检，太及时了', time: '30分钟前', likes: 3, isLiked: false },
+          { id: 'c5', author: { name: '喵星人守护者', avatar: '', isVIP: false }, content: '请问体检前需要禁食吗？看到有人说要空腹，有人说不用...', time: '15分钟前', likes: 1, isLiked: false }
+        ]
+      });
+    },
+
+    'POST /api/v1/post/create': function(body) {
+      return success({ id: 'post-' + Date.now(), created: true, message: '笔记发布成功' });
+    },
+
+    'GET /api/v1/collection/list': function() {
+      return success({
+        collections: [
+          { id: 'col-1', name: '猫咪洗澡教程', desc: '从准备工作到沐浴技巧，手把手教你给猫咪洗澡', postCount: 5, followers: 128, updatedAt: '3天前', cover: 'cat' },
+          { id: 'col-2', name: '狗狗穿搭灵感', desc: '四季潮流搭配，让你的狗狗成为街拍明星', postCount: 3, followers: 56, updatedAt: '1周前', cover: 'dog' },
+          { id: 'col-3', name: '宠物健康食谱', desc: '自制营养餐食，为毛孩子提供均衡膳食', postCount: 7, followers: 203, updatedAt: '5天前', cover: 'salad' }
+        ],
+        official: [
+          { id: 'oc-1', name: '新手养宠指南', desc: '从入门到精通的养宠手册', postCount: 12, cover: 'book-open' },
+          { id: 'oc-2', name: '洗护百科全书', desc: '科学洗护让宠物更健康', postCount: 8, cover: 'droplets' },
+          { id: 'oc-3', name: '训练小课堂', desc: '简单实用的训练技巧', postCount: 6, cover: 'graduation-cap' }
+        ],
+        total: 3
+      });
+    },
+
     'POST /api/v1/favorites/toggle': function(body) {
       var token = localStorage.getItem('moyuyo_access_token');
       if (!token || !mockDB.tokens[token]) {

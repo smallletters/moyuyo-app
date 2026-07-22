@@ -143,6 +143,72 @@
       <div class="h-[env(safe-area-inset-bottom,0px)]"></div>
 
     </main>
-    <script>lucide.createIcons();</script>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      (function() {
+        var api = window.moyuyoAPI;
+
+        // === 字数统计 ===
+        var textarea = document.querySelector('textarea');
+        var countSpan = document.querySelector('span.text-xs');
+        if (textarea && countSpan) {
+          textarea.addEventListener('input', function() {
+            var len = textarea.value.length;
+            countSpan.textContent = len + '/2000';
+          });
+        }
+
+        // === 取消按钮 ===
+        var backBtn = document.querySelector('[data-dom-id="back-previous"]');
+        if (backBtn) {
+          backBtn.addEventListener('click', function() {
+            window.history.back();
+          });
+        }
+
+        // === 发布按钮 ===
+        var publishBtns = document.querySelectorAll('[data-dom-id="cta-publish"]');
+        publishBtns.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var titleInput = document.querySelector('input[aria-label="笔记标题"]');
+            var title = titleInput ? titleInput.value.trim() : '';
+            var content = textarea ? textarea.value.trim() : '';
+
+            if (!title && !content) {
+              alert('请输入标题或内容');
+              return;
+            }
+
+            // 禁用按钮防止重复点击
+            publishBtns.forEach(function(b) { b.disabled = true; });
+
+            api.post('/api/v1/post/create', { title: title, content: content })
+              .then(function(res) {
+                if (res.code === 0) {
+                  // 显示 toast
+                  var toast = document.createElement('div');
+                  toast.textContent = '笔记发布成功！';
+                  toast.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:rgba(0,0,0,0.75);color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;pointer-events:none;';
+                  document.body.appendChild(toast);
+                  setTimeout(function() {
+                    window.location.href = 'community.html';
+                  }, 1500);
+                } else {
+                  alert(res.message || '发布失败，请重试');
+                  publishBtns.forEach(function(b) { b.disabled = false; });
+                }
+              })
+              .catch(function() {
+                alert('网络错误，请重试');
+                publishBtns.forEach(function(b) { b.disabled = false; });
+              });
+          });
+        });
+
+        // 确保 lucide 图标在动态渲染后刷新
+        lucide.createIcons();
+      })();
+    </script>
 </body>
 </html>
