@@ -204,6 +204,7 @@
       </section>
 
     </main>
+    <script src="shared/mock-api.js"></script>
     <script src="shared/api.js"></script><script>lucide.createIcons();</script>
   <script>
     (function () {
@@ -214,9 +215,8 @@
             var data = res.data;
             // 更新会员等级
             var levelSpan = document.querySelector('span[style*="border-radius: 999px"]');
-            if (levelSpan && data.level) {
-              var levelMap = { GOLD: '金卡会员', PLATINUM: '铂金会员', DIAMOND: '黑钻会员' };
-              levelSpan.textContent = levelMap[data.level] || data.level;
+            if (levelSpan && data.levelName) {
+              levelSpan.textContent = data.levelName;
             }
             // 更新昵称
             var nameEl = document.querySelector('.text-base.font-semibold');
@@ -225,16 +225,17 @@
             var avatarEl = document.querySelector('img[alt="用户头像"]');
             if (avatarEl && data.avatar) avatarEl.src = data.avatar;
             // 更新成长值进度
-            if (data.progress != null) {
+            if (data.levelProgress != null) {
               var progressBar = document.querySelector('.h-1\\.5.rounded-full div');
-              if (progressBar) progressBar.style.width = data.progress + '%';
+              if (progressBar) progressBar.style.width = data.levelProgress + '%';
               var progressText = document.querySelector('.text-xs.font-semibold');
-              if (progressText) progressText.textContent = data.progress + '%';
+              if (progressText) progressText.textContent = data.levelProgress + '%';
             }
             // 更新距下一级
-            if (data.toNextLevel != null) {
+            if (data.pointsToNext != null) {
               var nextEl = document.querySelector('.text-xs[style*="rgba(255,255,255,0.75)"]');
-              if (nextEl) nextEl.textContent = '距' + (data.nextLevel || '') + '还需 ' + Number(data.toNextLevel).toLocaleString() + ' 成长值';
+              var nextName = (data.nextLevels && data.nextLevels[0]) ? data.nextLevels[0].name : '下一级';
+              if (nextEl) nextEl.textContent = '距' + nextName + '还需 ' + Number(data.pointsToNext).toLocaleString() + ' 成长值';
             }
           }
         } catch (e) {

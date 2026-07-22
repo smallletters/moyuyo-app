@@ -681,6 +681,141 @@
       });
     },
 
+    // ===== 收藏模块 =====
+
+    'GET /api/v1/favorites/list': function() {
+      return success({
+        items: [
+          { id: 'fav-1', goods: { id: 101, slug: 'shampoo-set', name: '温和植物萃取宠物洗护套装', price: 12800, coverImage: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400&q=80' }, priceDrop: false },
+          { id: 'fav-2', goods: { id: 102, slug: 'pet-harness', name: '经典尼龙宠物牵引套装', price: 8900, coverImage: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&q=80' }, priceDrop: false },
+          { id: 'fav-3', goods: { id: 105, slug: 'pet-toy', name: '环保毛绒互动玩具球', price: 4500, coverImage: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=400&q=80' }, priceDrop: false },
+          { id: 'fav-4', goods: { id: 201, slug: 'pet-jacket', name: '设计师宠物机能风衣', price: 16800, originalPrice: 22800, coverImage: 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=400&q=80' }, priceDrop: true },
+          { id: 'fav-5', goods: { id: 202, slug: 'pet-carrier', name: '轻奢宠物外出航空包', price: 25900, coverImage: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&q=80' }, priceDrop: false },
+          { id: 'fav-6', goods: { id: 203, slug: 'pet-treats', name: '有机健康宠物零食礼盒', price: 5600, coverImage: 'https://images.unsplash.com/photo-1589924691195-41432c84c161?w=400&q=80' }, priceDrop: false }
+        ],
+        total: 12,
+        page: 1,
+        pageSize: 20
+      });
+    },
+
+    'POST /api/v1/favorites/remove': function(body) {
+      return success({ removed: true, favoriteId: body.favoriteId });
+    },
+
+    // ===== 会员模块 =====
+
+    'GET /api/v1/member/info': function() {
+      return success({
+        userId: 'u1',
+        level: 'GOLD',
+        levelName: '金卡会员',
+        levelIcon: 'crown',
+        points: 12850,
+        nextLevelPoints: 20000,
+        pointsToNext: 7150,
+        benefits: [
+          { id: 'b1', name: '全场9折', desc: '正价商品享9折优惠', icon: 'badge-percent', active: true },
+          { id: 'b2', name: '包邮', desc: '满99元免运费', icon: 'truck', active: true },
+          { id: 'b3', name: '生日礼', desc: '生日当月赠200积分', icon: 'gift', active: true },
+          { id: 'b4', name: '优先发货', desc: '金卡会员优先发货权', icon: 'zap', active: true },
+          { id: 'b5', name: '双倍积分', desc: '消费享双倍积分', icon: 'coins', active: false },
+          { id: 'b6', name: '专属客服', desc: '1对1宠物顾问', icon: 'headset', active: false }
+        ],
+        levelProgress: 64.2,
+        levelHistory: [
+          { level: 'SILVER', name: '银卡会员', achievedAt: '2025-06-15', icon: 'star' },
+          { level: 'GOLD', name: '金卡会员', achievedAt: '2026-01-20', icon: 'crown' }
+        ],
+        nextLevels: [
+          { level: 'PLATINUM', name: '铂金会员', pointsRequired: 20000, icon: 'trophy' },
+          { level: 'DIAMOND', name: '钻石会员', pointsRequired: 50000, icon: 'gem' }
+        ]
+      });
+    },
+
+    // ===== 积分模块 =====
+
+    'GET /api/v1/points/balance': function() {
+      return success({
+        total: 12850,
+        available: 12850,
+        frozen: 0,
+        expiring: 1200,
+        expireDate: '2026-09-15'
+      });
+    },
+
+    'GET /api/v1/points/records': function() {
+      return success({
+        records: [
+          { id: 'pr-1', type: 'EARN', title: '购物奖励', amount: 350, date: '2026-07-20', desc: '订单 #MOY17846830001' },
+          { id: 'pr-2', type: 'EARN', title: '每日签到', amount: 50, date: '2026-07-19', desc: '连续签到第7天' },
+          { id: 'pr-3', type: 'REDEEM', title: '兑换优惠券', amount: -500, date: '2026-07-18', desc: '满200减30券' },
+          { id: 'pr-4', type: 'EARN', title: '评价奖励', amount: 100, date: '2026-07-17', desc: '商品评价' },
+          { id: 'pr-5', type: 'EARN', title: '生日礼', amount: 200, date: '2026-07-15', desc: '会员生日积分' },
+          { id: 'pr-6', type: 'EARN', title: '购物奖励', amount: 280, date: '2026-07-10', desc: '订单 #MOY1784678005' },
+          { id: 'pr-7', type: 'REDEEM', title: '兑换商品', amount: -1000, date: '2026-07-05', desc: '宠物玩具球' },
+          { id: 'pr-8', type: 'EARN', title: '邀请好友', amount: 500, date: '2026-06-28', desc: '好友注册奖励' }
+        ],
+        total: 12850,
+        page: 1,
+        pageSize: 20
+      });
+    },
+
+    'GET /api/v1/points/mall': function() {
+      return success({
+        categories: [
+          { id: 'c1', name: '优惠券', icon: 'ticket' },
+          { id: 'c2', name: '实物商品', icon: 'gift' },
+          { id: 'c3', name: '虚拟卡券', icon: 'credit-card' },
+          { id: 'c4', name: '抽奖', icon: 'sparkles' }
+        ],
+        products: [
+          { id: 'pm-1', name: '满200减30优惠券', points: 500, stock: 100, image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=200&q=80', category: 'c1', sold: 2340 },
+          { id: 'pm-2', name: '满500减80优惠券', points: 1200, stock: 50, image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=200&q=80', category: 'c1', sold: 890 },
+          { id: 'pm-3', name: '宠物玩具球', points: 1000, stock: 30, image: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=200&q=80', category: 'c2', sold: 156 },
+          { id: 'pm-4', name: 'MOYUYO定制围巾', points: 3000, stock: 15, image: 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=200&q=80', category: 'c2', sold: 78 },
+          { id: 'pm-5', name: '星巴克宠物友好券', points: 800, stock: 200, image: 'https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=200&q=80', category: 'c3', sold: 450 },
+          { id: 'pm-6', name: '幸运大转盘抽奖', points: 100, stock: 999, image: 'https://images.unsplash.com/photo-1518895949257-7621c3fb1f8b?w=200&q=80', category: 'c4', sold: 5600 }
+        ]
+      });
+    },
+
+    // ===== 优惠券模块 =====
+
+    'GET /api/v1/coupon/list': function() {
+      return success({
+        stats: { total: 5, available: 3, used: 1, expired: 1 },
+        coupons: [
+          { id: 'cp-1', name: '满200减30', type: 'FULL_REDUCTION', threshold: 20000, discount: 3000, status: 'AVAILABLE', validFrom: '2026-07-01', validTo: '2026-08-31', desc: '正价商品可用', icon: 'ticket' },
+          { id: 'cp-2', name: '新用户专享8折', type: 'PERCENTAGE', threshold: 0, discount: 20, status: 'AVAILABLE', validFrom: '2026-07-15', validTo: '2026-08-15', desc: '最高减50元', icon: 'badge-percent' },
+          { id: 'cp-3', name: '宠物洗护满99减15', type: 'FULL_REDUCTION', threshold: 9900, discount: 1500, status: 'AVAILABLE', validFrom: '2026-07-01', validTo: '2026-07-31', desc: '限洗护品类', icon: 'droplets' },
+          { id: 'cp-4', name: '端午满300减50', type: 'FULL_REDUCTION', threshold: 30000, discount: 5000, status: 'USED', validFrom: '2026-06-01', validTo: '2026-06-30', usedAt: '2026-06-20', desc: '已使用', icon: 'ticket' },
+          { id: 'cp-5', name: '五一满100减20', type: 'FULL_REDUCTION', threshold: 10000, discount: 2000, status: 'EXPIRED', validFrom: '2026-05-01', validTo: '2026-05-07', desc: '已过期', icon: 'ticket' }
+        ]
+      });
+    },
+
+    'GET /api/v1/coupon/center': function() {
+      return success({
+        todayNew: 3,
+        claimable: [
+          { id: 'cc-1', name: '新人满99减20', type: 'FULL_REDUCTION', threshold: 9900, discount: 2000, stock: 500, claimed: 320, validDays: 30, icon: 'badge-percent', desc: '全场通用' },
+          { id: 'cc-2', name: '宠物零食8折券', type: 'PERCENTAGE', threshold: 0, discount: 20, stock: 200, claimed: 156, validDays: 15, icon: 'cookie', desc: '限零食品类' },
+          { id: 'cc-3', name: '满300减50', type: 'FULL_REDUCTION', threshold: 30000, discount: 5000, stock: 100, claimed: 67, validDays: 30, icon: 'ticket', desc: '全场通用' },
+          { id: 'cc-4', name: '满500减100', type: 'FULL_REDUCTION', threshold: 50000, discount: 10000, stock: 50, claimed: 23, validDays: 30, icon: 'ticket', desc: '全场通用' },
+          { id: 'cc-5', name: '宠物洗护9折', type: 'PERCENTAGE', threshold: 0, discount: 10, stock: 300, claimed: 189, validDays: 15, icon: 'droplets', desc: '限洗护品类' },
+          { id: 'cc-6', name: '会员专享满200减40', type: 'FULL_REDUCTION', threshold: 20000, discount: 4000, stock: 100, claimed: 45, validDays: 30, icon: 'crown', desc: '金卡及以上可用' }
+        ]
+      });
+    },
+
+    'POST /api/v1/coupon/claim': function(body) {
+      return success({ claimed: true, couponId: body.couponId, name: body.couponName || '优惠券' });
+    },
+
     'POST /api/v1/favorites/toggle': function(body) {
       var token = localStorage.getItem('moyuyo_access_token');
       if (!token || !mockDB.tokens[token]) {

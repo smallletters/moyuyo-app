@@ -85,132 +85,7 @@
       </div>
 
       <!-- 优惠券列表 -->
-      <section class="px-4 mt-4 flex flex-col gap-3" aria-label="可领取优惠券">
-
-        <!-- 券1: 新人专享 - 首单8折 -->
-        <article class="coupon-card rounded-2xl p-4 flex gap-4" style="background: var(--background-50); box-shadow: var(--shadow-sm);" data-category="new">
-          <!-- 左侧: 面额区域 -->
-          <div class="flex flex-col items-center justify-center min-w-[80px]">
-            <span class="text-[10px] font-medium" style="color: var(--muted-foreground);">新人专享</span>
-            <div class="flex items-baseline gap-0.5 mt-0.5">
-              <span class="text-lg font-bold" style="color: var(--brand-500);">8</span>
-              <span class="text-xs font-bold" style="color: var(--brand-500);">折</span>
-            </div>
-          </div>
-          <!-- 中间: 优惠券详情 -->
-          <div class="flex-1 flex flex-col justify-center min-w-0">
-            <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">首单8折优惠</h3>
-            <p class="text-[11px] mt-1" style="color: var(--muted-foreground);">满$50可用</p>
-            <p class="text-[10px] mt-0.5" style="color: var(--muted-foreground);">有效期30天 | 全场通用</p>
-          </div>
-          <!-- 右侧: 领取按钮 -->
-          <div class="flex items-center">
-            <button class="coupon-claim-btn px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);" data-claimed="false">领取</button>
-          </div>
-        </article>
-
-        <!-- 券2: CARE洗护专场 - 满$30减$5 -->
-        <article class="coupon-card rounded-2xl p-4 flex gap-4" style="background: var(--background-50); box-shadow: var(--shadow-sm);" data-category="category">
-          <div class="flex flex-col items-center justify-center min-w-[80px]">
-            <span class="text-[10px] font-medium" style="color: var(--muted-foreground);">CARE专场</span>
-            <div class="flex items-baseline gap-0.5 mt-0.5">
-              <span class="text-xs font-bold" style="color: var(--brand-500);">$</span>
-              <span class="text-lg font-bold" style="color: var(--brand-500);">5</span>
-            </div>
-          </div>
-          <div class="flex-1 flex flex-col justify-center min-w-0">
-            <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">CARE洗护专场</h3>
-            <p class="text-[11px] mt-1" style="color: var(--muted-foreground);">满$30减$5</p>
-            <p class="text-[10px] mt-0.5" style="color: var(--muted-foreground);">有效期7天 | CARE洗护品类</p>
-          </div>
-          <div class="flex items-center">
-            <button class="coupon-claim-btn px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);" data-claimed="false">领取</button>
-          </div>
-        </article>
-
-        <!-- 券3: GEAR出行日 - 满$80减$15 -->
-        <article class="coupon-card rounded-2xl p-4 flex gap-4" style="background: var(--background-50); box-shadow: var(--shadow-sm);" data-category="category">
-          <div class="flex flex-col items-center justify-center min-w-[80px]">
-            <span class="text-[10px] font-medium" style="color: var(--muted-foreground);">GEAR出行</span>
-            <div class="flex items-baseline gap-0.5 mt-0.5">
-              <span class="text-xs font-bold" style="color: var(--brand-500);">$</span>
-              <span class="text-lg font-bold" style="color: var(--brand-500);">15</span>
-            </div>
-          </div>
-          <div class="flex-1 flex flex-col justify-center min-w-0">
-            <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">GEAR出行日</h3>
-            <p class="text-[11px] mt-1" style="color: var(--muted-foreground);">满$80减$15</p>
-            <p class="text-[10px] mt-0.5" style="color: var(--muted-foreground);">有效期14天 | GEAR装备品类</p>
-          </div>
-          <div class="flex items-center">
-            <button class="coupon-claim-btn px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);" data-claimed="false">领取</button>
-          </div>
-        </article>
-
-        <!-- 券4: 全场通用 - 满$100减$20 (已领取) -->
-        <article class="coupon-card claimed rounded-2xl p-4 flex gap-4" style="background: var(--background-50); box-shadow: var(--shadow-sm); opacity: 0.55;" data-category="discount">
-          <div class="flex flex-col items-center justify-center min-w-[80px]">
-            <span class="text-[10px] font-medium" style="color: var(--muted-foreground);">全场通用</span>
-            <div class="flex items-baseline gap-0.5 mt-0.5">
-              <span class="text-xs font-bold" style="color: var(--background-500);">$</span>
-              <span class="text-lg font-bold" style="color: var(--background-500);">20</span>
-            </div>
-          </div>
-          <div class="flex-1 flex flex-col justify-center min-w-0">
-            <h3 class="text-sm font-semibold truncate" style="color: var(--muted-foreground);">全场通用券</h3>
-            <p class="text-[11px] mt-1" style="color: var(--muted-foreground);">满$100减$20</p>
-            <p class="text-[10px] mt-0.5" style="color: var(--muted-foreground);">有效期30天 | 全场通用</p>
-          </div>
-          <div class="flex items-center">
-            <button class="px-3 py-1.5 rounded-full text-xs font-semibold cursor-not-allowed" style="background: var(--background-300); color: var(--background-600);" disabled>已领取</button>
-          </div>
-        </article>
-
-        <!-- 券5: 会员专属 Silver - 满$50减$10 -->
-        <article class="coupon-card rounded-2xl p-4 flex gap-4" style="background: var(--background-50); box-shadow: var(--shadow-sm);" data-category="member">
-          <div class="flex flex-col items-center justify-center min-w-[80px]">
-            <span class="text-[10px] font-medium" style="color: var(--muted-foreground);">会员专属</span>
-            <div class="flex items-baseline gap-0.5 mt-0.5">
-              <span class="text-xs font-bold" style="color: var(--brand-500);">$</span>
-              <span class="text-lg font-bold" style="color: var(--brand-500);">10</span>
-            </div>
-          </div>
-          <div class="flex-1 flex flex-col justify-center min-w-0">
-            <div class="flex items-center gap-1.5">
-              <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">会员专属 Silver</h3>
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded-md text-[9px] font-bold" style="background: linear-gradient(135deg, #c0c0c0, #e8e8e8); color: var(--background-800);">SILVER</span>
-            </div>
-            <p class="text-[11px] mt-1" style="color: var(--muted-foreground);">满$50减$10</p>
-            <p class="text-[10px] mt-0.5" style="color: var(--muted-foreground);">仅Silver及以上可用</p>
-          </div>
-          <div class="flex items-center">
-            <button class="coupon-claim-btn px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);" data-claimed="false">领取</button>
-          </div>
-        </article>
-
-        <!-- 券6: 限时券 - $10无门槛 -->
-        <article class="coupon-card rounded-2xl p-4 flex gap-4" style="background: var(--background-50); box-shadow: var(--shadow-sm);" data-category="flash">
-          <div class="flex flex-col items-center justify-center min-w-[80px]">
-            <span class="text-[10px] font-medium" style="color: var(--muted-foreground);">限时特惠</span>
-            <div class="flex items-baseline gap-0.5 mt-0.5">
-              <span class="text-xs font-bold" style="color: var(--state-error);">$</span>
-              <span class="text-lg font-bold" style="color: var(--state-error);">10</span>
-            </div>
-          </div>
-          <div class="flex-1 flex flex-col justify-center min-w-0">
-            <div class="flex items-center gap-1.5">
-              <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">$10无门槛券</h3>
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded-md text-[9px] font-bold" style="background: var(--state-error-surface); color: var(--state-error);">今日有效</span>
-            </div>
-            <p class="text-[11px] mt-1" style="color: var(--muted-foreground);">无门槛</p>
-            <p class="text-[10px] mt-0.5" style="color: var(--muted-foreground);">仅限今日 | 全场通用</p>
-          </div>
-          <div class="flex items-center">
-            <button class="coupon-claim-btn px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);" data-claimed="false">领取</button>
-          </div>
-        </article>
-
-      </section>
+      <section class="px-4 mt-4 flex flex-col gap-3" aria-label="可领取优惠券" id="coupon-center-list"></section>
 
     </main>
 
@@ -225,92 +100,162 @@
       </div>
     </footer>
 
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
     <script>
-      // 初始化 Lucide 图标
-      lucide.createIcons();
+      var api = window.moyuyoAPI;
+      var claimableData = [];
+      var claimedTotal = 0;
 
-      // Tab 切换逻辑
-      const tabs = document.querySelectorAll('.coupon-tab');
-      const coupons = document.querySelectorAll('[data-category]');
+      // Category mapping for mock data
+      function getCategory(coupon) {
+        var name = coupon.name || '';
+        if (name.indexOf('新人') !== -1) return 'new';
+        if (name.indexOf('会员') !== -1) return 'member';
+        if (coupon.type === 'PERCENTAGE') return 'category';
+        if (coupon.type === 'FULL_REDUCTION') return 'discount';
+        return 'all';
+      }
 
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          // 更新 Tab 样式
-          tabs.forEach(t => {
+      function renderCouponCenter() {
+        api.get('/api/v1/coupon/center').then(function(res) {
+          if (res.code !== 0) return;
+          var data = res.data;
+          claimableData = data.claimable;
+          claimedTotal = 0;
+
+          var container = document.getElementById('coupon-center-list');
+          container.innerHTML = '';
+
+          // Today new count
+          var todayNewEl = document.createElement('div');
+          todayNewEl.style.cssText = 'display:flex;align-items:center;gap:6px;padding:0 4px;';
+          todayNewEl.innerHTML =
+            '<i data-lucide="sparkles" style="width:14px;height:14px;color:var(--brand-500);"></i>' +
+            '<span style="font-size:12px;font-weight:500;color:var(--brand-500);">今日上新 <b id="today-new-count">' + data.todayNew + '</b> 张</span>';
+          container.appendChild(todayNewEl);
+
+          claimableData.forEach(function(coupon) {
+            var category = getCategory(coupon);
+            var discountHtml = '';
+            if (coupon.type === 'FULL_REDUCTION') {
+              discountHtml = '<span style="font-size:10px;font-weight:500;color:var(--brand-500);">¥</span><span style="font-size:22px;font-weight:700;color:var(--brand-500);line-height:1;">' + (coupon.discount / 100) + '</span>';
+            } else if (coupon.type === 'PERCENTAGE') {
+              var percent = (100 - coupon.discount) / 10;
+              discountHtml = '<span style="font-size:22px;font-weight:700;color:var(--brand-500);line-height:1;">' + percent + '</span><span style="font-size:12px;font-weight:700;color:var(--brand-500);">折</span>';
+            }
+
+            var thresholdText = coupon.threshold === 0 ? '无门槛' : '满¥' + (coupon.threshold / 100) + '可用';
+            var stockText = '库存' + coupon.stock + ' | 已领' + coupon.claimed;
+            var validText = '有效期' + coupon.validDays + '天 | ' + (coupon.desc || '全场通用');
+
+            var card = document.createElement('article');
+            card.className = 'coupon-card';
+            card.setAttribute('data-category', category);
+            card.style.cssText = 'background:var(--background-50);border-radius:12px;padding:14px;display:flex;gap:12px;box-shadow:var(--shadow-sm);border:1px solid var(--background-200);';
+
+            card.innerHTML =
+              '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:72px;">' +
+                '<span style="font-size:10px;font-weight:500;color:var(--text-400);">' + coupon.name + '</span>' +
+                '<div style="display:flex;align-items:baseline;gap:2px;margin-top:2px;">' + discountHtml + '</div>' +
+              '</div>' +
+              '<div style="flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0;">' +
+                '<h3 style="font-size:13px;font-weight:600;color:var(--text-800);margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + coupon.name + '</h3>' +
+                '<p style="font-size:11px;color:var(--text-400);margin:4px 0 0;">' + thresholdText + '</p>' +
+                '<p style="font-size:10px;color:var(--text-300);margin:2px 0 0;">' + stockText + '</p>' +
+                '<p style="font-size:10px;color:var(--text-300);margin:2px 0 0;">' + validText + '</p>' +
+              '</div>' +
+              '<div style="display:flex;align-items:center;">' +
+                '<button class="coupon-claim-btn" data-coupon-id="' + coupon.id + '" data-coupon-name="' + coupon.name + '" style="padding:6px 14px;border-radius:999px;font-size:11px;font-weight:600;border:none;cursor:pointer;background:var(--brand-500);color:var(--background-50);">立即领取</button>' +
+              '</div>';
+
+            container.appendChild(card);
+          });
+
+          // Attach claim button handlers
+          container.querySelectorAll('.coupon-claim-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              var couponId = btn.getAttribute('data-coupon-id');
+              var couponName = btn.getAttribute('data-coupon-name');
+
+              api.post('/api/v1/coupon/claim', { couponId: couponId, couponName: couponName }).then(function(res) {
+                if (res.code === 0 && res.data && res.data.claimed) {
+                  btn.textContent = '已领取';
+                  btn.style.background = 'var(--background-300)';
+                  btn.style.color = 'var(--background-600)';
+                  btn.style.cursor = 'not-allowed';
+                  btn.disabled = true;
+
+                  var card = btn.closest('.coupon-card');
+                  card.style.opacity = '0.55';
+
+                  claimedTotal++;
+                  document.getElementById('claimed-count').textContent = claimedTotal;
+                }
+              });
+            });
+          });
+
+          lucide.createIcons();
+        });
+      }
+
+      // Back button
+      var backBtn = document.querySelector('[aria-label="返回"]');
+      if (backBtn) {
+        backBtn.addEventListener('click', function() {
+          window.history.back();
+        });
+      }
+
+      // Tab switching
+      var tabs = document.querySelectorAll('.coupon-tab[data-tab]');
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          tabs.forEach(function(t) {
             t.style.background = 'var(--background-100)';
             t.style.color = 'var(--text-600)';
           });
           tab.style.background = 'var(--primary)';
           tab.style.color = 'var(--primary-foreground)';
 
-          // 过滤优惠券
-          const category = tab.dataset.tab;
-          coupons.forEach(coupon => {
-            if (category === 'all' || coupon.dataset.category === category) {
-              coupon.style.display = 'flex';
+          var category = tab.getAttribute('data-tab');
+          var cards = document.querySelectorAll('#coupon-center-list [data-category]');
+          cards.forEach(function(card) {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+              card.style.display = 'flex';
             } else {
-              coupon.style.display = 'none';
+              card.style.display = 'none';
             }
           });
         });
       });
 
-      // 领取按钮逻辑
-      let claimedTotal = 1; // 已有1张已领取的券
-      const claimedCountEl = document.getElementById('claimed-count');
-
-      document.querySelectorAll('.coupon-claim-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          if (btn.dataset.claimed === 'false') {
-            btn.dataset.claimed = 'true';
-            btn.textContent = '已领取';
-            btn.style.background = 'var(--background-300)';
-            btn.style.color = 'var(--background-600)';
-            btn.style.cursor = 'not-allowed';
-            btn.disabled = true;
-
-            // 更新卡片样式
-            const card = btn.closest('.coupon-card');
-            card.classList.add('claimed');
-            card.style.opacity = '0.55';
-
-            // 更新计数
-            claimedTotal++;
-            claimedCountEl.textContent = claimedTotal;
-          }
-        });
-      });
-
-      // 倒计时逻辑
-      let totalSeconds = 2 * 3600 + 15 * 60 + 30; // 02:15:30
-      const countdownDisplay = document.getElementById('countdown-display');
+      // Countdown
+      var totalSeconds = 2 * 3600 + 15 * 60 + 30;
+      var countdownDisplay = document.getElementById('countdown-display');
 
       function updateCountdown() {
         if (totalSeconds <= 0) return;
         totalSeconds--;
-
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-
-        const spans = countdownDisplay.querySelectorAll('span');
-        const timeBlocks = [
-          String(hours).padStart(2, '0'),
-          String(minutes).padStart(2, '0'),
-          String(seconds).padStart(2, '0')
-        ];
-
-        // 仅更新数字 span（跳过冒号）
-        let blockIndex = 0;
-        spans.forEach(span => {
+        var hours = Math.floor(totalSeconds / 3600);
+        var minutes = Math.floor((totalSeconds % 3600) / 60);
+        var seconds = totalSeconds % 60;
+        var timeBlocks = [String(hours).padStart(2, '0'), String(minutes).padStart(2, '0'), String(seconds).padStart(2, '0')];
+        var spans = countdownDisplay.querySelectorAll('span');
+        var blockIndex = 0;
+        spans.forEach(function(span) {
           if (span.classList.contains('rounded-md')) {
             span.textContent = timeBlocks[blockIndex];
             blockIndex++;
           }
         });
       }
-
       setInterval(updateCountdown, 1000);
+
+      // Initial render
+      lucide.createIcons();
+      renderCouponCenter();
     </script>
 </body>
 </html>
