@@ -48,7 +48,7 @@
       <!-- iOS 状态栏模拟 -->
       <div class="sticky top-0 z-30" style="background: linear-gradient(135deg, var(--brand-500) 0%, var(--brand-600) 100%);">
         <div class="h-11 flex items-center justify-between px-5">
-          <a href="home.html" class="flex items-center gap-1.5 text-white" data-dom-id="cta-back" aria-label="返回首页">
+          <a href="home.html" class="flex items-center gap-1.5 text-white" data-dom-id="cta-back" aria-label="返回首页" onclick="history.back();return false;">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
             <span class="text-sm font-medium">返回</span>
           </a>
@@ -70,7 +70,7 @@
             <!-- 当前场倒计时 -->
             <div class="flex flex-col items-end gap-1">
               <span class="text-xs font-medium" style="color: rgba(255,255,255,0.7);">本场距结束</span>
-              <div class="flex items-center">
+              <div id="activeCountdown" class="flex items-center">
                 <span class="countdown-digit">02</span>
                 <span class="countdown-sep">:</span>
                 <span class="countdown-digit">34</span>
@@ -81,7 +81,7 @@
           </div>
 
           <!-- 场次切换 -->
-          <div class="flex gap-2 mt-4">
+          <div id="sessionTabs" class="flex gap-2 mt-4">
             <!-- 10:00 场（进行中） -->
             <button class="flex-1 h-9 rounded-xl text-xs font-semibold text-white flex items-center justify-center gap-1.5" style="background: rgba(255,255,255,0.25);">
               <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
@@ -100,7 +100,7 @@
 
       <!-- 秒杀商品列表（2列网格） -->
       <section class="px-4 pt-4" aria-label="秒杀商品">
-        <div class="grid grid-cols-2 gap-3">
+        <div id="productsGrid" class="grid grid-cols-2 gap-3">
 
           <!-- 秒杀商品 1 -->
           <a href="product-detail.html" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-sm); transition: transform 0.18s ease, box-shadow 0.18s ease;" data-dom-id="product-flash-1">
@@ -210,7 +210,7 @@
       </section>
 
       <!-- 底部提示：下一场倒计时 -->
-      <section class="mx-4 mt-5 mb-4 rounded-[var(--radius)] p-4" style="background: var(--background-200); border: 1px solid var(--border);" aria-label="下一场预告">
+      <section id="nextSessionSection" class="mx-4 mt-5 mb-4 rounded-[var(--radius)] p-4" style="background: var(--background-200); border: 1px solid var(--border);" aria-label="下一场预告">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-alert.svg'); color: var(--primary);"></span>
@@ -266,6 +266,178 @@
       </nav>
 
     </main>
-    <script>lucide.createIcons();</script>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      (function () {
+        var api = window.moyuyoAPI;
+        var sessions = [];
+        var products = [];
+        var activeSessionId = null;
+        var countdownTimer = null;
+
+        // 价格格式化（分转元）
+        function formatPrice(cents) {
+          return '¥' + (cents / 100).toFixed(2);
+        }
+
+        // 格式化倒计时
+        function formatCountdown(seconds) {
+          if (seconds <= 0) return { h: '00', m: '00', s: '00' };
+          var h = Math.floor(seconds / 3600);
+          var m = Math.floor((seconds % 3600) / 60);
+          var s = seconds % 60;
+          return {
+            h: String(h).padStart(2, '0'),
+            m: String(m).padStart(2, '0'),
+            s: String(s).padStart(2, '0')
+          };
+        }
+
+        // 渲染场次 Tab
+        function renderSessions() {
+          var container = document.getElementById('sessionTabs');
+          if (!container) return;
+          var html = '';
+          for (var i = 0; i < sessions.length; i++) {
+            var s = sessions[i];
+            var isActive = s.id === activeSessionId;
+            var bg = isActive ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.12)';
+            var statusText = s.status === 'ACTIVE' ? '抢购中' : '预告';
+            html += '<button class="session-tab flex-1 h-9 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5" '
+              + 'style="background: ' + bg + '; color: ' + (isActive ? '#fff' : 'rgba(255,255,255,0.7)') + ';" '
+              + 'data-session-id="' + s.id + '">';
+            if (isActive) {
+              html += '<span class="w-1.5 h-1.5 rounded-full bg-white"></span>';
+            }
+            html += s.label + ' <span class="font-normal">' + statusText + '</span></button>';
+          }
+          container.innerHTML = html;
+
+          var tabs = container.querySelectorAll('.session-tab');
+          for (var j = 0; j < tabs.length; j++) {
+            tabs[j].addEventListener('click', function () {
+              activeSessionId = this.getAttribute('data-session-id');
+              renderSessions();
+              renderProducts();
+              updateCountdown();
+            });
+          }
+        }
+
+        // 渲染商品列表
+        function renderProducts() {
+          var container = document.getElementById('productsGrid');
+          if (!container) return;
+          var filtered = activeSessionId
+            ? products.filter(function (p) { return p.sessionId === activeSessionId; })
+            : products;
+          var html = '';
+          for (var i = 0; i < filtered.length; i++) {
+            var p = filtered[i];
+            html += '<a href="flash-sale-detail.html?productId=' + p.id + '" class="block rounded-[var(--radius)] overflow-hidden border" '
+              + 'style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-sm); transition: transform 0.18s ease, box-shadow 0.18s ease;">'
+              + '<div class="aspect-square overflow-hidden relative">'
+              + '<img src="' + (p.image || '') + '" alt="' + p.name + '" class="w-full h-full object-cover">'
+              + '<span class="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[10px] font-bold text-white" style="background: var(--state-error);">秒杀</span>'
+              + '</div>'
+              + '<div class="p-2.5">'
+              + '<h3 class="text-sm font-medium truncate" style="color: var(--foreground);">' + p.name + '</h3>'
+              + '<div class="flex items-baseline gap-1.5 mt-1.5">'
+              + '<span class="text-base font-bold" style="color: var(--state-error);">' + formatPrice(p.price) + '</span>'
+              + '<span class="text-xs line-through" style="color: var(--text-400);">' + formatPrice(p.originalPrice) + '</span>'
+              + '</div>'
+              + '<div class="mt-2">'
+              + '<div class="flash-progress-bar">'
+              + '<div class="flash-progress-fill" style="width: ' + p.progress + '%;"></div>'
+              + '<span class="flash-progress-text">已抢 ' + p.progress + '%</span>'
+              + '</div>'
+              + '</div>'
+              + '<div class="flex items-center justify-between mt-2">'
+              + '<button class="h-7 px-3 rounded-lg text-xs font-semibold text-white" style="background: var(--state-error); border: none;">马上抢</button>'
+              + '<span class="text-[10px]" style="color: var(--text-400);">每人限1件</span>'
+              + '</div>'
+              + '</div>'
+              + '</a>';
+          }
+          container.innerHTML = html;
+          lucide.createIcons();
+        }
+
+        // 更新倒计时
+        function updateCountdown() {
+          var activeSession = null;
+          for (var i = 0; i < sessions.length; i++) {
+            if (sessions[i].status === 'ACTIVE') {
+              activeSession = sessions[i];
+              break;
+            }
+          }
+          if (!activeSession && sessions.length > 0) activeSession = sessions[0];
+          if (!activeSession) return;
+
+          if (countdownTimer) clearInterval(countdownTimer);
+
+          var timeLeft = activeSession.timeLeft || 0;
+          var digits = document.querySelectorAll('#activeCountdown .countdown-digit');
+
+          function tick() {
+            if (timeLeft <= 0) {
+              if (digits.length >= 3) {
+                digits[0].textContent = '00';
+                digits[1].textContent = '00';
+                digits[2].textContent = '00';
+              }
+              clearInterval(countdownTimer);
+              return;
+            }
+            timeLeft--;
+            var t = formatCountdown(timeLeft);
+            if (digits.length >= 3) {
+              digits[0].textContent = t.h;
+              digits[1].textContent = t.m;
+              digits[2].textContent = t.s;
+            }
+          }
+
+          var t = formatCountdown(timeLeft);
+          if (digits.length >= 3) {
+            digits[0].textContent = t.h;
+            digits[1].textContent = t.m;
+            digits[2].textContent = t.s;
+          }
+
+          countdownTimer = setInterval(tick, 1000);
+        }
+
+        // 初始化
+        function init() {
+          api.get('/api/v1/flash-sale/list').then(function (res) {
+            if (res.code === 0 && res.data) {
+              var data = res.data;
+              if (data.sessions) sessions = data.sessions;
+              if (data.products) products = data.products;
+
+              for (var i = 0; i < sessions.length; i++) {
+                if (sessions[i].status === 'ACTIVE') {
+                  activeSessionId = sessions[i].id;
+                  break;
+                }
+              }
+              if (!activeSessionId && sessions.length > 0) {
+                activeSessionId = sessions[0].id;
+              }
+
+              renderSessions();
+              renderProducts();
+              updateCountdown();
+              lucide.createIcons();
+            }
+          });
+        }
+
+        init();
+      })();
+    </script>
 </body>
 </html>

@@ -57,7 +57,7 @@
       </div>
       <!-- 导航：返回箭头 + 标题 -->
       <div class="flex items-center h-12 px-4 gap-3" style="background: var(--background-800);">
-        <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--background-700);" aria-label="返回">
+        <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--background-700);" aria-label="返回" onclick="history.back()">
           <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--text-50);"></i>
         </button>
         <h1 class="text-base font-semibold flex-1 text-center pr-9" style="color: var(--text-50);">幸运大转盘</h1>
@@ -72,7 +72,7 @@
             <i data-lucide="ticket" class="w-5 h-5" style="color: var(--background-50);"></i>
           </div>
           <div>
-            <p class="text-sm font-semibold" style="color: var(--background-50);">剩余 3 次抽奖机会</p>
+            <p class="text-sm font-semibold" style="color: var(--background-50);">剩余 <span id="remainingSpinsText">3</span> 次抽奖机会</p>
             <p class="text-xs mt-0.5" style="color: rgba(255,255,255,0.75);">消费满 $50 再获得 1 次</p>
           </div>
         </div>
@@ -109,7 +109,7 @@
              );">
 
           <!-- 扇区标签容器 -->
-          <div class="absolute inset-0">
+          <div id="wheelLabels" class="absolute inset-0">
             <!-- 8个扇区奖品标签，通过旋转定位 -->
             <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(22.5deg) translateY(-50%);">
               <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">$5优惠券</span>
@@ -157,12 +157,12 @@
         <div class="flex items-center gap-2">
           <i data-lucide="history" class="w-4 h-4" style="color: var(--primary);"></i>
           <span class="text-sm font-semibold" style="color: var(--foreground);">抽奖记录</span>
-          <span class="text-xs px-1.5 py-0.5 rounded-full" style="background: var(--brand-100); color: var(--primary);">10</span>
+          <span id="recordsCount" class="text-xs px-1.5 py-0.5 rounded-full" style="background: var(--brand-100); color: var(--primary);">10</span>
         </div>
         <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" style="color: var(--muted-foreground);" id="historyArrow"></i>
       </button>
       <div id="historyContent" class="collapse-content rounded-b-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); border-top: none;">
-        <div class="divide-y" style="border-color: var(--border);">
+        <div id="recordsList" class="divide-y" style="border-color: var(--border);">
           <!-- 记录 1 -->
           <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2.5">
@@ -274,7 +274,7 @@
           <i data-lucide="info" class="w-4 h-4" style="color: var(--primary);"></i>
           <span class="text-sm font-semibold" style="color: var(--foreground);">活动规则</span>
         </div>
-        <ul class="space-y-2">
+        <ul id="rulesList" class="space-y-2">
           <li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
             <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
             消费满 $50 获得 1 次抽奖机会，每日上限 5 次
@@ -321,102 +321,223 @@
   </main>
 
   <!-- 交互脚本 -->
+  <script src="shared/mock-api.js"></script>
+  <script src="shared/api.js"></script>
   <script>
-    // ===== 转盘旋转逻辑 =====
-    const prizes = [
-      { name: '$5优惠券', desc: '您获得了一张 $5 优惠券，下单立减', icon: 'tag', color: 'var(--brand-50)' },
-      { name: '10积分', desc: '您获得了 10 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
-      { name: '$10优惠券', desc: '您获得了一张 $10 优惠券，下单立减', icon: 'tag', color: 'var(--brand-50)' },
-      { name: '限定礼盒', desc: '恭喜获得限定礼盒，将在 3 个工作日内发货', icon: 'gift', color: '#f3e8ff' },
-      { name: '20积分', desc: '您获得了 20 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
-      { name: '免邮券', desc: '您获得了一张免邮券，可免一次运费', icon: 'truck', color: 'var(--brand-50)' },
-      { name: '50积分', desc: '您获得了 50 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
-      { name: '谢谢参与', desc: '很遗憾未中奖，再试一次吧', icon: 'frown', color: 'var(--background-200)' }
-    ];
+    (function () {
+      var api = window.moyuyoAPI;
 
-    const wheel = document.getElementById('wheel');
-    const spinBtn = document.getElementById('spinBtn');
-    const prizeModal = document.getElementById('prizeModal');
-    const prizeTitle = document.getElementById('prizeTitle');
-    const prizeDesc = document.getElementById('prizeDesc');
-    const prizeIcon = document.getElementById('prizeIcon');
-    const claimBtn = document.getElementById('claimBtn');
-    let isSpinning = false;
-    let currentRotation = 0;
+      // 默认奖品（兜底）
+      var defaultPrizes = [
+        { name: '$5优惠券', desc: '您获得了一张 $5 优惠券，下单立减', icon: 'tag', color: 'var(--brand-50)' },
+        { name: '10积分', desc: '您获得了 10 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
+        { name: '$10优惠券', desc: '您获得了一张 $10 优惠券，下单立减', icon: 'tag', color: 'var(--brand-50)' },
+        { name: '限定礼盒', desc: '恭喜获得限定礼盒，将在 3 个工作日内发货', icon: 'gift', color: '#f3e8ff' },
+        { name: '20积分', desc: '您获得了 20 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
+        { name: '免邮券', desc: '您获得了一张免邮券，可免一次运费', icon: 'truck', color: 'var(--brand-50)' },
+        { name: '50积分', desc: '您获得了 50 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
+        { name: '谢谢参与', desc: '很遗憾未中奖，再试一次吧', icon: 'frown', color: 'var(--background-200)' }
+      ];
+      var prizes = defaultPrizes;
+      var remainingSpins = 3;
 
-    // 点击开始按钮旋转转盘
-    spinBtn.addEventListener('click', function () {
-      if (isSpinning) return;
-      isSpinning = true;
+      var wheel = document.getElementById('wheel');
+      var spinBtn = document.getElementById('spinBtn');
+      var prizeModal = document.getElementById('prizeModal');
+      var prizeTitle = document.getElementById('prizeTitle');
+      var prizeDesc = document.getElementById('prizeDesc');
+      var prizeIcon = document.getElementById('prizeIcon');
+      var claimBtn = document.getElementById('claimBtn');
+      var isSpinning = false;
+      var currentRotation = 0;
 
-      // 随机选择奖品（加权：谢谢参与概率更高）
-      const weights = [15, 15, 10, 2, 10, 10, 5, 33]; // 概率权重
-      const totalWeight = weights.reduce((a, b) => a + b, 0);
-      let random = Math.random() * totalWeight;
-      let selectedIndex = 0;
-      for (let i = 0; i < weights.length; i++) {
-        random -= weights[i];
-        if (random <= 0) { selectedIndex = i; break; }
+      // 价格格式化（分转元）
+      function formatPrice(cents) {
+        return '¥' + (cents / 100).toFixed(2);
       }
 
-      // 计算旋转角度（至少转5圈 + 目标扇区偏移）
-      const sectorAngle = 360 / prizes.length;
-      const targetAngle = 360 * 5 + (360 - (selectedIndex * sectorAngle + sectorAngle / 2));
-      currentRotation += targetAngle;
+      // 更新剩余次数
+      function updateRemainingSpins() {
+        var el = document.getElementById('remainingSpinsText');
+        if (el) el.textContent = remainingSpins;
+      }
 
-      // 应用旋转
-      wheel.style.transform = 'rotate(' + currentRotation + 'deg)';
+      // 更新转盘奖品标签
+      function updateWheelLabels() {
+        var container = document.getElementById('wheelLabels');
+        if (!container) return;
+        var n = prizes.length;
+        var sectorAngle = 360 / n;
+        var html = '';
+        for (var i = 0; i < n; i++) {
+          var angle = sectorAngle * i + sectorAngle / 2;
+          html += '<div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(' + angle + 'deg) translateY(-50%);">'
+            + '<span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">' + prizes[i].name + '</span>'
+            + '</div>';
+        }
+        container.innerHTML = html;
+      }
 
-      // 旋转结束后显示弹窗
-      setTimeout(function () {
-        showPrize(selectedIndex);
-        isSpinning = false;
-      }, 4200);
-    });
+      // 更新规则
+      function updateRules(rules) {
+        var ul = document.getElementById('rulesList');
+        if (!ul || !rules) return;
+        var html = '';
+        for (var i = 0; i < rules.length; i++) {
+          html += '<li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">'
+            + '<span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>'
+            + rules[i]
+            + '</li>';
+        }
+        ul.innerHTML = html;
+      }
 
-    // 显示中奖弹窗
-    function showPrize(index) {
-      const prize = prizes[index];
-      prizeTitle.textContent = prize.name === '谢谢参与' ? '差一点就中了' : '恭喜中奖';
-      prizeDesc.textContent = prize.desc;
+      // 渲染中奖记录
+      function renderRecords(records) {
+        var container = document.getElementById('recordsList');
+        var countEl = document.getElementById('recordsCount');
+        if (!container || !records) return;
+        if (countEl) countEl.textContent = records.length;
+        var html = '';
+        for (var i = 0; i < records.length; i++) {
+          var rec = records[i];
+          var iconBg = rec.type === 'POINTS' ? 'var(--state-success-surface)' : rec.type === 'NONE' ? 'var(--background-200)' : 'var(--brand-50)';
+          var iconColor = rec.type === 'POINTS' ? 'var(--state-success)' : rec.type === 'NONE' ? 'var(--text-400)' : 'var(--primary)';
+          html += '<div class="flex items-center justify-between px-4 py-3">'
+            + '<div class="flex items-center gap-2.5">'
+            + '<div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: ' + iconBg + ';">'
+            + '<i data-lucide="' + rec.icon + '" class="w-4 h-4" style="color: ' + iconColor + ';"></i>'
+            + '</div>'
+            + '<span class="text-sm font-medium" style="color: var(--foreground);">' + rec.prizeName + '</span>'
+            + '</div>'
+            + '<span class="text-xs" style="color: var(--muted-foreground);">' + rec.time + '</span>'
+            + '</div>';
+        }
+        container.innerHTML = html;
+        lucide.createIcons();
+      }
 
-      // 更新弹窗图标
-      prizeIcon.style.background = prize.color;
-      prizeIcon.innerHTML = '<i data-lucide="' + prize.icon + '" class="w-8 h-8" style="color: ' +
-        (prize.name === '谢谢参与' ? 'var(--text-400)' : prize.icon === 'gift' ? '#5856D6' : 'var(--primary)') +
-        ';"></i>';
-      lucide.createIcons();
+      // 显示中奖弹窗
+      function showPrize(prize) {
+        prizeTitle.textContent = prize.type === 'NONE' ? '差一点就中了' : '恭喜中奖';
+        var desc = prize.type === 'NONE' ? '很遗憾未中奖，再试一次吧' : '您获得了 ' + prize.name;
+        prizeDesc.textContent = desc;
+        var iconBg = prize.type === 'POINTS' ? 'var(--state-success-surface)' : prize.type === 'NONE' ? 'var(--background-200)' : 'var(--brand-50)';
+        var iconColor = prize.type === 'POINTS' ? 'var(--state-success)' : prize.type === 'NONE' ? 'var(--text-400)' : 'var(--primary)';
+        prizeIcon.style.background = iconBg;
+        prizeIcon.innerHTML = '<i data-lucide="' + prize.icon + '" class="w-8 h-8" style="color: ' + iconColor + ';"></i>';
+        lucide.createIcons();
+        prizeModal.style.opacity = '1';
+        prizeModal.style.pointerEvents = 'auto';
+      }
 
-      // 显示弹窗
-      prizeModal.style.opacity = '1';
-      prizeModal.style.pointerEvents = 'auto';
-    }
+      // 旋转转盘
+      function spinWheel(targetIndex) {
+        var sectorAngle = 360 / prizes.length;
+        var targetAngle = 360 * 5 + (360 - (targetIndex * sectorAngle + sectorAngle / 2));
+        currentRotation += targetAngle;
+        wheel.style.transform = 'rotate(' + currentRotation + 'deg)';
+      }
 
-    // 关闭弹窗
-    claimBtn.addEventListener('click', function () {
-      prizeModal.style.opacity = '0';
-      prizeModal.style.pointerEvents = 'none';
-    });
+      // 点击抽奖
+      spinBtn.addEventListener('click', function () {
+        if (isSpinning) return;
+        if (remainingSpins <= 0) {
+          alert('抽奖次数已用完，消费满 $50 可获得更多机会');
+          return;
+        }
+        isSpinning = true;
 
-    // 点击遮罩关闭
-    prizeModal.addEventListener('click', function (e) {
-      if (e.target === prizeModal) {
+        api.post('/api/v1/lottery/spin').then(function (res) {
+          if (res.code === 0 && res.data) {
+            var prize = res.data.prize;
+            remainingSpins = res.data.remainingSpins;
+            updateRemainingSpins();
+
+            // 找到奖品在转盘上的位置
+            var targetIndex = -1;
+            for (var i = 0; i < prizes.length; i++) {
+              if (prizes[i].id === prize.id) { targetIndex = i; break; }
+            }
+            if (targetIndex === -1) targetIndex = prizes.length - 1;
+
+            spinWheel(targetIndex);
+
+            setTimeout(function () {
+              showPrize(prize);
+              isSpinning = false;
+            }, 4200);
+          } else {
+            isSpinning = false;
+          }
+        }).catch(function () {
+          // 降级：使用本地随机
+          var weights = [15, 15, 10, 2, 10, 10, 5, 33];
+          var totalWeight = weights.reduce(function (a, b) { return a + b; }, 0);
+          var random = Math.random() * totalWeight;
+          var selectedIndex = 0;
+          for (var i = 0; i < weights.length; i++) {
+            random -= weights[i];
+            if (random <= 0) { selectedIndex = i; break; }
+          }
+          remainingSpins = Math.max(0, remainingSpins - 1);
+          updateRemainingSpins();
+          spinWheel(selectedIndex);
+          setTimeout(function () {
+            var p = prizes[selectedIndex];
+            showPrize({ name: p.name, icon: p.icon, type: 'COUPON' });
+            isSpinning = false;
+          }, 4200);
+        });
+      });
+
+      // 关闭弹窗
+      claimBtn.addEventListener('click', function () {
         prizeModal.style.opacity = '0';
         prizeModal.style.pointerEvents = 'none';
+      });
+      prizeModal.addEventListener('click', function (e) {
+        if (e.target === prizeModal) {
+          prizeModal.style.opacity = '0';
+          prizeModal.style.pointerEvents = 'none';
+        }
+      });
+
+      // 折叠面板
+      var toggleHistory = document.getElementById('toggleHistory');
+      var historyContent = document.getElementById('historyContent');
+      var historyArrow = document.getElementById('historyArrow');
+      var historyOpen = false;
+      toggleHistory.addEventListener('click', function () {
+        historyOpen = !historyOpen;
+        historyContent.classList.toggle('open', historyOpen);
+        historyArrow.style.transform = historyOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+      });
+
+      // 初始化
+      function init() {
+        api.get('/api/v1/lottery/info').then(function (res) {
+          if (res.code === 0 && res.data) {
+            var data = res.data;
+            remainingSpins = data.remainingSpins;
+            if (data.prizes && data.prizes.length > 0) {
+              prizes = data.prizes;
+              updateWheelLabels();
+            }
+            updateRemainingSpins();
+            if (data.rules) updateRules(data.rules);
+          }
+        });
+
+        api.get('/api/v1/lottery/records').then(function (res) {
+          if (res.code === 0 && res.data && res.data.records) {
+            renderRecords(res.data.records);
+          }
+        });
       }
-    });
 
-    // ===== 折叠面板逻辑 =====
-    const toggleHistory = document.getElementById('toggleHistory');
-    const historyContent = document.getElementById('historyContent');
-    const historyArrow = document.getElementById('historyArrow');
-    let historyOpen = false;
-
-    toggleHistory.addEventListener('click', function () {
-      historyOpen = !historyOpen;
-      historyContent.classList.toggle('open', historyOpen);
-      historyArrow.style.transform = historyOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-    });
+      init();
+    })();
   </script>
   <script>lucide.createIcons();</script>
 </body>

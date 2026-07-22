@@ -1038,6 +1038,161 @@
       });
     },
 
+    // ===== 营销活动模块 =====
+
+    'GET /api/v1/lottery/info': function() {
+      return success({
+        remainingSpins: 3,
+        prizes: [
+          { id: 'p1', name: 'MILO联名胸背带', icon: 'gift', type: 'PRODUCT', value: 39900 },
+          { id: 'p2', name: '50元优惠券', icon: 'ticket', type: 'COUPON', value: 5000 },
+          { id: 'p3', name: '100积分', icon: 'coins', type: 'POINTS', value: 100 },
+          { id: 'p4', name: '免邮券', icon: 'truck', type: 'COUPON', value: 0 },
+          { id: 'p5', name: '20元优惠券', icon: 'ticket', type: 'COUPON', value: 2000 },
+          { id: 'p6', name: 'MOYUYO定制围巾', icon: 'gift', type: 'PRODUCT', value: 29900 },
+          { id: 'p7', name: '10积分', icon: 'coins', type: 'POINTS', value: 10 },
+          { id: 'p8', name: '谢谢参与', icon: 'circle', type: 'NONE', value: 0 }
+        ],
+        rules: [
+          '每位用户每日可抽奖3次',
+          '奖品将在活动结束后7个工作日内发放',
+          '实物奖品需填写收货地址',
+          '优惠券有效期30天，积分即时到账'
+        ]
+      });
+    },
+
+    'POST /api/v1/lottery/spin': function() {
+      var prizes = ['p3', 'p5', 'p8', 'p7', 'p4', 'p8', 'p7', 'p8'];
+      var prizeId = prizes[Math.floor(Math.random() * prizes.length)];
+      var prizeMap = {
+        'p3': { id: 'p3', name: '100积分', icon: 'coins', type: 'POINTS', value: 100 },
+        'p5': { id: 'p5', name: '20元优惠券', icon: 'ticket', type: 'COUPON', value: 2000 },
+        'p8': { id: 'p8', name: '谢谢参与', icon: 'circle', type: 'NONE', value: 0 },
+        'p7': { id: 'p7', name: '10积分', icon: 'coins', type: 'POINTS', value: 10 },
+        'p4': { id: 'p4', name: '免邮券', icon: 'truck', type: 'COUPON', value: 0 }
+      };
+      return success({ prize: prizeMap[prizeId], remainingSpins: Math.max(0, Math.floor(Math.random() * 3)) });
+    },
+
+    'GET /api/v1/lottery/records': function() {
+      return success({
+        records: [
+          { id: 'lr-1', prizeName: '10积分', icon: 'coins', type: 'POINTS', time: '2026-07-20 14:30', status: 'RECEIVED' },
+          { id: 'lr-2', prizeName: '20元优惠券', icon: 'ticket', type: 'COUPON', time: '2026-07-19 10:15', status: 'RECEIVED' },
+          { id: 'lr-3', prizeName: '谢谢参与', icon: 'circle', type: 'NONE', time: '2026-07-19 10:14', status: 'NONE' },
+          { id: 'lr-4', prizeName: '100积分', icon: 'coins', type: 'POINTS', time: '2026-07-18 16:00', status: 'RECEIVED' },
+          { id: 'lr-5', prizeName: '免邮券', icon: 'truck', type: 'COUPON', time: '2026-07-17 09:30', status: 'RECEIVED' }
+        ]
+      });
+    },
+
+    'GET /api/v1/flash-sale/list': function() {
+      return success({
+        sessions: [
+          { id: 's1', name: '10:00', label: '10点场', startTime: '10:00', endTime: '14:00', status: 'ACTIVE', timeLeft: 7200 },
+          { id: 's2', name: '14:00', label: '14点场', startTime: '14:00', endTime: '18:00', status: 'UPCOMING', timeLeft: null },
+          { id: 's3', name: '18:00', label: '18点场', startTime: '18:00', endTime: '22:00', status: 'UPCOMING', timeLeft: null }
+        ],
+        products: [
+          { id: 'fs-1', name: '植物萃取宠物洗护套装', price: 8900, originalPrice: 12800, stock: 45, totalStock: 100, image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&q=80', progress: 55, sessionId: 's1' },
+          { id: 'fs-2', name: '经典尼龙牵引套装', price: 5900, originalPrice: 8900, stock: 23, totalStock: 80, image: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=200&q=80', progress: 71, sessionId: 's1' },
+          { id: 'fs-3', name: '互动益智玩具球', price: 2900, originalPrice: 4500, stock: 12, totalStock: 60, image: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=200&q=80', progress: 80, sessionId: 's1' },
+          { id: 'fs-4', name: '宠物零食礼盒', price: 3500, originalPrice: 5600, stock: 30, totalStock: 50, image: 'https://images.unsplash.com/photo-1589924691195-41432c84c161?w=200&q=80', progress: 40, sessionId: 's2' }
+        ]
+      });
+    },
+
+    'GET /api/v1/flash-sale/[^/?]+$': function(body, url) {
+      return success({
+        id: 'fs-1',
+        name: '植物萃取宠物洗护套装',
+        price: 8900, originalPrice: 12800,
+        stock: 45, totalStock: 100,
+        progress: 55,
+        images: ['https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400&q=80'],
+        specs: [
+          { id: 'spec-1', name: '500ml / 经典款', price: 8900, stock: 15 },
+          { id: 'spec-2', name: '1000ml / 家庭装', price: 13900, stock: 10 },
+          { id: 'spec-3', name: '250ml / 旅行装', price: 4900, stock: 20 }
+        ],
+        sessionEnd: '14:00:00',
+        timeLeft: 7200,
+        rules: [
+          '秒杀商品每人限购1件',
+          '秒杀价格不与其他优惠叠加',
+          '商品售罄或活动结束后恢复原价',
+          '下单后15分钟内未付款自动取消订单'
+        ]
+      });
+    },
+
+    'GET /api/v1/group-buy/recommend': function() {
+      return success({
+        products: [
+          { id: 'gb-2', name: 'MILO联名探险牵引绳', price: 1999, originalPrice: 2900, progress: { current: 2, total: 3 } },
+          { id: 'gb-3', name: '智能GPS宠物定位项圈', price: 5999, originalPrice: 8900, progress: { current: 1, total: 3 } },
+          { id: 'gb-4', name: '有机鸡肉配方零食', price: 1299, originalPrice: 1800, progress: { current: 3, total: 3 } }
+        ]
+      });
+    },
+
+    'GET /api/v1/group-buy/[^/?]+$': function(body, url) {
+      return success({
+        id: 'gb-1',
+        product: { id: '101', name: 'MILO联名探险胸背带', price: 3599, originalPrice: 4900, save: 1301, image: '' },
+        progress: { current: 2, total: 3, percent: 66.67 },
+        members: [
+          { name: '我', isLeader: true, isMe: true },
+          { name: 'J', isLeader: false, isMe: false },
+          { name: null, isLeader: false, isMe: false }
+        ],
+        countdown: { hours: 18, minutes: 32, seconds: 15 },
+        rules: ['24小时倒计时', '成团自动发货', '未成团自动退款', '每人限参1团']
+      });
+    },
+
+    'GET /api/v1/invite/info': function() {
+      return success({
+        inviteCode: 'MOYUYO-2026-X7K9',
+        reward: 1000,
+        stats: { invited: 5, completed: 3, earned: 3000 },
+        ranking: { position: 8, total: 156 },
+        friends: [
+          { name: 'Sam*****on', initial: 'S', status: 'COMPLETED', reward: 1000, time: '2天前' },
+          { name: 'Jes*****cia', initial: 'J', status: 'REGISTERED', reward: 0, time: '5天前' },
+          { name: 'Mic*****el', initial: 'M', status: 'COMPLETED', reward: 1000, time: '1周前' }
+        ],
+        rules: [
+          '每邀请1位好友完成首单，双方各得 $10 积分',
+          '积分即时到账，可用于购物抵扣',
+          '月度邀请榜TOP10可获额外奖励'
+        ]
+      });
+    },
+
+    'GET /api/v1/new-user/info': function() {
+      return success({
+        daysLeft: 28,
+        benefits: [
+          { id: 'b1', name: '首单8折券', desc: '最高减 $20', icon: 'tag', type: 'COUPON', status: 'AVAILABLE' },
+          { id: 'b2', name: '免邮券', desc: '无门槛使用', icon: 'box', type: 'COUPON', status: 'AVAILABLE' },
+          { id: 'b3', name: '$5 积分', desc: '已到账', icon: 'circle-check', type: 'POINTS', status: 'RECEIVED' }
+        ],
+        products: [
+          { id: 'np-1', name: '高端宠物洗护套装', desc: '温和清洁 持久留香', price: 9500, originalPrice: 18900, image: '../assets/product-shampoo-bottle.jpg' },
+          { id: 'np-2', name: '舒适胸背带', desc: '透气网布 均匀受力', price: 6500, originalPrice: 12900, image: '../assets/product-harness-gear.jpg' },
+          { id: 'np-3', name: '互动益智玩具', desc: '耐咬材质 释放天性', price: 3500, originalPrice: 6900, image: '../assets/product-toy-play.jpg' },
+          { id: 'np-4', name: '宠物潮流外套', desc: '防水面料 春秋百搭', price: 11000, originalPrice: 21900, image: '../assets/product-pet-jacket.jpg' }
+        ],
+        tasks: [
+          { id: 't1', name: '完善宠物档案', reward: 50, icon: 'pen-line', status: 'PENDING', progress: 0, link: 'pet-profile.html' },
+          { id: 't2', name: '设置护理提醒', reward: 30, icon: 'circle-alert', status: 'PENDING', progress: 0, link: 'health-calendar.html' },
+          { id: 't3', name: '完成首单', reward: 100, icon: 'star', status: 'PENDING', progress: 0, link: 'home.html' }
+        ]
+      });
+    },
+
     'POST /api/v1/favorites/toggle': function(body) {
       var token = localStorage.getItem('moyuyo_access_token');
       if (!token || !mockDB.tokens[token]) {
