@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 幸运大转盘</title>
+    <title>MOYUYO - Lucky Spin Wheel</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -45,7 +45,7 @@
 <body class="min-h-screen font-sans antialiased">
   <main class="pb-12">
 
-    <!-- 顶部导航栏：深色背景 -->
+    <!-- Top navigation bar: dark background -->
     <div class="sticky top-0 z-30" style="background: var(--background-800);">
       <div class="h-11 flex items-center justify-between px-5">
         <span class="text-sm font-semibold" style="color: var(--text-50);">9:41</span>
@@ -55,16 +55,16 @@
           <span class="w-6 h-3 rounded-sm" style="background: var(--text-50);"></span>
         </div>
       </div>
-      <!-- 导航：返回箭头 + 标题 -->
+      <!-- Navigation: back arrow + title -->
       <div class="flex items-center h-12 px-4 gap-3" style="background: var(--background-800);">
-        <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--background-700);" aria-label="返回" onclick="history.back()">
+        <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--background-700);" aria-label="Back" onclick="history.back()">
           <i data-lucide="arrow-left" class="w-5 h-5" style="color: var(--text-50);"></i>
         </button>
-        <h1 class="text-base font-semibold flex-1 text-center pr-9" style="color: var(--text-50);">幸运大转盘</h1>
+        <h1 class="text-base font-semibold flex-1 text-center pr-9" style="color: var(--text-50);">Lucky Spin Wheel</h1>
       </div>
     </div>
 
-    <!-- 剩余抽奖次数卡片 -->
+    <!-- Remaining spins card -->
     <section class="px-4 pt-5">
       <div class="rounded-[var(--radius)] p-4 flex items-center justify-between" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600)); box-shadow: var(--shadow-md);">
         <div class="flex items-center gap-3">
@@ -72,8 +72,8 @@
             <i data-lucide="ticket" class="w-5 h-5" style="color: var(--background-50);"></i>
           </div>
           <div>
-            <p class="text-sm font-semibold" style="color: var(--background-50);">剩余 <span id="remainingSpinsText">3</span> 次抽奖机会</p>
-            <p class="text-xs mt-0.5" style="color: rgba(255,255,255,0.75);">消费满 $50 再获得 1 次</p>
+            <p class="text-sm font-semibold" style="color: var(--background-50);"><span id="remainingSpinsText">3</span> spins remaining</p>
+            <p class="text-xs mt-0.5" style="color: rgba(255,255,255,0.75);">Spend $50 to get 1 more spin</p>
           </div>
         </div>
         <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.2);">
@@ -82,20 +82,20 @@
       </div>
     </section>
 
-    <!-- 转盘主体区域 -->
+    <!-- Wheel main area -->
     <section class="flex flex-col items-center px-4 pt-8 pb-6">
-      <!-- 转盘容器 -->
+      <!-- Wheel container -->
       <div class="relative" style="width: 300px; height: 300px;">
 
-        <!-- 外圈装饰环 -->
+        <!-- Outer decoration ring -->
         <div class="absolute inset-0 rounded-full" style="border: 4px solid var(--brand-500); box-shadow: 0 0 0 8px var(--brand-50), 0 0 0 12px var(--brand-200), var(--shadow-lg);"></div>
 
-        <!-- 指针（转盘顶部） -->
+        <!-- Pointer (top of wheel) -->
         <div class="absolute top-[-2px] left-1/2 -translate-x-1/2 z-10">
           <div class="wheel-pointer"></div>
         </div>
 
-        <!-- 转盘本体 -->
+        <!-- Wheel body -->
         <div id="wheel" class="wheel-spin absolute inset-[4px] rounded-full overflow-hidden cursor-pointer"
              style="background: conic-gradient(
                #007AFF 0deg 45deg,
@@ -108,158 +108,158 @@
                #8E8E93 315deg 360deg
              );">
 
-          <!-- 扇区标签容器 -->
+          <!-- Sector labels container -->
           <div id="wheelLabels" class="absolute inset-0">
-            <!-- 8个扇区奖品标签，通过旋转定位 -->
+            <!-- 8 sector prize labels, positioned by rotation -->
             <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(22.5deg) translateY(-50%);">
-              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">$5优惠券</span>
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">$5 Coupon</span>
             </div>
             <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(67.5deg) translateY(-50%);">
-              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">10积分</span>
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">10 Points</span>
             </div>
             <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(112.5deg) translateY(-50%);">
-              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">$10优惠券</span>
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">$10 Coupon</span>
             </div>
             <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(157.5deg) translateY(-50%);">
-              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">限定礼盒</span>
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">Limited Gift Box</span>
             </div>
             <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(202.5deg) translateY(-50%);">
-              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">20积分</span>
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">20 Points</span>
             </div>
             <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(247.5deg) translateY(-50%);">
-              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">免邮券</span>
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">Free Shipping</span>
             </div>
             <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(292.5deg) translateY(-50%);">
-              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">50积分</span>
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">50 Points</span>
             </div>
             <div class="absolute flex items-center justify-center" style="top: 50%; left: 50%; width: 50%; height: 2px; transform-origin: 0% 50%; transform: rotate(337.5deg) translateY(-50%);">
-              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">谢谢参与</span>
+              <span class="text-[10px] font-bold whitespace-nowrap" style="color: #fff; transform: translateX(40%); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">Better Luck Next Time</span>
             </div>
           </div>
         </div>
 
-        <!-- 中心按钮 -->
+        <!-- Center button -->
         <button id="spinBtn" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full flex items-center justify-center"
                 style="background: var(--primary); box-shadow: 0 4px 16px rgba(0,122,255,0.4); border: 3px solid var(--background-50);"
-                aria-label="开始抽奖">
-          <span class="text-sm font-bold" style="color: var(--background-50);">开始</span>
+                aria-label="Spin">
+          <span class="text-sm font-bold" style="color: var(--background-50);">Spin</span>
         </button>
       </div>
 
-      <!-- 转盘下方提示 -->
-      <p class="text-xs mt-5 text-center" style="color: var(--muted-foreground);">点击「开始」按钮进行抽奖</p>
+      <!-- Hint below the wheel -->
+      <p class="text-xs mt-5 text-center" style="color: var(--muted-foreground);">Tap the "Spin" button to spin the wheel</p>
     </section>
 
-    <!-- 抽奖记录折叠面板 -->
+    <!-- Spin records collapsible panel -->
     <section class="px-4 mt-2">
       <button id="toggleHistory" class="w-full flex items-center justify-between p-4 rounded-t-[var(--radius)]"
               style="background: var(--secondary); border: 1px solid var(--border); border-bottom: none;">
         <div class="flex items-center gap-2">
           <i data-lucide="history" class="w-4 h-4" style="color: var(--primary);"></i>
-          <span class="text-sm font-semibold" style="color: var(--foreground);">抽奖记录</span>
+          <span class="text-sm font-semibold" style="color: var(--foreground);">Spin Records</span>
           <span id="recordsCount" class="text-xs px-1.5 py-0.5 rounded-full" style="background: var(--brand-100); color: var(--primary);">10</span>
         </div>
         <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" style="color: var(--muted-foreground);" id="historyArrow"></i>
       </button>
       <div id="historyContent" class="collapse-content rounded-b-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); border-top: none;">
         <div id="recordsList" class="divide-y" style="border-color: var(--border);">
-          <!-- 记录 1 -->
+          <!-- Record 1 -->
           <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
                 <i data-lucide="tag" class="w-4 h-4" style="color: var(--primary);"></i>
               </div>
-              <span class="text-sm font-medium" style="color: var(--foreground);">$5优惠券</span>
+              <span class="text-sm font-medium" style="color: var(--foreground);">$5 Coupon</span>
             </div>
             <span class="text-xs" style="color: var(--muted-foreground);">2025-07-08 14:32</span>
           </div>
-          <!-- 记录 2 -->
+          <!-- Record 2 -->
           <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--state-success-surface);">
                 <i data-lucide="star" class="w-4 h-4" style="color: var(--state-success);"></i>
               </div>
-              <span class="text-sm font-medium" style="color: var(--foreground);">20积分</span>
+              <span class="text-sm font-medium" style="color: var(--foreground);">20 Points</span>
             </div>
             <span class="text-xs" style="color: var(--muted-foreground);">2025-07-07 09:15</span>
           </div>
-          <!-- 记录 3 -->
+          <!-- Record 3 -->
           <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
                 <i data-lucide="tag" class="w-4 h-4" style="color: var(--primary);"></i>
               </div>
-              <span class="text-sm font-medium" style="color: var(--foreground);">$10优惠券</span>
+              <span class="text-sm font-medium" style="color: var(--foreground);">$10 Coupon</span>
             </div>
             <span class="text-xs" style="color: var(--muted-foreground);">2025-07-06 20:41</span>
           </div>
-          <!-- 记录 4 -->
+          <!-- Record 4 -->
           <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: #f3e8ff;">
                 <i data-lucide="gift" class="w-4 h-4" style="color: #5856D6;"></i>
               </div>
-              <span class="text-sm font-medium" style="color: var(--foreground);">限定礼盒</span>
+              <span class="text-sm font-medium" style="color: var(--foreground);">Limited Gift Box</span>
             </div>
             <span class="text-xs" style="color: var(--muted-foreground);">2025-07-05 16:08</span>
           </div>
-          <!-- 记录 5 -->
+          <!-- Record 5 -->
           <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
                 <i data-lucide="truck" class="w-4 h-4" style="color: var(--primary);"></i>
               </div>
-              <span class="text-sm font-medium" style="color: var(--foreground);">免邮券</span>
+              <span class="text-sm font-medium" style="color: var(--foreground);">Free Shipping</span>
             </div>
             <span class="text-xs" style="color: var(--muted-foreground);">2025-07-04 11:22</span>
           </div>
-          <!-- 记录 6 -->
+          <!-- Record 6 -->
           <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--state-success-surface);">
                 <i data-lucide="star" class="w-4 h-4" style="color: var(--state-success);"></i>
               </div>
-              <span class="text-sm font-medium" style="color: var(--foreground);">50积分</span>
+              <span class="text-sm font-medium" style="color: var(--foreground);">50 Points</span>
             </div>
             <span class="text-xs" style="color: var(--muted-foreground);">2025-07-03 08:55</span>
           </div>
-          <!-- 记录 7 -->
+          <!-- Record 7 -->
           <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--background-200);">
                 <i data-lucide="frown" class="w-4 h-4" style="color: var(--text-400);"></i>
               </div>
-              <span class="text-sm font-medium" style="color: var(--foreground);">谢谢参与</span>
+              <span class="text-sm font-medium" style="color: var(--foreground);">Better Luck Next Time</span>
             </div>
             <span class="text-xs" style="color: var(--muted-foreground);">2025-07-02 19:33</span>
           </div>
-          <!-- 记录 8 -->
+          <!-- Record 8 -->
           <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
                 <i data-lucide="tag" class="w-4 h-4" style="color: var(--primary);"></i>
               </div>
-              <span class="text-sm font-medium" style="color: var(--foreground);">$5优惠券</span>
+              <span class="text-sm font-medium" style="color: var(--foreground);">$5 Coupon</span>
             </div>
             <span class="text-xs" style="color: var(--muted-foreground);">2025-07-01 13:17</span>
           </div>
-          <!-- 记录 9 -->
+          <!-- Record 9 -->
           <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--state-success-surface);">
                 <i data-lucide="star" class="w-4 h-4" style="color: var(--state-success);"></i>
               </div>
-              <span class="text-sm font-medium" style="color: var(--foreground);">10积分</span>
+              <span class="text-sm font-medium" style="color: var(--foreground);">10 Points</span>
             </div>
             <span class="text-xs" style="color: var(--muted-foreground);">2025-06-30 10:44</span>
           </div>
-          <!-- 记录 10 -->
+          <!-- Record 10 -->
           <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
                 <i data-lucide="tag" class="w-4 h-4" style="color: var(--primary);"></i>
               </div>
-              <span class="text-sm font-medium" style="color: var(--foreground);">$10优惠券</span>
+              <span class="text-sm font-medium" style="color: var(--foreground);">$10 Coupon</span>
             </div>
             <span class="text-xs" style="color: var(--muted-foreground);">2025-06-29 17:29</span>
           </div>
@@ -267,76 +267,76 @@
       </div>
     </section>
 
-    <!-- 底部规则说明 -->
+    <!-- Bottom rules section -->
     <section class="px-4 pt-6 pb-8">
       <div class="rounded-[var(--radius)] p-4" style="background: var(--secondary);">
         <div class="flex items-center gap-2 mb-3">
           <i data-lucide="info" class="w-4 h-4" style="color: var(--primary);"></i>
-          <span class="text-sm font-semibold" style="color: var(--foreground);">活动规则</span>
+          <span class="text-sm font-semibold" style="color: var(--foreground);">Event Rules</span>
         </div>
         <ul id="rulesList" class="space-y-2">
           <li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
             <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
-            消费满 $50 获得 1 次抽奖机会，每日上限 5 次
+            Spend $50 to get 1 spin chance, up to 5 times per day
           </li>
           <li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
             <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
-            奖品包括优惠券、积分、免邮券及限定礼盒
+            Prizes include coupons, points, free shipping, and limited gift boxes
           </li>
           <li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
             <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
-            优惠券有效期为发放后 7 天，积分实时到账
+            Coupons are valid for 7 days after issuance, points are credited instantly
           </li>
           <li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
             <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
-            限定礼盒中奖后 3 个工作日内发货
+            Limited gift boxes will be shipped within 3 business days after winning
           </li>
           <li class="flex gap-2 text-xs leading-relaxed" style="color: var(--muted-foreground);">
             <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
-            活动最终解释权归 MOYUYO 所有
+            MOYUYO reserves the final interpretation right for this event
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- 中奖结果弹窗（默认隐藏） -->
+    <!-- Prize result modal (hidden by default) -->
     <div id="prizeModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center" style="background: rgba(0,0,0,0.5); opacity: 0; pointer-events: none;">
       <div class="mx-4 w-full max-w-[340px] rounded-2xl p-6 text-center" style="background: var(--card); box-shadow: var(--shadow-2xl);">
-        <!-- 奖品图标 -->
+        <!-- Prize icon -->
         <div id="prizeIcon" class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style="background: var(--brand-50);">
           <i data-lucide="gift" class="w-8 h-8" style="color: var(--primary);"></i>
         </div>
-        <!-- 奖品名称 -->
-        <h2 id="prizeTitle" class="text-lg font-bold mb-2" style="color: var(--foreground);">恭喜中奖</h2>
-        <!-- 奖品说明 -->
-        <p id="prizeDesc" class="text-sm mb-6" style="color: var(--muted-foreground);">您获得了一张 $5 优惠券</p>
-        <!-- 收下奖品按钮 -->
+        <!-- Prize name -->
+        <h2 id="prizeTitle" class="text-lg font-bold mb-2" style="color: var(--foreground);">Congratulations!</h2>
+        <!-- Prize description -->
+        <p id="prizeDesc" class="text-sm mb-6" style="color: var(--muted-foreground);">You won a $5 coupon</p>
+        <!-- Claim prize button -->
         <button id="claimBtn" class="w-full h-12 rounded-full text-sm font-semibold"
                 style="background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-md);">
-          收下奖品
+          Claim Prize
         </button>
       </div>
     </div>
 
   </main>
 
-  <!-- 交互脚本 -->
+  <!-- Interaction scripts -->
   <script src="shared/mock-api.js"></script>
   <script src="shared/api.js"></script>
   <script>
     (function () {
       var api = window.moyuyoAPI;
 
-      // 默认奖品（兜底）
+      // Default prizes (fallback)
       var defaultPrizes = [
-        { name: '$5优惠券', desc: '您获得了一张 $5 优惠券，下单立减', icon: 'tag', color: 'var(--brand-50)' },
-        { name: '10积分', desc: '您获得了 10 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
-        { name: '$10优惠券', desc: '您获得了一张 $10 优惠券，下单立减', icon: 'tag', color: 'var(--brand-50)' },
-        { name: '限定礼盒', desc: '恭喜获得限定礼盒，将在 3 个工作日内发货', icon: 'gift', color: '#f3e8ff' },
-        { name: '20积分', desc: '您获得了 20 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
-        { name: '免邮券', desc: '您获得了一张免邮券，可免一次运费', icon: 'truck', color: 'var(--brand-50)' },
-        { name: '50积分', desc: '您获得了 50 积分奖励', icon: 'star', color: 'var(--state-success-surface)' },
-        { name: '谢谢参与', desc: '很遗憾未中奖，再试一次吧', icon: 'frown', color: 'var(--background-200)' }
+        { name: '$5 Coupon', desc: 'You won a $5 coupon, save instantly on your order', icon: 'tag', color: 'var(--brand-50)' },
+        { name: '10 Points', desc: 'You won 10 points', icon: 'star', color: 'var(--state-success-surface)' },
+        { name: '$10 Coupon', desc: 'You won a $10 coupon, save instantly on your order', icon: 'tag', color: 'var(--brand-50)' },
+        { name: 'Limited Gift Box', desc: 'You won a limited gift box, will be shipped within 3 business days', icon: 'gift', color: '#f3e8ff' },
+        { name: '20 Points', desc: 'You won 20 points', icon: 'star', color: 'var(--state-success-surface)' },
+        { name: 'Free Shipping', desc: 'You won a free shipping coupon, free shipping on one order', icon: 'truck', color: 'var(--brand-50)' },
+        { name: '50 Points', desc: 'You won 50 points', icon: 'star', color: 'var(--state-success-surface)' },
+        { name: 'Better Luck Next Time', desc: 'No luck this time, try again!', icon: 'frown', color: 'var(--background-200)' }
       ];
       var prizes = defaultPrizes;
       var remainingSpins = 3;
@@ -351,18 +351,18 @@
       var isSpinning = false;
       var currentRotation = 0;
 
-      // 价格格式化（分转元）
+      // Price formatting (cents to yuan)
       function formatPrice(cents) {
         return '¥' + (cents / 100).toFixed(2);
       }
 
-      // 更新剩余次数
+      // Update remaining spins
       function updateRemainingSpins() {
         var el = document.getElementById('remainingSpinsText');
         if (el) el.textContent = remainingSpins;
       }
 
-      // 更新转盘奖品标签
+      // Update wheel prize labels
       function updateWheelLabels() {
         var container = document.getElementById('wheelLabels');
         if (!container) return;
@@ -378,7 +378,7 @@
         container.innerHTML = html;
       }
 
-      // 更新规则
+      // Update rules
       function updateRules(rules) {
         var ul = document.getElementById('rulesList');
         if (!ul || !rules) return;
@@ -392,7 +392,7 @@
         ul.innerHTML = html;
       }
 
-      // 渲染中奖记录
+      // Render spin records
       function renderRecords(records) {
         var container = document.getElementById('recordsList');
         var countEl = document.getElementById('recordsCount');
@@ -417,10 +417,10 @@
         lucide.createIcons();
       }
 
-      // 显示中奖弹窗
+      // Show prize modal
       function showPrize(prize) {
-        prizeTitle.textContent = prize.type === 'NONE' ? '差一点就中了' : '恭喜中奖';
-        var desc = prize.type === 'NONE' ? '很遗憾未中奖，再试一次吧' : '您获得了 ' + prize.name;
+        prizeTitle.textContent = prize.type === 'NONE' ? 'So Close!' : 'Congratulations!';
+        var desc = prize.type === 'NONE' ? 'No luck this time, try again!' : 'You won ' + prize.name;
         prizeDesc.textContent = desc;
         var iconBg = prize.type === 'POINTS' ? 'var(--state-success-surface)' : prize.type === 'NONE' ? 'var(--background-200)' : 'var(--brand-50)';
         var iconColor = prize.type === 'POINTS' ? 'var(--state-success)' : prize.type === 'NONE' ? 'var(--text-400)' : 'var(--primary)';
@@ -431,7 +431,7 @@
         prizeModal.style.pointerEvents = 'auto';
       }
 
-      // 旋转转盘
+      // Spin the wheel
       function spinWheel(targetIndex) {
         var sectorAngle = 360 / prizes.length;
         var targetAngle = 360 * 5 + (360 - (targetIndex * sectorAngle + sectorAngle / 2));
@@ -439,11 +439,11 @@
         wheel.style.transform = 'rotate(' + currentRotation + 'deg)';
       }
 
-      // 点击抽奖
+      // Click to spin
       spinBtn.addEventListener('click', function () {
         if (isSpinning) return;
         if (remainingSpins <= 0) {
-          alert('抽奖次数已用完，消费满 $50 可获得更多机会');
+          alert('No spins remaining. Spend $50 to get more chances');
           return;
         }
         isSpinning = true;
@@ -454,7 +454,7 @@
             remainingSpins = res.data.remainingSpins;
             updateRemainingSpins();
 
-            // 找到奖品在转盘上的位置
+            // Find the prize position on the wheel
             var targetIndex = -1;
             for (var i = 0; i < prizes.length; i++) {
               if (prizes[i].id === prize.id) { targetIndex = i; break; }
@@ -471,7 +471,7 @@
             isSpinning = false;
           }
         }).catch(function () {
-          // 降级：使用本地随机
+          // Fallback: use local random
           var weights = [15, 15, 10, 2, 10, 10, 5, 33];
           var totalWeight = weights.reduce(function (a, b) { return a + b; }, 0);
           var random = Math.random() * totalWeight;
@@ -491,7 +491,7 @@
         });
       });
 
-      // 关闭弹窗
+      // Close modal
       claimBtn.addEventListener('click', function () {
         prizeModal.style.opacity = '0';
         prizeModal.style.pointerEvents = 'none';
@@ -503,7 +503,7 @@
         }
       });
 
-      // 折叠面板
+      // Collapsible panel
       var toggleHistory = document.getElementById('toggleHistory');
       var historyContent = document.getElementById('historyContent');
       var historyArrow = document.getElementById('historyArrow');
@@ -514,7 +514,7 @@
         historyArrow.style.transform = historyOpen ? 'rotate(180deg)' : 'rotate(0deg)';
       });
 
-      // 初始化
+      // Initialize
       function init() {
         api.get('/api/v1/lottery/info').then(function (res) {
           if (res.code === 0 && res.data) {

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 新人专区</title>
+    <title>MOYUYO - New User Zone</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -45,90 +45,90 @@
 <body class="min-h-screen font-sans antialiased">
     <main class="pb-24">
 
-      <!-- 顶部导航栏：返回按钮 + 标题 -->
+      <!-- Top navigation bar: back button + title -->
       <div class="sticky top-0 z-30" style="background: var(--brand-500);">
         <div class="h-11 flex items-center justify-center px-5 relative">
-          <a href="javascript:void(0)" onclick="window.history.back()" class="absolute left-4 flex items-center justify-center w-8 h-8" style="color: var(--primary-foreground);" data-dom-id="cta-back" aria-label="返回">
+          <a href="javascript:void(0)" onclick="window.history.back()" class="absolute left-4 flex items-center justify-center w-8 h-8" style="color: var(--primary-foreground);" data-dom-id="cta-back" aria-label="Back">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
           </a>
-          <span class="text-sm font-semibold" style="color: var(--primary-foreground);">新人专区</span>
+          <span class="text-sm font-semibold" style="color: var(--primary-foreground);">New User Zone</span>
         </div>
       </div>
 
-      <!-- 顶部品牌色渐变英雄区域 -->
-      <section class="hero-gradient px-5 pt-4 pb-8" aria-label="新人欢迎">
+      <!-- Hero gradient section -->
+      <section class="hero-gradient px-5 pt-4 pb-8" aria-label="Welcome">
         <div class="text-center">
-          <h1 class="text-2xl font-bold" style="color: var(--primary-foreground);">欢迎加入 MOYUYO</h1>
-          <p class="text-sm mt-2" style="color: rgba(255,255,255,0.85);">新人专属福利已到账</p>
-          <!-- 倒计时提示 -->
+          <h1 class="text-2xl font-bold" style="color: var(--primary-foreground);">Welcome to MOYUYO</h1>
+          <p class="text-sm mt-2" style="color: rgba(255,255,255,0.85);">New user exclusive benefits have arrived</p>
+          <!-- Countdown reminder -->
           <div class="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-full" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);">
             <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-alert.svg'); color: var(--primary-foreground);"></span>
-            <span class="text-xs font-medium" id="new-user-days-left" style="color: var(--primary-foreground);">新人权益有效期还剩 28 天</span>
+            <span class="text-xs font-medium" id="new-user-days-left" style="color: var(--primary-foreground);">New user benefits valid for 28 more days</span>
           </div>
         </div>
       </section>
 
-      <!-- 新人大礼包卡片 -->
-      <section class="px-4 -mt-4 relative z-10" aria-label="新人大礼包">
+      <!-- New User Welcome Pack card -->
+      <section class="px-4 -mt-4 relative z-10" aria-label="New User Welcome Pack">
         <div class="rounded-[var(--radius)] p-4" style="background: var(--background-50); box-shadow: var(--shadow-lg); border: 1px solid var(--border);">
           <div class="flex items-center justify-between mb-3">
-            <h2 class="text-base font-bold" style="color: var(--foreground);">新人大礼包</h2>
-            <a href="coupons.html" class="text-xs font-medium" style="color: var(--primary);" data-dom-id="cta-coupon">查看全部</a>
+            <h2 class="text-base font-bold" style="color: var(--foreground);">New User Welcome Pack</h2>
+            <a href="coupons.html" class="text-xs font-medium" style="color: var(--primary);" data-dom-id="cta-coupon">View All</a>
           </div>
-          <!-- 3 个权益横排 -->
+          <!-- 3 benefits in a row -->
           <div class="flex gap-3" id="benefits-container">
-            <!-- 权益1：首单8折券 -->
+            <!-- Benefit 1: 20% off first order -->
             <div class="benefit-card">
               <div class="benefit-icon-wrap">
                 <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); mask-image: url('../assets/icons/dl-builtin-apple/tag.svg');"></span>
               </div>
               <div class="text-center">
-                <p class="text-sm font-bold" style="color: var(--foreground);">首单8折券</p>
-                <p class="text-xs mt-0.5" style="color: var(--text-400);">最高减 $20</p>
+                <p class="text-sm font-bold" style="color: var(--foreground);">20% Off First Order</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">Up to $20 off</p>
               </div>
             </div>
-            <!-- 权益2：免邮券 -->
+            <!-- Benefit 2: Free shipping -->
             <div class="benefit-card">
               <div class="benefit-icon-wrap">
                 <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
               </div>
               <div class="text-center">
-                <p class="text-sm font-bold" style="color: var(--foreground);">免邮券</p>
-                <p class="text-xs mt-0.5" style="color: var(--text-400);">无门槛使用</p>
+                <p class="text-sm font-bold" style="color: var(--foreground);">Free Shipping</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">No minimum spend</p>
               </div>
             </div>
-            <!-- 权益3：$5 积分 -->
+            <!-- Benefit 3: $5 credit -->
             <div class="benefit-card">
               <div class="benefit-icon-wrap" style="background: var(--state-success-surface); color: var(--state-success);">
                 <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg');"></span>
               </div>
               <div class="text-center">
-                <p class="text-sm font-bold" style="color: var(--foreground);">$5 积分</p>
-                <p class="text-xs mt-0.5" style="color: var(--state-success);">已到账</p>
+                <p class="text-sm font-bold" style="color: var(--foreground);">$5 Credit</p>
+                <p class="text-xs mt-0.5" style="color: var(--state-success);">Received</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 新人专属价商品 -->
-      <section class="px-4 mt-6" aria-label="新人专属价商品">
+      <!-- New user exclusive price products -->
+      <section class="px-4 mt-6" aria-label="New User Exclusive Prices">
         <div class="flex items-center justify-between mb-3">
-          <h2 class="text-base font-bold" style="color: var(--foreground);">新人专属价</h2>
-          <span class="text-xs font-medium px-2 py-0.5 rounded-full" style="background: var(--state-error-surface); color: var(--state-error);">限时特惠</span>
+          <h2 class="text-base font-bold" style="color: var(--foreground);">New User Exclusive Prices</h2>
+          <span class="text-xs font-medium px-2 py-0.5 rounded-full" style="background: var(--state-error-surface); color: var(--state-error);">Limited Time Offer</span>
         </div>
-        <!-- 2 列商品网格 -->
+        <!-- 2-column product grid -->
         <div class="grid grid-cols-2 gap-3" id="new-user-products">
 
-          <!-- 商品卡片 1 -->
+          <!-- Product card 1 -->
           <a href="#" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">
             <div class="aspect-square overflow-hidden relative">
-              <img src="../assets/product-shampoo-bottle.jpg" alt="宠物洗护套装" class="w-full h-full object-cover">
-              <span class="discount-tag absolute top-2 left-2">低至5折</span>
+              <img src="../assets/product-shampoo-bottle.jpg" alt="Pet Grooming Kit" class="w-full h-full object-cover">
+              <span class="discount-tag absolute top-2 left-2">Up to 50% off</span>
             </div>
             <div class="p-3">
-              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">高端宠物洗护套装</h3>
-              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">温和清洁 持久留香</p>
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">Premium Pet Grooming Kit</h3>
+              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">Gentle cleansing, long-lasting fragrance</p>
               <div class="flex items-baseline gap-1.5 mt-2">
                 <span class="text-sm font-bold" style="color: var(--state-error);">$95</span>
                 <span class="text-xs line-through" style="color: var(--text-300);">$189</span>
@@ -136,15 +136,15 @@
             </div>
           </a>
 
-          <!-- 商品卡片 2 -->
+          <!-- Product card 2 -->
           <a href="#" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">
             <div class="aspect-square overflow-hidden relative">
-              <img src="../assets/product-harness-gear.jpg" alt="宠物胸背带" class="w-full h-full object-cover">
-              <span class="discount-tag absolute top-2 left-2">低至5折</span>
+              <img src="../assets/product-harness-gear.jpg" alt="Pet Harness" class="w-full h-full object-cover">
+              <span class="discount-tag absolute top-2 left-2">Up to 50% off</span>
             </div>
             <div class="p-3">
-              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">舒适胸背带</h3>
-              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">透气网布 均匀受力</p>
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">Comfortable Harness</h3>
+              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">Breathable mesh, even pressure distribution</p>
               <div class="flex items-baseline gap-1.5 mt-2">
                 <span class="text-sm font-bold" style="color: var(--state-error);">$65</span>
                 <span class="text-xs line-through" style="color: var(--text-300);">$129</span>
@@ -152,15 +152,15 @@
             </div>
           </a>
 
-          <!-- 商品卡片 3 -->
+          <!-- Product card 3 -->
           <a href="#" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">
             <div class="aspect-square overflow-hidden relative">
-              <img src="../assets/product-toy-play.jpg" alt="互动益智玩具" class="w-full h-full object-cover">
-              <span class="discount-tag absolute top-2 left-2">低至5折</span>
+              <img src="../assets/product-toy-play.jpg" alt="Interactive Puzzle Toy" class="w-full h-full object-cover">
+              <span class="discount-tag absolute top-2 left-2">Up to 50% off</span>
             </div>
             <div class="p-3">
-              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">互动益智玩具</h3>
-              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">耐咬材质 释放天性</p>
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">Interactive Puzzle Toy</h3>
+              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">Durable chew material, unleash instincts</p>
               <div class="flex items-baseline gap-1.5 mt-2">
                 <span class="text-sm font-bold" style="color: var(--state-error);">$35</span>
                 <span class="text-xs line-through" style="color: var(--text-300);">$69</span>
@@ -168,15 +168,15 @@
             </div>
           </a>
 
-          <!-- 商品卡片 4 -->
+          <!-- Product card 4 -->
           <a href="#" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">
             <div class="aspect-square overflow-hidden relative">
-              <img src="../assets/product-pet-jacket.jpg" alt="宠物潮流外套" class="w-full h-full object-cover">
-              <span class="discount-tag absolute top-2 left-2">低至5折</span>
+              <img src="../assets/product-pet-jacket.jpg" alt="Trendy Pet Jacket" class="w-full h-full object-cover">
+              <span class="discount-tag absolute top-2 left-2">Up to 50% off</span>
             </div>
             <div class="p-3">
-              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">宠物潮流外套</h3>
-              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">防水面料 春秋百搭</p>
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">Trendy Pet Jacket</h3>
+              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">Waterproof fabric, perfect for spring &amp; fall</p>
               <div class="flex items-baseline gap-1.5 mt-2">
                 <span class="text-sm font-bold" style="color: var(--state-error);">$110</span>
                 <span class="text-xs line-through" style="color: var(--text-300);">$219</span>
@@ -187,109 +187,109 @@
         </div>
       </section>
 
-      <!-- 新人任务引导 -->
-      <section class="px-4 mt-6" aria-label="新人任务">
-        <h2 class="text-base font-bold mb-3" style="color: var(--foreground);">完成任务赚积分</h2>
+      <!-- New user task guide -->
+      <section class="px-4 mt-6" aria-label="New User Tasks">
+        <h2 class="text-base font-bold mb-3" style="color: var(--foreground);">Complete Tasks to Earn Points</h2>
         <div class="flex flex-col gap-3" id="new-user-tasks">
 
-          <!-- 任务 1：完善宠物档案 -->
+          <!-- Task 1: Complete pet profile -->
           <div class="task-item">
             <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background: var(--brand-50); color: var(--brand-500);">
               <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/pen-line.svg'); mask-image: url('../assets/icons/dl-builtin-apple/pen-line.svg');"></span>
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between">
-                <p class="text-sm font-medium" style="color: var(--foreground);">完善宠物档案</p>
-                <span class="text-xs font-bold flex-shrink-0 ml-2" style="color: var(--brand-600);">+50 积分</span>
+                <p class="text-sm font-medium" style="color: var(--foreground);">Complete Pet Profile</p>
+                <span class="text-xs font-bold flex-shrink-0 ml-2" style="color: var(--brand-600);">+50 Points</span>
               </div>
               <div class="flex items-center gap-2 mt-2">
                 <div class="task-progress-bar">
                   <div class="task-progress-fill"></div>
                 </div>
-                <span class="text-xs flex-shrink-0" style="color: var(--text-400);">未完成</span>
+                <span class="text-xs flex-shrink-0" style="color: var(--text-400);">Incomplete</span>
               </div>
             </div>
-            <a href="pet-profile.html" class="ml-2 flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);" data-dom-id="cta-complete-profile">去完成</a>
+            <a href="pet-profile.html" class="ml-2 flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);" data-dom-id="cta-complete-profile">Go</a>
           </div>
 
-          <!-- 任务 2：设置护理提醒 -->
+          <!-- Task 2: Set care reminders -->
           <div class="task-item">
             <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background: var(--state-success-surface); color: var(--state-success);">
               <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-alert.svg');"></span>
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between">
-                <p class="text-sm font-medium" style="color: var(--foreground);">设置护理提醒</p>
-                <span class="text-xs font-bold flex-shrink-0 ml-2" style="color: var(--brand-600);">+30 积分</span>
+                <p class="text-sm font-medium" style="color: var(--foreground);">Set Care Reminders</p>
+                <span class="text-xs font-bold flex-shrink-0 ml-2" style="color: var(--brand-600);">+30 Points</span>
               </div>
               <div class="flex items-center gap-2 mt-2">
                 <div class="task-progress-bar">
                   <div class="task-progress-fill"></div>
                 </div>
-                <span class="text-xs flex-shrink-0" style="color: var(--text-400);">未完成</span>
+                <span class="text-xs flex-shrink-0" style="color: var(--text-400);">Incomplete</span>
               </div>
             </div>
-            <button class="ml-2 flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">去完成</button>
+            <button class="ml-2 flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">Go</button>
           </div>
 
-          <!-- 任务 3：完成首单 -->
+          <!-- Task 3: Complete first order -->
           <div class="task-item">
             <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background: var(--brand-50); color: var(--brand-500);">
               <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg');"></span>
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between">
-                <p class="text-sm font-medium" style="color: var(--foreground);">完成首单</p>
-                <span class="text-xs font-bold flex-shrink-0 ml-2" style="color: var(--brand-600);">+100 积分</span>
+                <p class="text-sm font-medium" style="color: var(--foreground);">Complete First Order</p>
+                <span class="text-xs font-bold flex-shrink-0 ml-2" style="color: var(--brand-600);">+100 Points</span>
               </div>
               <div class="flex items-center gap-2 mt-2">
                 <div class="task-progress-bar">
                   <div class="task-progress-fill"></div>
                 </div>
-                <span class="text-xs flex-shrink-0" style="color: var(--text-400);">未完成</span>
+                <span class="text-xs flex-shrink-0" style="color: var(--text-400);">Incomplete</span>
               </div>
             </div>
-            <button class="ml-2 flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">去完成</button>
+            <button class="ml-2 flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">Go</button>
           </div>
 
         </div>
       </section>
 
-      <!-- 底部查看全部新人价按钮 -->
-      <section class="px-4 mt-6 pb-4" aria-label="查看更多">
+      <!-- Bottom view all new user prices button -->
+      <section class="px-4 mt-6 pb-4" aria-label="View More">
         <a href="#" class="btn btn-primary btn-lg w-full flex items-center justify-center" style="border-radius: var(--radius);">
-          查看全部新人价
+          View All New User Prices
           <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-right.svg');"></span>
         </a>
       </section>
 
-      <!-- 底部 TabBar -->
-      <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="主导航">
+      <!-- Bottom TabBar -->
+      <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="Main Navigation">
         <div class="flex items-stretch justify-around h-[49px]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
-          <!-- 首页 -->
-          <a href="home.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="首页">
+          <!-- Home -->
+          <a href="home.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="Home">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
-            <span class="text-[10px] font-medium">首页</span>
+            <span class="text-[10px] font-medium">Home</span>
           </a>
-          <!-- 分类 -->
-          <a href="category.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-category" aria-label="分类">
+          <!-- Categories -->
+          <a href="category.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-category" aria-label="Categories">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/grip.svg'); mask-image: url('../assets/icons/dl-builtin-apple/grip.svg');"></span>
-            <span class="text-[10px] font-medium">分类</span>
+            <span class="text-[10px] font-medium">Categories</span>
           </a>
           <!-- Pet Hub -->
           <a href="pet-hub.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-pet-hub" aria-label="Pet Hub">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
             <span class="text-[10px] font-medium">Pet Hub</span>
           </a>
-          <!-- 社区 -->
-          <a href="community.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="社区">
+          <!-- Community -->
+          <a href="community.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="Community">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
-            <span class="text-[10px] font-medium">社区</span>
+            <span class="text-[10px] font-medium">Community</span>
           </a>
-          <!-- 我的 -->
-          <a href="profile.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-profile" aria-label="个人中心">
+          <!-- My Profile -->
+          <a href="profile.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-profile" aria-label="My Profile">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
-            <span class="text-[10px] font-medium">我的</span>
+            <span class="text-[10px] font-medium">Me</span>
           </a>
         </div>
         <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.88);"></div>
@@ -305,7 +305,7 @@
       return (cents / 100).toFixed(0);
     }
 
-    // 渲染权益卡片
+    // Render benefit cards
     function renderBenefits(benefits) {
       var container = document.getElementById('benefits-container');
       if (!container) return;
@@ -335,7 +335,7 @@
       container.innerHTML = html;
     }
 
-    // 渲染商品列表
+    // Render product list
     function renderProducts(products) {
       var container = document.getElementById('new-user-products');
       if (!container) return;
@@ -346,7 +346,7 @@
         html += '<a href="#" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">';
         html += '<div class="aspect-square overflow-hidden relative">';
         html += '<img src="' + p.image + '" alt="' + p.name + '" class="w-full h-full object-cover">';
-        html += '<span class="discount-tag absolute top-2 left-2">低至5折</span></div>';
+        html += '<span class="discount-tag absolute top-2 left-2">Up to 50% off</span></div>';
         html += '<div class="p-3"><h3 class="text-sm font-medium truncate" style="color: var(--foreground);">' + p.name + '</h3>';
         html += '<p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">' + p.desc + '</p>';
         html += '<div class="flex items-baseline gap-1.5 mt-2">';
@@ -357,7 +357,7 @@
       container.innerHTML = html;
     }
 
-    // 渲染任务列表
+    // Render task list
     function renderTasks(tasks) {
       var container = document.getElementById('new-user-tasks');
       if (!container) return;
@@ -373,14 +373,14 @@
         var t = tasks[i];
         var iconBg = iconBgColors[i] || 'background: var(--brand-50); color: var(--brand-500);';
         var progressPercent = t.progress || 0;
-        var statusText = t.status === 'PENDING' ? '未完成' : '已完成';
-        var btnText = t.status === 'PENDING' ? '去完成' : '已完成';
+        var statusText = t.status === 'PENDING' ? 'Incomplete' : 'Completed';
+        var btnText = t.status === 'PENDING' ? 'Go' : 'Completed';
         html += '<div class="task-item">';
         html += '<div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="' + iconBg + '">';
         html += '<span data-icon class="w-5 h-5" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/' + t.icon + '.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/' + t.icon + '.svg\');"></span>';
         html += '</div><div class="flex-1 min-w-0"><div class="flex items-center justify-between">';
         html += '<p class="text-sm font-medium" style="color: var(--foreground);">' + t.name + '</p>';
-        html += '<span class="text-xs font-bold flex-shrink-0 ml-2" style="color: var(--brand-600);">+' + t.reward + ' 积分</span>';
+        html += '<span class="text-xs font-bold flex-shrink-0 ml-2" style="color: var(--brand-600);">+' + t.reward + ' Points</span>';
         html += '</div><div class="flex items-center gap-2 mt-2">';
         html += '<div class="task-progress-bar"><div class="task-progress-fill" style="width: ' + progressPercent + '%;"></div></div>';
         html += '<span class="text-xs flex-shrink-0" style="color: var(--text-400);">' + statusText + '</span></div></div>';
@@ -390,23 +390,23 @@
       container.innerHTML = html;
     }
 
-    // 初始化页面
+    // Initialize page
     (function init() {
       api.get('/api/v1/new-user/info').then(function(res) {
         if (res.code !== 0 || !res.data) return;
         var data = res.data;
 
-        // 更新倒计时天数
+        // Update days remaining
         var daysEl = document.getElementById('new-user-days-left');
-        if (daysEl) daysEl.textContent = '新人权益有效期还剩 ' + data.daysLeft + ' 天';
+        if (daysEl) daysEl.textContent = 'New user benefits valid for ' + data.daysLeft + ' more days';
 
-        // 渲染权益卡片
+        // Render benefit cards
         renderBenefits(data.benefits);
 
-        // 渲染商品列表
+        // Render product list
         renderProducts(data.products);
 
-        // 渲染任务列表
+        // Render task list
         renderTasks(data.tasks);
 
         lucide.createIcons();

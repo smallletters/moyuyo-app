@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>限时秒杀 - MOYUYO</title>
+    <title>Flash Sale - MOYUYO</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -45,28 +45,28 @@
 <body class="min-h-screen font-sans antialiased">
     <main class="pb-24">
 
-      <!-- 顶部导航栏：返回箭头 + 标题 -->
+      <!-- Top navigation bar: back arrow + title -->
       <nav class="sticky top-0 z-30 flex items-center justify-between h-11 px-4"
            style="background: var(--background-800);">
         <button class="flex items-center justify-center w-9 h-9 -ml-1 rounded-full"
                 style="color: var(--background-50);"
-                aria-label="返回" onclick="history.back()">
+                aria-label="Go back" onclick="history.back()">
           <i data-lucide="chevron-left" class="w-5 h-5"></i>
         </button>
         <span class="text-base font-semibold"
-              style="color: var(--background-50);">限时秒杀</span>
+              style="color: var(--background-50);">Flash Sale</span>
         <button class="flex items-center justify-center w-9 h-9 -mr-1 rounded-full"
                 style="color: var(--background-50);"
-                aria-label="分享">
+                aria-label="Share">
           <i data-lucide="share" class="w-5 h-5"></i>
         </button>
       </nav>
 
-      <!-- 秒杀倒计时横幅 -->
+      <!-- Flash sale countdown banner -->
       <div class="flex items-center justify-center gap-2 py-3 px-4"
            style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
         <i data-lucide="clock" class="w-4 h-4" style="color: #ffffff;"></i>
-        <span class="text-sm font-medium" style="color: rgba(255, 255, 255, 0.85);">距结束</span>
+        <span class="text-sm font-medium" style="color: rgba(255, 255, 255, 0.85);">Ends in</span>
         <div id="countdownDigits" class="flex items-center gap-1">
           <span class="countdown-digit">02</span>
           <span class="text-sm font-bold" style="color: #ffffff;">:</span>
@@ -76,29 +76,29 @@
         </div>
       </div>
 
-      <!-- 商品主图区（CSS渐变占位） -->
+      <!-- Product main image area (CSS gradient placeholder) -->
       <div id="productImage" class="w-full aspect-square"
            style="background: linear-gradient(160deg, var(--brand-50), var(--background-100), var(--brand-100));">
-        <!-- 商品标签浮层 -->
+        <!-- Product tag overlay -->
         <div class="absolute top-4 left-4">
           <span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-bold"
                 style="background: var(--state-error); color: var(--state-error-foreground);">
-            5折
+            50% OFF
           </span>
         </div>
       </div>
 
-      <!-- 价格与名称区 -->
+      <!-- Price and name area -->
       <section class="px-4 pt-4 pb-3"
                style="background: var(--background);">
         <h1 id="productName" class="text-lg font-bold leading-snug" style="color: var(--text-800);">
-          MOYUYO 舒适宠物窝 可拆洗深度睡眠垫
+          MOYUYO Comfy Pet Bed Removable Washable Deep Sleep Mat
         </h1>
         <p id="productSubtitle" class="mt-1 text-sm" style="color: var(--muted-foreground);">
-          360度包裹设计 / 记忆棉内芯 / 防滑底部
+          360° Wrap Design / Memory Foam Core / Non-Slip Bottom
         </p>
 
-        <!-- 秒杀价格 -->
+        <!-- Flash sale price -->
         <div class="flex items-end gap-2 mt-3">
           <span id="flashPrice" class="text-2xl font-extrabold"
                 style="color: var(--state-error);">$19.99</span>
@@ -107,38 +107,38 @@
           </span>
           <span id="saveBadge" class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-bold"
                 style="background: var(--state-error); color: var(--state-error-foreground);">
-            省$20.00
+            Save $20.00
           </span>
         </div>
 
-        <!-- 秒杀专属标签 -->
+        <!-- Flash sale exclusive tags -->
         <div class="flex items-center gap-2 mt-2">
           <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-semibold"
                 style="background: var(--brand-100); color: var(--brand-600);">
-            秒杀专享
+            Flash Deal
           </span>
           <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-semibold"
                 style="background: var(--state-success-surface); color: var(--state-success);">
-            正品保障
+            Authentic
           </span>
           <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-semibold"
                 style="background: var(--background-200); color: var(--muted-foreground);">
-           包邮
+           Free Shipping
           </span>
         </div>
       </section>
 
-      <!-- 分隔线 -->
+      <!-- Divider -->
       <div class="h-2" style="background: var(--background-100);"></div>
 
-      <!-- 库存进度条 -->
+      <!-- Stock progress bar -->
       <section class="px-4 py-4" style="background: var(--background);">
         <div class="flex items-center justify-between mb-2">
           <span class="text-sm font-semibold" style="color: var(--text-800);">
-            限量抢购
+            Limited Stock
           </span>
           <span id="stockText" class="text-xs font-medium" style="color: var(--state-error);">
-            已抢 80%，剩余 20 件
+            80% sold, 20 left
           </span>
         </div>
         <div class="w-full h-2 rounded-full overflow-hidden"
@@ -148,41 +148,41 @@
         </div>
       </section>
 
-      <!-- 分隔线 -->
+      <!-- Divider -->
       <div class="h-2" style="background: var(--background-100);"></div>
 
-      <!-- 规格选择区 -->
+      <!-- Spec selection area -->
       <section id="specsContainer" class="px-4 py-4" style="background: var(--background);">
         <div class="mb-4">
           <span class="text-sm font-semibold block mb-2.5" style="color: var(--text-800);">
-            颜色
+            Color
           </span>
           <div class="flex items-center gap-2.5">
             <button class="spec-btn active flex items-center gap-2 h-9 px-3.5 rounded-full text-sm font-medium border"
                     style="border-color: var(--border); background: var(--background); color: var(--text-700);">
               <span class="w-4 h-4 rounded-full border"
                     style="background: linear-gradient(135deg, #4a90d9, #007aff); border-color: var(--border);"></span>
-              蓝色
+              Blue
             </button>
             <button class="spec-btn flex items-center gap-2 h-9 px-3.5 rounded-full text-sm font-medium border"
                     style="border-color: var(--border); background: var(--background); color: var(--text-700);">
               <span class="w-4 h-4 rounded-full border"
                     style="background: linear-gradient(135deg, #f5a0b8, #ff6b8a); border-color: var(--border);"></span>
-              粉色
+              Pink
             </button>
             <button class="spec-btn flex items-center gap-2 h-9 px-3.5 rounded-full text-sm font-medium border"
                     style="border-color: var(--border); background: var(--background); color: var(--text-700);">
               <span class="w-4 h-4 rounded-full border"
                     style="background: linear-gradient(135deg, #555555, #1d1d1f); border-color: var(--border);"></span>
-              黑色
+              Black
             </button>
           </div>
         </div>
 
-        <!-- 尺寸选择 -->
+        <!-- Size selection -->
         <div>
           <span class="text-sm font-semibold block mb-2.5" style="color: var(--text-800);">
-            尺寸
+            Size
           </span>
           <div class="flex items-center gap-2.5">
             <button class="spec-btn h-9 w-9 rounded-full text-sm font-medium border flex items-center justify-center"
@@ -201,43 +201,43 @@
         </div>
       </section>
 
-      <!-- 分隔线 -->
+      <!-- Divider -->
       <div class="h-2" style="background: var(--background-100);"></div>
 
-      <!-- 秒杀规则 -->
+      <!-- Flash sale rules -->
       <section id="rulesSection" class="px-4 py-4" style="background: var(--background);">
         <div class="flex items-center gap-2 mb-3">
           <i data-lucide="info" class="w-4 h-4" style="color: var(--primary);"></i>
-          <span class="text-sm font-semibold" style="color: var(--text-800);">秒杀规则</span>
+          <span class="text-sm font-semibold" style="color: var(--text-800);">Flash Sale Rules</span>
         </div>
         <ul id="rulesList" class="space-y-1.5">
           <li class="flex items-start gap-2 text-xs" style="color: var(--text-500);">
             <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
-            秒杀商品每人限购1件
+            Each person is limited to 1 item per flash sale
           </li>
           <li class="flex items-start gap-2 text-xs" style="color: var(--text-500);">
             <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
-            秒杀价格不与其他优惠叠加
+            Flash sale prices cannot be combined with other discounts
           </li>
           <li class="flex items-start gap-2 text-xs" style="color: var(--text-500);">
             <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
-            商品售罄或活动结束后恢复原价
+            Original price resumes after sellout or event ends
           </li>
           <li class="flex items-start gap-2 text-xs" style="color: var(--text-500);">
             <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
-            下单后15分钟内未付款自动取消订单
+            Orders will be automatically canceled if payment is not made within 15 minutes
           </li>
         </ul>
       </section>
 
-      <!-- 分隔线 -->
+      <!-- Divider -->
       <div class="h-2" style="background: var(--background-100);"></div>
 
-      <!-- 商品详情折叠面板 -->
+      <!-- Product details collapsible panel -->
       <section class="px-4 py-4" style="background: var(--background);">
         <button class="collapse-toggle flex items-center justify-between w-full" data-collapse="detail">
           <span class="text-sm font-semibold" style="color: var(--text-800);">
-            商品详情
+            Product Details
           </span>
           <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300" style="color: var(--icon-muted);"></i>
         </button>
@@ -246,69 +246,69 @@
             <div class="w-full aspect-video rounded-xl"
                  style="background: linear-gradient(135deg, var(--brand-50), var(--background-200));"></div>
             <p class="text-sm leading-relaxed" style="color: var(--text-600);">
-              采用优质记忆棉材质，为爱宠提供极致舒适的睡眠体验。360度包裹设计让宠物更有安全感，可拆洗外套方便日常清洁。底部防滑设计，确保宠物窝稳固不移位。
+              Made with premium memory foam, providing your pet with ultimate comfort for a restful sleep. The 360° wrap design gives pets a sense of security, while the removable and washable cover makes daily cleaning effortless. The non-slip bottom keeps the bed stable and secure at all times.
             </p>
             <ul class="space-y-1.5">
               <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
                 <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
-                高密度记忆棉内芯，慢回弹支撑
+                High-density memory foam core with slow rebound support
               </li>
               <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
                 <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
-                防水防污面料，易清洁打理
+                Waterproof and stain-resistant fabric, easy to clean
               </li>
               <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
                 <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
-                底部硅胶防滑颗粒，安全稳固
+                Silicone anti-slip particles on the bottom for safety and stability
               </li>
               <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
                 <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
-                全方位可拆洗设计，支持机洗
+                Fully removable and washable design, machine washable
               </li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- 分隔线 -->
+      <!-- Divider -->
       <div class="h-2" style="background: var(--background-100);"></div>
 
-      <!-- 商品评价摘要 -->
+      <!-- Product review summary -->
       <section class="px-4 py-4" style="background: var(--background);">
         <div class="flex items-center justify-between mb-3">
           <span class="text-sm font-semibold" style="color: var(--text-800);">
-            用户评价
+            Customer Reviews
           </span>
           <div class="flex items-center gap-1">
             <span class="text-sm font-bold" style="color: var(--brand-500);">98%</span>
-            <span class="text-sm" style="color: var(--muted-foreground);">好评</span>
+            <span class="text-sm" style="color: var(--muted-foreground);">Positive</span>
             <span class="mx-1 text-xs" style="color: var(--background-400);">|</span>
-            <span class="text-sm" style="color: var(--muted-foreground);">256 条评价</span>
+            <span class="text-sm" style="color: var(--muted-foreground);">256 reviews</span>
             <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--icon-muted);"></i>
           </div>
         </div>
 
-        <!-- 评价标签 -->
+        <!-- Review tags -->
         <div class="flex flex-wrap gap-2 mb-3">
           <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
                 style="background: var(--brand-50); border-color: var(--brand-200); color: var(--brand-600);">
-            质量好 (89)
+            Great Quality (89)
           </span>
           <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
                 style="background: var(--brand-50); border-color: var(--brand-200); color: var(--brand-600);">
-            舒适度佳 (76)
+            Super Comfortable (76)
           </span>
           <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
                 style="background: var(--background-100); border-color: var(--border); color: var(--text-500);">
-            易清洗 (63)
+            Easy to Clean (63)
           </span>
           <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
                 style="background: var(--background-100); border-color: var(--border); color: var(--text-500);">
-            颜色正 (45)
+            True Color (45)
           </span>
         </div>
 
-        <!-- 单条评价示例 -->
+        <!-- Single review example -->
         <div class="rounded-xl p-3" style="background: var(--background-100);">
           <div class="flex items-center gap-2 mb-2">
             <div class="w-8 h-8 rounded-full"
@@ -323,41 +323,41 @@
                 <i data-lucide="star" class="w-3 h-3" style="color: #ff9500; fill: #ff9500;"></i>
               </div>
             </div>
-            <span class="text-xs" style="color: var(--muted-foreground);">3天前</span>
+            <span class="text-xs" style="color: var(--muted-foreground);">3 days ago</span>
           </div>
           <p class="text-sm leading-relaxed" style="color: var(--text-600);">
-            非常舒适，我家金毛特别喜欢！记忆棉回弹很好，面料摸起来很柔软。蓝色也很耐脏，强烈推荐。
+            Super comfortable, my Golden Retriever absolutely loves it! The memory foam bounces back nicely and the fabric feels very soft to the touch. Blue is also great at hiding dirt. Highly recommended.
           </p>
         </div>
       </section>
 
     </main>
 
-    <!-- 底部固定操作栏 -->
+    <!-- Bottom fixed action bar -->
     <footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full z-40"
             style="max-width: 430px; background: var(--background); border-top: 1px solid var(--border); padding-bottom: env(safe-area-inset-bottom);">
       <div class="flex items-center gap-3 px-4 py-3">
-        <!-- 客服按钮 -->
+        <!-- Customer service button -->
         <button class="flex flex-col items-center justify-center gap-0.5 w-12 shrink-0"
                 style="background: transparent; border: none; cursor: pointer;"
-                aria-label="客服">
+                aria-label="Customer Service">
           <i data-lucide="headphones" class="w-5 h-5" style="color: var(--icon-muted);"></i>
-          <span class="text-xs" style="color: var(--muted-foreground);">客服</span>
+          <span class="text-xs" style="color: var(--muted-foreground);">Support</span>
         </button>
 
-        <!-- 收藏按钮 -->
+        <!-- Favorite button -->
         <button class="flex flex-col items-center justify-center gap-0.5 w-12 shrink-0"
                 style="background: transparent; border: none; cursor: pointer;"
-                aria-label="收藏">
+                aria-label="Favorite">
           <i data-lucide="heart" class="w-5 h-5" style="color: var(--icon-muted);"></i>
-          <span class="text-xs" style="color: var(--muted-foreground);">收藏</span>
+          <span class="text-xs" style="color: var(--muted-foreground);">Favorite</span>
         </button>
 
-        <!-- 立即抢购按钮 -->
+        <!-- Buy now button -->
         <button class="btn btn-primary btn-lg flex-1"
                 style="height: 48px; border-radius: 12px; font-size: 16px; font-weight: 700;"
-                aria-label="立即抢购">
-          立即抢购
+                aria-label="Buy Now">
+          Buy Now
         </button>
       </div>
     </footer>
@@ -370,18 +370,18 @@
         var productData = null;
         var countdownTimer = null;
 
-        // 从 URL 获取 productId
+        // Get productId from URL
         function getProductId() {
           var params = new URLSearchParams(window.location.search);
           return params.get('productId') || 'fs-1';
         }
 
-        // 价格格式化（分转元）
+        // Price formatting (cents to yuan)
         function formatPrice(cents) {
           return '¥' + (cents / 100).toFixed(2);
         }
 
-        // 格式化倒计时
+        // Format countdown
         function formatCountdown(seconds) {
           if (seconds <= 0) return { h: '00', m: '00', s: '00' };
           var h = Math.floor(seconds / 3600);
@@ -394,7 +394,7 @@
           };
         }
 
-        // 渲染产品信息
+        // Render product info
         function renderProduct(data) {
           productData = data;
 
@@ -410,50 +410,50 @@
           var saveBadge = document.getElementById('saveBadge');
           if (saveBadge) {
             var save = data.originalPrice - data.price;
-            saveBadge.textContent = '省' + formatPrice(save);
+            saveBadge.textContent = 'Save ' + formatPrice(save);
           }
 
-          // 库存进度
+          // Stock progress
           var stockText = document.getElementById('stockText');
           if (stockText) {
-            stockText.textContent = '已抢 ' + data.progress + '%，剩余 ' + data.stock + ' 件';
+            stockText.textContent = data.progress + '% sold, ' + data.stock + ' left';
           }
           var stockBar = document.getElementById('stockBar');
           if (stockBar) stockBar.style.width = data.progress + '%';
 
-          // 折扣标签
+          // Discount tag
           var discount = Math.round((1 - data.price / data.originalPrice) * 100) / 10;
           if (discount < 10 && discount > 0) {
             var badge = document.querySelector('#productImage .absolute span');
-            if (badge) badge.textContent = discount + '折';
+            if (badge) badge.textContent = (discount * 10) + '% OFF';
           }
 
-          // 产品图片
+          // Product image
           if (data.images && data.images.length > 0) {
             var imgContainer = document.getElementById('productImage');
             if (imgContainer) {
               imgContainer.style.background = 'none';
               imgContainer.innerHTML = '<img src="' + data.images[0].url + '" alt="' + data.name + '" class="w-full h-full object-cover">'
-                + '<div class="absolute top-4 left-4"><span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-bold" style="background: var(--state-error); color: var(--state-error-foreground);">' + discount + '折</span></div>';
+                + '<div class="absolute top-4 left-4"><span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-bold" style="background: var(--state-error); color: var(--state-error-foreground);">' + (discount * 10) + '% OFF</span></div>';
             }
           }
 
-          // 渲染规格
+          // Render specs
           if (data.specs && data.specs.length > 0) {
             renderSpecs(data.specs, data.originalPrice);
           }
 
-          // 渲染规则
+          // Render rules
           if (data.rules && data.rules.length > 0) {
             renderRules(data.rules);
           }
         }
 
-        // 渲染规格
+        // Render specs
         function renderSpecs(specs, originalPrice) {
           var container = document.getElementById('specsContainer');
           if (!container) return;
-          var html = '<div class="mb-4"><span class="text-sm font-semibold block mb-2.5" style="color: var(--text-800);">规格</span>'
+          var html = '<div class="mb-4"><span class="text-sm font-semibold block mb-2.5" style="color: var(--text-800);">Spec</span>'
             + '<div class="flex items-center gap-2.5 flex-wrap">';
           for (var i = 0; i < specs.length; i++) {
             var s = specs[i];
@@ -482,13 +482,13 @@
 
               var saveBadge = document.getElementById('saveBadge');
               if (saveBadge && originalPrice) {
-                saveBadge.textContent = '省' + formatPrice(originalPrice - newPrice);
+                saveBadge.textContent = 'Save ' + formatPrice(originalPrice - newPrice);
               }
             });
           }
         }
 
-        // 渲染规则
+        // Render rules
         function renderRules(rules) {
           var ul = document.getElementById('rulesList');
           if (!ul) return;
@@ -502,7 +502,7 @@
           ul.innerHTML = html;
         }
 
-        // 更新倒计时
+        // Update countdown
         function updateCountdown(timeLeft) {
           if (countdownTimer) clearInterval(countdownTimer);
           var digits = document.querySelectorAll('#countdownDigits .countdown-digit');
@@ -535,7 +535,7 @@
           countdownTimer = setInterval(tick, 1000);
         }
 
-        // 折叠面板
+        // Collapsible panel
         function bindCollapse() {
           var toggles = document.querySelectorAll('.collapse-toggle');
           for (var i = 0; i < toggles.length; i++) {
@@ -553,7 +553,7 @@
           }
         }
 
-        // 初始化
+        // Initialize
         function init() {
           var productId = getProductId();
           api.get('/api/v1/flash-sale/' + productId).then(function (res) {
