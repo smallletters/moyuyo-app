@@ -816,6 +816,104 @@
       return success({ claimed: true, couponId: body.couponId, name: body.couponName || '优惠券' });
     },
 
+    // ===== 售后模块 =====
+
+    'GET /api/v1/after-sale/list': function(body, url) {
+      var status = url.match(/status=(\w+)/);
+      status = status ? status[1] : 'ALL';
+      var allItems = [
+        {
+          id: 'as-1', orderNo: 'MOY1784683777099', type: 'RETURN_REFUND', typeName: '退货退款',
+          status: 'WAIT_RETURN', statusName: '待寄回', statusColor: 'brand',
+          goods: { name: '温和植物萃取宠物洗护套装', spec: '500ml / 经典款', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&q=80' },
+          refundAmount: 12800, applyDate: '2026-07-05', progress: 3, totalSteps: 6,
+          steps: ['申请中', '审核通过', '待寄回', '仓库签收', '退款中', '已完成']
+        },
+        {
+          id: 'as-2', orderNo: 'MOY1784683000020', type: 'REFUND_ONLY', typeName: '仅退款',
+          status: 'REFUNDING', statusName: '退款中', statusColor: 'warning',
+          goods: { name: '经典尼龙宠物牵引套装', spec: 'M码 / 黑色', image: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=200&q=80' },
+          refundAmount: 8900, applyDate: '2026-06-28', progress: 4, totalSteps: 6,
+          steps: ['申请中', '审核通过', '仓库签收', '仓库签收', '退款中', '已完成']
+        },
+        {
+          id: 'as-3', orderNo: 'MOY1784678005001', type: 'EXCHANGE', typeName: '换货',
+          status: 'COMPLETED', statusName: '已完成', statusColor: 'success',
+          goods: { name: '互动益智玩具', spec: '大号 / 耐咬款', image: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=200&q=80' },
+          refundAmount: 0, applyDate: '2026-06-15', progress: 6, totalSteps: 6,
+          steps: ['申请中', '审核通过', '待寄回', '仓库签收', '换货寄出', '已完成']
+        },
+        {
+          id: 'as-4', orderNo: 'MOY1784678006002', type: 'RETURN_REFUND', typeName: '退货退款',
+          status: 'REJECTED', statusName: '已拒绝', statusColor: 'error',
+          goods: { name: '宠物零食鸡肉干', spec: '200g / 原味', image: 'https://images.unsplash.com/photo-1589924691195-41432c84c161?w=200&q=80' },
+          refundAmount: 4500, applyDate: '2026-06-10', progress: 1, totalSteps: 6,
+          steps: ['申请中', '审核通过', '待寄回', '仓库签收', '退款中', '已完成'],
+          rejectReason: '食品类商品不支持退货'
+        },
+        {
+          id: 'as-5', orderNo: 'MOY1784678007003', type: 'REFUND_ONLY', typeName: '仅退款',
+          status: 'CANCELLED', statusName: '已取消', statusColor: 'muted',
+          goods: { name: '宠物磨牙棒套装', spec: '3支装', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&q=80' },
+          refundAmount: 3200, applyDate: '2026-05-20', progress: 0, totalSteps: 6,
+          steps: ['申请中', '审核通过', '待寄回', '仓库签收', '退款中', '已完成']
+        }
+      ];
+
+      var filtered = status === 'ALL' ? allItems : allItems.filter(function(item) {
+        if (status === 'PROCESSING') return item.status === 'WAIT_RETURN' || item.status === 'REFUNDING';
+        if (status === 'COMPLETED') return item.status === 'COMPLETED';
+        if (status === 'REJECTED') return item.status === 'REJECTED';
+        if (status === 'CANCELLED') return item.status === 'CANCELLED';
+        return true;
+      });
+
+      return success({ items: filtered, total: allItems.length });
+    },
+
+    'GET /api/v1/after-sale/[^/?]+$': function(body, url) {
+      var id = url.match(/\/after-sale\/([^/?]+)/)[1];
+      return success({
+        id: id,
+        orderNo: 'MOY1784683777099',
+        type: 'RETURN_REFUND', typeName: '退货退款',
+        status: 'WAIT_RETURN', statusName: '待寄回',
+        goods: { name: '温和植物萃取宠物洗护套装', spec: '500ml / 经典款', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&q=80', price: 12800 },
+        refundAmount: 12800,
+        applyDate: '2026-07-05 14:30',
+        reason: '商品包装破损',
+        description: '收到时外包装有明显挤压痕迹，内瓶有轻微漏液',
+        returnAddress: { name: 'MOYUYO退货仓库', phone: '400-888-6688', address: '浙江省杭州市余杭区仓前街道MOYUYO物流园B区3号仓' },
+        timeline: [
+          { status: 'APPLY', title: '申请提交', time: '2026-07-05 14:30', desc: '提交退货退款申请' },
+          { status: 'APPROVE', title: '审核通过', time: '2026-07-05 18:00', desc: '您的退货申请已通过审核，请尽快寄回商品' },
+          { status: 'WAIT_RETURN', title: '待寄回', time: '--', desc: '请在7天内寄回商品并填写物流单号' }
+        ],
+        progress: 3, totalSteps: 6
+      });
+    },
+
+    // ===== 反馈模块 =====
+
+    'GET /api/v1/feedback/list': function() {
+      return success({
+        items: [
+          { id: 'fb-1', title: '功能建议: 希望增加宠物社交功能', type: '体验建议', status: 'PENDING', statusName: '处理中', date: '2026-07-01' },
+          { id: 'fb-2', title: '商品问题: 狗衣服尺码偏小', type: '商品问题', status: 'REPLIED', statusName: '已回复', date: '2026-06-25' },
+          { id: 'fb-3', title: '物流问题: 快递延迟超过3天', type: '物流问题', status: 'COMPLETED', statusName: '已完成', date: '2026-06-10' }
+        ],
+        total: 3
+      });
+    },
+
+    'POST /api/v1/feedback/submit': function(body) {
+      return success({
+        id: 'fb-' + Date.now(),
+        submitted: true,
+        message: '反馈已提交，我们会尽快处理'
+      });
+    },
+
     'POST /api/v1/favorites/toggle': function(body) {
       var token = localStorage.getItem('moyuyo_access_token');
       if (!token || !mockDB.tokens[token]) {
