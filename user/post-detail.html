@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>社区笔记详情 - MOYUYO</title>
+    <title>MOYUYO - Post Detail</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -44,18 +44,18 @@
 </head>
 <body class="min-h-screen antialiased" style="font-family: 'DM Sans', -apple-system, sans-serif;">
 
-    <!-- 全屏图片查看器 -->
+    <!-- Full-screen image viewer -->
     <div class="image-viewer-overlay" id="imageViewer">
-      <button class="absolute top-12 right-4 w-10 h-10 flex items-center justify-center rounded-full" style="background: rgba(255,255,255,0.15); color: #fff;" id="closeViewer" aria-label="关闭图片查看">
+      <button class="absolute top-12 right-4 w-10 h-10 flex items-center justify-center rounded-full" style="background: rgba(255,255,255,0.15); color: #fff;" id="closeViewer" aria-label="Close image viewer">
         <span data-icon class="w-6 h-6" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/x.svg'); mask-image: url('../assets/icons/dl-builtin-apple/x.svg');"></span>
       </button>
-      <img id="viewerImage" src="" alt="查看大图">
+      <img id="viewerImage" src="" alt="View large image">
       <p class="mt-3 text-sm" style="color: rgba(255,255,255,0.6);" id="viewerCounter"></p>
     </div>
 
     <main class="pb-6" style="max-width: 393px; margin: 0 auto;">
 
-      <!-- iOS 状态栏模拟 -->
+      <!-- iOS status bar simulation -->
       <div class="sticky top-0 z-30" style="background: var(--background);">
         <div class="h-11 flex items-center justify-between px-5">
           <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
@@ -67,67 +67,67 @@
         </div>
       </div>
 
-      <!-- 顶部导航栏 -->
-      <nav class="sticky top-11 z-30 flex items-center justify-between h-12 px-4" style="background: var(--background); border-bottom: 1px solid var(--border);" aria-label="笔记详情导航">
-        <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" data-dom-id="cta-back" aria-label="返回">
+      <!-- Top navigation bar -->
+      <nav class="sticky top-11 z-30 flex items-center justify-between h-12 px-4" style="background: var(--background); border-bottom: 1px solid var(--border);" aria-label="Post detail navigation">
+        <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" data-dom-id="cta-back" aria-label="Back">
           <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--foreground);"></span>
         </button>
-        <h1 class="text-base font-semibold truncate" style="color: var(--foreground);">笔记详情</h1>
-        <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="moreBtn" aria-label="更多操作">
+        <h1 class="text-base font-semibold truncate" style="color: var(--foreground);">Post Detail</h1>
+        <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="moreBtn" aria-label="More actions">
           <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/gear.svg'); mask-image: url('../assets/icons/dl-builtin-apple/gear.svg'); color: var(--foreground);"></span>
         </button>
       </nav>
 
-      <!-- 笔记内容主体 -->
+      <!-- Post content body -->
       <article class="px-4 pt-4">
 
-        <!-- 作者信息栏 -->
+        <!-- Author info bar -->
         <div class="flex items-center gap-3 mb-4">
-          <!-- 头像占位 -->
+          <!-- Avatar placeholder -->
           <div class="w-10 h-10 rounded-full shrink-0" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-200));"></div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-1.5">
-              <span class="text-sm font-semibold truncate" style="color: var(--foreground);" id="authorName">养猫的小确幸</span>
-              <!-- 会员标签 -->
+              <span class="text-sm font-semibold truncate" style="color: var(--foreground);" id="authorName">HappyCatParent</span>
+              <!-- Membership badge -->
               <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold" style="background: var(--state-warning); color: #fff;" id="authorVIP">PRIME</span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-xs" style="color: var(--text-400);" id="postTime">3 小时前</span>
-              <span class="text-xs" style="color: var(--text-400);" id="authorFollowers">1,280 关注者</span>
+              <span class="text-xs" style="color: var(--text-400);" id="postTime">3 hours ago</span>
+              <span class="text-xs" style="color: var(--text-400);" id="authorFollowers">1,280 followers</span>
             </div>
           </div>
-          <!-- 关注按钮 -->
-          <button class="h-8 px-4 rounded-full text-xs font-semibold shrink-0" style="background: var(--primary); color: var(--primary-foreground);" id="followBtn" aria-label="关注作者">
-            关注
+          <!-- Follow button -->
+          <button class="h-8 px-4 rounded-full text-xs font-semibold shrink-0" style="background: var(--primary); color: var(--primary-foreground);" id="followBtn" aria-label="Follow author">
+            Follow
           </button>
         </div>
 
-        <!-- 标题 -->
+        <!-- Title -->
         <h2 class="text-lg font-bold leading-snug mb-3" style="color: var(--text-800);" id="postTitle">
-          第一次带猫猫去宠物医院，这些准备你一定要做好
+          First Time Taking Your Cat to the Vet? Here's Everything You Need to Prepare
         </h2>
 
-        <!-- 正文内容 -->
+        <!-- Post content -->
         <div class="text-sm leading-relaxed space-y-3 mb-4" style="color: var(--text-600);" id="postContent">
         </div>
 
-        <!-- 关联标签 -->
+        <!-- Related tags -->
         <div class="flex flex-wrap gap-2 mb-3" id="tagsContainer">
         </div>
 
-        <!-- 图片网格（3列展示） -->
+        <!-- Image grid (3-column display) -->
         <div class="image-grid cols-3 mb-4" id="imageGrid">
-          <div class="grid-img" style="background: linear-gradient(135deg, var(--brand-50), var(--brand-200));" data-index="0" role="button" tabindex="0" aria-label="查看图片 1"></div>
-          <div class="grid-img" style="background: linear-gradient(135deg, var(--state-success-surface), var(--brand-100));" data-index="1" role="button" tabindex="0" aria-label="查看图片 2"></div>
-          <div class="grid-img" style="background: linear-gradient(135deg, var(--brand-100), var(--background-200));" data-index="2" role="button" tabindex="0" aria-label="查看图片 3"></div>
-          <div class="grid-img" style="background: linear-gradient(225deg, var(--brand-200), var(--brand-50));" data-index="3" role="button" tabindex="0" aria-label="查看图片 4"></div>
-          <div class="grid-img" style="background: linear-gradient(180deg, var(--secondary), var(--accent));" data-index="4" role="button" tabindex="0" aria-label="查看图片 5"></div>
-          <div class="grid-img" style="background: linear-gradient(135deg, var(--brand-50), var(--secondary));" data-index="5" role="button" tabindex="0" aria-label="查看图片 6"></div>
+          <div class="grid-img" style="background: linear-gradient(135deg, var(--brand-50), var(--brand-200));" data-index="0" role="button" tabindex="0" aria-label="View image 1"></div>
+          <div class="grid-img" style="background: linear-gradient(135deg, var(--state-success-surface), var(--brand-100));" data-index="1" role="button" tabindex="0" aria-label="View image 2"></div>
+          <div class="grid-img" style="background: linear-gradient(135deg, var(--brand-100), var(--background-200));" data-index="2" role="button" tabindex="0" aria-label="View image 3"></div>
+          <div class="grid-img" style="background: linear-gradient(225deg, var(--brand-200), var(--brand-50));" data-index="3" role="button" tabindex="0" aria-label="View image 4"></div>
+          <div class="grid-img" style="background: linear-gradient(180deg, var(--secondary), var(--accent));" data-index="4" role="button" tabindex="0" aria-label="View image 5"></div>
+          <div class="grid-img" style="background: linear-gradient(135deg, var(--brand-50), var(--secondary));" data-index="5" role="button" tabindex="0" aria-label="View image 6"></div>
         </div>
 
-        <!-- 互动数据栏 -->
+        <!-- Interaction stats bar -->
         <div class="flex items-center justify-between py-3 mb-1" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-          <!-- 数据展示 -->
+          <!-- Stats display -->
           <div class="flex items-center gap-4">
             <span class="text-xs" style="color: var(--text-400);">
               <span data-icon class="w-3.5 h-3.5 inline-block align-text-bottom" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg');"></span>
@@ -146,15 +146,15 @@
               <span id="shareCount">23</span>
             </span>
           </div>
-          <!-- 操作按钮 -->
+          <!-- Action buttons -->
           <div class="flex items-center gap-2">
-            <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="likeBtn" aria-label="点赞">
+            <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="likeBtn" aria-label="Like">
               <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); color: var(--text-500);"></span>
             </button>
-            <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="bookmarkBtn" aria-label="收藏">
+            <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="bookmarkBtn" aria-label="Bookmark">
               <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--text-500);"></span>
             </button>
-            <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="shareBtn" aria-label="分享">
+            <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--secondary);" id="shareBtn" aria-label="Share">
               <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/share.svg'); mask-image: url('../assets/icons/dl-builtin-apple/share.svg'); color: var(--text-500);"></span>
             </button>
           </div>
@@ -162,65 +162,65 @@
 
       </article>
 
-      <!-- 关联商品卡片 -->
-      <section class="px-4 pt-2 pb-4" aria-label="关联商品">
+      <!-- Linked product card -->
+      <section class="px-4 pt-2 pb-4" aria-label="Linked products">
         <div class="flex items-center gap-2 mb-3">
           <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/link.svg'); color: var(--text-400);"></span>
-          <span class="text-xs font-semibold tracking-wide" style="color: var(--text-400);">关联商品</span>
-          <span class="commission-badge">笔记带货</span>
+          <span class="text-xs font-semibold tracking-wide" style="color: var(--text-400);">Linked Products</span>
+          <span class="commission-badge">Affiliate Product</span>
         </div>
 
         <div class="linked-product-card" data-dom-id="cta-buy">
-          <!-- 商品缩略图占位 -->
+          <!-- Product thumbnail placeholder -->
           <div class="w-16 h-16 rounded-xl shrink-0" style="background: linear-gradient(135deg, var(--secondary), var(--accent)); border: 1px solid var(--border);"></div>
           <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium truncate" style="color: var(--foreground);" id="productName">宠物便携航空箱 标准款</p>
+            <p class="text-sm font-medium truncate" style="color: var(--foreground);" id="productName">Portable Pet Carrier Standard</p>
             <div class="flex items-baseline gap-1.5 mt-1">
               <span class="text-sm font-bold" style="color: var(--primary);" id="productPrice">¥259</span>
               <span class="text-xs line-through" style="color: var(--text-300);" id="productOriginalPrice">¥359</span>
             </div>
           </div>
-          <button class="h-8 px-4 rounded-full text-xs font-semibold shrink-0" style="background: var(--primary); color: var(--primary-foreground);" data-dom-id="cta-buy" aria-label="去购买">
-            去购买
+          <button class="h-8 px-4 rounded-full text-xs font-semibold shrink-0" style="background: var(--primary); color: var(--primary-foreground);" data-dom-id="cta-buy" aria-label="Buy now">
+            Buy Now
           </button>
         </div>
       </section>
 
-      <!-- 分隔 -->
+      <!-- Divider -->
       <div class="mx-4" style="height: 1px; background: var(--border);"></div>
 
-      <!-- 评论区 -->
-      <section class="px-4 pt-3 pb-6" aria-label="评论区">
+      <!-- Comments section -->
+      <section class="px-4 pt-3 pb-6" aria-label="Comments section">
         <div class="flex items-center justify-between mb-2">
-          <h3 class="text-base font-semibold" style="color: var(--foreground);">评论 (<span id="commentsTotal">56</span>)</h3>
-          <button class="text-xs font-medium" style="color: var(--text-400);">按热度</button>
+          <h3 class="text-base font-semibold" style="color: var(--foreground);">Comments (<span id="commentsTotal">56</span>)</h3>
+          <button class="text-xs font-medium" style="color: var(--text-400);">Top</button>
         </div>
 
         <div id="comments-list">
         </div>
 
-        <!-- 查看更多评论入口 -->
-        <button class="w-full flex items-center justify-center gap-1.5 h-11 rounded-xl mt-2" style="background: var(--secondary); border: none; color: var(--primary);" id="moreCommentsBtn" aria-label="查看更多评论">
-          <span class="text-sm font-medium" id="moreCommentsText">查看全部 56 条评论</span>
+        <!-- View more comments entry -->
+        <button class="w-full flex items-center justify-center gap-1.5 h-11 rounded-xl mt-2" style="background: var(--secondary); border: none; color: var(--primary);" id="moreCommentsBtn" aria-label="View more comments">
+          <span class="text-sm font-medium" id="moreCommentsText">View all 56 comments</span>
           <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg');"></span>
         </button>
       </section>
 
     </main>
 
-    <!-- 底部评论输入栏 -->
+    <!-- Bottom comment input bar -->
     <div class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);">
       <div class="flex items-center gap-3 h-[52px] px-4" style="max-width: 393px; margin: 0 auto; padding-bottom: env(safe-area-inset-bottom, 0px);">
         <div class="flex-1 h-9 flex items-center px-3 rounded-full" style="background: var(--secondary);">
-          <span class="text-sm" style="color: var(--text-400);">说点什么...</span>
+          <span class="text-sm" style="color: var(--text-400);">Say something...</span>
         </div>
-        <button class="w-9 h-9 flex items-center justify-center rounded-full shrink-0" style="background: var(--secondary);" aria-label="点赞">
+        <button class="w-9 h-9 flex items-center justify-center rounded-full shrink-0" style="background: var(--secondary);" aria-label="Like">
           <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); color: var(--text-500);"></span>
         </button>
-        <button class="w-9 h-9 flex items-center justify-center rounded-full shrink-0" style="background: var(--secondary);" aria-label="收藏">
+        <button class="w-9 h-9 flex items-center justify-center rounded-full shrink-0" style="background: var(--secondary);" aria-label="Bookmark">
           <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--text-500);"></span>
         </button>
-        <button class="w-9 h-9 flex items-center justify-center rounded-full shrink-0" style="background: var(--secondary);" aria-label="分享">
+        <button class="w-9 h-9 flex items-center justify-center rounded-full shrink-0" style="background: var(--secondary);" aria-label="Share">
           <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/share.svg'); mask-image: url('../assets/icons/dl-builtin-apple/share.svg'); color: var(--text-500);"></span>
         </button>
       </div>
@@ -231,20 +231,20 @@
     <script>
       var api = window.moyuyoAPI;
 
-      // 从 URL 参数获取帖子 ID
+      // Get post ID from URL parameters
       var urlParams = new URLSearchParams(window.location.search);
       var postId = urlParams.get('postId') || 'post-1';
 
-      // ===== IP 标签颜色映射 =====
+      // ===== IP tag color mapping =====
       var ipTagColors = {
         'MILO': { bg: '#3b82f6', text: '#fff' },
         'OLIVE': { bg: '#22c55e', text: '#fff' },
         'LUNA': { bg: '#8b5cf6', text: '#fff' }
       };
 
-      // ===== 渲染帖子详情 =====
+      // ===== Render post detail =====
       function renderPost(post) {
-        // 作者信息
+        // Author info
         document.getElementById('authorName').textContent = post.author.name;
         var vipEl = document.getElementById('authorVIP');
         if (post.author.isVIP) {
@@ -253,16 +253,16 @@
         } else {
           vipEl.style.display = 'none';
         }
-        document.getElementById('authorFollowers').textContent = (post.author.followers || 0).toLocaleString() + ' 关注者';
+        document.getElementById('authorFollowers').textContent = (post.author.followers || 0).toLocaleString() + ' followers';
         document.getElementById('postTime').textContent = post.time;
 
-        // 标题
+        // Title
         document.getElementById('postTitle').textContent = post.title;
 
-        // 正文
+        // Content
         document.getElementById('postContent').innerHTML = post.content;
 
-        // 标签
+        // Tags
         var tagsContainer = document.getElementById('tagsContainer');
         tagsContainer.innerHTML = '';
         (post.tags || []).forEach(function(tag) {
@@ -272,7 +272,7 @@
           a.textContent = '#' + tag;
           tagsContainer.appendChild(a);
         });
-        // 宠物标签
+        // Pet tag
         if (post.pet) {
           var petTag = document.createElement('a');
           petTag.href = '#';
@@ -285,7 +285,7 @@
           petTag.appendChild(document.createTextNode(' @' + post.pet));
           tagsContainer.appendChild(petTag);
         }
-        // IP 标签
+        // IP tag
         (post.ipTags || []).forEach(function(ipTag) {
           var span = document.createElement('span');
           span.className = 'ip-tag';
@@ -298,31 +298,31 @@
           tagsContainer.appendChild(span);
         });
 
-        // 互动数据
+        // Interaction data
         document.getElementById('likeCount').textContent = post.likes || 0;
         document.getElementById('commentCount').textContent = post.comments || 0;
         document.getElementById('starCount').textContent = post.stars || 0;
         document.getElementById('shareCount').textContent = post.shares || 0;
 
-        // 关联商品
+        // Linked product
         if (post.linkedProduct) {
           document.getElementById('productName').textContent = post.linkedProduct.name;
           document.getElementById('productPrice').textContent = '¥' + ((post.linkedProduct.price || 0) / 100);
           document.getElementById('productOriginalPrice').textContent = '¥' + ((post.linkedProduct.originalPrice || 0) / 100);
         }
 
-        // 恢复交互状态
+        // Restore interaction state
         if (post.isLiked) toggleLike(true);
         if (post.isStarred) toggleBookmark(true);
         if (post.isFollowed) toggleFollow(true);
       }
 
-      // ===== 渲染评论列表 =====
+      // ===== Render comments list =====
       function renderComments(commentsData) {
         var total = commentsData.total || 0;
         var comments = commentsData.comments || [];
         document.getElementById('commentsTotal').textContent = total;
-        document.getElementById('moreCommentsText').textContent = '查看全部 ' + total + ' 条评论';
+        document.getElementById('moreCommentsText').textContent = 'View all ' + total + ' comments';
 
         var commentsList = document.getElementById('comments-list');
         commentsList.innerHTML = '';
@@ -347,16 +347,16 @@
               '<div class="flex-1 min-w-0">' +
                 '<div class="flex items-center gap-2 mb-0.5">' +
                   '<span class="text-xs font-semibold" style="color: var(--text-800);">' + escapeHtml(comment.author.name) + '</span>' +
-                  (comment.author.isVerified ? '<span class="inline-flex items-center px-1 py-0 rounded text-[9px] font-bold" style="background: var(--brand-50); color: var(--primary);">认证作者</span>' : '') +
+                  (comment.author.isVerified ? '<span class="inline-flex items-center px-1 py-0 rounded text-[9px] font-bold" style="background: var(--brand-50); color: var(--primary);">Verified Author</span>' : '') +
                   '<span class="text-[11px]" style="color: var(--text-400);">' + escapeHtml(comment.time) + '</span>' +
                 '</div>' +
                 '<p class="text-sm leading-relaxed" style="color: var(--text-600);">' + escapeHtml(comment.content) + '</p>' +
                 '<div class="flex items-center gap-4 mt-2">' +
-                  '<button class="flex items-center gap-1 text-xs" style="color: var(--text-400);" data-comment-id="' + comment.id + '" aria-label="标记有用">' +
+                  '<button class="flex items-center gap-1 text-xs" style="color: var(--text-400);" data-comment-id="' + comment.id + '" aria-label="Mark as helpful">' +
                     '<span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/thumbs-up.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/thumbs-up.svg\');"></span>' +
-                    '有用 (' + (comment.likes || 0) + ')' +
+                    'Helpful (' + (comment.likes || 0) + ')' +
                   '</button>' +
-                  '<button class="text-xs" style="color: var(--text-400);">回复</button>' +
+                  '<button class="text-xs" style="color: var(--text-400);">Reply</button>' +
                 '</div>' +
               '</div>' +
             '</div>';
@@ -371,7 +371,7 @@
         return div.innerHTML;
       }
 
-      // ===== API 数据加载 =====
+      // ===== API data loading =====
       function loadPost() {
         api.get('/api/v1/post/' + postId).then(function(res) {
           if (res.code === 0 && res.data) {
@@ -393,7 +393,7 @@
         });
       }
 
-      // ===== 点赞按钮切换 =====
+      // ===== Like button toggle =====
       var likeBtn = document.getElementById('likeBtn');
       var isLiked = false;
       function toggleLike(force) {
@@ -413,7 +413,7 @@
         toggleLike();
       });
 
-      // ===== 收藏按钮切换 =====
+      // ===== Bookmark button toggle =====
       var bookmarkBtn = document.getElementById('bookmarkBtn');
       var isBookmarked = false;
       function toggleBookmark(force) {
@@ -433,17 +433,17 @@
         toggleBookmark();
       });
 
-      // ===== 关注按钮切换 =====
+      // ===== Follow button toggle =====
       var followBtn = document.getElementById('followBtn');
       var isFollowing = false;
       function toggleFollow(force) {
         isFollowing = typeof force === 'boolean' ? force : !isFollowing;
         if (isFollowing) {
-          followBtn.textContent = '已关注';
+          followBtn.textContent = 'Following';
           followBtn.style.background = 'var(--secondary)';
           followBtn.style.color = 'var(--text-500)';
         } else {
-          followBtn.textContent = '关注';
+          followBtn.textContent = 'Follow';
           followBtn.style.background = 'var(--primary)';
           followBtn.style.color = 'var(--primary-foreground)';
         }
@@ -452,7 +452,7 @@
         toggleFollow();
       });
 
-      // ===== 全屏图片查看 =====
+      // ===== Full-screen image viewer =====
       var viewer = document.getElementById('imageViewer');
       var viewerImg = document.getElementById('viewerImage');
       var viewerCounter = document.getElementById('viewerCounter');
@@ -475,7 +475,7 @@
             viewerImg.style.width = '80vw';
             viewerImg.style.aspectRatio = '1';
             viewerImg.src = '';
-            viewerImg.alt = '图片 ' + (index + 1);
+            viewerImg.alt = 'Image ' + (index + 1);
             viewerCounter.textContent = (index + 1) + ' / ' + gridImages.length;
             viewer.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -495,7 +495,7 @@
         }
       });
 
-      // ===== 返回按钮 =====
+      // ===== Back button =====
       var backBtn = document.querySelector('[data-dom-id="cta-back"]');
       if (backBtn) {
         backBtn.addEventListener('click', function () {
@@ -503,13 +503,13 @@
         });
       }
 
-      // ===== 更多操作按钮 =====
+      // ===== More actions button =====
       var moreBtn = document.getElementById('moreBtn');
       moreBtn.addEventListener('click', function () {
-        // 在实际项目中此处弹出 ActionSheet
+        // In actual project, show ActionSheet here
       });
 
-      // ===== 初始化 =====
+      // ===== Initialize =====
       lucide.createIcons();
       bindImageGrid();
       loadPost();
