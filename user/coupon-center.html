@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOYUYO 领券中心</title>
+    <title>MOYUYO - Coupon Center</title>
     <link rel="stylesheet" href="shared/moyuyo-tokens.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -45,23 +45,23 @@
 <body class="min-h-screen font-sans antialiased" style="background: var(--background-200); max-width: 430px; margin: 0 auto;">
     <main class="pb-28">
 
-      <!-- 深色顶部导航栏 -->
+      <!-- Dark top navigation bar -->
       <nav class="sticky top-0 z-30 flex items-center justify-between h-12 px-4" style="background: var(--background-800);">
-        <button class="flex items-center justify-center w-8 h-8" style="color: var(--background-50);" aria-label="返回">
+        <button class="flex items-center justify-center w-8 h-8" style="color: var(--background-50);" aria-label="Back">
           <i data-lucide="chevron-left" class="w-5 h-5"></i>
         </button>
-        <h1 class="text-base font-semibold" style="color: var(--background-50);">领券中心</h1>
+        <h1 class="text-base font-semibold" style="color: var(--background-50);">Coupon Center</h1>
         <div class="w-8 h-8"></div>
       </nav>
 
-      <!-- 限时抢券倒计时横幅 -->
+      <!-- Flash sale countdown banner -->
       <section class="mx-4 mt-4 rounded-2xl px-4 py-3 flex items-center justify-between" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-700));">
         <div class="flex items-center gap-2">
           <i data-lucide="zap" class="w-4 h-4 countdown-pulse" style="color: var(--background-50);"></i>
-          <span class="text-sm font-semibold" style="color: var(--background-50);">限时领券</span>
+          <span class="text-sm font-semibold" style="color: var(--background-50);">Flash Coupons</span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="text-xs font-medium" style="color: var(--brand-100);">剩余</span>
+          <span class="text-xs font-medium" style="color: var(--brand-100);">Remaining</span>
           <div class="flex items-center gap-0.5" id="countdown-display">
             <span class="inline-flex items-center justify-center w-6 h-6 rounded-md text-xs font-bold" style="background: var(--background-900); color: var(--background-50);">02</span>
             <span class="text-xs font-bold" style="color: var(--background-50);">:</span>
@@ -72,31 +72,31 @@
         </div>
       </section>
 
-      <!-- 优惠券分类 Tab -->
+      <!-- Coupon category tabs -->
       <div class="px-4 mt-4 overflow-x-auto no-scrollbar">
         <div class="flex gap-2" style="min-width: max-content;">
-          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="all" style="background: var(--primary); color: var(--primary-foreground);">全部</button>
-          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="new" style="background: var(--background-100); color: var(--text-600);">新人券</button>
-          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="category" style="background: var(--background-100); color: var(--text-600);">品类券</button>
-          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="discount" style="background: var(--background-100); color: var(--text-600);">满减券</button>
-          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="flash" style="background: var(--background-100); color: var(--text-600);">限时券</button>
-          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="member" style="background: var(--background-100); color: var(--text-600);">会员专属</button>
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="all" style="background: var(--primary); color: var(--primary-foreground);">All</button>
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="new" style="background: var(--background-100); color: var(--text-600);">New User</button>
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="category" style="background: var(--background-100); color: var(--text-600);">Category</button>
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="discount" style="background: var(--background-100); color: var(--text-600);">Spend &amp; Save</button>
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="flash" style="background: var(--background-100); color: var(--text-600);">Flash Sale</button>
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="member" style="background: var(--background-100); color: var(--text-600);">Members Only</button>
         </div>
       </div>
 
-      <!-- 优惠券列表 -->
-      <section class="px-4 mt-4 flex flex-col gap-3" aria-label="可领取优惠券" id="coupon-center-list"></section>
+      <!-- Coupon list -->
+      <section class="px-4 mt-4 flex flex-col gap-3" aria-label="Available coupons" id="coupon-center-list"></section>
 
     </main>
 
-    <!-- 底部汇总栏 -->
+    <!-- Bottom summary bar -->
     <footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full z-30" style="max-width: 430px; background: var(--background-50); border-top: 1px solid var(--border);">
       <div class="flex items-center justify-between px-5 h-14">
         <div class="flex items-center gap-2">
           <i data-lucide="ticket" class="w-4 h-4" style="color: var(--brand-500);"></i>
-          <span class="text-sm font-medium" style="color: var(--foreground);">已领取 <span id="claimed-count" class="font-bold" style="color: var(--brand-500);">1</span> 张优惠券</span>
+          <span class="text-sm font-medium" style="color: var(--foreground);">Claimed <span id="claimed-count" class="font-bold" style="color: var(--brand-500);">1</span> coupons</span>
         </div>
-        <button class="px-5 py-2 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">去使用</button>
+        <button class="px-5 py-2 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">Use Now</button>
       </div>
     </footer>
 
@@ -110,8 +110,8 @@
       // Category mapping for mock data
       function getCategory(coupon) {
         var name = coupon.name || '';
-        if (name.indexOf('新人') !== -1) return 'new';
-        if (name.indexOf('会员') !== -1) return 'member';
+        if (name.indexOf('New User') !== -1) return 'new';
+        if (name.indexOf('Members') !== -1) return 'member';
         if (coupon.type === 'PERCENTAGE') return 'category';
         if (coupon.type === 'FULL_REDUCTION') return 'discount';
         return 'all';
@@ -132,7 +132,7 @@
           todayNewEl.style.cssText = 'display:flex;align-items:center;gap:6px;padding:0 4px;';
           todayNewEl.innerHTML =
             '<i data-lucide="sparkles" style="width:14px;height:14px;color:var(--brand-500);"></i>' +
-            '<span style="font-size:12px;font-weight:500;color:var(--brand-500);">今日上新 <b id="today-new-count">' + data.todayNew + '</b> 张</span>';
+            '<span style="font-size:12px;font-weight:500;color:var(--brand-500);">New Today <b id="today-new-count">' + data.todayNew + '</b></span>';
           container.appendChild(todayNewEl);
 
           claimableData.forEach(function(coupon) {
@@ -142,12 +142,12 @@
               discountHtml = '<span style="font-size:10px;font-weight:500;color:var(--brand-500);">¥</span><span style="font-size:22px;font-weight:700;color:var(--brand-500);line-height:1;">' + (coupon.discount / 100) + '</span>';
             } else if (coupon.type === 'PERCENTAGE') {
               var percent = (100 - coupon.discount) / 10;
-              discountHtml = '<span style="font-size:22px;font-weight:700;color:var(--brand-500);line-height:1;">' + percent + '</span><span style="font-size:12px;font-weight:700;color:var(--brand-500);">折</span>';
+              discountHtml = '<span style="font-size:22px;font-weight:700;color:var(--brand-500);line-height:1;">' + percent + '</span><span style="font-size:12px;font-weight:700;color:var(--brand-500);">OFF</span>';
             }
 
-            var thresholdText = coupon.threshold === 0 ? '无门槛' : '满¥' + (coupon.threshold / 100) + '可用';
-            var stockText = '库存' + coupon.stock + ' | 已领' + coupon.claimed;
-            var validText = '有效期' + coupon.validDays + '天 | ' + (coupon.desc || '全场通用');
+            var thresholdText = coupon.threshold === 0 ? 'No minimum' : 'Over ¥' + (coupon.threshold / 100);
+            var stockText = 'Stock: ' + coupon.stock + ' | Claimed: ' + coupon.claimed;
+            var validText = 'Valid: ' + coupon.validDays + 'd | ' + (coupon.desc || 'Storewide');
 
             var card = document.createElement('article');
             card.className = 'coupon-card';
@@ -166,7 +166,7 @@
                 '<p style="font-size:10px;color:var(--text-300);margin:2px 0 0;">' + validText + '</p>' +
               '</div>' +
               '<div style="display:flex;align-items:center;">' +
-                '<button class="coupon-claim-btn" data-coupon-id="' + coupon.id + '" data-coupon-name="' + coupon.name + '" style="padding:6px 14px;border-radius:999px;font-size:11px;font-weight:600;border:none;cursor:pointer;background:var(--brand-500);color:var(--background-50);">立即领取</button>' +
+                '<button class="coupon-claim-btn" data-coupon-id="' + coupon.id + '" data-coupon-name="' + coupon.name + '" style="padding:6px 14px;border-radius:999px;font-size:11px;font-weight:600;border:none;cursor:pointer;background:var(--brand-500);color:var(--background-50);">Claim Now</button>' +
               '</div>';
 
             container.appendChild(card);
@@ -180,7 +180,7 @@
 
               api.post('/api/v1/coupon/claim', { couponId: couponId, couponName: couponName }).then(function(res) {
                 if (res.code === 0 && res.data && res.data.claimed) {
-                  btn.textContent = '已领取';
+                  btn.textContent = 'Claimed';
                   btn.style.background = 'var(--background-300)';
                   btn.style.color = 'var(--background-600)';
                   btn.style.cursor = 'not-allowed';
@@ -201,7 +201,7 @@
       }
 
       // Back button
-      var backBtn = document.querySelector('[aria-label="返回"]');
+      var backBtn = document.querySelector('[aria-label="Back"]');
       if (backBtn) {
         backBtn.addEventListener('click', function() {
           window.history.back();
