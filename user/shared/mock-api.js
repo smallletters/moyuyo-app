@@ -510,6 +510,177 @@
       });
     },
 
+    // ===== 宠物档案模块 =====
+
+    'GET /api/v1/pet/list': function() {
+      return success([
+        {
+          id: 'pet-1', name: '旺财', breed: '金毛寻回犬', gender: 'MALE', age: '3岁6个月',
+          weight: 28.5, birthday: '2023-01-15', avatar: '../assets/pet-avatar-dog.jpg',
+          cover: '../assets/pet-profile-dog.jpg', isDefault: true
+        },
+        {
+          id: 'pet-2', name: '团子', breed: '金毛寻回犬', gender: 'MALE', age: '2岁3个月',
+          weight: 28.5, birthday: '2024-04-10', avatar: '../assets/pet-avatar-dog.jpg',
+          cover: '../assets/pet-profile-dog.jpg', isDefault: false
+        },
+        {
+          id: 'pet-3', name: '豆豆', breed: '英国短毛猫', gender: 'FEMALE', age: '1岁2个月',
+          weight: 4.2, birthday: '2025-05-20', avatar: '../assets/pet-avatar-dog.jpg',
+          cover: '../assets/pet-profile-dog.jpg', isDefault: false
+        }
+      ]);
+    },
+
+    'GET /api/v1/pet/[^/?]+$': function(body, url) {
+      var petId = url.match(/\/pet\/([^/?]+)/)[1];
+      var pets = {
+        'pet-1': {
+          id: 'pet-1', name: '旺财', breed: '金毛寻回犬', gender: 'MALE', age: '3岁6个月',
+          weight: 28.5, height: 58, birthday: '2023-01-15', color: '浅金色',
+          avatar: '../assets/pet-avatar-dog.jpg', cover: '../assets/pet-profile-dog.jpg',
+          health: {
+            weight: { value: 28.5, unit: 'kg', status: 'NORMAL', label: '正常' },
+            temperature: { value: 38.5, unit: '°C', status: 'NORMAL', label: '正常' },
+            heartRate: { value: null, unit: 'bpm', status: 'NONE', label: '暂无数据' },
+            foodIntake: { value: null, unit: 'g', status: 'NORMAL', label: '正常' }
+          },
+          careTimeline: [
+            { type: 'BATH', title: '洗澡', date: '2026-07-15', desc: '使用MOYUYO温和洗护套装', icon: 'droplets', color: 'brand' },
+            { type: 'DEWORM', title: '驱虫', date: '2026-07-10', desc: '体内+体外驱虫', icon: 'shield', color: 'success' },
+            { type: 'VACCINE', title: '疫苗', date: '2026-06-28', desc: '狂犬疫苗加强针', icon: 'check', color: 'brand' },
+            { type: 'CHECKUP', title: '体检', date: '2026-06-15', desc: '年度体检，一切正常', icon: 'heart', color: 'error' }
+          ]
+        },
+        'pet-2': {
+          id: 'pet-2', name: '团子', breed: '金毛寻回犬', gender: 'MALE', age: '2岁3个月',
+          weight: 28.5, height: 55, birthday: '2024-04-10', color: '深金色',
+          avatar: '../assets/pet-avatar-dog.jpg', cover: '../assets/pet-profile-dog.jpg',
+          health: {
+            weight: { value: 28.5, unit: 'kg', status: 'NORMAL', label: '正常' },
+            temperature: { value: 38.2, unit: '°C', status: 'NORMAL', label: '正常' },
+            heartRate: { value: 95, unit: 'bpm', status: 'NORMAL', label: '正常' },
+            foodIntake: { value: 350, unit: 'g', status: 'NORMAL', label: '正常' }
+          },
+          careTimeline: [
+            { type: 'DEWORM', title: '驱虫', date: '2026-07-05', desc: '体内驱虫，服用拜宠清', icon: 'shield', color: 'success' },
+            { type: 'CHECKUP', title: '体检', date: '2026-06-28', desc: '半年度体检', icon: 'heart', color: 'error' },
+            { type: 'VACCINE', title: '疫苗', date: '2026-06-10', desc: '年度疫苗', icon: 'check', color: 'brand' }
+          ]
+        },
+        'pet-3': {
+          id: 'pet-3', name: '豆豆', breed: '英国短毛猫', gender: 'FEMALE', age: '1岁2个月',
+          weight: 4.2, height: 25, birthday: '2025-05-20', color: '蓝灰色',
+          avatar: '../assets/pet-avatar-dog.jpg', cover: '../assets/pet-profile-dog.jpg',
+          health: {
+            weight: { value: 4.2, unit: 'kg', status: 'NORMAL', label: '正常' },
+            temperature: { value: 38.8, unit: '°C', status: 'NORMAL', label: '正常' },
+            heartRate: { value: null, unit: 'bpm', status: 'NONE', label: '暂无数据' },
+            foodIntake: { value: null, unit: 'g', status: 'NORMAL', label: '正常' }
+          },
+          careTimeline: [
+            { type: 'BATH', title: '洗澡', date: '2026-07-12', desc: '温和沐浴露洗护', icon: 'droplets', color: 'brand' },
+            { type: 'DEWORM', title: '驱虫', date: '2026-07-01', desc: '体外驱虫', icon: 'shield', color: 'success' }
+          ]
+        }
+      };
+      return success(pets[petId] || pets['pet-1']);
+    },
+
+    'GET /api/v1/pet/[^/?]+/diary': function(body, url) {
+      return success({
+        pages: [
+          {
+            month: '2026年7月', count: 6,
+            entries: [
+              { id: 'diary-1', date: '2026-07-08', weekday: '周二', content: '今天带团子去公园散步，遇到了好久不见的柯基朋友，两个小家伙在草地上追了半小时，回家路上团子直接趴在副驾驶睡着了，太可爱了。', tags: ['日常', '户外'], likes: 12, comments: 3, photos: 3 },
+              { id: 'diary-2', date: '2026-07-05', weekday: '周六', content: '体检日！团子非常乖，打针的时候只哼了一声。医生说状态很好，体重控制得也不错，继续保持现在的饮食和运动量。', tags: ['体检', '体重', '疫苗'], likes: 24, comments: 8, photos: 2, weight: { value: 28.5, unit: 'kg', change: -0.3, trend: 'down' } },
+              { id: 'diary-3', date: '2026-07-02', weekday: '周三', content: '新买的逗猫棒到了（虽然团子是狗），但它意外地很喜欢这个玩具，追着跑了半个晚上，看来运动量是够了。', tags: ['日常', '新玩具'], likes: 9, comments: 1, photos: 2 }
+            ]
+          },
+          {
+            month: '2026年6月', count: 4,
+            entries: [
+              { id: 'diary-4', date: '2026-06-28', weekday: '周六', content: '这周食欲特别好，可能是换新狗粮的原因。不过要注意控制零食量了，不然体重增长太快。', tags: ['日常', '体重'], likes: 6, comments: 2, photos: 0, weight: { value: 28.8, unit: 'kg', change: 0.5, trend: 'up' } },
+              { id: 'diary-5', date: '2026-06-15', weekday: '周日', content: '夏天到了给团子剃了个清爽的造型，看起来像个小狮子，走在路上回头率超高。自己也觉得凉快了不少。', tags: ['造型', '护理'], likes: 18, comments: 5, photos: 1 },
+              { id: 'diary-6', date: '2026-06-03', weekday: '周二', content: '驱虫药按时吃了，团子吃完之后有点犯困，大概半小时就好了。记录一下下次驱虫时间是8月3号。', tags: ['日常', '驱虫'], likes: 4, comments: 0, photos: 0 }
+            ]
+          }
+        ]
+      });
+    },
+
+    'GET /api/v1/pet/[^/?]+/weight': function(body, url) {
+      return success({
+        unit: 'kg',
+        records: [
+          { date: '2026-01-15', value: 27.5 },
+          { date: '2026-02-15', value: 27.8 },
+          { date: '2026-03-15', value: 28.0 },
+          { date: '2026-04-15', value: 28.2 },
+          { date: '2026-05-15', value: 28.8 },
+          { date: '2026-06-15', value: 28.8 },
+          { date: '2026-07-05', value: 28.5 }
+        ],
+        stats: {
+          current: 28.5, min: 27.5, max: 28.8, avg: 28.23,
+          change: 0.3, trend: 'up', status: 'NORMAL', label: '正常范围'
+        }
+      });
+    },
+
+    'GET /api/v1/pet/[^/?]+/health/calendar': function(body, url) {
+      return success({
+        year: 2026, month: 7,
+        events: {
+          '3': [{ type: 'BATH', label: '洗澡' }],
+          '7': [{ type: 'DIARY', label: '日记' }],
+          '9': [{ type: 'DEWORM', label: '驱虫' }],
+          '12': [{ type: 'VACCINE', label: '疫苗' }, { type: 'BATH', label: '洗澡' }],
+          '14': [{ type: 'CHECKUP', label: '体检' }],
+          '17': [{ type: 'BATH', label: '洗澡' }],
+          '20': [{ type: 'DIARY', label: '日记' }],
+          '25': [{ type: 'VACCINE', label: '疫苗' }],
+          '29': [{ type: 'BATH', label: '洗澡' }]
+        }
+      });
+    },
+
+    'GET /api/v1/pet/[^/?]+/health/reminders': function(body, url) {
+      return success({
+        list: [
+          { type: 'BATH', title: '洗澡', dueDate: '2026-07-06', remaining: -3, status: 'OVERDUE', desc: '预计日期：7月6日' },
+          { type: 'VACCINE', title: '疫苗', dueDate: '2026-07-15', remaining: 6, status: 'UPCOMING', desc: '狂犬疫苗加强' },
+          { type: 'DEWORM', title: '驱虫', dueDate: '2026-07-27', remaining: 18, status: 'NORMAL', desc: '体外驱虫' },
+          { type: 'CHECKUP', title: '体检', dueDate: '2026-08-03', remaining: 25, status: 'NORMAL', desc: '半年度体检' }
+        ]
+      });
+    },
+
+    'GET /api/v1/pet/[^/?]+/health/records': function(body, url) {
+      return success({
+        date: '2026-07-09',
+        petName: '豆豆',
+        records: [
+          { type: 'DEWORM', title: '驱虫', time: '10:30', desc: '体内驱虫，服用拜宠清 1 片', icon: 'shield' },
+          { type: 'WEIGHT', title: '体重', time: '09:15', desc: '4.2 kg（较上月 -0.1 kg）', icon: 'arrow-down' }
+        ]
+      });
+    },
+
+    'GET /api/v1/pet/[^/?]+/health/stats': function(body, url) {
+      return success({
+        month: '2026年7月',
+        stats: {
+          BATH: { count: 3, label: '洗澡' },
+          VACCINE: { count: 1, label: '疫苗' },
+          DEWORM: { count: 1, label: '驱虫' },
+          CHECKUP: { count: 0, label: '体检' },
+          DIARY: { count: 2, label: '日记' }
+        }
+      });
+    },
+
     'POST /api/v1/favorites/toggle': function(body) {
       var token = localStorage.getItem('moyuyo_access_token');
       if (!token || !mockDB.tokens[token]) {
@@ -544,8 +715,9 @@
           var urlPattern = parts.slice(1).join(' ');
           // 转义特殊字符但保留正则语法
           var escapedPattern = urlPattern.replace(/\./g, '\\.').replace(/\//g, '\\/');
+          var urlWithoutQuery = url.split('?')[0];
           var regex = new RegExp('^' + methodPart + ' ' + escapedPattern + '$');
-          if (regex.test(method + ' ' + url)) {
+          if (regex.test(method + ' ' + urlWithoutQuery)) {
             matchedHandler = mockHandlers[key];
             matchedKey = key;
           }

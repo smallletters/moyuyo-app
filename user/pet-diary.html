@@ -78,17 +78,17 @@
           <!-- 宠物基础信息 -->
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
-              <h2 class="text-base font-semibold truncate" style="color: var(--foreground);">团子</h2>
-              <span class="text-xs px-2 py-0.5 rounded-full" style="background: var(--brand-50); color: var(--brand-600); font-weight: 600;">金毛</span>
+              <h2 class="text-base font-semibold truncate" style="color: var(--foreground);" data-dom-id="pet-name">团子</h2>
+              <span class="text-xs px-2 py-0.5 rounded-full" style="background: var(--brand-50); color: var(--brand-600); font-weight: 600;" data-dom-id="pet-breed">金毛</span>
             </div>
             <div class="flex items-center gap-3 mt-1.5">
               <div class="flex items-center gap-1">
                 <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--text-400);"></span>
-                <span class="text-xs" style="color: var(--text-500);">2岁3个月</span>
+                <span class="text-xs" style="color: var(--text-500);" data-dom-id="pet-age">2岁3个月</span>
               </div>
               <div class="w-px h-3" style="background: var(--background-300);"></div>
               <div class="flex items-center gap-1">
-                <span class="text-xs font-medium" style="color: var(--text-800);">28.5 kg</span>
+                <span class="text-xs font-medium" style="color: var(--text-800);" data-dom-id="pet-weight">28.5 kg</span>
               </div>
             </div>
           </div>
@@ -98,330 +98,8 @@
       </section>
 
       <!-- 日记时间线 -->
-      <section class="px-4 pt-3" aria-label="成长日记时间线">
-
-        <!-- ========== 2025年7月 ========== -->
-        <div class="mb-6">
-          <!-- 月份分组标题 -->
-          <div class="flex items-center gap-2 mb-3">
-            <span class="text-sm font-semibold" style="color: var(--foreground);">2025年7月</span>
-            <span class="text-xs px-2 py-0.5 rounded-full" style="background: var(--secondary); color: var(--muted-foreground); font-weight: 500;">6篇</span>
-          </div>
-
-          <div class="relative pl-12">
-            <div class="timeline-line"></div>
-
-            <!-- 日记条目 1 -->
-            <div class="relative pb-5">
-              <div class="timeline-dot" style="background: var(--brand-500);"></div>
-              <div class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
-                <!-- 日期 + 头像 -->
-                <div class="flex items-center justify-between mb-2.5">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-full shrink-0 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-200));">
-                      <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--brand-500);"></span>
-                    </div>
-                    <div>
-                      <span class="text-xs font-medium" style="color: var(--text-800);">7月8日 周二</span>
-                    </div>
-                  </div>
-                  <!-- 更多操作 -->
-                  <button class="w-7 h-7 rounded-full flex items-center justify-center" style="background: var(--background-200);" aria-label="更多操作">
-                    <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); color: var(--text-400);"></span>
-                  </button>
-                </div>
-                <!-- 日记内容 -->
-                <p class="text-sm leading-relaxed mb-3" style="color: var(--text-600);">
-                  今天带团子去公园散步，遇到了好久不见的柯基朋友，两个小家伙在草地上追了半小时，回家路上团子直接趴在副驾驶睡着了，太可爱了。
-                </p>
-                <!-- 附件图片占位 -->
-                <div class="flex gap-2 mb-3">
-                  <div class="photo-placeholder flex-1 h-24" style="background: linear-gradient(135deg, var(--brand-50), var(--background-100));"></div>
-                  <div class="photo-placeholder flex-1 h-24" style="background: linear-gradient(135deg, var(--background-100), var(--background-200));"></div>
-                  <div class="photo-placeholder flex-1 h-24" style="background: linear-gradient(135deg, var(--brand-50), var(--background-200));"></div>
-                </div>
-                <!-- 标签 -->
-                <div class="flex flex-wrap gap-1.5 mb-3">
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: var(--brand-50); color: var(--brand-600); font-weight: 500;">#日常</span>
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: var(--state-success-surface); color: var(--state-success); font-weight: 500;">#户外</span>
-                </div>
-                <!-- 点赞/评论数 -->
-                <div class="flex items-center gap-4 pt-2.5" style="border-top: 1px solid var(--border);">
-                  <button class="flex items-center gap-1.5" aria-label="点赞">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); color: var(--text-400);"></span>
-                    <span class="text-xs" style="color: var(--text-400);">12</span>
-                  </button>
-                  <button class="flex items-center gap-1.5" aria-label="评论">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); color: var(--text-400);"></span>
-                    <span class="text-xs" style="color: var(--text-400);">3</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- 日记条目 2（含体重记录） -->
-            <div class="relative pb-5">
-              <div class="timeline-dot" style="background: var(--state-success);"></div>
-              <div class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
-                <div class="flex items-center justify-between mb-2.5">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-full shrink-0 flex items-center justify-center" style="background: linear-gradient(135deg, var(--state-success-surface), var(--brand-50));">
-                      <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--state-success);"></span>
-                    </div>
-                    <div>
-                      <span class="text-xs font-medium" style="color: var(--text-800);">7月5日 周六</span>
-                    </div>
-                  </div>
-                  <button class="w-7 h-7 rounded-full flex items-center justify-center" style="background: var(--background-200);" aria-label="更多操作">
-                    <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); color: var(--text-400);"></span>
-                  </button>
-                </div>
-                <p class="text-sm leading-relaxed mb-3" style="color: var(--text-600);">
-                  体检日！团子非常乖，打针的时候只哼了一声。医生说状态很好，体重控制得也不错，继续保持现在的饮食和运动量。
-                </p>
-                <!-- 体重记录卡片 -->
-                <div class="flex items-center gap-3 p-3 rounded-xl mb-3" style="background: var(--background-200);">
-                  <div class="flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--state-success-surface);">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--state-success);"></span>
-                  </div>
-                  <div class="flex-1">
-                    <span class="text-xs" style="color: var(--text-500);">体重记录</span>
-                    <div class="flex items-center gap-1.5 mt-0.5">
-                      <span class="text-sm font-semibold" style="color: var(--text-800);">28.5 kg</span>
-                      <!-- 体重下降趋势 -->
-                      <span class="flex items-center gap-0.5 text-xs font-medium px-1.5 py-0.5 rounded-full" style="background: var(--state-success-surface); color: var(--state-success);">
-                        <span data-icon class="w-3 h-3" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-down.svg);"></span>
-                        0.3
-                      </span>
-                    </div>
-                  </div>
-                  <span class="text-xs" style="color: var(--text-400);">较上次</span>
-                </div>
-                <!-- 附件图片占位 -->
-                <div class="flex gap-2 mb-3">
-                  <div class="photo-placeholder flex-1 h-24" style="background: linear-gradient(135deg, var(--state-success-surface), var(--brand-50));"></div>
-                  <div class="photo-placeholder flex-1 h-24" style="background: linear-gradient(135deg, var(--background-100), var(--state-success-surface));"></div>
-                </div>
-                <!-- 标签 -->
-                <div class="flex flex-wrap gap-1.5 mb-3">
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: var(--brand-50); color: var(--brand-600); font-weight: 500;">#体检</span>
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: var(--state-success-surface); color: var(--state-success); font-weight: 500;">#体重</span>
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: rgba(255,149,0,0.12); color: var(--state-warning); font-weight: 500;">#疫苗</span>
-                </div>
-                <!-- 点赞/评论数 -->
-                <div class="flex items-center gap-4 pt-2.5" style="border-top: 1px solid var(--border);">
-                  <button class="flex items-center gap-1.5" aria-label="点赞">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); color: var(--brand-500);"></span>
-                    <span class="text-xs" style="color: var(--brand-500);">24</span>
-                  </button>
-                  <button class="flex items-center gap-1.5" aria-label="评论">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); color: var(--text-400);"></span>
-                    <span class="text-xs" style="color: var(--text-400);">8</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- 日记条目 3 -->
-            <div class="relative pb-2">
-              <div class="timeline-dot" style="background: var(--brand-300);"></div>
-              <div class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
-                <div class="flex items-center justify-between mb-2.5">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-full shrink-0 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-200));">
-                      <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--brand-500);"></span>
-                    </div>
-                    <div>
-                      <span class="text-xs font-medium" style="color: var(--text-800);">7月2日 周三</span>
-                    </div>
-                  </div>
-                  <button class="w-7 h-7 rounded-full flex items-center justify-center" style="background: var(--background-200);" aria-label="更多操作">
-                    <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); color: var(--text-400);"></span>
-                  </button>
-                </div>
-                <p class="text-sm leading-relaxed mb-3" style="color: var(--text-600);">
-                  新买的逗猫棒到了（虽然团子是狗），但它意外地很喜欢这个玩具，追着跑了半个晚上，看来运动量是够了。
-                </p>
-                <!-- 附件图片占位 -->
-                <div class="flex gap-2 mb-3">
-                  <div class="photo-placeholder h-28" style="background: linear-gradient(135deg, var(--brand-50), var(--background-200)); flex: 2;"></div>
-                  <div class="photo-placeholder h-28" style="background: linear-gradient(135deg, var(--background-200), var(--brand-50)); flex: 1;"></div>
-                </div>
-                <!-- 标签 -->
-                <div class="flex flex-wrap gap-1.5 mb-3">
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: var(--brand-50); color: var(--brand-600); font-weight: 500;">#日常</span>
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: rgba(255,149,0,0.12); color: var(--state-warning); font-weight: 500;">#新玩具</span>
-                </div>
-                <!-- 点赞/评论数 -->
-                <div class="flex items-center gap-4 pt-2.5" style="border-top: 1px solid var(--border);">
-                  <button class="flex items-center gap-1.5" aria-label="点赞">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); color: var(--text-400);"></span>
-                    <span class="text-xs" style="color: var(--text-400);">9</span>
-                  </button>
-                  <button class="flex items-center gap-1.5" aria-label="评论">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); color: var(--text-400);"></span>
-                    <span class="text-xs" style="color: var(--text-400);">1</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- ========== 2025年6月 ========== -->
-        <div class="mb-6">
-          <!-- 月份分组标题 -->
-          <div class="flex items-center gap-2 mb-3">
-            <span class="text-sm font-semibold" style="color: var(--foreground);">2025年6月</span>
-            <span class="text-xs px-2 py-0.5 rounded-full" style="background: var(--secondary); color: var(--muted-foreground); font-weight: 500;">4篇</span>
-          </div>
-
-          <div class="relative pl-12">
-            <div class="timeline-line"></div>
-
-            <!-- 日记条目（含体重上涨） -->
-            <div class="relative pb-5">
-              <div class="timeline-dot" style="background: var(--state-warning);"></div>
-              <div class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
-                <div class="flex items-center justify-between mb-2.5">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-full shrink-0 flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,149,0,0.15), rgba(255,149,0,0.08));">
-                      <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--state-warning);"></span>
-                    </div>
-                    <div>
-                      <span class="text-xs font-medium" style="color: var(--text-800);">6月28日 周六</span>
-                    </div>
-                  </div>
-                  <button class="w-7 h-7 rounded-full flex items-center justify-center" style="background: var(--background-200);" aria-label="更多操作">
-                    <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); color: var(--text-400);"></span>
-                  </button>
-                </div>
-                <p class="text-sm leading-relaxed mb-3" style="color: var(--text-600);">
-                  这周食欲特别好，可能是换新狗粮的原因。不过要注意控制零食量了，不然体重增长太快。
-                </p>
-                <!-- 体重记录卡片 -->
-                <div class="flex items-center gap-3 p-3 rounded-xl mb-3" style="background: var(--background-200);">
-                  <div class="flex items-center justify-center w-8 h-8 rounded-full" style="background: rgba(255,149,0,0.12);">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--state-warning);"></span>
-                  </div>
-                  <div class="flex-1">
-                    <span class="text-xs" style="color: var(--text-500);">体重记录</span>
-                    <div class="flex items-center gap-1.5 mt-0.5">
-                      <span class="text-sm font-semibold" style="color: var(--text-800);">28.8 kg</span>
-                      <!-- 体重上升趋势 -->
-                      <span class="flex items-center gap-0.5 text-xs font-medium px-1.5 py-0.5 rounded-full" style="background: rgba(255,149,0,0.12); color: var(--state-warning);">
-                        <span data-icon class="w-3 h-3" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg');"></span>
-                        0.5
-                      </span>
-                    </div>
-                  </div>
-                  <span class="text-xs" style="color: var(--text-400);">较上次</span>
-                </div>
-                <!-- 标签 -->
-                <div class="flex flex-wrap gap-1.5 mb-3">
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: var(--brand-50); color: var(--brand-600); font-weight: 500;">#日常</span>
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: var(--state-success-surface); color: var(--state-success); font-weight: 500;">#体重</span>
-                </div>
-                <!-- 点赞/评论数 -->
-                <div class="flex items-center gap-4 pt-2.5" style="border-top: 1px solid var(--border);">
-                  <button class="flex items-center gap-1.5" aria-label="点赞">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); color: var(--text-400);"></span>
-                    <span class="text-xs" style="color: var(--text-400);">6</span>
-                  </button>
-                  <button class="flex items-center gap-1.5" aria-label="评论">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); color: var(--text-400);"></span>
-                    <span class="text-xs" style="color: var(--text-400);">2</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- 日记条目 -->
-            <div class="relative pb-5">
-              <div class="timeline-dot" style="background: var(--brand-400);"></div>
-              <div class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
-                <div class="flex items-center justify-between mb-2.5">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-full shrink-0 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-200));">
-                      <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--brand-500);"></span>
-                    </div>
-                    <div>
-                      <span class="text-xs font-medium" style="color: var(--text-800);">6月15日 周日</span>
-                    </div>
-                  </div>
-                  <button class="w-7 h-7 rounded-full flex items-center justify-center" style="background: var(--background-200);" aria-label="更多操作">
-                    <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); color: var(--text-400);"></span>
-                  </button>
-                </div>
-                <p class="text-sm leading-relaxed mb-3" style="color: var(--text-600);">
-                  夏天到了给团子剃了个清爽的造型，看起来像个小狮子，走在路上回头率超高。自己也觉得凉快了不少。
-                </p>
-                <!-- 附件图片占位 -->
-                <div class="flex gap-2 mb-3">
-                  <div class="photo-placeholder h-24 flex-1" style="background: linear-gradient(135deg, var(--brand-50), var(--background-100));"></div>
-                </div>
-                <!-- 标签 -->
-                <div class="flex flex-wrap gap-1.5 mb-3">
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: var(--brand-50); color: var(--brand-600); font-weight: 500;">#造型</span>
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: var(--state-success-surface); color: var(--state-success); font-weight: 500;">#护理</span>
-                </div>
-                <!-- 点赞/评论数 -->
-                <div class="flex items-center gap-4 pt-2.5" style="border-top: 1px solid var(--border);">
-                  <button class="flex items-center gap-1.5" aria-label="点赞">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); color: var(--text-400);"></span>
-                    <span class="text-xs" style="color: var(--text-400);">18</span>
-                  </button>
-                  <button class="flex items-center gap-1.5" aria-label="评论">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); color: var(--text-400);"></span>
-                    <span class="text-xs" style="color: var(--text-400);">5</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- 日记条目 -->
-            <div class="relative pb-2">
-              <div class="timeline-dot" style="background: var(--text-300);"></div>
-              <div class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
-                <div class="flex items-center justify-between mb-2.5">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-full shrink-0 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-200));">
-                      <span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--brand-500);"></span>
-                    </div>
-                    <div>
-                      <span class="text-xs font-medium" style="color: var(--text-800);">6月3日 周二</span>
-                    </div>
-                  </div>
-                  <button class="w-7 h-7 rounded-full flex items-center justify-center" style="background: var(--background-200);" aria-label="更多操作">
-                    <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-down.svg'); color: var(--text-400);"></span>
-                  </button>
-                </div>
-                <p class="text-sm leading-relaxed mb-3" style="color: var(--text-600);">
-                  驱虫药按时吃了，团子吃完之后有点犯困，大概半小时就好了。记录一下下次驱虫时间是8月3号。
-                </p>
-                <!-- 标签 -->
-                <div class="flex flex-wrap gap-1.5 mb-3">
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: var(--brand-50); color: var(--brand-600); font-weight: 500;">#日常</span>
-                  <span class="text-xs px-2 py-1 rounded-full" style="background: rgba(255,149,0,0.12); color: var(--state-warning); font-weight: 500;">#驱虫</span>
-                </div>
-                <!-- 点赞/评论数 -->
-                <div class="flex items-center gap-4 pt-2.5" style="border-top: 1px solid var(--border);">
-                  <button class="flex items-center gap-1.5" aria-label="点赞">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/thumbs-up.svg'); color: var(--text-400);"></span>
-                    <span class="text-xs" style="color: var(--text-400);">4</span>
-                  </button>
-                  <button class="flex items-center gap-1.5" aria-label="评论">
-                    <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); color: var(--text-400);"></span>
-                    <span class="text-xs" style="color: var(--text-400);">0</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
+      <section class="px-4 pt-3" aria-label="成长日记时间线" id="diary-timeline">
+        <!-- 动态渲染区域 -->
       </section>
 
       <!-- 底部悬浮新建按钮 -->
@@ -435,7 +113,7 @@
       <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="主导航">
         <div class="flex items-stretch justify-around h-[49px]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
           <!-- 首页 -->
-          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="首页">
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-home" aria-label="首页">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
             <span class="text-[10px] font-medium">首页</span>
           </button>
@@ -465,6 +143,291 @@
       </nav>
 
     </main>
-    <script>lucide.createIcons();</script>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      (function() {
+        'use strict';
+
+        var api = window.moyuyoAPI;
+
+        // 标签颜色映射
+        var TAG_COLORS = {
+          '日常': 'brand',
+          '体检': 'brand',
+          '体重': 'success',
+          '疫苗': 'warning',
+          '驱虫': 'warning',
+          '户外': 'success',
+          '护理': 'success',
+          '造型': 'brand',
+          '新玩具': 'warning'
+        };
+
+        var TAG_BG = {
+          'brand': 'var(--brand-50)',
+          'success': 'var(--state-success-surface)',
+          'warning': 'rgba(255,149,0,0.12)'
+        };
+
+        var TAG_TEXT = {
+          'brand': 'var(--brand-600)',
+          'success': 'var(--state-success)',
+          'warning': 'var(--state-warning)'
+        };
+
+        function getTagColor(tag) {
+          return TAG_COLORS[tag] || 'brand';
+        }
+
+        function getDotColor(tags) {
+          if (!tags || !tags.length) return 'var(--brand-500)';
+          var color = getTagColor(tags[0]);
+          if (color === 'brand') return 'var(--brand-500)';
+          if (color === 'success') return 'var(--state-success)';
+          if (color === 'warning') return 'var(--state-warning)';
+          return 'var(--brand-500)';
+        }
+
+        function getPhotoGradients(count) {
+          var gradients = [
+            'linear-gradient(135deg, var(--brand-50), var(--background-100))',
+            'linear-gradient(135deg, var(--background-100), var(--background-200))',
+            'linear-gradient(135deg, var(--brand-50), var(--background-200))',
+            'linear-gradient(135deg, var(--state-success-surface), var(--brand-50))',
+            'linear-gradient(135deg, var(--background-100), var(--state-success-surface))'
+          ];
+          var result = [];
+          for (var i = 0; i < count; i++) {
+            result.push(gradients[i % gradients.length]);
+          }
+          return result;
+        }
+
+        function getDotBgColor(tags) {
+          if (!tags || !tags.length) return 'linear-gradient(135deg, var(--brand-100), var(--brand-200))';
+          var color = getTagColor(tags[0]);
+          if (color === 'success') return 'linear-gradient(135deg, var(--state-success-surface), var(--brand-50))';
+          if (color === 'warning') return 'linear-gradient(135deg, rgba(255,149,0,0.15), rgba(255,149,0,0.08))';
+          return 'linear-gradient(135deg, var(--brand-100), var(--brand-200))';
+        }
+
+        function getDotIconColor(tags) {
+          if (!tags || !tags.length) return 'var(--brand-500)';
+          var color = getTagColor(tags[0]);
+          if (color === 'success') return 'var(--state-success)';
+          if (color === 'warning') return 'var(--state-warning)';
+          return 'var(--brand-500)';
+        }
+
+        function renderWeightCard(weight) {
+          var trend = weight.trend || 'down';
+          var isUp = trend === 'up';
+          var colorVar = isUp ? 'var(--state-warning)' : 'var(--state-success)';
+          var bgVar = isUp ? 'rgba(255,149,0,0.12)' : 'var(--state-success-surface)';
+          var arrowIcon = isUp ? 'arrow-up' : 'arrow-down';
+
+          return '<div class="flex items-center gap-3 p-3 rounded-xl mb-3" style="background: var(--background-200);">' +
+            '<div class="flex items-center justify-center w-8 h-8 rounded-full" style="background: ' + bgVar + ';">' +
+              '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/star.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/star.svg\'); color: ' + colorVar + ';"></span>' +
+            '</div>' +
+            '<div class="flex-1">' +
+              '<span class="text-xs" style="color: var(--text-500);">体重记录</span>' +
+              '<div class="flex items-center gap-1.5 mt-0.5">' +
+                '<span class="text-sm font-semibold" style="color: var(--text-800);">' + weight.value + ' ' + weight.unit + '</span>' +
+                '<span class="flex items-center gap-0.5 text-xs font-medium px-1.5 py-0.5 rounded-full" style="background: ' + bgVar + '; color: ' + colorVar + ';">' +
+                  '<span data-icon class="w-3 h-3" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/' + arrowIcon + '.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/' + arrowIcon + '.svg\');"></span>' +
+                  Math.abs(weight.change) +
+                '</span>' +
+              '</div>' +
+            '</div>' +
+            '<span class="text-xs" style="color: var(--text-400);">较上次</span>' +
+          '</div>';
+        }
+
+        function renderPhotoPlaceholders(count) {
+          if (!count || count === 0) return '';
+          var gradients = getPhotoGradients(count);
+          var html = '<div class="flex gap-2 mb-3">';
+          for (var i = 0; i < count; i++) {
+            html += '<div class="photo-placeholder flex-1 h-24" style="background: ' + gradients[i] + ';"></div>';
+          }
+          html += '</div>';
+          return html;
+        }
+
+        function renderTags(tags) {
+          if (!tags || !tags.length) return '';
+          var html = '<div class="flex flex-wrap gap-1.5 mb-3">';
+          for (var i = 0; i < tags.length; i++) {
+            var color = getTagColor(tags[i]);
+            html += '<span class="text-xs px-2 py-1 rounded-full" style="background: ' + TAG_BG[color] + '; color: ' + TAG_TEXT[color] + '; font-weight: 500;">#' + tags[i] + '</span>';
+          }
+          html += '</div>';
+          return html;
+        }
+
+        function renderLikesComments(likes, comments) {
+          var likeColor = likes > 10 ? 'var(--brand-500)' : 'var(--text-400)';
+          return '<div class="flex items-center gap-4 pt-2.5" style="border-top: 1px solid var(--border);">' +
+            '<button class="flex items-center gap-1.5" aria-label="点赞">' +
+              '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/thumbs-up.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/thumbs-up.svg\'); color: ' + likeColor + ';"></span>' +
+              '<span class="text-xs" style="color: ' + likeColor + ';">' + likes + '</span>' +
+            '</button>' +
+            '<button class="flex items-center gap-1.5" aria-label="评论">' +
+              '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/message-circle-more.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/message-circle-more.svg\'); color: var(--text-400);"></span>' +
+              '<span class="text-xs" style="color: var(--text-400);">' + comments + '</span>' +
+            '</button>' +
+          '</div>';
+        }
+
+        function renderEntry(entry, isLast) {
+          var pb = isLast ? 'pb-2' : 'pb-5';
+          var dotColor = getDotColor(entry.tags);
+          var dotBg = getDotBgColor(entry.tags);
+          var dotIconColor = getDotIconColor(entry.tags);
+
+          // 解析日期格式：2026-07-08 → 7月8日
+          var dateParts = entry.date.split('-');
+          var dateStr = parseInt(dateParts[1], 10) + '月' + parseInt(dateParts[2], 10) + '日 ' + entry.weekday;
+
+          var html = '<div class="relative ' + pb + '">' +
+            '<div class="timeline-dot" style="background: ' + dotColor + ';"></div>' +
+            '<div class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">' +
+              '<div class="flex items-center justify-between mb-2.5">' +
+                '<div class="flex items-center gap-2.5">' +
+                  '<div class="w-9 h-9 rounded-full shrink-0 flex items-center justify-center" style="background: ' + dotBg + ';">' +
+                    '<span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/heart.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/heart.svg\'); color: ' + dotIconColor + ';"></span>' +
+                  '</div>' +
+                  '<div>' +
+                    '<span class="text-xs font-medium" style="color: var(--text-800);">' + dateStr + '</span>' +
+                  '</div>' +
+                '</div>' +
+                '<button class="w-7 h-7 rounded-full flex items-center justify-center" style="background: var(--background-200);" aria-label="更多操作">' +
+                  '<span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/chevron-down.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/chevron-down.svg\'); color: var(--text-400);"></span>' +
+                '</button>' +
+              '</div>' +
+              '<p class="text-sm leading-relaxed mb-3" style="color: var(--text-600);">' + entry.content + '</p>';
+
+          // 体重记录卡片
+          if (entry.weight) {
+            html += renderWeightCard(entry.weight);
+          }
+
+          // 附件图片占位
+          html += renderPhotoPlaceholders(entry.photos);
+
+          // 标签
+          html += renderTags(entry.tags);
+
+          // 点赞/评论
+          html += renderLikesComments(entry.likes, entry.comments);
+
+          html += '</div></div>';
+          return html;
+        }
+
+        function renderMonthBlock(page) {
+          var html = '<div class="mb-6">' +
+            '<div class="flex items-center gap-2 mb-3">' +
+              '<span class="text-sm font-semibold" style="color: var(--foreground);">' + page.month + '</span>' +
+              '<span class="text-xs px-2 py-0.5 rounded-full" style="background: var(--secondary); color: var(--muted-foreground); font-weight: 500;">' + page.count + '篇</span>' +
+            '</div>' +
+            '<div class="relative pl-12">' +
+              '<div class="timeline-line"></div>';
+
+          var entries = page.entries || [];
+          for (var i = 0; i < entries.length; i++) {
+            html += renderEntry(entries[i], i === entries.length - 1);
+          }
+
+          html += '</div></div>';
+          return html;
+        }
+
+        function renderTimeline(pages) {
+          var container = document.getElementById('diary-timeline');
+          if (!container) return;
+          var html = '';
+          for (var i = 0; i < pages.length; i++) {
+            html += renderMonthBlock(pages[i]);
+          }
+          container.innerHTML = html;
+        }
+
+        function updatePetInfo(pet) {
+          var elName = document.querySelector('[data-dom-id="pet-name"]');
+          var elBreed = document.querySelector('[data-dom-id="pet-breed"]');
+          var elAge = document.querySelector('[data-dom-id="pet-age"]');
+          var elWeight = document.querySelector('[data-dom-id="pet-weight"]');
+
+          if (elName) elName.textContent = pet.name;
+          if (elBreed) elBreed.textContent = pet.breed;
+          if (elAge) elAge.textContent = pet.age;
+          if (elWeight) elWeight.textContent = pet.weight + ' kg';
+        }
+
+        function bindEvents() {
+          // 返回按钮
+          var btnBack = document.querySelector('[data-dom-id="cta-back"]');
+          if (btnBack) {
+            btnBack.addEventListener('click', function() {
+              window.history.back();
+            });
+          }
+
+          // 导航栏链接
+          var navMap = {
+            'nav-home': 'home.html',
+            'nav-category': 'category.html',
+            'nav-profile': 'profile.html'
+          };
+          Object.keys(navMap).forEach(function(domId) {
+            var el = document.querySelector('[data-dom-id="' + domId + '"]');
+            if (el) {
+              el.addEventListener('click', function() {
+                window.location.href = navMap[domId];
+              });
+            }
+          });
+        }
+
+        function getPetIdFromUrl() {
+          var params = new URLSearchParams(window.location.search);
+          return params.get('petId') || 'pet-2';
+        }
+
+        async function loadData() {
+          var petId = getPetIdFromUrl();
+
+          try {
+            // 并行加载宠物信息和日记数据
+            var petRes = await api.get('/api/v1/pet/' + petId);
+            var diaryRes = await api.get('/api/v1/pet/' + petId + '/diary');
+
+            if (petRes.code === 0 && petRes.data) {
+              updatePetInfo(petRes.data);
+            }
+
+            if (diaryRes.code === 0 && diaryRes.data && diaryRes.data.pages) {
+              renderTimeline(diaryRes.data.pages);
+            }
+          } catch (e) {
+            console.error('[Pet Diary] 数据加载失败:', e);
+          }
+
+          // 确保图标在动态渲染后刷新
+          if (window.lucide && window.lucide.createIcons) {
+            lucide.createIcons();
+          }
+        }
+
+        // 绑定事件总是在 DOM 就绪后执行
+        bindEvents();
+
+        // 加载数据
+        loadData();
+      })();
+    </script>
 </body>
 </html>

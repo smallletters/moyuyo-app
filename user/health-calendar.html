@@ -73,43 +73,8 @@
 
       <!-- 宠物切换横向滚动栏 -->
       <section class="px-4 pt-3 pb-2" aria-label="宠物切换">
-        <div class="flex gap-4 overflow-x-auto no-scrollbar py-1">
-          <!-- 宠物 1（当前选中） -->
-          <div class="flex flex-col items-center gap-1.5 flex-shrink-0">
-            <div class="pet-avatar active">
-              <div class="pet-avatar-placeholder">
-                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--icon-400);"></span>
-              </div>
-            </div>
-            <span class="text-xs font-medium" style="color: var(--primary);">豆豆</span>
-          </div>
-          <!-- 宠物 2 -->
-          <div class="flex flex-col items-center gap-1.5 flex-shrink-0">
-            <div class="pet-avatar">
-              <div class="pet-avatar-placeholder">
-                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--icon-400);"></span>
-              </div>
-            </div>
-            <span class="text-xs font-medium" style="color: var(--text-500);">咪咪</span>
-          </div>
-          <!-- 宠物 3 -->
-          <div class="flex flex-col items-center gap-1.5 flex-shrink-0">
-            <div class="pet-avatar">
-              <div class="pet-avatar-placeholder">
-                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--icon-400);"></span>
-              </div>
-            </div>
-            <span class="text-xs font-medium" style="color: var(--text-500);">旺财</span>
-          </div>
-          <!-- 添加宠物 -->
-          <div class="flex flex-col items-center gap-1.5 flex-shrink-0">
-            <div class="pet-avatar" style="border: 2px dashed var(--background-300);">
-              <div class="pet-avatar-placeholder">
-                <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); color: var(--icon-300);"></span>
-              </div>
-            </div>
-            <span class="text-xs font-medium" style="color: var(--text-400);">添加</span>
-          </div>
+        <div class="flex gap-4 overflow-x-auto no-scrollbar py-1" id="pet-switch-bar">
+          <!-- 动态渲染 -->
         </div>
       </section>
 
@@ -137,85 +102,9 @@
           <div class="text-center text-xs font-medium py-1" style="color: var(--state-error);">六</div>
         </div>
 
-        <!-- 日期网格（2026年7月） -->
-        <!-- 7月1日=周三，前面填充周二和周一 -->
-        <div class="calendar-grid">
-          <!-- 上月占位 -->
-          <div class="calendar-cell other-month"><span class="day-number">29</span></div>
-          <div class="calendar-cell other-month"><span class="day-number">30</span></div>
-          <!-- 7月 -->
-          <div class="calendar-cell"><span class="day-number">1</span></div>
-          <div class="calendar-cell"><span class="day-number">2</span></div>
-          <div class="calendar-cell">
-            <span class="day-number">3</span>
-            <div class="dot-indicators"><span class="dot-indicator type-bath"></span></div>
-          </div>
-          <div class="calendar-cell"><span class="day-number">4</span></div>
-          <div class="calendar-cell"><span class="day-number">5</span></div>
-
-          <!-- 第二周 -->
-          <div class="calendar-cell"><span class="day-number">6</span></div>
-          <div class="calendar-cell">
-            <span class="day-number">7</span>
-            <div class="dot-indicators"><span class="dot-indicator type-diary"></span></div>
-          </div>
-          <div class="calendar-cell"><span class="day-number">8</span></div>
-          <div class="calendar-cell today selected">
-            <span class="day-number">9</span>
-            <div class="dot-indicators"><span class="dot-indicator type-deworm"></span></div>
-          </div>
-          <div class="calendar-cell"><span class="day-number">10</span></div>
-          <div class="calendar-cell"><span class="day-number">11</span></div>
-          <div class="calendar-cell">
-            <span class="day-number">12</span>
-            <div class="dot-indicators">
-              <span class="dot-indicator type-vaccine"></span>
-              <span class="dot-indicator type-bath"></span>
-            </div>
-          </div>
-
-          <!-- 第三周 -->
-          <div class="calendar-cell"><span class="day-number">13</span></div>
-          <div class="calendar-cell">
-            <span class="day-number">14</span>
-            <div class="dot-indicators"><span class="dot-indicator type-checkup"></span></div>
-          </div>
-          <div class="calendar-cell"><span class="day-number">15</span></div>
-          <div class="calendar-cell"><span class="day-number">16</span></div>
-          <div class="calendar-cell">
-            <span class="day-number">17</span>
-            <div class="dot-indicators"><span class="dot-indicator type-bath"></span></div>
-          </div>
-          <div class="calendar-cell"><span class="day-number">18</span></div>
-          <div class="calendar-cell"><span class="day-number">19</span></div>
-
-          <!-- 第四周 -->
-          <div class="calendar-cell">
-            <span class="day-number">20</span>
-            <div class="dot-indicators"><span class="dot-indicator type-diary"></span></div>
-          </div>
-          <div class="calendar-cell"><span class="day-number">21</span></div>
-          <div class="calendar-cell"><span class="day-number">22</span></div>
-          <div class="calendar-cell"><span class="day-number">23</span></div>
-          <div class="calendar-cell"><span class="day-number">24</span></div>
-          <div class="calendar-cell">
-            <span class="day-number">25</span>
-            <div class="dot-indicators"><span class="dot-indicator type-vaccine"></span></div>
-          </div>
-          <div class="calendar-cell"><span class="day-number">26</span></div>
-
-          <!-- 第五周 -->
-          <div class="calendar-cell"><span class="day-number">27</span></div>
-          <div class="calendar-cell"><span class="day-number">28</span></div>
-          <div class="calendar-cell">
-            <span class="day-number">29</span>
-            <div class="dot-indicators"><span class="dot-indicator type-bath"></span></div>
-          </div>
-          <div class="calendar-cell"><span class="day-number">30</span></div>
-          <div class="calendar-cell"><span class="day-number">31</span></div>
-          <!-- 下月占位 -->
-          <div class="calendar-cell other-month"><span class="day-number">1</span></div>
-          <div class="calendar-cell other-month"><span class="day-number">2</span></div>
+        <!-- 日期网格 -->
+        <div class="calendar-grid" id="calendar-grid">
+          <!-- 动态渲染 -->
         </div>
 
         <!-- 图例 -->
@@ -246,43 +135,12 @@
       <!-- 当日记录详情 -->
       <section class="mx-4 mt-3 rounded-[var(--radius)] p-4" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid var(--border);" aria-label="当日记录">
         <!-- 日期与宠物名标题 -->
-        <div class="flex items-center justify-between mb-3">
-          <div class="flex items-center gap-2">
-            <span class="text-sm font-semibold" style="color: var(--text-800);">7月9日</span>
-            <span class="text-xs font-medium px-2 py-0.5 rounded-full" style="background: var(--brand-50); color: var(--brand-600);">今天</span>
-          </div>
-          <span class="text-xs" style="color: var(--text-500);">豆豆</span>
+        <div class="flex items-center justify-between mb-3" id="records-header">
+          <!-- 动态渲染 -->
         </div>
-
         <!-- 护理记录列表 -->
-        <div class="flex flex-col gap-2.5">
-          <!-- 记录 1：驱虫 -->
-          <div class="flex items-start gap-3 p-3 rounded-xl" style="background: var(--background-200);">
-            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--state-warning); opacity: 0.12;">
-              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/shield.svg'); mask-image: url('../assets/icons/dl-builtin-apple/shield.svg'); color: var(--state-warning);"></span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs font-semibold px-2 py-0.5 rounded-md tag-deworm">驱虫</span>
-                <span class="text-[10px]" style="color: var(--text-400);">10:30</span>
-              </div>
-              <p class="text-xs" style="color: var(--text-600);">体内驱虫，服用拜宠清 1 片</p>
-            </div>
-          </div>
-
-          <!-- 记录 2：体重记录 -->
-          <div class="flex items-start gap-3 p-3 rounded-xl" style="background: var(--background-200);">
-            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--brand-50);">
-              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-down.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-down.svg'); color: var(--brand-500);"></span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs font-semibold px-2 py-0.5 rounded-md" style="background: var(--brand-50); color: var(--brand-600);">体重</span>
-                <span class="text-[10px]" style="color: var(--text-400);">09:15</span>
-              </div>
-              <p class="text-xs" style="color: var(--text-600);">4.2 kg（较上月 -0.1 kg）</p>
-            </div>
-          </div>
+        <div class="flex flex-col gap-2.5" id="records-list">
+          <!-- 动态渲染 -->
         </div>
       </section>
 
@@ -292,88 +150,16 @@
           <h3 class="text-sm font-semibold" style="color: var(--text-800);">近期提醒</h3>
           <span class="text-xs" style="color: var(--text-400);">查看全部</span>
         </div>
-
-        <div class="flex flex-col gap-2.5">
-          <!-- 提醒 1：已过期 -->
-          <div class="flex items-center gap-3 p-3 rounded-xl reminder-overdue" style="background: var(--state-error-surface);">
-            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--state-error); opacity: 0.12;">
-              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/droplets.svg'); mask-image: url('../assets/icons/dl-builtin-apple/droplets.svg'); color: var(--state-error);"></span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center justify-between mb-0.5">
-                <span class="text-xs font-semibold px-2 py-0.5 rounded-md" style="background: rgba(255,59,48,0.1); color: var(--state-error);">洗澡</span>
-                <span class="text-[10px] font-semibold" style="color: var(--state-error);">已过期 3 天</span>
-              </div>
-              <p class="text-[11px]" style="color: var(--text-500);">预计日期：7月6日</p>
-            </div>
-          </div>
-
-          <!-- 提醒 2：即将到来 -->
-          <div class="flex items-center gap-3 p-3 rounded-xl" style="background: var(--background-200);">
-            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--state-success-surface);">
-              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/syringe.svg'); mask-image: url('../assets/icons/dl-builtin-apple/syringe.svg'); color: var(--state-success);"></span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center justify-between mb-0.5">
-                <span class="text-xs font-semibold px-2 py-0.5 rounded-md tag-vaccine">疫苗</span>
-                <span class="text-[10px] font-medium" style="color: var(--state-warning);">还剩 6 天</span>
-              </div>
-              <p class="text-[11px]" style="color: var(--text-500);">预计日期：7月15日 · 狂犬疫苗加强</p>
-            </div>
-          </div>
-
-          <!-- 提醒 3 -->
-          <div class="flex items-center gap-3 p-3 rounded-xl" style="background: var(--background-200);">
-            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--state-success-surface);">
-              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/shield.svg'); mask-image: url('../assets/icons/dl-builtin-apple/shield.svg'); color: var(--state-success);"></span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center justify-between mb-0.5">
-                <span class="text-xs font-semibold px-2 py-0.5 rounded-md tag-deworm">驱虫</span>
-                <span class="text-[10px] font-medium" style="color: var(--text-500);">还剩 18 天</span>
-              </div>
-              <p class="text-[11px]" style="color: var(--text-500);">预计日期：7月27日 · 体外驱虫</p>
-            </div>
-          </div>
-
-          <!-- 提醒 4 -->
-          <div class="flex items-center gap-3 p-3 rounded-xl" style="background: var(--background-200);">
-            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: #f0f0ff;">
-              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/stethoscope.svg'); mask-image: url('../assets/icons/dl-builtin-apple/stethoscope.svg'); color: var(--chart-4);"></span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center justify-between mb-0.5">
-                <span class="text-xs font-semibold px-2 py-0.5 rounded-md tag-checkup">体检</span>
-                <span class="text-[10px] font-medium" style="color: var(--text-500);">还剩 25 天</span>
-              </div>
-              <p class="text-[11px]" style="color: var(--text-500);">预计日期：8月3日 · 半年度体检</p>
-            </div>
-          </div>
+        <div class="flex flex-col gap-2.5" id="reminders-list">
+          <!-- 动态渲染 -->
         </div>
       </section>
 
       <!-- 护理统计本月概览 -->
       <section class="mx-4 mt-3 mb-4 rounded-[var(--radius)] p-4" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid var(--border);" aria-label="本月统计">
         <h3 class="text-sm font-semibold mb-3" style="color: var(--text-800);">本月概览</h3>
-        <div class="grid grid-cols-3 gap-3">
-          <!-- 洗澡统计 -->
-          <div class="flex flex-col items-center gap-1.5 py-3 rounded-xl" style="background: var(--brand-50);">
-            <span class="stat-number" style="color: var(--brand-500);">3</span>
-            <span class="text-[10px] font-medium" style="color: var(--brand-600);">洗澡</span>
-            <div class="w-1 h-1 rounded-full" style="background: var(--brand-200);"></div>
-          </div>
-          <!-- 疫苗统计 -->
-          <div class="flex flex-col items-center gap-1.5 py-3 rounded-xl" style="background: var(--state-success-surface);">
-            <span class="stat-number" style="color: var(--state-success);">1</span>
-            <span class="text-[10px] font-medium" style="color: var(--state-success);">疫苗</span>
-            <div class="w-1 h-1 rounded-full" style="background: #b5f0c2;"></div>
-          </div>
-          <!-- 驱虫统计 -->
-          <div class="flex flex-col items-center gap-1.5 py-3 rounded-xl" style="background: #fff5e6;">
-            <span class="stat-number" style="color: var(--state-warning);">1</span>
-            <span class="text-[10px] font-medium" style="color: var(--state-warning);">驱虫</span>
-            <div class="w-1 h-1 rounded-full" style="background: #ffd699;"></div>
-          </div>
+        <div class="grid grid-cols-3 gap-3" id="stats-grid">
+          <!-- 动态渲染 -->
         </div>
       </section>
 
@@ -381,7 +167,7 @@
       <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="主导航">
         <div class="flex items-stretch justify-around h-[49px]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
           <!-- 首页 -->
-          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="首页">
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-home" aria-label="首页">
             <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
             <span class="text-[10px] font-medium">首页</span>
           </button>
@@ -411,6 +197,418 @@
       </nav>
 
     </main>
-    <script>lucide.createIcons();</script>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+(function () {
+  'use strict';
+
+  var api = window.moyuyoAPI;
+
+  /* ========== 状态变量 ========== */
+  var params = new URLSearchParams(window.location.search);
+  var currentPetId = params.get('petId') || 'pet-1';
+  var currentYear = 2026;
+  var currentMonth = 7; // 1-indexed
+  var selectedDate = '2026-07-09';
+  var petList = [];
+  var calendarEvents = {};
+  var currentPetName = '';
+
+  /* ========== 事件类型映射 ========== */
+  var TYPE_MAP = {
+    BATH:    { css: 'type-bath',    label: '洗澡', tag: 'brand-50', tagColor: 'brand-600', icon: 'droplets',   iconBg: 'brand-50', iconColor: 'brand-500' },
+    VACCINE: { css: 'type-vaccine', label: '疫苗', tag: 'tag-vaccine',                   icon: 'syringe',     iconBg: 'state-success-surface', iconColor: 'state-success' },
+    DEWORM:  { css: 'type-deworm',  label: '驱虫', tag: 'tag-deworm',                    icon: 'shield',      iconBg: 'state-warning', iconColor: 'state-warning', iconBgOpacity: '0.12' },
+    CHECKUP: { css: 'type-checkup', label: '体检', tag: 'tag-checkup',                   icon: 'stethoscope',  iconBg: '#f0f0ff', iconColor: 'chart-4' },
+    DIARY:   { css: 'type-diary',   label: '日记', tag: 'brand-50', tagColor: 'brand-600', icon: 'book-open', iconBg: 'text-400', iconColor: 'text-400', iconBgOpacity: '0.12' },
+    WEIGHT:  { css: '',             label: '体重', tag: 'brand-50', tagColor: 'brand-600', icon: 'arrow-down', iconBg: 'brand-50', iconColor: 'brand-500' }
+  };
+
+  var STAT_STYLES = {
+    BATH:    { bg: 'brand-50',    numColor: 'brand-500', labelColor: 'brand-600', dotColor: 'brand-200' },
+    VACCINE: { bg: 'state-success-surface', numColor: 'state-success', labelColor: 'state-success', dotColor: '#b5f0c2' },
+    DEWORM:  { bg: '#fff5e6',    numColor: 'state-warning', labelColor: 'state-warning', dotColor: '#ffd699' },
+    CHECKUP: { bg: '#f0f0ff',    numColor: 'chart-4', labelColor: 'chart-4', dotColor: '#d4c8ff' },
+    DIARY:   { bg: 'background-200', numColor: 'text-500', labelColor: 'text-500', dotColor: 'text-300' }
+  };
+
+  /* ========== 工具函数 ========== */
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function formatDate(y, m, d) { return y + '-' + pad(m) + '-' + pad(d); }
+  function daysInMonth(y, m) { return new Date(y, m, 0).getDate(); }
+  function dayOfWeek(y, m, d) { return new Date(y, m - 1, d).getDay(); }
+
+  function isToday(y, m, d) {
+    var now = new Date();
+    return now.getFullYear() === y && (now.getMonth() + 1) === m && now.getDate() === d;
+  }
+
+  function getMonthLabel(y, m) {
+    return y + '年' + m + '月';
+  }
+
+  /* ========== 渲染宠物切换栏 ========== */
+  function renderPetBar() {
+    var container = document.getElementById('pet-switch-bar');
+    if (!container) return;
+    var html = '';
+    for (var i = 0; i < petList.length; i++) {
+      var pet = petList[i];
+      var isActive = pet.id === currentPetId;
+      html += '<div class="flex flex-col items-center gap-1.5 flex-shrink-0" data-pet-id="' + pet.id + '" style="cursor:pointer;">';
+      html += '<div class="pet-avatar' + (isActive ? ' active' : '') + '">';
+      html += '<div class="pet-avatar-placeholder">';
+      html += '<span data-icon class="w-5 h-5" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/heart.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/heart.svg\'); color: var(--icon-400);"></span>';
+      html += '</div></div>';
+      html += '<span class="text-xs font-medium" style="color: ' + (isActive ? 'var(--primary)' : 'var(--text-500)') + ';">' + pet.name + '</span>';
+      html += '</div>';
+    }
+    // 添加宠物按钮
+    html += '<div class="flex flex-col items-center gap-1.5 flex-shrink-0">';
+    html += '<div class="pet-avatar" style="border: 2px dashed var(--background-300);">';
+    html += '<div class="pet-avatar-placeholder">';
+    html += '<span data-icon class="w-5 h-5" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/circle-plus.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/circle-plus.svg\'); color: var(--icon-300);"></span>';
+    html += '</div></div>';
+    html += '<span class="text-xs font-medium" style="color: var(--text-400);">添加</span>';
+    html += '</div>';
+    container.innerHTML = html;
+
+    // 绑定点击事件
+    var items = container.querySelectorAll('[data-pet-id]');
+    for (var j = 0; j < items.length; j++) {
+      (function (petId) {
+        items[j].addEventListener('click', function () {
+          switchPet(petId);
+        });
+      })(petList[j].id);
+    }
+
+    lucide.createIcons();
+  }
+
+  /* ========== 切换宠物 ========== */
+  function switchPet(petId) {
+    if (petId === currentPetId) return;
+    currentPetId = petId;
+    // 更新 URL 参数
+    var url = new URL(window.location.href);
+    url.searchParams.set('petId', petId);
+    window.history.replaceState({}, '', url.toString());
+    renderPetBar();
+    loadCalendarData();
+    loadReminders();
+    loadStats();
+    loadRecordsForDate(selectedDate);
+  }
+
+  /* ========== 渲染日历网格 ========== */
+  function renderCalendar() {
+    var grid = document.getElementById('calendar-grid');
+    if (!grid) return;
+    var days = daysInMonth(currentYear, currentMonth);
+    var startDow = dayOfWeek(currentYear, currentMonth, 1); // 0=Sun
+    var html = '';
+
+    // 前置空白格
+    for (var i = 0; i < startDow; i++) {
+      html += '<div class="calendar-cell other-month"></div>';
+    }
+
+    // 本月日期
+    for (var d = 1; d <= days; d++) {
+      var dateStr = formatDate(currentYear, currentMonth, d);
+      var cellClasses = 'calendar-cell';
+      if (isToday(currentYear, currentMonth, d)) cellClasses += ' today';
+      if (dateStr === selectedDate) cellClasses += ' selected';
+
+      html += '<div class="' + cellClasses + '" data-date="' + dateStr + '">';
+      html += '<span class="day-number">' + d + '</span>';
+
+      // 事件圆点
+      var dayEvents = calendarEvents[String(d)] || [];
+      if (dayEvents.length > 0) {
+        html += '<div class="dot-indicators">';
+        for (var e = 0; e < dayEvents.length; e++) {
+          var ev = dayEvents[e];
+          var tm = TYPE_MAP[ev.type] || {};
+          html += '<span class="dot-indicator ' + (tm.css || '') + '"></span>';
+        }
+        html += '</div>';
+      }
+
+      html += '</div>';
+    }
+
+    grid.innerHTML = html;
+
+    // 绑定点击事件
+    var cells = grid.querySelectorAll('.calendar-cell[data-date]');
+    for (var c = 0; c < cells.length; c++) {
+      (function (dateStr) {
+        cells[c].addEventListener('click', function () {
+          selectDate(dateStr);
+        });
+      })(cells[c].getAttribute('data-date'));
+    }
+  }
+
+  /* ========== 选择日期 ========== */
+  function selectDate(dateStr) {
+    selectedDate = dateStr;
+    // 更新网格选中状态
+    var grid = document.getElementById('calendar-grid');
+    if (grid) {
+      var cells = grid.querySelectorAll('.calendar-cell');
+      for (var i = 0; i < cells.length; i++) {
+        cells[i].classList.remove('selected');
+      }
+      var selectedCell = grid.querySelector('[data-date="' + dateStr + '"]');
+      if (selectedCell) selectedCell.classList.add('selected');
+    }
+    loadRecordsForDate(dateStr);
+  }
+
+  /* ========== 渲染当日记录 ========== */
+  function renderRecords(data) {
+    var header = document.getElementById('records-header');
+    var list = document.getElementById('records-list');
+    if (!header || !list) return;
+
+    var dateParts = data.date.split('-');
+    var monthDay = parseInt(dateParts[1], 10) + '月' + parseInt(dateParts[2], 10) + '日';
+    var todayStr = formatDate(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate());
+    var isTodayDate = data.date === todayStr;
+
+    header.innerHTML = '<div class="flex items-center gap-2">' +
+      '<span class="text-sm font-semibold" style="color: var(--text-800);">' + monthDay + '</span>' +
+      (isTodayDate ? '<span class="text-xs font-medium px-2 py-0.5 rounded-full" style="background: var(--brand-50); color: var(--brand-600);">今天</span>' : '') +
+      '</div>' +
+      '<span class="text-xs" style="color: var(--text-500);">' + (data.petName || currentPetName) + '</span>';
+
+    var records = data.records || [];
+    if (records.length === 0) {
+      list.innerHTML = '<div class="text-center py-4 text-xs" style="color: var(--text-400);">暂无记录</div>';
+      return;
+    }
+
+    var html = '';
+    for (var i = 0; i < records.length; i++) {
+      var r = records[i];
+      var tm = TYPE_MAP[r.type] || TYPE_MAP.DIARY;
+      html += '<div class="flex items-start gap-3 p-3 rounded-xl" style="background: var(--background-200);">';
+      html += '<div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--' + tm.iconBg + ')' + (tm.iconBgOpacity ? '; opacity: ' + tm.iconBgOpacity : '') + ';">';
+      html += '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/' + tm.icon + '.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/' + tm.icon + '.svg\'); color: var(--' + tm.iconColor + ');"></span>';
+      html += '</div>';
+      html += '<div class="flex-1 min-w-0">';
+      html += '<div class="flex items-center gap-2 mb-1">';
+      if (tm.tag === 'tag-vaccine' || tm.tag === 'tag-deworm' || tm.tag === 'tag-checkup') {
+        html += '<span class="text-xs font-semibold px-2 py-0.5 rounded-md ' + tm.tag + '">' + (r.title || tm.label) + '</span>';
+      } else {
+        html += '<span class="text-xs font-semibold px-2 py-0.5 rounded-md" style="background: var(--' + tm.tag + '); color: var(--' + tm.tagColor + ');">' + (r.title || tm.label) + '</span>';
+      }
+      html += '<span class="text-[10px]" style="color: var(--text-400);">' + (r.time || '') + '</span>';
+      html += '</div>';
+      html += '<p class="text-xs" style="color: var(--text-600);">' + (r.desc || '') + '</p>';
+      html += '</div></div>';
+    }
+    list.innerHTML = html;
+    lucide.createIcons();
+  }
+
+  /* ========== 渲染提醒列表 ========== */
+  function renderReminders(data) {
+    var container = document.getElementById('reminders-list');
+    if (!container) return;
+    var list = data.list || [];
+    var html = '';
+
+    for (var i = 0; i < list.length; i++) {
+      var r = list[i];
+      var tm = TYPE_MAP[r.type] || TYPE_MAP.BATH;
+      var isOverdue = r.status === 'OVERDUE';
+      var isUpcoming = r.status === 'UPCOMING';
+
+      var statusText = '';
+      var statusColor = 'var(--text-500)';
+      if (isOverdue) {
+        statusText = '已过期 ' + Math.abs(r.remaining) + ' 天';
+        statusColor = 'var(--state-error)';
+      } else if (isUpcoming) {
+        statusText = '还剩 ' + r.remaining + ' 天';
+        statusColor = 'var(--state-warning)';
+      } else {
+        statusText = '还剩 ' + r.remaining + ' 天';
+        statusColor = 'var(--text-500)';
+      }
+
+      var rowBg = isOverdue ? 'var(--state-error-surface)' : 'var(--background-200)';
+      var rowClass = isOverdue ? ' reminder-overdue' : '';
+
+      html += '<div class="flex items-center gap-3 p-3 rounded-xl' + rowClass + '" style="background: ' + rowBg + ';">';
+      html += '<div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--' + tm.iconBg + ')' + (tm.iconBgOpacity ? '; opacity: ' + tm.iconBgOpacity : '') + ';">';
+      html += '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/' + tm.icon + '.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/' + tm.icon + '.svg\'); color: var(--' + tm.iconColor + ');"></span>';
+      html += '</div>';
+      html += '<div class="flex-1 min-w-0">';
+      html += '<div class="flex items-center justify-between mb-0.5">';
+
+      // 标签
+      if (tm.tag === 'tag-vaccine' || tm.tag === 'tag-deworm' || tm.tag === 'tag-checkup') {
+        html += '<span class="text-xs font-semibold px-2 py-0.5 rounded-md ' + tm.tag + '">' + (r.title || tm.label) + '</span>';
+      } else {
+        var tagBg = isOverdue ? 'rgba(255,59,48,0.1)' : 'var(--' + tm.tag + ')';
+        var tagCol = isOverdue ? 'var(--state-error)' : 'var(--' + tm.tagColor + ')';
+        html += '<span class="text-xs font-semibold px-2 py-0.5 rounded-md" style="background: ' + tagBg + '; color: ' + tagCol + ';">' + (r.title || tm.label) + '</span>';
+      }
+
+      html += '<span class="text-[10px] font-semibold" style="color: ' + statusColor + ';">' + statusText + '</span>';
+      html += '</div>';
+      html += '<p class="text-[11px]" style="color: var(--text-500);">' + (r.desc || '预计日期：' + r.dueDate) + '</p>';
+      html += '</div></div>';
+    }
+
+    container.innerHTML = html;
+    lucide.createIcons();
+  }
+
+  /* ========== 渲染本月统计 ========== */
+  function renderStats(data) {
+    var container = document.getElementById('stats-grid');
+    if (!container) return;
+    var stats = data.stats || {};
+    var html = '';
+    var keys = ['BATH', 'VACCINE', 'DEWORM', 'CHECKUP', 'DIARY'];
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      var entry = stats[key];
+      if (!entry) continue;
+      var ss = STAT_STYLES[key] || STAT_STYLES.DIARY;
+      html += '<div class="flex flex-col items-center gap-1.5 py-3 rounded-xl" style="background: var(--' + ss.bg + ');">';
+      html += '<span class="stat-number" style="color: var(--' + ss.numColor + ');">' + (entry.count || 0) + '</span>';
+      html += '<span class="text-[10px] font-medium" style="color: var(--' + ss.labelColor + ');">' + (entry.label || '') + '</span>';
+      html += '<div class="w-1 h-1 rounded-full" style="background: var(--' + ss.dotColor + ');"></div>';
+      html += '</div>';
+    }
+    container.innerHTML = html;
+  }
+
+  /* ========== API 数据加载 ========== */
+  function loadPetList() {
+    api.get('/api/v1/pet/list').then(function (res) {
+      if (res.code === 0 && res.data) {
+        petList = res.data;
+        // 找到当前宠物名
+        for (var i = 0; i < petList.length; i++) {
+          if (petList[i].id === currentPetId) {
+            currentPetName = petList[i].name;
+            break;
+          }
+        }
+        renderPetBar();
+      }
+    }).catch(function (err) {
+      console.error('加载宠物列表失败:', err);
+    });
+  }
+
+  function loadCalendarData() {
+    api.get('/api/v1/pet/' + currentPetId + '/health/calendar').then(function (res) {
+      if (res.code === 0 && res.data) {
+        currentYear = res.data.year;
+        currentMonth = res.data.month;
+        calendarEvents = res.data.events || {};
+        document.getElementById('calendar-month-label').textContent = getMonthLabel(currentYear, currentMonth);
+        renderCalendar();
+      }
+    }).catch(function (err) {
+      console.error('加载日历数据失败:', err);
+    });
+  }
+
+  function loadRecordsForDate(dateStr) {
+    api.get('/api/v1/pet/' + currentPetId + '/health/records?date=' + dateStr).then(function (res) {
+      if (res.code === 0 && res.data) {
+        renderRecords(res.data);
+      }
+    }).catch(function (err) {
+      console.error('加载记录失败:', err);
+    });
+  }
+
+  function loadReminders() {
+    api.get('/api/v1/pet/' + currentPetId + '/health/reminders').then(function (res) {
+      if (res.code === 0 && res.data) {
+        renderReminders(res.data);
+      }
+    }).catch(function (err) {
+      console.error('加载提醒失败:', err);
+    });
+  }
+
+  function loadStats() {
+    api.get('/api/v1/pet/' + currentPetId + '/health/stats').then(function (res) {
+      if (res.code === 0 && res.data) {
+        renderStats(res.data);
+      }
+    }).catch(function (err) {
+      console.error('加载统计失败:', err);
+    });
+  }
+
+  /* ========== 月份切换 ========== */
+  function changeMonth(delta) {
+    currentMonth += delta;
+    if (currentMonth > 12) { currentMonth = 1; currentYear++; }
+    if (currentMonth < 1) { currentMonth = 12; currentYear--; }
+    document.getElementById('calendar-month-label').textContent = getMonthLabel(currentYear, currentMonth);
+    loadCalendarData();
+  }
+
+  /* ========== 事件绑定 ========== */
+  function bindEvents() {
+    // 返回按钮
+    var btnBack = document.querySelector('[data-dom-id="cta-back"]');
+    if (btnBack) {
+      btnBack.addEventListener('click', function () { window.history.back(); });
+    }
+
+    // 上个月/下个月
+    var btnPrev = document.querySelector('[data-dom-id="prev-month"]');
+    if (btnPrev) {
+      btnPrev.addEventListener('click', function () { changeMonth(-1); });
+    }
+    var btnNext = document.querySelector('[data-dom-id="next-month"]');
+    if (btnNext) {
+      btnNext.addEventListener('click', function () { changeMonth(1); });
+    }
+
+    // 底部导航栏
+    var navHome = document.querySelector('[data-dom-id="nav-home"]');
+    if (navHome) {
+      navHome.addEventListener('click', function () { window.location.href = 'home.html'; });
+    }
+    var navCategory = document.querySelector('[data-dom-id="nav-category"]');
+    if (navCategory) {
+      navCategory.addEventListener('click', function () { window.location.href = 'category.html'; });
+    }
+    var navProfile = document.querySelector('[data-dom-id="nav-profile"]');
+    if (navProfile) {
+      navProfile.addEventListener('click', function () { window.location.href = 'profile.html'; });
+    }
+  }
+
+  /* ========== 初始化 ========== */
+  function init() {
+    bindEvents();
+    loadPetList();
+    loadCalendarData();
+    loadReminders();
+    loadStats();
+    loadRecordsForDate(selectedDate);
+  }
+
+  init();
+})();
+    </script>
 </body>
 </html>

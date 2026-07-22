@@ -203,6 +203,120 @@
       </section>
 
     </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      // ========== Pet Profile API 对接 ==========
+      (function() {
+        'use strict';
+        var api = window.moyuyoAPI;
+
+        function getPetId() {
+          var params = new URLSearchParams(window.location.search);
+          return params.get('petId') || 'pet-1';
+        }
+
+        function genderLabel(g) {
+          if (g === 'MALE') return '公';
+          if (g === 'FEMALE') return '母';
+          return g;
+        }
+
+        function getColorClass(color) {
+          var map = { brand: 'var(--brand-50)', success: 'var(--state-success-surface)', error: 'var(--state-error-surface)' };
+          return map[color] || 'var(--brand-50)';
+        }
+        function getIconColor(color) {
+          var map = { brand: 'var(--brand-500)', success: 'var(--state-success)', error: 'var(--state-error)' };
+          return map[color] || 'var(--brand-500)';
+        }
+
+        function getStatusColor(status) {
+          if (status === 'NORMAL') return 'var(--state-success)';
+          if (status === 'NONE') return 'var(--text-400)';
+          return 'var(--text-400)';
+        }
+
+        function loadProfile() {
+          var petId = getPetId();
+          api.get('/api/v1/pet/' + petId).then(function(res) {
+            if (res.code !== 0) return;
+            var pet = res.data;
+
+            // Hero card
+            var cover = document.querySelector('section.mx-3.mt-3 img');
+            if (cover) cover.src = pet.cover || cover.src;
+            var h1 = document.querySelector('section.mx-3.mt-3 h1');
+            if (h1) h1.textContent = pet.name;
+            var breedEl = document.querySelector('section.mx-3.mt-3 p');
+            if (breedEl) breedEl.textContent = pet.breed + ' · ' + pet.age + ' · ' + genderLabel(pet.gender);
+
+            // Badges
+            var badges = document.querySelectorAll('section.mx-3.mt-3 .flex.gap-2 > div');
+            if (badges[0]) badges[0].textContent = '体重 ' + pet.weight + 'kg';
+            if (badges[1]) badges[1].textContent = '肩高 ' + pet.height + 'cm';
+            if (badges[2]) badges[2].textContent = '生日 ' + pet.birthday;
+
+            // Care Timeline
+            var timeline = document.querySelector('section.mx-3.mt-6 .flex.flex-col.gap-0');
+            if (timeline && pet.careTimeline) {
+              timeline.innerHTML = '';
+              pet.careTimeline.forEach(function(item, idx) {
+                var borderStyle = idx < pet.careTimeline.length - 1 ? 'border-bottom: 1px solid var(--border);' : '';
+                var entry = '<div class="flex items-start gap-3 px-3 py-3" style="' + borderStyle + '">' +
+                  '<div class="flex-shrink-0 flex items-center justify-center mt-0.5" style="width: 32px; height: 32px; border-radius: 8px; background: ' + getColorClass(item.color) + ';">' +
+                  '<i data-lucide="' + item.icon + '" style="width: 16px; height: 16px; color: ' + getIconColor(item.color) + ';"></i></div>' +
+                  '<div class="flex-1 min-w-0"><div class="flex items-center justify-between">' +
+                  '<span class="font-semibold truncate" style="font-size: 14px; color: var(--text-800);">' + item.title + '</span>' +
+                  '<span class="flex-shrink-0 ml-2" style="font-size: 12px; color: var(--text-400);">' + item.date.substring(5) + '</span></div>' +
+                  '<p class="mt-0.5 truncate" style="font-size: 13px; color: var(--text-500);">' + item.desc + '</p></div></div>';
+                timeline.innerHTML += entry;
+              });
+              lucide.createIcons();
+            }
+
+            // Health data
+            var h = pet.health;
+            if (h) {
+              var healthCards = document.querySelectorAll('.grid.grid-cols-2.gap-2 > div');
+              updateHealthCard(healthCards[0], '体重', h.weight);
+              updateHealthCard(healthCards[1], '体温', h.temperature);
+              updateHealthCard(healthCards[2], '心率', h.heartRate);
+              updateHealthCard(healthCards[3], '食量', h.foodIntake);
+            }
+          });
+        }
+
+        function updateHealthCard(card, title, data) {
+          if (!card) return;
+          var valueEl = card.querySelector('.font-semibold');
+          var unitEl = card.querySelectorAll('span')[2];
+          var statusEl = card.querySelector('.inline-flex.items-center');
+
+          if (data.status === 'NONE') {
+            if (valueEl) valueEl.innerHTML = '--';
+            if (valueEl) valueEl.style.color = 'var(--text-400)';
+            if (unitEl) unitEl.style.color = 'var(--text-400)';
+            if (statusEl) { statusEl.innerHTML = '暂无数据'; statusEl.style.color = 'var(--text-400)'; }
+          } else {
+            if (valueEl) valueEl.textContent = data.value;
+            if (unitEl) unitEl.textContent = data.unit;
+            if (statusEl) {
+              statusEl.innerHTML = '<i data-lucide="check-circle" style="width: 12px; height: 12px; margin-right: 2px;"></i>' + data.label;
+              statusEl.style.color = data.status === 'NORMAL' ? 'var(--state-success)' : 'var(--text-400)';
+            }
+          }
+        }
+
+        // Back button
+        var backBtn = document.querySelector('[data-dom-id="back-previous"]');
+        if (backBtn) {
+          backBtn.addEventListener('click', function() { window.history.back(); });
+        }
+
+        loadProfile();
+      })();
+    </script>
     <script>lucide.createIcons();</script>
 </body>
 </html>

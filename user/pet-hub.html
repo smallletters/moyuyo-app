@@ -291,6 +291,142 @@
         </div>
       </nav>
     </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      // ========== Pet Hub API 对接 ==========
+      (function() {
+        'use strict';
+        var api = window.moyuyoAPI;
+
+        function genderLabel(g) {
+          if (g === 'MALE') return '公';
+          if (g === 'FEMALE') return '母';
+          return g;
+        }
+
+        // 加载宠物列表并渲染第一个宠物卡片
+        function loadPets() {
+          api.get('/api/v1/pet/list').then(function(res) {
+            if (res.code !== 0) return;
+            var pets = res.data;
+            if (!pets.length) return;
+            var pet = pets[0];
+
+            // 更新宠物卡片
+            var avatar = document.querySelector('#pet-hub-content section:nth-of-type(2) img');
+            var nameEl = document.querySelector('#pet-hub-content section:nth-of-type(2) h2');
+            var breedEl = document.querySelector('#pet-hub-content section:nth-of-type(2) p.text-sm');
+            var infoEls = document.querySelectorAll('#pet-hub-content section:nth-of-type(2) .flex.items-center.gap-3 span');
+
+            if (avatar) avatar.src = pet.avatar || avatar.src;
+            if (nameEl) nameEl.textContent = pet.name;
+            if (breedEl) breedEl.textContent = pet.breed;
+            if (infoEls.length >= 3) {
+              infoEls[0].innerHTML = '<span style="color: var(--primary);">' + (pet.gender === 'MALE' ? '♂' : '♀') + '</span> ' + genderLabel(pet.gender);
+              infoEls[1].textContent = pet.age;
+              infoEls[2].textContent = pet.weight + 'kg';
+            }
+          });
+        }
+
+        // 加载护理提醒
+        function loadReminders() {
+          api.get('/api/v1/pet/pet-1/health/reminders').then(function(res) {
+            if (res.code !== 0) return;
+            var list = res.data.list;
+            var container = document.querySelector('#pet-hub-content section:nth-of-type(3) .flex.gap-3');
+            if (!container) return;
+            container.innerHTML = '';
+
+            var iconMap = {
+              BATH: 'star', VACCINE: 'circle-check', DEWORM: 'triangle-alert', CHECKUP: 'circle-check'
+            };
+            var bgMap = {
+              BATH: 'var(--brand-100)', VACCINE: 'var(--state-success-surface)', DEWORM: 'var(--brand-100)', CHECKUP: 'var(--state-success-surface)'
+            };
+            var iconColorMap = {
+              BATH: 'var(--brand-500)', VACCINE: 'var(--state-success)', DEWORM: 'var(--brand-500)', CHECKUP: 'var(--state-success)'
+            };
+
+            list.forEach(function(item) {
+              var daysText = item.status === 'OVERDUE' ? '已过期' : item.remaining + '天';
+              var daysColor = item.status === 'OVERDUE' ? 'var(--state-error)' : (item.remaining <= 7 ? 'var(--brand-500)' : 'var(--text-400)');
+              var card = '<div class="shrink-0 w-32 p-3.5 rounded-2xl" style="background: var(--card); border: 1px solid var(--border);">' +
+                '<div class="flex items-center justify-between mb-2">' +
+                '<span class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="background: ' + (bgMap[item.type] || 'var(--brand-100)') + ';">' +
+                '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/' + (iconMap[item.type] || 'star') + '.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/' + (iconMap[item.type] || 'star') + '.svg\'); background-color: ' + (iconColorMap[item.type] || 'var(--brand-500)') + ';"></span>' +
+                '</span><span class="text-xs font-semibold" style="color: ' + daysColor + ';">' + daysText + '</span></div>' +
+                '<p class="text-sm font-semibold" style="color: var(--text-800);">' + item.title + '</p>' +
+                '<p class="text-xs mt-0.5" style="color: var(--text-400);">' + item.desc + '</p></div>';
+              container.innerHTML += card;
+            });
+          });
+        }
+
+        // 加载体重趋势
+        function loadWeight() {
+          api.get('/api/v1/pet/pet-1/weight').then(function(res) {
+            if (res.code !== 0) return;
+            var stats = res.data.stats;
+            var trendEl = document.querySelector('#pet-hub-content section:nth-of-type(4) .text-xs.leading-relaxed');
+            if (trendEl) {
+              trendEl.textContent = '过去30天体重变化 ' + (stats.change > 0 ? '+' : '') + stats.change + 'kg，处于健康范围';
+            }
+            var changeEl = document.querySelector('#pet-hub-content section:nth-of-type(4) .px-2.py-0\\\\.5');
+            if (changeEl) {
+              changeEl.innerHTML = '<span data-icon class="w-3 h-3" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/arrow-up.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/arrow-up.svg\'); background-color: var(--state-success);"></span>+' + stats.change + 'kg';
+            }
+          });
+        }
+
+        // 加载成长记录
+        function loadTimeline() {
+          api.get('/api/v1/pet/pet-1/diary').then(function(res) {
+            if (res.code !== 0) return;
+            var pages = res.data.pages;
+            var container = document.querySelector('#pet-hub-content section:nth-of-type(5) .space-y-0');
+            if (!container) return;
+            container.innerHTML = '';
+
+            // 取最近5条日记
+            var entries = [];
+            pages.forEach(function(page) {
+              page.entries.forEach(function(e) { entries.push(e); });
+            });
+            entries = entries.slice(0, 5);
+
+            entries.forEach(function(entry, idx) {
+              var isLast = idx === entries.length - 1;
+              var line = isLast ? '' : '<div class="w-px flex-1 mt-1" style="background: var(--border);"></div>';
+              var dateStr = entry.date.substring(5);
+              var card = '<div class="flex gap-3">' +
+                '<div class="flex flex-col items-center">' +
+                '<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style="background: var(--brand-100);">' +
+                '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/star.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/star.svg\'); background-color: var(--brand-500);"></span>' +
+                '</div>' + line + '</div>' +
+                '<div class="' + (isLast ? 'pb-2' : 'pb-4') + ' flex-1 min-w-0">' +
+                '<p class="text-sm font-semibold" style="color: var(--text-800);">' + (entry.tags[0] || '日记') + '</p>' +
+                '<p class="text-xs mt-0.5" style="color: var(--text-400);">' + dateStr + ' · ' + entry.content.substring(0, 15) + '...</p></div></div>';
+              container.innerHTML += card;
+            });
+          });
+        }
+
+        // 导航栏链接
+        var navHome = document.querySelector('[data-dom-id="nav-home"]');
+        var navCategory = document.querySelector('[data-dom-id="nav-category"]');
+        var navProfile = document.querySelector('[data-dom-id="nav-profile"]');
+        if (navHome) navHome.href = 'home.html';
+        if (navCategory) navCategory.href = 'category.html';
+        if (navProfile) navProfile.href = 'profile.html';
+
+        loadPets();
+        loadReminders();
+        loadWeight();
+        loadTimeline();
+      })();
+    </script>
     <script>lucide.createIcons();</script>
 </body>
 </html>

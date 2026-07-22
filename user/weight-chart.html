@@ -41,8 +41,416 @@
     th { @apply whitespace-nowrap; }
   }
     </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+      .pet-avatar {
+        width: 52px; height: 52px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        background: var(--background-200); border: 2px solid transparent;
+        transition: all 0.25s ease;
+      }
+      .pet-avatar.active {
+        border-color: var(--brand-500);
+        box-shadow: 0 0 0 3px rgba(0,122,255,0.12);
+      }
+      .pet-avatar-placeholder {
+        width: 40px; height: 40px; border-radius: 50%;
+        background: var(--background-300);
+        display: flex; align-items: center; justify-content: center;
+      }
+    </style>
 </head>
 <body class="min-h-screen font-sans antialiased">
-    <script>lucide.createIcons();</script>
+
+    <main class="pb-28">
+
+      <!-- 顶部导航栏 -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-4">
+          <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--background-200); border: none;" data-dom-id="cta-back" aria-label="返回">
+            <i data-lucide="chevron-left" class="w-5 h-5" style="color: var(--text-800);"></i>
+          </button>
+          <h1 class="text-base font-semibold" style="color: var(--text-800);">体重记录</h1>
+          <div class="w-9 h-9"></div>
+        </div>
+      </div>
+
+      <!-- 宠物切换横向滚动栏 -->
+      <section class="px-4 pt-3 pb-2" aria-label="宠物切换">
+        <div class="flex gap-4 overflow-x-auto no-scrollbar py-1" id="pet-switcher">
+          <!-- 动态渲染 -->
+        </div>
+      </section>
+
+      <!-- 体重趋势图 -->
+      <section class="mx-4 mt-2 rounded-xl p-4" style="background: var(--card); border: 1px solid var(--border);" aria-label="体重趋势图">
+        <h2 class="text-base font-semibold mb-3" style="color: var(--text-800);">体重趋势</h2>
+        <div class="w-full" style="height: 200px; position: relative;">
+          <canvas id="weight-chart" class="w-full h-full"></canvas>
+        </div>
+      </section>
+
+      <!-- 体重统计卡片 -->
+      <section class="mx-4 mt-3" aria-label="体重统计">
+        <div class="grid grid-cols-4 gap-2">
+          <div class="rounded-xl p-3 flex flex-col items-center" style="background: var(--card); border: 1px solid var(--border);">
+            <span class="text-[10px] font-medium" style="color: var(--text-500);">当前体重</span>
+            <span id="stat-current" class="text-base font-semibold mt-1" style="color: var(--brand-500);">--</span>
+            <span class="text-[10px]" style="color: var(--text-400);">kg</span>
+          </div>
+          <div class="rounded-xl p-3 flex flex-col items-center" style="background: var(--card); border: 1px solid var(--border);">
+            <span class="text-[10px] font-medium" style="color: var(--text-500);">最低体重</span>
+            <span id="stat-min" class="text-base font-semibold mt-1" style="color: var(--state-success);">--</span>
+            <span class="text-[10px]" style="color: var(--text-400);">kg</span>
+          </div>
+          <div class="rounded-xl p-3 flex flex-col items-center" style="background: var(--card); border: 1px solid var(--border);">
+            <span class="text-[10px] font-medium" style="color: var(--text-500);">最高体重</span>
+            <span id="stat-max" class="text-base font-semibold mt-1" style="color: var(--state-error);">--</span>
+            <span class="text-[10px]" style="color: var(--text-400);">kg</span>
+          </div>
+          <div class="rounded-xl p-3 flex flex-col items-center" style="background: var(--card); border: 1px solid var(--border);">
+            <span class="text-[10px] font-medium" style="color: var(--text-500);">平均体重</span>
+            <span id="stat-avg" class="text-base font-semibold mt-1" style="color: var(--text-800);">--</span>
+            <span class="text-[10px]" style="color: var(--text-400);">kg</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 体重记录列表 -->
+      <section class="mx-4 mt-3 mb-4 rounded-xl p-4" style="background: var(--card); border: 1px solid var(--border);" aria-label="体重记录列表">
+        <h2 class="text-base font-semibold mb-3" style="color: var(--text-800);">记录列表</h2>
+        <div id="weight-records" class="flex flex-col gap-2">
+          <!-- 动态渲染 -->
+        </div>
+        <div id="weight-empty" class="hidden flex flex-col items-center justify-center py-10">
+          <i data-lucide="inbox" class="w-10 h-10" style="color: var(--text-300);"></i>
+          <p class="text-sm mt-2" style="color: var(--text-400);">暂无体重记录</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 底部悬浮添加按钮 -->
+    <button class="fixed bottom-8 right-5 z-40 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
+            style="background: var(--brand-500); border: none;"
+            data-dom-id="cta-fab-add"
+            aria-label="添加体重记录">
+      <i data-lucide="plus" class="w-6 h-6" style="color: var(--primary-foreground);"></i>
+    </button>
+
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+(function() {
+  'use strict';
+
+  const api = window.moyuyoAPI;
+
+  /* ===== 状态 ===== */
+  let currentPetId = null;
+  let pets = [];
+  let weightData = null;
+
+  /* ===== 初始化 ===== */
+  function init() {
+    const params = new URLSearchParams(window.location.search);
+    currentPetId = params.get('petId') || 'pet-1';
+    loadPetList();
+    loadPetAndWeight();
+  }
+
+  /* ===== 加载宠物列表 ===== */
+  async function loadPetList() {
+    try {
+      const res = await api.get('/api/v1/pet/list');
+      if (res.code === 0 && res.data) {
+        pets = res.data;
+        renderPetSwitcher();
+      }
+    } catch (e) {
+      console.error('加载宠物列表失败:', e);
+    }
+  }
+
+  /* ===== 加载宠物信息和体重数据 ===== */
+  async function loadPetAndWeight() {
+    try {
+      const [petRes, weightRes] = await Promise.all([
+        api.get('/api/v1/pet/' + currentPetId),
+        api.get('/api/v1/pet/' + currentPetId + '/weight')
+      ]);
+
+      if (petRes.code === 0) {
+        updatePetInfo(petRes.data);
+      }
+
+      if (weightRes.code === 0 && weightRes.data) {
+        weightData = weightRes.data;
+        drawChart();
+        updateStats();
+        renderRecords();
+      }
+    } catch (e) {
+      console.error('加载数据失败:', e);
+    }
+  }
+
+  /* ===== 更新宠物信息 ===== */
+  function updatePetInfo(pet) {
+    // 高亮当前宠物
+    renderPetSwitcher();
+  }
+
+  /* ===== 渲染宠物切换栏 ===== */
+  function renderPetSwitcher() {
+    const container = document.getElementById('pet-switcher');
+    if (!container) return;
+
+    let html = '';
+    pets.forEach(function(pet) {
+      var isActive = pet.id === currentPetId;
+      html += '<div class="flex flex-col items-center gap-1.5 flex-shrink-0 cursor-pointer" data-pet-id="' + pet.id + '" onclick="window._switchPet(\'' + pet.id + '\')">';
+      html += '  <div class="pet-avatar' + (isActive ? ' active' : '') + '">';
+      html += '    <div class="pet-avatar-placeholder">';
+      html += '      <i data-lucide="heart" class="w-5 h-5" style="color: var(--icon-400);"></i>';
+      html += '    </div>';
+      html += '  </div>';
+      html += '  <span class="text-xs font-medium" style="color: ' + (isActive ? 'var(--primary)' : 'var(--text-500)') + ';">' + escapeHtml(pet.name) + '</span>';
+      html += '</div>';
+    });
+
+    // 添加宠物按钮
+    html += '<div class="flex flex-col items-center gap-1.5 flex-shrink-0 cursor-pointer">';
+    html += '  <div class="pet-avatar" style="border: 2px dashed var(--background-300);">';
+    html += '    <div class="pet-avatar-placeholder">';
+    html += '      <i data-lucide="circle-plus" class="w-5 h-5" style="color: var(--icon-300);"></i>';
+    html += '    </div>';
+    html += '  </div>';
+    html += '  <span class="text-xs font-medium" style="color: var(--text-400);">添加</span>';
+    html += '</div>';
+
+    container.innerHTML = html;
+    lucide.createIcons();
+  }
+
+  /* ===== 切换宠物 ===== */
+  window._switchPet = function(petId) {
+    if (petId === currentPetId) return;
+    currentPetId = petId;
+    renderPetSwitcher();
+    loadPetAndWeight();
+  };
+
+  /* ===== 绘制折线图 ===== */
+  function drawChart() {
+    var canvas = document.getElementById('weight-chart');
+    if (!canvas || !weightData || !weightData.records || weightData.records.length === 0) return;
+
+    var records = weightData.records;
+    var dpr = window.devicePixelRatio || 1;
+    var container = canvas.parentElement;
+    var rect = container.getBoundingClientRect();
+    var width = rect.width;
+    var height = rect.height;
+
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+
+    var ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    var padding = { top: 16, right: 16, bottom: 28, left: 40 };
+    var chartW = width - padding.left - padding.right;
+    var chartH = height - padding.top - padding.bottom;
+
+    // 计算 Y 轴范围
+    var values = records.map(function(r) { return r.value; });
+    var minVal = Math.min.apply(null, values);
+    var maxVal = Math.max.apply(null, values);
+    var range = maxVal - minVal;
+    if (range === 0) range = 1;
+    var yMin = Math.floor(minVal - range * 0.2);
+    var yMax = Math.ceil(maxVal + range * 0.2);
+    var yRange = yMax - yMin;
+
+    // 清除
+    ctx.clearRect(0, 0, width, height);
+
+    // 绘制 Y 轴刻度线和标签
+    var ySteps = 4;
+    ctx.fillStyle = 'var(--text-400)';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    for (var i = 0; i <= ySteps; i++) {
+      var yVal = yMin + (yRange / ySteps) * i;
+      var yPos = padding.top + chartH - (chartH / ySteps) * i;
+      ctx.fillText(yVal.toFixed(1), padding.left - 6, yPos);
+
+      if (i > 0 && i < ySteps) {
+        ctx.strokeStyle = 'var(--border)';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(padding.left, yPos);
+        ctx.lineTo(width - padding.right, yPos);
+        ctx.stroke();
+      }
+    }
+
+    // 绘制 X 轴标签
+    ctx.fillStyle = 'var(--text-400)';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    var xStep = records.length > 1 ? chartW / (records.length - 1) : 0;
+    records.forEach(function(rec, idx) {
+      var xPos = padding.left + xStep * idx;
+      var label = rec.date.replace(/^\d{4}-/, '').replace('-', '/');
+      ctx.fillText(label, xPos, padding.top + chartH + 8);
+    });
+
+    // 计算数据点坐标
+    var points = records.map(function(rec, idx) {
+      return {
+        x: padding.left + xStep * idx,
+        y: padding.top + chartH - ((rec.value - yMin) / yRange) * chartH
+      };
+    });
+
+    // 绘制渐变填充
+    var gradient = ctx.createLinearGradient(0, padding.top, 0, padding.top + chartH);
+    gradient.addColorStop(0, getComputedStyle(document.documentElement).getPropertyValue('--brand-50').trim() || 'rgba(0,122,255,0.08)');
+    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, padding.top + chartH);
+    points.forEach(function(p) {
+      ctx.lineTo(p.x, p.y);
+    });
+    ctx.lineTo(points[points.length - 1].x, padding.top + chartH);
+    ctx.closePath();
+    ctx.fillStyle = gradient;
+    ctx.fill();
+
+    // 绘制折线 - 分段绘制实现圆角效果
+    var brandColor = getComputedStyle(document.documentElement).getPropertyValue('--brand-500').trim() || '#007AFF';
+    ctx.strokeStyle = brandColor;
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (var k = 1; k < points.length; k++) {
+      ctx.lineTo(points[k].x, points[k].y);
+    }
+    ctx.stroke();
+
+    // 绘制数据点
+    points.forEach(function(p) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+      ctx.strokeStyle = brandColor;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+  }
+
+  /* ===== 更新统计卡片 ===== */
+  function updateStats() {
+    if (!weightData || !weightData.stats) return;
+
+    var stats = weightData.stats;
+    document.getElementById('stat-current').textContent = stats.current != null ? stats.current.toFixed(1) : '--';
+    document.getElementById('stat-min').textContent = stats.min != null ? stats.min.toFixed(1) : '--';
+    document.getElementById('stat-max').textContent = stats.max != null ? stats.max.toFixed(1) : '--';
+    document.getElementById('stat-avg').textContent = stats.avg != null ? stats.avg.toFixed(1) : '--';
+  }
+
+  /* ===== 渲染记录列表 ===== */
+  function renderRecords() {
+    var container = document.getElementById('weight-records');
+    var emptyEl = document.getElementById('weight-empty');
+    if (!container) return;
+
+    if (!weightData || !weightData.records || weightData.records.length === 0) {
+      container.innerHTML = '';
+      emptyEl.classList.remove('hidden');
+      return;
+    }
+
+    emptyEl.classList.add('hidden');
+
+    // 按日期倒序排列
+    var records = weightData.records.slice().sort(function(a, b) {
+      return b.date.localeCompare(a.date);
+    });
+
+    var prevValue = null;
+    var html = '';
+
+    records.forEach(function(rec, idx) {
+      var changeHtml = '';
+      if (idx < records.length - 1) {
+        var prev = records[idx + 1];
+        var diff = rec.value - prev.value;
+        if (diff !== 0) {
+          var arrow = diff > 0 ? '&#9650;' : '&#9660;';
+          var color = diff > 0 ? 'var(--state-error)' : 'var(--state-success)';
+          var sign = diff > 0 ? '+' : '';
+          changeHtml = '<span class="text-[10px] ml-2" style="color: ' + color + ';">' + arrow + ' ' + sign + diff.toFixed(1) + ' kg</span>';
+        }
+      }
+
+      var dateLabel = rec.date.replace(/^\d{4}-/, '').replace('-', '月') + '日';
+
+      html += '<div class="flex items-center justify-between p-3 rounded-xl" style="background: var(--background-200);">';
+      html += '  <div class="flex items-center gap-3">';
+      html += '    <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--brand-50);">';
+      html += '      <i data-lucide="weight" class="w-4 h-4" style="color: var(--brand-500);"></i>';
+      html += '    </div>';
+      html += '    <div>';
+      html += '      <p class="text-sm font-medium" style="color: var(--text-800);">' + dateLabel + '</p>';
+      html += '      <p class="text-xs" style="color: var(--text-500);">' + rec.value.toFixed(1) + ' ' + (weightData.unit || 'kg') + changeHtml + '</p>';
+      html += '    </div>';
+      html += '  </div>';
+      html += '  <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--text-300);"></i>';
+      html += '</div>';
+    });
+
+    container.innerHTML = html;
+    lucide.createIcons();
+  }
+
+  /* ===== 工具函数 ===== */
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  /* ===== 窗口 resize 时重绘图表 ===== */
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      if (weightData) drawChart();
+    }, 200);
+  });
+
+  /* ===== 启动 ===== */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+    </script>
 </body>
 </html>
