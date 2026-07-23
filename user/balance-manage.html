@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的余额 - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background: var(--background-200);">
+    <main class="pb-8">
+
+      <!-- iOS 状态栏模拟 -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--foreground);"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 顶部导航栏 -->
+      <nav class="sticky top-[44px] z-20 flex items-center h-11 px-4" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);" aria-label="页面导航">
+        <!-- 返回按钮 -->
+        <button class="flex items-center justify-center w-9 h-9 -ml-1 rounded-full" style="background: transparent; border: none;" data-dom-id="cta-back" aria-label="返回上一页">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--brand-500);"></span>
+        </button>
+        <!-- 页面标题 -->
+        <h1 class="flex-1 text-center text-base font-semibold" style="color: var(--text-800);">我的余额</h1>
+        <!-- 占位保持标题居中 -->
+        <div class="w-9 h-9"></div>
+      </nav>
+
+      <!-- ==================== 余额展示卡片 ==================== -->
+      <section class="px-4 pt-4" aria-label="余额展示">
+        <div class="balance-card-bg p-5">
+          <!-- 余额标签 -->
+          <div class="flex items-center gap-1.5 mb-1">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); color: rgba(255,255,255,0.8);"></span>
+            <span class="text-xs font-medium" style="color: rgba(255,255,255,0.8);">当前余额（储值卡）</span>
+          </div>
+          <!-- 大数字 -->
+          <div class="flex items-baseline gap-0.5 mb-3">
+            <span class="text-sm font-medium" style="color: rgba(255,255,255,0.9);">$</span>
+            <span class="text-4xl font-bold tracking-tight" style="color: #ffffff;">1,268.50</span>
+          </div>
+          <!-- 本金 vs 赠送 拆分 -->
+          <div class="flex items-center gap-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.2);">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full" style="background: rgba(255,255,255,0.9);"></span>
+              <span class="text-xs" style="color: rgba(255,255,255,0.7);">充值本金</span>
+              <span class="text-xs font-semibold" style="color: rgba(255,255,255,0.95);">$1,150.00</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full" style="background: rgba(255,200,50,0.9);"></span>
+              <span class="text-xs" style="color: rgba(255,255,255,0.7);">赠送金额</span>
+              <span class="text-xs font-semibold" style="color: rgba(255,255,255,0.95);">$118.50</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 充值入口区域 ==================== -->
+      <section class="mt-5 px-4" aria-label="充值">
+        <div class="rounded-[var(--radius)] p-4" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+          <!-- 区域标题 -->
+          <h2 class="text-base font-semibold mb-4" style="color: var(--text-800);">充值</h2>
+
+          <!-- 充值档位网格 -->
+          <div class="grid grid-cols-3 gap-2.5 mb-4">
+            <!-- $10 -->
+            <div class="recharge-option" data-dom-id="recharge-option" data-amount="10">
+              <span class="text-lg font-bold" style="color: var(--text-800);">$10</span>
+              <span class="text-[10px] mt-1" style="color: var(--text-400);">到账 $10.50</span>
+            </div>
+            <!-- $25 -->
+            <div class="recharge-option" data-dom-id="recharge-option" data-amount="25">
+              <span class="text-lg font-bold" style="color: var(--text-800);">$25</span>
+              <span class="text-[10px] mt-1" style="color: var(--text-400);">到账 $26.88</span>
+            </div>
+            <!-- $50 -->
+            <div class="recharge-option selected" data-dom-id="recharge-option" data-amount="50">
+              <span class="text-lg font-bold" style="color: var(--brand-500);">$50</span>
+              <span class="text-[10px] mt-1" style="color: var(--brand-500);">到账 $53.75</span>
+            </div>
+            <!-- $100 -->
+            <div class="recharge-option" data-dom-id="recharge-option" data-amount="100">
+              <span class="text-lg font-bold" style="color: var(--text-800);">$100</span>
+              <span class="text-[10px] mt-1" style="color: var(--text-400);">到账 $107.50</span>
+            </div>
+            <!-- $200 -->
+            <div class="recharge-option" data-dom-id="recharge-option" data-amount="200">
+              <span class="text-lg font-bold" style="color: var(--text-800);">$200</span>
+              <span class="text-[10px] mt-1" style="color: var(--text-400);">到账 $215.00</span>
+            </div>
+            <!-- $500 -->
+            <div class="recharge-option" data-dom-id="recharge-option" data-amount="500">
+              <span class="text-lg font-bold" style="color: var(--text-800);">$500</span>
+              <span class="text-[10px] mt-1" style="color: var(--text-400);">到账 $550.00</span>
+            </div>
+          </div>
+
+          <!-- 自定义金额输入 -->
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-sm font-medium shrink-0" style="color: var(--text-500);">自定义金额</span>
+            <div class="flex-1 field small" style="min-width: 0; height: 40px;">
+              <span class="text-sm font-medium shrink-0" style="color: var(--text-400);">$</span>
+              <input class="control text-sm font-medium" type="number" placeholder="10 ~ 1000" min="10" max="1000" data-dom-id="input-custom-amount" aria-label="自定义充值金额">
+            </div>
+          </div>
+
+          <!-- 充值赠送规则说明 -->
+          <div class="flex items-start gap-1.5 mb-4 px-1">
+            <span data-icon class="w-3.5 h-3.5 shrink-0 mt-0.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); color: var(--text-400);"></span>
+            <p class="text-[11px] leading-relaxed" style="color: var(--text-400);">
+              充值赠送阶梯：充值 $10~$49 赠送 5%，$50~$199 赠送 7.5%，$200 及以上赠送 10%。赠送金额不可提现。
+            </p>
+          </div>
+
+          <!-- 立即充值按钮 -->
+          <button class="btn-recharge" data-dom-id="cta-recharge" aria-label="立即充值">
+            立即充值
+          </button>
+        </div>
+      </section>
+
+      <!-- ==================== 提现入口卡片 ==================== -->
+      <section class="mt-5 px-4" aria-label="提现">
+        <div class="rounded-[var(--radius)] p-4" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+          <!-- 区域标题 -->
+          <h2 class="text-base font-semibold mb-1" style="color: var(--text-800);">提现</h2>
+
+          <!-- 提现条件说明 -->
+          <div class="flex items-start gap-1.5 mb-3 px-1">
+            <span data-icon class="w-3.5 h-3.5 shrink-0 mt-0.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); color: var(--text-400);"></span>
+            <p class="text-[11px] leading-relaxed" style="color: var(--text-400);">
+              提现条件：账户余额需 >= $20，且已完成实名认证。仅充值本金部分可提现，赠送金额不可提现。
+            </p>
+          </div>
+
+          <!-- 可提现金额 -->
+          <div class="flex items-baseline gap-1 mb-4 px-1">
+            <span class="text-sm" style="color: var(--text-500);">可提现金额</span>
+            <span class="text-xl font-bold" style="color: var(--text-800);">$1,150.00</span>
+          </div>
+
+          <!-- 提现渠道选择 -->
+          <div class="space-y-2.5 mb-3">
+            <!-- 银行卡 -->
+            <div class="channel-option selected" data-dom-id="channel-bank" data-channel="bank">
+              <div class="channel-radio">
+                <div class="channel-radio-inner"></div>
+              </div>
+              <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--text-600);"></span>
+              <div class="flex-1">
+                <span class="text-sm font-medium" style="color: var(--text-800);">银行卡</span>
+                <span class="text-[11px] ml-2" style="color: var(--text-400);">手续费 $1/笔</span>
+              </div>
+            </div>
+            <!-- PayPal -->
+            <div class="channel-option" data-dom-id="channel-paypal" data-channel="paypal">
+              <div class="channel-radio">
+                <div class="channel-radio-inner"></div>
+              </div>
+              <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); color: var(--text-600);"></span>
+              <div class="flex-1">
+                <span class="text-sm font-medium" style="color: var(--text-800);">PayPal</span>
+                <span class="text-[11px] ml-2" style="color: var(--text-400);">手续费 2%/笔</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 立即提现按钮 -->
+          <button class="btn-withdraw" data-dom-id="cta-withdraw" aria-label="立即提现">
+            立即提现
+          </button>
+        </div>
+      </section>
+
+      <!-- ==================== 余额明细列表 ==================== -->
+      <section class="mt-5 px-4" aria-label="余额明细">
+        <div class="rounded-[var(--radius)]" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+          <!-- Tab 切换栏 -->
+          <div class="flex overflow-x-auto no-scrollbar" style="border-bottom: 1px solid var(--border);">
+            <button class="tab-active flex-shrink-0 flex-1 h-11 flex items-center justify-center text-sm font-semibold" style="color: var(--brand-500);" data-dom-id="tab-all" aria-label="全部记录">全部</button>
+            <button class="flex-shrink-0 flex-1 h-11 flex items-center justify-center text-sm font-medium" style="color: var(--text-400);" data-dom-id="tab-recharge" aria-label="充值记录">充值</button>
+            <button class="flex-shrink-0 flex-1 h-11 flex items-center justify-center text-sm font-medium" style="color: var(--text-400);" data-dom-id="tab-consume" aria-label="消费记录">消费</button>
+            <button class="flex-shrink-0 flex-1 h-11 flex items-center justify-center text-sm font-medium" style="color: var(--text-400);" data-dom-id="tab-refund" aria-label="退款记录">退款</button>
+            <button class="flex-shrink-0 flex-1 h-11 flex items-center justify-center text-sm font-medium" style="color: var(--text-400);" data-dom-id="tab-gift" aria-label="赠送记录">赠送</button>
+          </div>
+
+          <!-- 明细列表 -->
+          <div class="px-4" data-dom-id="transaction-list">
+
+            <!-- 记录 1：消费 -->
+            <div class="record-item">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" style="background: var(--state-error-surface); color: var(--state-error);">消费</span>
+                  <span class="text-xs" style="color: var(--text-400);">2026-07-08 14:32</span>
+                </div>
+                <p class="text-sm font-medium truncate" style="color: var(--text-800);">购买宠物洗护套装</p>
+                <p class="text-[11px] mt-0.5" style="color: var(--text-400);">余额 ¥1,268.50</p>
+              </div>
+              <div class="text-right shrink-0 ml-3">
+                <span class="text-sm font-bold" style="color: var(--state-error);">-$189.00</span>
+              </div>
+            </div>
+
+            <!-- 记录 2：充值 -->
+            <div class="record-item">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" style="background: var(--brand-50); color: var(--brand-500);">充值</span>
+                  <span class="text-xs" style="color: var(--text-400);">2026-07-07 10:15</span>
+                </div>
+                <p class="text-sm font-medium truncate" style="color: var(--text-800);">储值卡充值</p>
+                <p class="text-[11px] mt-0.5" style="color: var(--text-400);">余额 ¥1,457.50</p>
+              </div>
+              <div class="text-right shrink-0 ml-3">
+                <span class="text-sm font-bold" style="color: var(--state-success);">+$500.00</span>
+                <p class="text-[10px]" style="color: var(--state-success);">含赠送 $50.00</p>
+              </div>
+            </div>
+
+            <!-- 记录 3：退款 -->
+            <div class="record-item">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" style="background: var(--state-success-surface); color: var(--state-success);">退款</span>
+                  <span class="text-xs" style="color: var(--text-400);">2026-07-06 18:42</span>
+                </div>
+                <p class="text-sm font-medium truncate" style="color: var(--text-800);">订单退款 - 胸背带退货</p>
+                <p class="text-[11px] mt-0.5" style="color: var(--text-400);">余额 ¥957.50</p>
+              </div>
+              <div class="text-right shrink-0 ml-3">
+                <span class="text-sm font-bold" style="color: var(--state-success);">+$129.00</span>
+              </div>
+            </div>
+
+            <!-- 记录 4：赠送 -->
+            <div class="record-item">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" style="background: rgba(255,149,0,0.1); color: var(--state-warning);">赠送</span>
+                  <span class="text-xs" style="color: var(--text-400);">2026-07-06 18:42</span>
+                </div>
+                <p class="text-sm font-medium truncate" style="color: var(--text-800);">充值 $200 阶梯赠送</p>
+                <p class="text-[11px] mt-0.5" style="color: var(--text-400);">余额 ¥957.50</p>
+              </div>
+              <div class="text-right shrink-0 ml-3">
+                <span class="text-sm font-bold" style="color: var(--state-warning);">+$20.00</span>
+              </div>
+            </div>
+
+            <!-- 记录 5：消费 -->
+            <div class="record-item">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" style="background: var(--state-error-surface); color: var(--state-error);">消费</span>
+                  <span class="text-xs" style="color: var(--text-400);">2026-07-05 09:28</span>
+                </div>
+                <p class="text-sm font-medium truncate" style="color: var(--text-800);">购买互动益智玩具</p>
+                <p class="text-[11px] mt-0.5" style="color: var(--text-400);">余额 ¥808.50</p>
+              </div>
+              <div class="text-right shrink-0 ml-3">
+                <span class="text-sm font-bold" style="color: var(--state-error);">-$69.00</span>
+              </div>
+            </div>
+
+            <!-- 记录 6：充值 -->
+            <div class="record-item">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" style="background: var(--brand-50); color: var(--brand-500);">充值</span>
+                  <span class="text-xs" style="color: var(--text-400);">2026-07-04 16:05</span>
+                </div>
+                <p class="text-sm font-medium truncate" style="color: var(--text-800);">储值卡充值</p>
+                <p class="text-[11px] mt-0.5" style="color: var(--text-400);">余额 ¥877.50</p>
+              </div>
+              <div class="text-right shrink-0 ml-3">
+                <span class="text-sm font-bold" style="color: var(--state-success);">+$200.00</span>
+                <p class="text-[10px]" style="color: var(--state-success);">含赠送 $20.00</p>
+              </div>
+            </div>
+
+            <!-- 记录 7：消费 -->
+            <div class="record-item">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" style="background: var(--state-error-surface); color: var(--state-error);">消费</span>
+                  <span class="text-xs" style="color: var(--text-400);">2026-07-03 11:50</span>
+                </div>
+                <p class="text-sm font-medium truncate" style="color: var(--text-800);">购买宠物潮流外套</p>
+                <p class="text-[11px] mt-0.5" style="color: var(--text-400);">余额 ¥657.50</p>
+              </div>
+              <div class="text-right shrink-0 ml-3">
+                <span class="text-sm font-bold" style="color: var(--state-error);">-$219.00</span>
+              </div>
+            </div>
+
+            <!-- 记录 8：充值 -->
+            <div class="record-item">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" style="background: var(--brand-50); color: var(--brand-500);">充值</span>
+                  <span class="text-xs" style="color: var(--text-400);">2026-07-02 08:30</span>
+                </div>
+                <p class="text-sm font-medium truncate" style="color: var(--text-800);">储值卡充值</p>
+                <p class="text-[11px] mt-0.5" style="color: var(--text-400);">余额 ¥876.50</p>
+              </div>
+              <div class="text-right shrink-0 ml-3">
+                <span class="text-sm font-bold" style="color: var(--state-success);">+$200.00</span>
+                <p class="text-[10px]" style="color: var(--state-success);">含赠送 $20.00</p>
+              </div>
+            </div>
+
+            <!-- 记录 9：赠送 -->
+            <div class="record-item">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" style="background: rgba(255,149,0,0.1); color: var(--state-warning);">赠送</span>
+                  <span class="text-xs" style="color: var(--text-400);">2026-07-01 12:00</span>
+                </div>
+                <p class="text-sm font-medium truncate" style="color: var(--text-800);">新用户注册赠送</p>
+                <p class="text-[11px] mt-0.5" style="color: var(--text-400);">余额 ¥676.50</p>
+              </div>
+              <div class="text-right shrink-0 ml-3">
+                <span class="text-sm font-bold" style="color: var(--state-warning);">+$8.50</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 底部支付方式说明 ==================== -->
+      <section class="mt-5 px-4 pb-6" aria-label="支付方式">
+        <div class="rounded-[var(--radius)] p-4" style="background: var(--card); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+          <h2 class="text-sm font-semibold mb-3" style="color: var(--text-800);">支持的支付方式</h2>
+          <div class="grid grid-cols-2 gap-2">
+            <!-- 信用卡 -->
+            <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg" style="background: var(--background-200);">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--text-500);"></span>
+              <span class="text-xs font-medium" style="color: var(--text-600);">信用卡 / 借记卡</span>
+            </div>
+            <!-- PayPal -->
+            <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg" style="background: var(--background-200);">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); color: var(--text-500);"></span>
+              <span class="text-xs font-medium" style="color: var(--text-600);">PayPal</span>
+            </div>
+            <!-- Apple Pay -->
+            <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg" style="background: var(--background-200);">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--text-500);"></span>
+              <span class="text-xs font-medium" style="color: var(--text-600);">Apple Pay</span>
+            </div>
+            <!-- Google Pay -->
+            <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg" style="background: var(--background-200);">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); color: var(--text-500);"></span>
+              <span class="text-xs font-medium" style="color: var(--text-600);">Google Pay</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <script>
+      // Lucide 图标初始化
+      lucide.createIcons();
+
+      // 充值档位选择交互
+      document.querySelectorAll('[data-dom-id="recharge-option"]').forEach(function(option) {
+        option.addEventListener('click', function() {
+          // 取消所有选中态
+          document.querySelectorAll('[data-dom-id="recharge-option"]').forEach(function(el) {
+            el.classList.remove('selected');
+            var priceEl = el.querySelector('.text-lg');
+            var descEl = el.querySelector('.text-\\[10px\\]');
+            if (priceEl) priceEl.style.color = 'var(--text-800)';
+            if (descEl) descEl.style.color = 'var(--text-400)';
+          });
+          // 设置当前选中
+          this.classList.add('selected');
+          var currentPrice = this.querySelector('.text-lg');
+          var currentDesc = this.querySelector('.text-\\[10px\\]');
+          if (currentPrice) currentPrice.style.color = 'var(--brand-500)';
+          if (currentDesc) currentDesc.style.color = 'var(--brand-500)';
+        });
+      });
+
+      // 提现渠道选择交互
+      document.querySelectorAll('[data-dom-id^="channel-"]').forEach(function(option) {
+        option.addEventListener('click', function() {
+          // 取消所有选中态
+          document.querySelectorAll('[data-dom-id^="channel-"]').forEach(function(el) {
+            el.classList.remove('selected');
+          });
+          // 设置当前选中
+          this.classList.add('selected');
+        });
+      });
+
+      // Tab 切换交互
+      var tabs = document.querySelectorAll('[data-dom-id^="tab-"]');
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          // 重置所有 Tab 样式
+          tabs.forEach(function(t) {
+            t.classList.remove('tab-active');
+            t.style.color = 'var(--text-400)';
+            t.style.fontWeight = '500';
+          });
+          // 设置当前激活
+          this.classList.add('tab-active');
+          this.style.color = 'var(--brand-500)';
+          this.style.fontWeight = '600';
+        });
+      });
+    </script>
+</body>
+</html>

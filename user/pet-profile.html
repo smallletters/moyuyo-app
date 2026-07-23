@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Pet Profile</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="min-h-screen" style="background: var(--background-200);">
+
+      <!-- Top Navigation Bar -->
+      <header class="sticky top-0 z-30 flex items-center justify-between px-4" style="height: 44px; background: var(--background-50);">
+        <button data-dom-id="back-previous" class="inline-flex items-center justify-center" style="width: 32px; height: 32px; border-radius: 8px; border: none; background: transparent; color: var(--foreground); cursor: pointer;" aria-label="Back">
+          <i data-lucide="chevron-left" style="width: 20px; height: 20px;"></i>
+        </button>
+        <span class="text-center font-semibold" style="flex: 1; font-size: 16px; color: var(--text-800); letter-spacing: -0.02em;">Pet Profile</span>
+        <button data-dom-id="cta-edit-pet" class="inline-flex items-center justify-center font-semibold" style="border: none; background: transparent; color: var(--brand-500); cursor: pointer; font-size: 15px; height: 32px; padding: 0 4px;" aria-label="Edit Pet Profile">Edit</button>
+      </header>
+
+      <!-- Pet Hero Card (Background Image + Gradient Overlay) -->
+      <section class="mx-3 mt-3 relative overflow-hidden" style="border-radius: 19.2px; min-height: 200px;">
+        <img src="../assets/pet-profile-dog.jpg" alt="Wangcai" class="absolute inset-0 w-full h-full object-cover" style="border-radius: 19.2px;">
+        <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 50%, rgba(0,0,0,0.08) 100%); border-radius: 19.2px;"></div>
+        <div class="relative z-10 flex flex-col justify-end p-4" style="min-height: 200px;">
+          <h1 class="font-bold" style="font-size: 28px; color: var(--background-50); line-height: 1.18; letter-spacing: -0.02em; text-wrap: balance; word-break: keep-all;">Wangcai</h1>
+          <p class="mt-1" style="font-size: 14px; color: var(--background-100); line-height: 1.5;">Golden Retriever · 3 years 6 months · Male</p>
+          <!-- Three Data Badges -->
+          <div class="flex gap-2 mt-3">
+            <div class="inline-flex items-center justify-center" style="padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.16); backdrop-filter: blur(8px); font-size: 12px; color: var(--background-50); white-space: nowrap;">
+              Weight 28.5kg
+            </div>
+            <div class="inline-flex items-center justify-center" style="padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.16); backdrop-filter: blur(8px); font-size: 12px; color: var(--background-50); white-space: nowrap;">
+              Shoulder Height 58cm
+            </div>
+            <div class="inline-flex items-center justify-center" style="padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.16); backdrop-filter: blur(8px); font-size: 12px; color: var(--background-50); white-space: nowrap;">
+              Birthday 2023-01-15
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Action Row -->
+      <section class="mx-3 mt-4 grid grid-cols-4 gap-2">
+        <a href="#" class="flex flex-col items-center justify-center gap-1 py-3" style="background: var(--background-50); border-radius: 12px; border: 1px solid var(--border); text-decoration: none; transition: background-color 0.16s ease;" aria-label="Vaccination Records">
+          <i data-lucide="circle-check" style="width: 20px; height: 20px; color: var(--brand-500);"></i>
+          <span style="font-size: 11px; color: var(--text-500); white-space: nowrap;">Vaccination</span>
+        </a>
+        <a href="#" class="flex flex-col items-center justify-center gap-1 py-3" style="background: var(--background-50); border-radius: 12px; border: 1px solid var(--border); text-decoration: none; transition: background-color 0.16s ease;" aria-label="Deworming Records">
+          <i data-lucide="shield" style="width: 20px; height: 20px; color: var(--state-success);"></i>
+          <span style="font-size: 11px; color: var(--text-500); white-space: nowrap;">Deworming</span>
+        </a>
+        <a href="#" class="flex flex-col items-center justify-center gap-1 py-3" style="background: var(--background-50); border-radius: 12px; border: 1px solid var(--border); text-decoration: none; transition: background-color 0.16s ease;" aria-label="Grooming Records">
+          <i data-lucide="droplets" style="width: 20px; height: 20px; color: var(--brand-500);"></i>
+          <span style="font-size: 11px; color: var(--text-500); white-space: nowrap;">Grooming</span>
+        </a>
+        <a href="#" class="flex flex-col items-center justify-center gap-1 py-3" style="background: var(--background-50); border-radius: 12px; border: 1px solid var(--border); text-decoration: none; transition: background-color 0.16s ease;" aria-label="Checkup Records">
+          <i data-lucide="heart-pulse" style="width: 20px; height: 20px; color: var(--state-error);"></i>
+          <span style="font-size: 11px; color: var(--text-500); white-space: nowrap;">Checkup</span>
+        </a>
+      </section>
+
+      <!-- Care Timeline -->
+      <section class="mx-3 mt-6">
+        <h2 class="font-semibold" style="font-size: 18px; color: var(--text-800); line-height: 1.3; letter-spacing: -0.01em;">Care Timeline</h2>
+        <div class="mt-3 flex flex-col gap-0" style="background: var(--background-50); border-radius: 12px; border: 1px solid var(--border); overflow: hidden;">
+
+          <!-- Timeline Entry 1: Bath -->
+          <div class="flex items-start gap-3 px-3 py-3" style="border-bottom: 1px solid var(--border);">
+            <div class="flex-shrink-0 flex items-center justify-center mt-0.5" style="width: 32px; height: 32px; border-radius: 8px; background: var(--brand-50);">
+              <i data-lucide="droplets" style="width: 16px; height: 16px; color: var(--brand-500);"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="font-semibold truncate" style="font-size: 14px; color: var(--text-800);">Bath</span>
+                <span class="flex-shrink-0 ml-2" style="font-size: 12px; color: var(--text-400);">Jul 15</span>
+              </div>
+              <p class="mt-0.5 truncate" style="font-size: 13px; color: var(--text-500);">Used MOYUYO Gentle Grooming Kit</p>
+            </div>
+          </div>
+
+          <!-- Timeline Entry 2: Deworming -->
+          <div class="flex items-start gap-3 px-3 py-3" style="border-bottom: 1px solid var(--border);">
+            <div class="flex-shrink-0 flex items-center justify-center mt-0.5" style="width: 32px; height: 32px; border-radius: 8px; background: var(--state-success-surface);">
+              <i data-lucide="shield" style="width: 16px; height: 16px; color: var(--state-success);"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="font-semibold truncate" style="font-size: 14px; color: var(--text-800);">Deworming</span>
+                <span class="flex-shrink-0 ml-2" style="font-size: 12px; color: var(--text-400);">Jul 10</span>
+              </div>
+              <p class="mt-0.5 truncate" style="font-size: 13px; color: var(--text-500);">Internal + External Deworming</p>
+            </div>
+          </div>
+
+          <!-- Timeline Entry 3: Vaccination -->
+          <div class="flex items-start gap-3 px-3 py-3" style="border-bottom: 1px solid var(--border);">
+            <div class="flex-shrink-0 flex items-center justify-center mt-0.5" style="width: 32px; height: 32px; border-radius: 8px; background: var(--brand-50);">
+              <i data-lucide="check" style="width: 16px; height: 16px; color: var(--brand-500);"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="font-semibold truncate" style="font-size: 14px; color: var(--text-800);">Vaccination</span>
+                <span class="flex-shrink-0 ml-2" style="font-size: 12px; color: var(--text-400);">Jun 28</span>
+              </div>
+              <p class="mt-0.5 truncate" style="font-size: 13px; color: var(--text-500);">Rabies Vaccine Booster</p>
+            </div>
+          </div>
+
+          <!-- Timeline Entry 4: Checkup -->
+          <div class="flex items-start gap-3 px-3 py-3">
+            <div class="flex-shrink-0 flex items-center justify-center mt-0.5" style="width: 32px; height: 32px; border-radius: 8px; background: var(--state-error-surface);">
+              <i data-lucide="heart" style="width: 16px; height: 16px; color: var(--state-error);"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="font-semibold truncate" style="font-size: 14px; color: var(--text-800);">Checkup</span>
+                <span class="flex-shrink-0 ml-2" style="font-size: 12px; color: var(--text-400);">Jun 15</span>
+              </div>
+              <p class="mt-0.5 truncate" style="font-size: 13px; color: var(--text-500);">Annual checkup, all normal</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Health Data -->
+      <section class="mx-3 mt-6">
+        <h2 class="font-semibold" style="font-size: 18px; color: var(--text-800); line-height: 1.3; letter-spacing: -0.01em;">Health Data</h2>
+        <div class="mt-3 overflow-hidden" style="border-radius: 12px;">
+          <img src="../assets/pet-weight-chart.jpg" alt="Weight Trend Chart" class="w-full object-cover" style="display: block; border-radius: 12px;">
+        </div>
+      </section>
+
+      <!-- Health Data Grid 2x2 -->
+      <section class="mx-3 mt-4 grid grid-cols-2 gap-2">
+        <!-- Weight -->
+        <div class="flex flex-col gap-1 px-3 py-3" style="background: var(--background-50); border-radius: 12px; border: 1px solid var(--border);">
+          <span style="font-size: 12px; color: var(--text-400);">Weight</span>
+          <div class="flex items-baseline gap-1.5">
+            <span class="font-semibold" style="font-size: 22px; color: var(--text-800); font-variant-numeric: tabular-nums; line-height: 1;">28.5</span>
+            <span style="font-size: 13px; color: var(--text-500);">kg</span>
+          </div>
+          <span class="inline-flex items-center" style="font-size: 11px; color: var(--state-success);">
+            <i data-lucide="check-circle" style="width: 12px; height: 12px; margin-right: 2px;"></i>
+            Normal
+          </span>
+        </div>
+        <!-- Temperature -->
+        <div class="flex flex-col gap-1 px-3 py-3" style="background: var(--background-50); border-radius: 12px; border: 1px solid var(--border);">
+          <span style="font-size: 12px; color: var(--text-400);">Temperature</span>
+          <div class="flex items-baseline gap-1.5">
+            <span class="font-semibold" style="font-size: 22px; color: var(--text-800); font-variant-numeric: tabular-nums; line-height: 1;">38.5</span>
+            <span style="font-size: 13px; color: var(--text-500);">°C</span>
+          </div>
+          <span class="inline-flex items-center" style="font-size: 11px; color: var(--state-success);">
+            <i data-lucide="check-circle" style="width: 12px; height: 12px; margin-right: 2px;"></i>
+            Normal
+          </span>
+        </div>
+        <!-- Heart Rate -->
+        <div class="flex flex-col gap-1 px-3 py-3" style="background: var(--background-50); border-radius: 12px; border: 1px solid var(--border);">
+          <span style="font-size: 12px; color: var(--text-400);">Heart Rate</span>
+          <div class="flex items-baseline gap-1.5">
+            <span class="font-semibold" style="font-size: 22px; color: var(--text-400); font-variant-numeric: tabular-nums; line-height: 1;">--</span>
+            <span style="font-size: 13px; color: var(--text-400);">bpm</span>
+          </div>
+          <span style="font-size: 11px; color: var(--text-400);">No data</span>
+        </div>
+        <!-- Food Intake -->
+        <div class="flex flex-col gap-1 px-3 py-3" style="background: var(--background-50); border-radius: 12px; border: 1px solid var(--border);">
+          <span style="font-size: 12px; color: var(--text-400);">Food Intake</span>
+          <div class="flex items-baseline gap-1.5">
+            <span class="font-semibold" style="font-size: 22px; color: var(--text-800); line-height: 1;">--</span>
+          </div>
+          <span class="inline-flex items-center" style="font-size: 11px; color: var(--state-success);">
+            <i data-lucide="check-circle" style="width: 12px; height: 12px; margin-right: 2px;"></i>
+            Normal
+          </span>
+        </div>
+      </section>
+
+      <!-- Bottom Action Area -->
+      <section class="mx-3 mt-6 mb-8 flex flex-col items-center gap-3">
+        <button class="inline-flex items-center justify-center font-semibold" style="width: 100%; height: 44px; border-radius: 999px; border: 1.5px solid var(--brand-500); background: transparent; color: var(--brand-500); font-size: 15px; cursor: pointer; transition: background-color 0.16s ease, color 0.16s ease; white-space: nowrap;" aria-label="Add Care Record">
+          Add Care Record
+        </button>
+        <a href="#" class="inline-flex items-center justify-center" style="border: none; background: transparent; color: var(--brand-500); font-size: 14px; text-decoration: none; cursor: pointer; white-space: nowrap; transition: opacity 0.16s ease;" aria-label="View Full Profile">
+          View Full Profile
+        </a>
+      </section>
+
+    </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      // ========== Pet Profile API Integration ==========
+      (function() {
+        'use strict';
+        var api = window.moyuyoAPI;
+
+        function getPetId() {
+          var params = new URLSearchParams(window.location.search);
+          return params.get('petId') || 'pet-1';
+        }
+
+        function genderLabel(g) {
+          if (g === 'MALE') return 'Male';
+          if (g === 'FEMALE') return 'Female';
+          return g;
+        }
+
+        function getColorClass(color) {
+          var map = { brand: 'var(--brand-50)', success: 'var(--state-success-surface)', error: 'var(--state-error-surface)' };
+          return map[color] || 'var(--brand-50)';
+        }
+        function getIconColor(color) {
+          var map = { brand: 'var(--brand-500)', success: 'var(--state-success)', error: 'var(--state-error)' };
+          return map[color] || 'var(--brand-500)';
+        }
+
+        function getStatusColor(status) {
+          if (status === 'NORMAL') return 'var(--state-success)';
+          if (status === 'NONE') return 'var(--text-400)';
+          return 'var(--text-400)';
+        }
+
+        function loadProfile() {
+          var petId = getPetId();
+          api.get('/api/v1/pet/' + petId).then(function(res) {
+            if (res.code !== 0) return;
+            var pet = res.data;
+
+            // Hero card
+            var cover = document.querySelector('section.mx-3.mt-3 img');
+            if (cover) cover.src = pet.cover || cover.src;
+            var h1 = document.querySelector('section.mx-3.mt-3 h1');
+            if (h1) h1.textContent = pet.name;
+            var breedEl = document.querySelector('section.mx-3.mt-3 p');
+            if (breedEl) breedEl.textContent = pet.breed + ' · ' + pet.age + ' · ' + genderLabel(pet.gender);
+
+            // Badges
+            var badges = document.querySelectorAll('section.mx-3.mt-3 .flex.gap-2 > div');
+            if (badges[0]) badges[0].textContent = 'Weight ' + pet.weight + 'kg';
+            if (badges[1]) badges[1].textContent = 'Shoulder Height ' + pet.height + 'cm';
+            if (badges[2]) badges[2].textContent = 'Birthday ' + pet.birthday;
+
+            // Care Timeline
+            var timeline = document.querySelector('section.mx-3.mt-6 .flex.flex-col.gap-0');
+            if (timeline && pet.careTimeline) {
+              timeline.innerHTML = '';
+              pet.careTimeline.forEach(function(item, idx) {
+                var borderStyle = idx < pet.careTimeline.length - 1 ? 'border-bottom: 1px solid var(--border);' : '';
+                var entry = '<div class="flex items-start gap-3 px-3 py-3" style="' + borderStyle + '">' +
+                  '<div class="flex-shrink-0 flex items-center justify-center mt-0.5" style="width: 32px; height: 32px; border-radius: 8px; background: ' + getColorClass(item.color) + ';">' +
+                  '<i data-lucide="' + item.icon + '" style="width: 16px; height: 16px; color: ' + getIconColor(item.color) + ';"></i></div>' +
+                  '<div class="flex-1 min-w-0"><div class="flex items-center justify-between">' +
+                  '<span class="font-semibold truncate" style="font-size: 14px; color: var(--text-800);">' + item.title + '</span>' +
+                  '<span class="flex-shrink-0 ml-2" style="font-size: 12px; color: var(--text-400);">' + item.date.substring(5) + '</span></div>' +
+                  '<p class="mt-0.5 truncate" style="font-size: 13px; color: var(--text-500);">' + item.desc + '</p></div></div>';
+                timeline.innerHTML += entry;
+              });
+              lucide.createIcons();
+            }
+
+            // Health data
+            var h = pet.health;
+            if (h) {
+              var healthCards = document.querySelectorAll('.grid.grid-cols-2.gap-2 > div');
+              updateHealthCard(healthCards[0], 'Weight', h.weight);
+              updateHealthCard(healthCards[1], 'Temperature', h.temperature);
+              updateHealthCard(healthCards[2], 'Heart Rate', h.heartRate);
+              updateHealthCard(healthCards[3], 'Food Intake', h.foodIntake);
+            }
+          });
+        }
+
+        function updateHealthCard(card, title, data) {
+          if (!card) return;
+          var valueEl = card.querySelector('.font-semibold');
+          var unitEl = card.querySelectorAll('span')[2];
+          var statusEl = card.querySelector('.inline-flex.items-center');
+
+          if (data.status === 'NONE') {
+            if (valueEl) valueEl.innerHTML = '--';
+            if (valueEl) valueEl.style.color = 'var(--text-400)';
+            if (unitEl) unitEl.style.color = 'var(--text-400)';
+            if (statusEl) { statusEl.innerHTML = 'No data'; statusEl.style.color = 'var(--text-400)'; }
+          } else {
+            if (valueEl) valueEl.textContent = data.value;
+            if (unitEl) unitEl.textContent = data.unit;
+            if (statusEl) {
+              statusEl.innerHTML = '<i data-lucide="check-circle" style="width: 12px; height: 12px; margin-right: 2px;"></i>' + data.label;
+              statusEl.style.color = data.status === 'NORMAL' ? 'var(--state-success)' : 'var(--text-400)';
+            }
+          }
+        }
+
+        // Back button
+        var backBtn = document.querySelector('[data-dom-id="back-previous"]');
+        if (backBtn) {
+          backBtn.addEventListener('click', function() { window.history.back(); });
+        }
+
+        loadProfile();
+      })();
+    </script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

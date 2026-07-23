@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - 积分明细</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="max-width: 430px; margin: 0 auto;">
+
+    <!-- 顶部导航栏：深色背景 -->
+    <nav class="sticky top-0 z-30 flex items-center justify-between px-4" style="height: 44px; background: var(--background-800);">
+      <!-- 返回箭头 -->
+      <button class="flex items-center justify-center" style="width: 32px; height: 32px; border-radius: 999px; background: transparent; border: none; color: var(--background-50);" aria-label="返回">
+        <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+      </button>
+      <!-- 标题 -->
+      <span class="text-sm font-semibold" style="color: var(--background-50);">积分明细</span>
+      <!-- 占位保持标题居中 -->
+      <div style="width: 32px;"></div>
+    </nav>
+
+    <main class="pb-8">
+
+      <!-- 积分总览卡片：品牌色渐变背景 -->
+      <div class="mx-4 mt-4 rounded-2xl p-5" style="background: linear-gradient(135deg, var(--brand-400), var(--brand-600)); box-shadow: var(--shadow-lg);">
+        <p class="text-xs font-medium tracking-wide" style="color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.08em;">当前积分</p>
+        <p class="mt-1 text-4xl font-bold" style="color: var(--background-50); font-variant-numeric: tabular-nums;">2,680</p>
+        <!-- 积分变动统计 -->
+        <div class="flex gap-6 mt-4 pt-4" style="border-top: 1px solid rgba(255,255,255,0.2);">
+          <div>
+            <p class="text-xs" style="color: rgba(255,255,255,0.7);">本月获取</p>
+            <p class="mt-0.5 text-base font-semibold" style="color: var(--background-50); font-variant-numeric: tabular-nums;">+320</p>
+          </div>
+          <div>
+            <p class="text-xs" style="color: rgba(255,255,255,0.7);">本月消耗</p>
+            <p class="mt-0.5 text-base font-semibold" style="color: var(--background-50); font-variant-numeric: tabular-nums;">-150</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 筛选 Tab -->
+      <div class="mx-4 mt-5 flex rounded-xl p-1" style="background: var(--secondary); box-shadow: var(--shadow-xs);">
+        <button class="tab-btn active flex-1 py-2 text-sm font-semibold rounded-lg transition-all" data-filter="all" style="background: var(--background); color: var(--foreground); box-shadow: var(--shadow-sm);">全部</button>
+        <button class="tab-btn flex-1 py-2 text-sm font-semibold rounded-lg transition-all" data-filter="earn" style="background: transparent; color: var(--muted-foreground);">获取</button>
+        <button class="tab-btn flex-1 py-2 text-sm font-semibold rounded-lg transition-all" data-filter="spend" style="background: transparent; color: var(--muted-foreground);">消耗</button>
+      </div>
+
+      <!-- 积分流水列表 -->
+      <div class="mx-4 mt-4 flex flex-col gap-2" id="points-list">
+
+        <!-- 记录 1：每日签到 +10（7月8日） -->
+        <div class="points-item flex items-center gap-3 rounded-xl p-3.5" data-type="earn" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="flex items-center justify-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 12px; background: var(--state-success-surface);">
+            <i data-lucide="calendar-check" style="width: 20px; height: 20px; color: var(--state-success);"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium" style="color: var(--foreground);">每日签到</p>
+            <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">7月8日</p>
+          </div>
+          <span class="text-sm font-bold flex-shrink-0" style="color: var(--state-success); font-variant-numeric: tabular-nums;">+10</span>
+        </div>
+
+        <!-- 记录 2：商品评价 +20（7月7日） -->
+        <div class="points-item flex items-center gap-3 rounded-xl p-3.5" data-type="earn" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="flex items-center justify-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 12px; background: var(--state-success-surface);">
+            <i data-lucide="message-square" style="width: 20px; height: 20px; color: var(--state-success);"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium" style="color: var(--foreground);">商品评价</p>
+            <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">7月7日</p>
+          </div>
+          <span class="text-sm font-bold flex-shrink-0" style="color: var(--state-success); font-variant-numeric: tabular-nums;">+20</span>
+        </div>
+
+        <!-- 记录 3：购买返积分 +85（7月6日） -->
+        <div class="points-item flex items-center gap-3 rounded-xl p-3.5" data-type="earn" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="flex items-center justify-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 12px; background: var(--state-success-surface);">
+            <i data-lucide="shopping-bag" style="width: 20px; height: 20px; color: var(--state-success);"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium" style="color: var(--foreground);">购买返积分</p>
+            <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">订单 MOYU20260705 · 7月6日</p>
+          </div>
+          <span class="text-sm font-bold flex-shrink-0" style="color: var(--state-success); font-variant-numeric: tabular-nums;">+85</span>
+        </div>
+
+        <!-- 记录 4：积分抽奖 -50（7月5日） -->
+        <div class="points-item flex items-center gap-3 rounded-xl p-3.5" data-type="spend" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="flex items-center justify-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 12px; background: var(--state-error-surface);">
+            <i data-lucide="sparkles" style="width: 20px; height: 20px; color: var(--state-error);"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium" style="color: var(--foreground);">积分抽奖</p>
+            <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">7月5日</p>
+          </div>
+          <span class="text-sm font-bold flex-shrink-0" style="color: var(--state-error); font-variant-numeric: tabular-nums;">-50</span>
+        </div>
+
+        <!-- 记录 5：邀请好友注册 +100（7月4日） -->
+        <div class="points-item flex items-center gap-3 rounded-xl p-3.5" data-type="earn" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="flex items-center justify-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 12px; background: var(--state-success-surface);">
+            <i data-lucide="user-plus" style="width: 20px; height: 20px; color: var(--state-success);"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium" style="color: var(--foreground);">邀请好友注册</p>
+            <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">7月4日</p>
+          </div>
+          <span class="text-sm font-bold flex-shrink-0" style="color: var(--state-success); font-variant-numeric: tabular-nums;">+100</span>
+        </div>
+
+        <!-- 记录 6：兑换优惠券 -200（7月3日） -->
+        <div class="points-item flex items-center gap-3 rounded-xl p-3.5" data-type="spend" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="flex items-center justify-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 12px; background: var(--state-error-surface);">
+            <i data-lucide="ticket" style="width: 20px; height: 20px; color: var(--state-error);"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium" style="color: var(--foreground);">兑换优惠券</p>
+            <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">7月3日</p>
+          </div>
+          <span class="text-sm font-bold flex-shrink-0" style="color: var(--state-error); font-variant-numeric: tabular-nums;">-200</span>
+        </div>
+
+        <!-- 记录 7：连续签到奖励 +30（7月2日） -->
+        <div class="points-item flex items-center gap-3 rounded-xl p-3.5" data-type="earn" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="flex items-center justify-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 12px; background: var(--state-success-surface);">
+            <i data-lucide="flame" style="width: 20px; height: 20px; color: var(--state-success);"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium" style="color: var(--foreground);">连续签到奖励</p>
+            <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">7月2日</p>
+          </div>
+          <span class="text-sm font-bold flex-shrink-0" style="color: var(--state-success); font-variant-numeric: tabular-nums;">+30</span>
+        </div>
+
+        <!-- 记录 8：活动参与奖励 +50（7月1日） -->
+        <div class="points-item flex items-center gap-3 rounded-xl p-3.5" data-type="earn" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="flex items-center justify-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 12px; background: var(--state-success-surface);">
+            <i data-lucide="gift" style="width: 20px; height: 20px; color: var(--state-success);"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium" style="color: var(--foreground);">活动参与奖励</p>
+            <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">7月1日</p>
+          </div>
+          <span class="text-sm font-bold flex-shrink-0" style="color: var(--state-success); font-variant-numeric: tabular-nums;">+50</span>
+        </div>
+
+        <!-- 记录 9：订单抵扣 -100（6月28日） -->
+        <div class="points-item flex items-center gap-3 rounded-xl p-3.5" data-type="spend" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="flex items-center justify-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 12px; background: var(--state-error-surface);">
+            <i data-lucide="receipt" style="width: 20px; height: 20px; color: var(--state-error);"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium" style="color: var(--foreground);">订单抵扣</p>
+            <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">6月28日</p>
+          </div>
+          <span class="text-sm font-bold flex-shrink-0" style="color: var(--state-error); font-variant-numeric: tabular-nums;">-100</span>
+        </div>
+
+        <!-- 记录 10：每日签到 +10（6月27日） -->
+        <div class="points-item flex items-center gap-3 rounded-xl p-3.5" data-type="earn" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="flex items-center justify-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 12px; background: var(--state-success-surface);">
+            <i data-lucide="calendar-check" style="width: 20px; height: 20px; color: var(--state-success);"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium" style="color: var(--foreground);">每日签到</p>
+            <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">6月27日</p>
+          </div>
+          <span class="text-sm font-bold flex-shrink-0" style="color: var(--state-success); font-variant-numeric: tabular-nums;">+10</span>
+        </div>
+
+      </div>
+
+      <!-- 底部加载更多 -->
+      <div class="mt-6 flex justify-center">
+        <button class="flex items-center gap-1.5 py-2.5 px-5 rounded-full text-sm font-medium" style="background: var(--secondary); color: var(--muted-foreground); border: none; cursor: pointer;" id="load-more-btn">
+          <i data-lucide="chevron-down" style="width: 16px; height: 16px;"></i>
+          加载更多
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Tab 筛选交互逻辑 -->
+    <script>
+      // Tab 切换功能
+      document.addEventListener('DOMContentLoaded', function() {
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const items = document.querySelectorAll('.points-item');
+
+        tabBtns.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            // 更新 Tab 样式状态
+            tabBtns.forEach(function(b) {
+              b.style.background = 'transparent';
+              b.style.color = 'var(--muted-foreground)';
+              b.style.boxShadow = 'none';
+            });
+            this.style.background = 'var(--background)';
+            this.style.color = 'var(--foreground)';
+            this.style.boxShadow = 'var(--shadow-sm)';
+
+            // 筛选记录
+            var filter = this.getAttribute('data-filter');
+            items.forEach(function(item) {
+              if (filter === 'all') {
+                item.style.display = 'flex';
+              } else if (filter === 'earn') {
+                item.style.display = item.getAttribute('data-type') === 'earn' ? 'flex' : 'none';
+              } else if (filter === 'spend') {
+                item.style.display = item.getAttribute('data-type') === 'spend' ? 'flex' : 'none';
+              }
+            });
+          });
+        });
+      });
+    </script>
+
+    <!-- 初始化 Lucide Icons -->
+    <script>
+      lucide.createIcons();
+    </script>
+</body>
+</html>

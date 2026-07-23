@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Categories</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <!-- Page-specific styles -->
+    <style>
+      /* ===== Base Reset ===== */
+      *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background: var(--background);
+        color: var(--foreground);
+        line-height: 1.47;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+        max-width: 375px;
+        margin: 0 auto;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      /* ===== Page Layout ===== */
+      .page-category {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        padding-bottom: calc(50px + env(safe-area-inset-bottom, 0px));
+      }
+
+      /* ===== Top Search Bar ===== */
+      .top-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        padding-top: calc(8px + env(safe-area-inset-top, 0px));
+        background: var(--background);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+      }
+
+      .back-btn {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .back-btn .icon-back {
+        width: 20px;
+        height: 20px;
+        background-color: var(--foreground);
+        -webkit-mask: url("../assets/icons/dl-builtin-apple/chevron-left.svg") no-repeat center / contain;
+        mask: url("../assets/icons/dl-builtin-apple/chevron-left.svg") no-repeat center / contain;
+      }
+
+      .search-bar {
+        flex: 1;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--secondary);
+        border-radius: 10px;
+        padding: 0 12px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .search-bar .icon-search {
+        width: 16px;
+        height: 16px;
+        background-color: var(--muted-foreground);
+        flex-shrink: 0;
+      }
+
+      /* Draw search icon using CSS (no SVG) */
+      .search-bar .icon-search::after {
+        content: '';
+        display: block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid var(--muted-foreground);
+        border-radius: 50%;
+        position: relative;
+        top: -1px;
+      }
+      .search-bar .icon-search::before {
+        content: '';
+        display: block;
+        width: 2px;
+        height: 6px;
+        background: var(--muted-foreground);
+        transform: rotate(-45deg);
+        position: relative;
+        top: 5px;
+        left: 10px;
+      }
+
+      .search-bar .search-text {
+        font-size: 13px;
+        color: var(--muted-foreground);
+        font-weight: 400;
+      }
+
+      /* ===== Product Line Tabs ===== */
+      .product-tabs {
+        display: flex;
+        gap: 0;
+        padding: 4px 16px 0;
+        background: var(--background);
+        position: sticky;
+        top: 52px;
+        z-index: 19;
+      }
+
+      .product-tab {
+        flex: 1;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted-foreground);
+        padding: 8px 0 10px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        position: relative;
+        transition: color 0.2s ease;
+        letter-spacing: 0.02em;
+      }
+
+      .product-tab.active {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .product-tab::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+        width: 20px;
+        height: 2.5px;
+        border-radius: 2px;
+        background: var(--primary);
+        transition: transform 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+      }
+
+      .product-tab.active::after {
+        transform: translateX(-50%) scaleX(1);
+      }
+
+      /* ===== Main Content Area (Left Categories + Right Products) ===== */
+      .content-body {
+        display: flex;
+        flex: 1;
+        min-height: 0;
+        background: var(--background);
+      }
+
+      /* ===== Left Category Navigation ===== */
+      .category-sidebar {
+        width: 80px;
+        flex-shrink: 0;
+        background: var(--secondary);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 4px 0;
+      }
+
+      /* Hide scrollbar */
+      .category-sidebar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .category-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 6px;
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        text-align: center;
+        line-height: 1.3;
+        transition: all 0.2s ease;
+        position: relative;
+        border: none;
+        background: none;
+        width: 100%;
+      }
+
+      .category-item.active {
+        color: var(--primary);
+        font-weight: 600;
+        background: var(--background);
+      }
+
+      .category-item.active::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 2.5px;
+        height: 16px;
+        border-radius: 0 2px 2px 0;
+        background: var(--primary);
+      }
+
+      /* ===== Right Product Grid ===== */
+      .product-area {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px 10px;
+      }
+
+      /* Hide scrollbar */
+      .product-area::-webkit-scrollbar {
+        display: none;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+
+      /* ===== Product Card ===== */
+      .product-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) * 0.6);
+        overflow: hidden;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        transition: box-shadow 0.25s ease;
+      }
+
+      .product-card:active {
+        box-shadow: var(--shadow-md);
+      }
+
+      .product-card .card-image {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        background: var(--secondary);
+        display: block;
+      }
+
+      .product-card .card-info {
+        padding: 8px 8px 10px;
+      }
+
+      .product-card .card-name {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--foreground);
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 4px;
+      }
+
+      .product-card .card-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .product-card .card-price {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--foreground);
+        letter-spacing: -0.02em;
+      }
+
+      .product-card .card-price .price-symbol {
+        font-size: 11px;
+        font-weight: 500;
+      }
+
+      .product-card .card-brand {
+        font-size: 9px;
+        font-weight: 500;
+        color: var(--muted-foreground);
+        padding: 1px 5px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        line-height: 1.5;
+        letter-spacing: 0.02em;
+      }
+
+      /* ===== Bottom TabBar ===== */
+      .tab-bar {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 375px;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding: 6px 0 calc(6px + env(safe-area-inset-bottom, 0px));
+        background: rgba(255, 255, 255, 0.82);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        backdrop-filter: saturate(180%) blur(20px);
+        border-top: 0.5px solid var(--border);
+        z-index: 100;
+      }
+
+      .tab-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        min-width: 44px;
+        min-height: 44px;
+        justify-content: center;
+        text-decoration: none;
+        padding: 4px 0;
+      }
+
+      .tab-item .tab-icon {
+        width: 24px;
+        height: 24px;
+        background-color: var(--icon-muted);
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+      }
+
+      .tab-item .tab-label {
+        font-size: 10px;
+        font-weight: 400;
+        color: var(--icon-muted);
+        line-height: 1;
+      }
+
+      .tab-item.active .tab-icon {
+        background-color: var(--primary);
+      }
+
+      .tab-item.active .tab-label {
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      /* Tab icon paths */
+      .tab-icon-home {
+        -webkit-mask-image: url("../assets/icons/dl-builtin-apple/house.svg");
+        mask-image: url("../assets/icons/dl-builtin-apple/house.svg");
+      }
+      .tab-icon-category {
+        -webkit-mask-image: url("../assets/icons/dl-builtin-apple/grip.svg");
+        mask-image: url("../assets/icons/dl-builtin-apple/grip.svg");
+      }
+      .tab-icon-pethub {
+        -webkit-mask-image: url("../assets/icons/dl-builtin-apple/heart.svg");
+        mask-image: url("../assets/icons/dl-builtin-apple/heart.svg");
+      }
+      .tab-icon-community {
+        -webkit-mask-image: url("../assets/icons/dl-builtin-apple/message-circle-more.svg");
+        mask-image: url("../assets/icons/dl-builtin-apple/message-circle-more.svg");
+      }
+      .tab-icon-profile {
+        -webkit-mask-image: url("../assets/icons/dl-builtin-apple/user.svg");
+        mask-image: url("../assets/icons/dl-builtin-apple/user.svg");
+      }
+
+      /* ===== Transition Animations ===== */
+      .fade-in {
+        animation: fadeIn 0.35s cubic-bezier(0.32, 0.72, 0, 1) both;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+
+  <div class="page-category">
+
+    <!-- ===== Top Search Bar ===== -->
+    <div class="top-bar">
+      <div class="back-btn" data-dom-id="back-previous" role="button" aria-label="Back">
+        <span class="icon-back"></span>
+      </div>
+      <div class="search-bar" data-dom-id="cta-search" role="button" aria-label="Search products">
+        <span class="icon-search"></span>
+        <span class="search-text">Search pet supplies</span>
+      </div>
+    </div>
+
+    <!-- ===== Product Line Tabs ===== -->
+    <div class="product-tabs">
+      <div class="product-tab active" data-tab="gear">GEAR</div>
+      <div class="product-tab" data-tab="care">CARE</div>
+      <div class="product-tab" data-tab="play">PLAY</div>
+      <div class="product-tab" data-tab="home">HOME</div>
+    </div>
+
+    <!-- ===== Main Content Area ===== -->
+    <div class="content-body">
+
+      <!-- Left Category Navigation -->
+      <div class="category-sidebar" role="navigation" aria-label="Category navigation">
+        <button class="category-item active" data-category="all">All</button>
+        <button class="category-item" data-category="collar-leash">Leashes</button>
+        <button class="category-item" data-category="harness">Harnesses</button>
+        <button class="category-item" data-category="clothing">Pet Clothing</button>
+        <button class="category-item" data-category="carrier">Travel Gear</button>
+        <button class="category-item" data-category="outdoor">Outdoor</button>
+        <button class="category-item" data-category="waterproof">Waterproof</button>
+        <button class="category-item" data-category="seasonal">Seasonal</button>
+      </div>
+
+      <!-- Right Product Grid -->
+      <div class="product-area">
+        <div class="product-grid">
+
+          <!-- Product Card 1 -->
+          <a class="product-card fade-in" data-dom-id="link-product-detail" href="#" style="animation-delay: 0s">
+            <img class="card-image" src="../assets/product-harness-gear.jpg" alt="Pet harness" loading="lazy">
+            <div class="card-info">
+              <div class="card-name">Premium Outdoor Harness Breathable Mesh</div>
+              <div class="card-bottom">
+                <span class="card-price"><span class="price-symbol">&yen;</span>268</span>
+                <span class="card-brand">GEAR</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Product Card 2 -->
+          <a class="product-card fade-in" data-dom-id="link-product-detail" href="#" style="animation-delay: 0.05s">
+            <img class="card-image" src="../assets/product-pet-jacket.jpg" alt="Pet jacket" loading="lazy">
+            <div class="card-info">
+              <div class="card-name">Urban Pet Windproof Jacket Techwear Style</div>
+              <div class="card-bottom">
+                <span class="card-price"><span class="price-symbol">&yen;</span>358</span>
+                <span class="card-brand">GEAR</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Product Card 3 -->
+          <a class="product-card fade-in" data-dom-id="link-product-detail" href="#" style="animation-delay: 0.1s">
+            <img class="card-image" src="../assets/product-pet-carrier.jpg" alt="Pet carrier" loading="lazy">
+            <div class="card-info">
+              <div class="card-name">AeroLite Airline Travel Carrier Spinner Wheels</div>
+              <div class="card-bottom">
+                <span class="card-price"><span class="price-symbol">&yen;</span>598</span>
+                <span class="card-brand">HOME</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Product Card 4 -->
+          <a class="product-card fade-in" data-dom-id="link-product-detail" href="#" style="animation-delay: 0.15s">
+            <img class="card-image" src="../assets/product-shampoo-bottle.jpg" alt="Pet grooming" loading="lazy">
+            <div class="card-info">
+              <div class="card-name">Botanical Plant-Based Shampoo Hypoallergenic Formula</div>
+              <div class="card-bottom">
+                <span class="card-price"><span class="price-symbol">&yen;</span>128</span>
+                <span class="card-brand">CARE</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Product Card 5 -->
+          <a class="product-card fade-in" data-dom-id="link-product-detail" href="#" style="animation-delay: 0.2s">
+            <img class="card-image" src="../assets/product-toy-play.jpg" alt="Pet toy" loading="lazy">
+            <div class="card-info">
+              <div class="card-name">Interactive Durable Chew Toy Eco-Friendly Rubber</div>
+              <div class="card-bottom">
+                <span class="card-price"><span class="price-symbol">&yen;</span>89</span>
+                <span class="card-brand">PLAY</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Product Card 6 -->
+          <a class="product-card fade-in" data-dom-id="link-product-detail" href="#" style="animation-delay: 0.25s">
+            <img class="card-image" src="../assets/product-pet-treats.jpg" alt="Pet treats" loading="lazy">
+            <div class="card-info">
+              <div class="card-name">Organic Freeze-Dried Treats Chicken Recipe</div>
+              <div class="card-bottom">
+                <span class="card-price"><span class="price-symbol">&yen;</span>68</span>
+                <span class="card-brand">CARE</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Product Card 7 -->
+          <a class="product-card fade-in" data-dom-id="link-product-detail" href="#" style="animation-delay: 0.3s">
+            <img class="card-image" src="../assets/product-dental-care.jpg" alt="Dental care" loading="lazy">
+            <div class="card-info">
+              <div class="card-name">Dental Care Dental Chews Fresh Mint</div>
+              <div class="card-bottom">
+                <span class="card-price"><span class="price-symbol">&yen;</span>45</span>
+                <span class="card-brand">CARE</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Product Card 8 -->
+          <a class="product-card fade-in" data-dom-id="link-product-detail" href="#" style="animation-delay: 0.35s">
+            <img class="card-image" src="../assets/product-harness-gear.jpg" alt="Leash set" loading="lazy">
+            <div class="card-info">
+              <div class="card-name">Classic Nylon Leash Set Adjustable</div>
+              <div class="card-bottom">
+                <span class="card-price"><span class="price-symbol">&yen;</span>168</span>
+                <span class="card-brand">GEAR</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== Bottom TabBar ===== -->
+    <nav class="tab-bar" role="navigation" aria-label="Main navigation">
+      <a class="tab-item" data-dom-id="nav-home" href="#" aria-label="Home">
+        <span class="tab-icon tab-icon-home"></span>
+        <span class="tab-label">Home</span>
+      </a>
+      <a class="tab-item active" href="#" aria-label="Categories" aria-current="page">
+        <span class="tab-icon tab-icon-category"></span>
+        <span class="tab-label">Categories</span>
+      </a>
+      <a class="tab-item" data-dom-id="nav-pet-hub" href="#" aria-label="Pet Hub">
+        <span class="tab-icon tab-icon-pethub"></span>
+        <span class="tab-label">Pet Hub</span>
+      </a>
+      <a class="tab-item" href="#" aria-label="Community">
+        <span class="tab-icon tab-icon-community"></span>
+        <span class="tab-label">Community</span>
+      </a>
+      <a class="tab-item" data-dom-id="nav-profile" href="#" aria-label="Profile">
+        <span class="tab-icon tab-icon-profile"></span>
+        <span class="tab-label">Profile</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script src="shared/mock-api.js"></script>
+  <script src="shared/api.js"></script>
+  <script>
+    (function() {
+      var categoriesData = [];
+      var currentCategoryId = null;
+
+      function renderSidebar(categories) {
+        var sidebar = document.querySelector('.category-sidebar');
+        if (!sidebar || !categories.length) return;
+        sidebar.innerHTML = '';
+        categories.forEach(function(cat, index) {
+          var btn = document.createElement('button');
+          btn.className = 'category-item' + (index === 0 ? ' active' : '');
+          btn.setAttribute('data-category', cat.id);
+          btn.textContent = cat.name;
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.category-item').forEach(function(i) { i.classList.remove('active'); });
+            this.classList.add('active');
+            currentCategoryId = cat.id;
+            renderSubcategories(cat.subcategories || []);
+          });
+          sidebar.appendChild(btn);
+        });
+      }
+
+      function renderSubcategories(subs) {
+        var grid = document.querySelector('.product-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        if (!subs || !subs.length) {
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text-400);font-size:13px;">No products available</div>';
+          return;
+        }
+        subs.forEach(function(sub, i) {
+          var card = document.createElement('a');
+          card.className = 'product-card fade-in';
+          card.href = 'search.html?keyword=' + encodeURIComponent(sub.name);
+          card.style.animationDelay = (i * 0.05) + 's';
+          card.innerHTML =
+            '<div class="card-image" style="display:flex;align-items:center;justify-content:center;background:var(--background-100);">' +
+            '<span style="font-size:32px;color:var(--text-300);">' + (sub.icon || '📦') + '</span>' +
+            '</div>' +
+            '<div class="card-info">' +
+            '<div class="card-name">' + sub.name + '</div>' +
+            '<div class="card-bottom"><span class="card-brand">View All</span></div>' +
+            '</div>';
+          grid.appendChild(card);
+        });
+      }
+
+      async function loadCategories() {
+        try {
+          var res = await moyuyoAPI.get('/api/v1/goods/categories', { skipSign: true });
+          if (res.code === 0 && res.data && res.data.length) {
+            categoriesData = res.data;
+            renderSidebar(categoriesData);
+            if (categoriesData[0]) {
+              currentCategoryId = categoriesData[0].id;
+              renderSubcategories(categoriesData[0].subcategories || []);
+            }
+          }
+        } catch (e) {
+          console.log('[MOYUYO] Categories unavailable, showing static content');
+        }
+      }
+
+      /* Product line tab switching */
+      document.querySelectorAll('.product-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.product-tab').forEach(function(t) { t.classList.remove('active'); });
+          this.classList.add('active');
+        });
+      });
+
+      /* Search bar click */
+      var searchBar = document.querySelector('.search-bar');
+      if (searchBar) {
+        searchBar.addEventListener('click', function() {
+          window.location.href = 'search.html';
+        });
+      }
+
+      /* Back button */
+      var backBtn = document.querySelector('[data-dom-id="back-previous"]');
+      if (backBtn) {
+        backBtn.addEventListener('click', function() { window.history.back(); });
+      }
+
+      /* Bottom navigation */
+      var navHome = document.querySelector('[data-dom-id="nav-home"]');
+      if (navHome) { navHome.href = 'home.html'; navHome.onclick = null; }
+      var navPetHub = document.querySelector('[data-dom-id="nav-pet-hub"]');
+      if (navPetHub) { navPetHub.href = 'pet-hub.html'; navPetHub.onclick = null; }
+      var navProfile = document.querySelector('[data-dom-id="nav-profile"]');
+      if (navProfile) { navProfile.href = 'profile.html'; navProfile.onclick = null; }
+
+      loadCategories();
+    })();
+  </script>
+  <script>lucide.createIcons();</script>
+
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 我的评价</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+
+      <!-- iOS 状态栏模拟 -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--foreground);"></span>
+          </div>
+        </div>
+
+        <!-- 顶部导航栏：返回 + 标题 -->
+        <div class="flex items-center justify-center h-11 px-4 relative" style="border-bottom: 1px solid var(--border);">
+          <!-- 返回按钮 -->
+          <a href="profile.html" class="absolute left-4 w-8 h-8 flex items-center justify-center" style="color: var(--primary);" data-dom-id="cta-back" aria-label="返回">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+          </a>
+          <h1 class="text-base font-semibold" style="color: var(--foreground);">我的评价</h1>
+        </div>
+      </div>
+
+      <!-- 统计概览区域 -->
+      <section class="px-4 py-4" aria-label="评价统计概览">
+        <div class="flex items-center justify-center gap-6 rounded-[var(--radius)] px-4 py-3.5" style="background: var(--secondary);">
+          <!-- 累计评价 -->
+          <div class="flex flex-col items-center gap-0.5">
+            <span class="text-lg font-bold" style="color: var(--primary);">12</span>
+            <span class="text-[11px]" style="color: var(--text-500);">累计评价</span>
+          </div>
+          <!-- 分隔线 -->
+          <span class="w-px h-8" style="background: var(--background-300);"></span>
+          <!-- 获赞数 -->
+          <div class="flex flex-col items-center gap-0.5">
+            <span class="text-lg font-bold" style="color: var(--primary);">56</span>
+            <span class="text-[11px]" style="color: var(--text-500);">获赞</span>
+          </div>
+          <!-- 分隔线 -->
+          <span class="w-px h-8" style="background: var(--background-300);"></span>
+          <!-- 优质评价 -->
+          <div class="flex flex-col items-center gap-0.5">
+            <span class="text-lg font-bold" style="color: var(--success);">3</span>
+            <span class="text-[11px]" style="color: var(--text-500);">优质评价</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 切换栏 -->
+      <section class="px-4" aria-label="评价筛选">
+        <div class="flex gap-0 rounded-[var(--radius)] overflow-hidden p-1" style="background: var(--secondary);">
+          <!-- 全部（选中态） -->
+          <button class="tab-item flex-1 h-9 flex items-center justify-center text-sm font-medium rounded-[calc(var(--radius)-4px)]" style="background: var(--background); color: var(--foreground); box-shadow: var(--shadow-sm);">
+            全部
+          </button>
+          <!-- 待评价 -->
+          <button class="tab-item flex-1 h-9 flex items-center justify-center text-sm font-medium rounded-[calc(var(--radius)-4px)]" style="color: var(--text-400);">
+            待评价
+          </button>
+          <!-- 已评价 -->
+          <button class="tab-item flex-1 h-9 flex items-center justify-center text-sm font-medium rounded-[calc(var(--radius)-4px)]" style="color: var(--text-400);">
+            已评价
+          </button>
+          <!-- 有追评 -->
+          <button class="tab-item flex-1 h-9 flex items-center justify-center text-sm font-medium rounded-[calc(var(--radius)-4px)]" style="color: var(--text-400);">
+            有追评
+          </button>
+        </div>
+      </section>
+
+      <!-- 评价卡片列表 -->
+      <section class="px-4 pt-3 space-y-3" aria-label="评价列表">
+
+        <!-- 评价卡片 1：高端宠物洗护套装（已回复，有追评） -->
+        <article class="rounded-[var(--radius)] p-3.5" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <!-- 商品信息行 -->
+          <div class="flex items-center gap-3">
+            <img src="../assets/product-shampoo-bottle.jpg" alt="高端宠物洗护套装" class="w-14 h-14 rounded-lg object-cover shrink-0">
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">高端宠物洗护套装</h3>
+              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">温和低敏款 / 500ml</p>
+              <!-- 星星评分 -->
+              <div class="flex items-center gap-0.5 mt-1">
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span class="text-xs font-medium ml-1" style="color: var(--brand-300);">5.0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 评价内容 -->
+          <p class="text-sm mt-3 leading-relaxed" style="color: var(--text-600); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+            泡沫非常细腻，洗完后毛发柔顺不毛躁，香味也很持久自然。我家金毛特别怕水，用了这款洗发水之后明显安静了很多，温和不刺激。
+          </p>
+
+          <!-- 评价图片缩略图行 -->
+          <div class="flex gap-2 mt-2.5">
+            <div class="w-16 h-16 rounded-lg overflow-hidden shrink-0">
+              <img src="../assets/product-shampoo-bottle.jpg" alt="评价图片1" class="w-full h-full object-cover">
+            </div>
+            <div class="w-16 h-16 rounded-lg overflow-hidden shrink-0">
+              <img src="../assets/product-shampoo-bottle.jpg" alt="评价图片2" class="w-full h-full object-cover">
+            </div>
+            <div class="w-16 h-16 rounded-lg overflow-hidden shrink-0">
+              <img src="../assets/product-shampoo-bottle.jpg" alt="评价图片3" class="w-full h-full object-cover">
+            </div>
+          </div>
+
+          <!-- 底部：时间 + 回复状态 + 查看详情 -->
+          <div class="flex items-center justify-between mt-3 pt-2.5" style="border-top: 1px solid var(--border);">
+            <div class="flex items-center gap-2">
+              <span class="text-xs" style="color: var(--text-400);">2025-06-12</span>
+              <!-- 已回复标签 -->
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium" style="background: var(--state-success-surface); color: var(--success);">已回复</span>
+              <!-- 有追评标签 -->
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium" style="background: var(--brand-50); color: var(--primary);">有追评</span>
+            </div>
+            <!-- 查看详情箭头 -->
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--text-400);"></span>
+          </div>
+        </article>
+
+        <!-- 评价卡片 2：舒适胸背带（未回复） -->
+        <article class="rounded-[var(--radius)] p-3.5" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <!-- 商品信息行 -->
+          <div class="flex items-center gap-3">
+            <img src="../assets/product-harness-gear.jpg" alt="舒适胸背带" class="w-14 h-14 rounded-lg object-cover shrink-0">
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">舒适胸背带</h3>
+              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">透气款 / M码 / 黑色</p>
+              <!-- 星星评分 -->
+              <div class="flex items-center gap-0.5 mt-1">
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--background-400);"></span>
+                <span class="text-xs font-medium ml-1" style="color: var(--brand-300);">4.0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 评价内容 -->
+          <p class="text-sm mt-3 leading-relaxed" style="color: var(--text-600); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+            胸背带做工不错，网布透气性好。唯一不足是卡扣有时候会卡住，需要多按几次才能扣紧。总体来说性价比还是很高的，日常遛狗够用了。
+          </p>
+
+          <!-- 评价图片缩略图行 -->
+          <div class="flex gap-2 mt-2.5">
+            <div class="w-16 h-16 rounded-lg overflow-hidden shrink-0">
+              <img src="../assets/product-harness-gear.jpg" alt="评价图片1" class="w-full h-full object-cover">
+            </div>
+            <div class="w-16 h-16 rounded-lg overflow-hidden shrink-0">
+              <img src="../assets/product-harness-gear.jpg" alt="评价图片2" class="w-full h-full object-cover">
+            </div>
+          </div>
+
+          <!-- 底部：时间 + 回复状态 + 查看详情 -->
+          <div class="flex items-center justify-between mt-3 pt-2.5" style="border-top: 1px solid var(--border);">
+            <div class="flex items-center gap-2">
+              <span class="text-xs" style="color: var(--text-400);">2025-05-28</span>
+              <!-- 未回复标签 -->
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium" style="background: var(--secondary); color: var(--text-500);">未回复</span>
+            </div>
+            <!-- 查看详情箭头 -->
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--text-400);"></span>
+          </div>
+        </article>
+
+        <!-- 评价卡片 3：互动益智玩具（已回复，优质评价） -->
+        <article class="rounded-[var(--radius)] p-3.5" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <!-- 商品信息行 -->
+          <div class="flex items-center gap-3">
+            <img src="../assets/product-toy-play.jpg" alt="互动益智玩具" class="w-14 h-14 rounded-lg object-cover shrink-0">
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">互动益智玩具</h3>
+              <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">耐咬款 / 互动球</p>
+              <!-- 星星评分 -->
+              <div class="flex items-center gap-0.5 mt-1">
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-300);"></span>
+                <span class="text-xs font-medium ml-1" style="color: var(--brand-300);">5.0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 评价内容 -->
+          <p class="text-sm mt-3 leading-relaxed" style="color: var(--text-600); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+            我家柯基超喜欢这个玩具球，每天叼着到处跑。材质确实耐咬，玩了两个月几乎没有磨损痕迹，内部还藏有零食槽设计，非常有创意。
+          </p>
+
+          <!-- 评价图片缩略图行 -->
+          <div class="flex gap-2 mt-2.5">
+            <div class="w-16 h-16 rounded-lg overflow-hidden shrink-0">
+              <img src="../assets/product-toy-play.jpg" alt="评价图片1" class="w-full h-full object-cover">
+            </div>
+          </div>
+
+          <!-- 底部：时间 + 回复状态 + 查看详情 -->
+          <div class="flex items-center justify-between mt-3 pt-2.5" style="border-top: 1px solid var(--border);">
+            <div class="flex items-center gap-2">
+              <span class="text-xs" style="color: var(--text-400);">2025-05-15</span>
+              <!-- 已回复标签 -->
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium" style="background: var(--state-success-surface); color: var(--success);">已回复</span>
+              <!-- 优质评价标签 -->
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium" style="background: var(--brand-50); color: var(--primary);">优质评价</span>
+            </div>
+            <!-- 查看详情箭头 -->
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--text-400);"></span>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- 待评价 Tab 空状态（默认隐藏） -->
+      <section class="px-4 pt-16 hidden" aria-label="待评价空状态" id="empty-pending">
+        <div class="flex flex-col items-center gap-3">
+          <!-- 空状态图标 -->
+          <span data-icon class="w-16 h-16" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); color: var(--background-400);"></span>
+          <h3 class="text-base font-medium" style="color: var(--text-500);">暂无待评价商品</h3>
+          <p class="text-sm text-center leading-relaxed" style="color: var(--text-400);">完成订单后即可发表评价，您的反馈对其他宠物主人很有帮助</p>
+          <!-- 去逛逛按钮 -->
+          <a href="home.html" class="mt-4 inline-flex items-center justify-center h-10 px-6 rounded-full text-sm font-semibold" style="background: var(--primary); color: var(--primary-foreground);">
+            去逛逛
+          </a>
+        </div>
+      </section>
+
+      <!-- 底部 TabBar -->
+      <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="主导航">
+        <div class="flex items-stretch justify-around h-[49px]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+          <!-- 首页 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-home" aria-label="首页">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
+            <span class="text-[10px] font-medium">首页</span>
+          </button>
+          <!-- 分类 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-category" aria-label="分类">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/grip.svg'); mask-image: url('../assets/icons/dl-builtin-apple/grip.svg');"></span>
+            <span class="text-[10px] font-medium">分类</span>
+          </button>
+          <!-- Pet Hub -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-pet-hub" aria-label="Pet Hub">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+            <span class="text-[10px] font-medium">Pet Hub</span>
+          </button>
+          <!-- 社区 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="社区">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+            <span class="text-[10px] font-medium">社区</span>
+          </button>
+          <!-- 我的 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--primary);" data-dom-id="nav-profile" aria-label="个人中心">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
+            <span class="text-[10px] font-medium">我的</span>
+          </button>
+        </div>
+        <!-- Safe area -->
+        <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.88);"></div>
+      </nav>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

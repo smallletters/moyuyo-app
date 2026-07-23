@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 扫一扫</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+  <main class="flex flex-col min-h-screen" style="background: var(--background-900); color: var(--text-50); max-width: 430px; margin: 0 auto; position: relative; overflow: hidden;">
+
+    <!-- 顶部工具栏 -->
+    <header class="flex items-center justify-between px-5 pt-3 pb-2" style="position: relative; z-index: 10;">
+      <!-- 返回箭头 -->
+      <button class="flex items-center justify-center w-9 h-9 rounded-full" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: none; color: var(--text-50); cursor: pointer;" aria-label="返回">
+        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+      </button>
+      <!-- 标题 -->
+      <h1 class="text-base font-semibold" style="color: var(--text-50);">扫一扫</h1>
+      <!-- 相册按钮 -->
+      <button class="flex items-center justify-center w-9 h-9 rounded-full" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: none; color: var(--text-50); cursor: pointer;" aria-label="从相册选择">
+        <i data-lucide="image" class="w-5 h-5"></i>
+      </button>
+    </header>
+
+    <!-- 扫描取景区域 -->
+    <section class="flex-1 flex flex-col items-center justify-center px-10" style="min-height: 0;">
+
+      <!-- 取景框容器 -->
+      <div class="relative" style="width: 260px; height: 260px; border-radius: 16px; overflow: hidden; background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 40%, #0a0a0a 100%);">
+
+        <!-- 取景框内边框（半透明白色） -->
+        <div style="position: absolute; inset: 0; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); pointer-events: none;"></div>
+
+        <!-- 扫描线 -->
+        <div class="scan-line" style="position: absolute; left: 12px; right: 12px; height: 2px; background: linear-gradient(90deg, transparent 0%, var(--brand-500) 30%, var(--brand-500) 70%, transparent 100%); box-shadow: 0 0 8px rgba(0,122,255,0.5); z-index: 2;"></div>
+
+        <!-- 四角标记 -->
+        <div class="corner-mark corner-tl" style="top: -1px; left: -1px;"></div>
+        <div class="corner-mark corner-tr" style="top: -1px; right: -1px;"></div>
+        <div class="corner-mark corner-bl" style="bottom: -1px; left: -1px;"></div>
+        <div class="corner-mark corner-br" style="bottom: -1px; right: -1px;"></div>
+      </div>
+
+      <!-- 操作提示文字 -->
+      <p class="text-center mt-6 text-sm" style="color: var(--text-300); line-height: 1.5;">
+        将二维码/条形码放入框内，即可自动扫描
+      </p>
+    </section>
+
+    <!-- 底部功能按钮组 -->
+    <footer class="flex items-center justify-center gap-10 pb-12 pt-6" style="position: relative; z-index: 10;">
+
+      <!-- 闪光灯开关 -->
+      <button class="flex flex-col items-center gap-2" style="background: none; border: none; cursor: pointer; color: var(--text-100);" aria-label="闪光灯">
+        <div class="flex items-center justify-center w-11 h-11 rounded-full" style="background: rgba(255,255,255,0.1);">
+          <i data-lucide="flashlight" class="w-5 h-5"></i>
+        </div>
+        <span class="text-xs" style="color: var(--text-300);">闪光灯</span>
+      </button>
+
+      <!-- 从相册选择 -->
+      <button class="flex flex-col items-center gap-2" style="background: none; border: none; cursor: pointer; color: var(--text-100);" aria-label="从相册选择">
+        <div class="flex items-center justify-center w-11 h-11 rounded-full" style="background: rgba(255,255,255,0.1);">
+          <i data-lucide="image-plus" class="w-5 h-5"></i>
+        </div>
+        <span class="text-xs" style="color: var(--text-300);">相册</span>
+      </button>
+
+      <!-- 历史扫码记录 -->
+      <button class="flex flex-col items-center gap-2" style="background: none; border: none; cursor: pointer; color: var(--text-100);" aria-label="历史扫码记录">
+        <div class="flex items-center justify-center w-11 h-11 rounded-full" style="background: rgba(255,255,255,0.1);">
+          <i data-lucide="history" class="w-5 h-5"></i>
+        </div>
+        <span class="text-xs" style="color: var(--text-300);">记录</span>
+      </button>
+
+    </footer>
+
+  </main>
+
+  <!-- 初始化 Lucide Icons -->
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

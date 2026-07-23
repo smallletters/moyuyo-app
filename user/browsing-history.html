@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 浏览历史</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-8">
+
+      <!-- 顶部导航栏 -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="flex items-center justify-between h-12 px-4">
+          <!-- 返回按钮 -->
+          <a href="profile.html" class="flex items-center justify-center w-9 h-9 -ml-1 rounded-full" style="background: var(--background-200);" data-dom-id="cta-back" aria-label="返回个人中心">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--foreground);"></span>
+          </a>
+          <!-- 页面标题 -->
+          <h1 class="text-base font-semibold" style="color: var(--foreground);">浏览记录</h1>
+          <!-- 清空按钮 -->
+          <button class="text-sm font-medium -mr-1" style="color: var(--primary); background: none; border: none;" data-dom-id="cta-clear" aria-label="清空全部浏览记录">清空</button>
+        </div>
+      </div>
+
+      <!-- Tab 切换 -->
+      <div class="flex gap-0 border-b px-4" style="border-color: var(--border); background: var(--background);">
+        <button class="flex-1 h-10 flex items-center justify-center text-sm font-semibold relative" style="color: var(--primary);">
+          全部
+          <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full" style="background: var(--primary);"></span>
+        </button>
+        <button class="flex-1 h-10 flex items-center justify-center text-sm font-medium" style="color: var(--text-400); background: none; border: none;">
+          商品
+        </button>
+        <button class="flex-1 h-10 flex items-center justify-center text-sm font-medium" style="color: var(--text-400); background: none; border: none;">
+          笔记
+        </button>
+        <button class="flex-1 h-10 flex items-center justify-center text-sm font-medium" style="color: var(--text-400); background: none; border: none;">
+          话题
+        </button>
+      </div>
+
+      <!-- 搜索框 -->
+      <div class="px-4 pt-3 pb-1">
+        <div class="flex items-center gap-2 h-10 rounded-xl px-3" style="background: var(--background-200);">
+          <span data-icon class="w-4 h-4 shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/funnel.svg'); mask-image: url('../assets/icons/dl-builtin-apple/funnel.svg'); color: var(--icon-600);"></span>
+          <input type="text" placeholder="搜索浏览记录" class="flex-1 text-sm bg-transparent border-none outline-none" style="color: var(--foreground);" aria-label="搜索浏览记录">
+        </div>
+      </div>
+
+      <!-- 无痕浏览开关 -->
+      <div class="flex items-center justify-between px-4 py-3">
+        <div>
+          <span class="text-sm font-medium" style="color: var(--foreground);">无痕浏览</span>
+          <span class="text-xs ml-1" style="color: var(--text-400);">开启后不记录浏览历史</span>
+        </div>
+        <div class="toggle-track" role="switch" aria-checked="false" aria-label="无痕浏览开关" tabindex="0">
+          <div class="toggle-thumb"></div>
+        </div>
+      </div>
+
+      <!-- ===== 今天分组 ===== -->
+      <section class="px-4 pt-2" aria-label="今天的浏览记录">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xs font-semibold" style="color: var(--text-500);">今天</h2>
+          <button class="text-xs font-medium" style="color: var(--text-400); background: none; border: none;">更多</button>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <!-- 商品卡片 1 -->
+          <a href="#" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);" data-dom-id="link-product-detail">
+            <div class="aspect-square overflow-hidden">
+              <img src="../assets/product-shampoo-bottle.jpg" alt="高端宠物洗护套装" class="w-full h-full object-cover">
+            </div>
+            <div class="p-2.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">高端宠物洗护套装</h3>
+              <div class="flex items-baseline mt-1">
+                <span class="text-sm font-semibold" style="color: var(--primary);">¥189</span>
+              </div>
+              <span class="text-xs mt-1 block" style="color: var(--text-400);">14:32 浏览</span>
+            </div>
+          </a>
+          <!-- 商品卡片 2 -->
+          <a href="#" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);" data-dom-id="link-product-detail">
+            <div class="aspect-square overflow-hidden">
+              <img src="../assets/product-harness-gear.jpg" alt="舒适胸背带" class="w-full h-full object-cover">
+            </div>
+            <div class="p-2.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">舒适胸背带</h3>
+              <div class="flex items-baseline mt-1">
+                <span class="text-sm font-semibold" style="color: var(--primary);">¥129</span>
+              </div>
+              <span class="text-xs mt-1 block" style="color: var(--text-400);">10:15 浏览</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- ===== 昨天分组 ===== -->
+      <section class="px-4 pt-5" aria-label="昨天的浏览记录">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xs font-semibold" style="color: var(--text-500);">昨天</h2>
+          <button class="text-xs font-medium" style="color: var(--text-400); background: none; border: none;">更多</button>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <!-- 商品卡片 3 -->
+          <a href="#" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);" data-dom-id="link-product-detail">
+            <div class="aspect-square overflow-hidden">
+              <img src="../assets/product-toy-play.jpg" alt="互动益智玩具" class="w-full h-full object-cover">
+            </div>
+            <div class="p-2.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">互动益智玩具</h3>
+              <div class="flex items-baseline mt-1">
+                <span class="text-sm font-semibold" style="color: var(--primary);">¥69</span>
+              </div>
+              <span class="text-xs mt-1 block" style="color: var(--text-400);">昨天 21:08</span>
+            </div>
+          </a>
+          <!-- 商品卡片 4 -->
+          <a href="#" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);" data-dom-id="link-product-detail">
+            <div class="aspect-square overflow-hidden">
+              <img src="../assets/product-pet-jacket.jpg" alt="宠物潮流外套" class="w-full h-full object-cover">
+            </div>
+            <div class="p-2.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">宠物潮流外套</h3>
+              <div class="flex items-baseline mt-1">
+                <span class="text-sm font-semibold" style="color: var(--primary);">¥219</span>
+              </div>
+              <span class="text-xs mt-1 block" style="color: var(--text-400);">昨天 16:45</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- ===== 更早分组 ===== -->
+      <section class="px-4 pt-5" aria-label="更早的浏览记录">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xs font-semibold" style="color: var(--text-500);">更早</h2>
+          <button class="text-xs font-medium" style="color: var(--text-400); background: none; border: none;">更多</button>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <!-- 商品卡片 5 -->
+          <a href="#" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);" data-dom-id="link-product-detail">
+            <div class="aspect-square overflow-hidden">
+              <img src="../assets/product-pet-carrier.jpg" alt="宠物出行航空箱" class="w-full h-full object-cover">
+            </div>
+            <div class="p-2.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">宠物出行航空箱</h3>
+              <div class="flex items-baseline mt-1">
+                <span class="text-sm font-semibold" style="color: var(--primary);">¥349</span>
+              </div>
+              <span class="text-xs mt-1 block" style="color: var(--text-400);">3天前</span>
+            </div>
+          </a>
+          <!-- 商品卡片 6 -->
+          <a href="#" class="block rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);" data-dom-id="link-product-detail">
+            <div class="aspect-square overflow-hidden">
+              <img src="../assets/product-pet-treats.jpg" alt="冻干零食礼包" class="w-full h-full object-cover">
+            </div>
+            <div class="p-2.5">
+              <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">冻干零食礼包</h3>
+              <div class="flex items-baseline mt-1">
+                <span class="text-sm font-semibold" style="color: var(--primary);">¥89</span>
+              </div>
+              <span class="text-xs mt-1 block" style="color: var(--text-400);">5天前</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- 底部提示 -->
+      <div class="flex items-center justify-center pt-6 pb-4">
+        <span class="text-xs" style="color: var(--text-400);">记录保留 90 天，最多 500 条</span>
+      </div>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

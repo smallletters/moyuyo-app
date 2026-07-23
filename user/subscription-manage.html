@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 订阅管理</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-28" style="background-color: var(--background);">
+
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30 flex h-11 items-center px-4" style="background-color: var(--background); border-bottom: 1px solid var(--border);">
+        <a href="profile.html" data-dom-id="cta-back" class="inline-flex h-9 w-9 items-center justify-center" style="border-radius: var(--radius);" aria-label="返回">
+          <i data-lucide="chevron-left" class="h-5 w-5" style="color: var(--foreground);"></i>
+        </a>
+        <h1 class="min-w-0 flex-1 text-center text-base font-semibold tracking-tight" style="color: var(--foreground); text-wrap: balance; word-break: keep-all;">我的订阅</h1>
+        <div class="w-9"></div>
+      </header>
+
+      <!-- 订阅概览卡片 -->
+      <section class="mx-4 mt-4 flex items-center justify-between p-4" style="border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--card); box-shadow: var(--shadow-xs);">
+        <div class="flex items-center gap-3">
+          <!-- 活跃订阅数量 -->
+          <div class="flex flex-col">
+            <span class="text-xs" style="color: var(--muted-foreground);">活跃订阅</span>
+            <span class="text-2xl font-bold mt-0.5" style="color: var(--foreground); font-variant-numeric: tabular-nums;">2</span>
+          </div>
+          <!-- 分隔竖线 -->
+          <div class="w-px h-8 mx-1" style="background-color: var(--border);"></div>
+          <!-- 总节省金额 -->
+          <div class="flex flex-col">
+            <span class="text-xs" style="color: var(--muted-foreground);">总节省</span>
+            <span class="text-2xl font-bold mt-0.5" style="color: var(--state-success); font-variant-numeric: tabular-nums;">$45.00</span>
+          </div>
+        </div>
+        <!-- 订阅管理图标 -->
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background-color: var(--brand-50);">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--primary);"></span>
+        </div>
+      </section>
+
+      <!-- 活跃订阅列表标题 -->
+      <section class="mt-6 px-4">
+        <h2 class="text-sm font-semibold" style="color: var(--foreground);">活跃订阅</h2>
+      </section>
+
+      <!-- 订阅卡片 1: MOYUYO 温和沐浴露 -->
+      <section class="mx-4 mt-3" style="border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--card); box-shadow: var(--shadow-xs);">
+        <!-- 商品信息行 -->
+        <div class="flex items-center gap-3 p-3.5">
+          <img src="../assets/product-shampoo-bottle.jpg" alt="MOYUYO 温和沐浴露 500ml" class="h-16 w-16 shrink-0 object-cover" style="border-radius: calc(var(--radius) - 4px);">
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold truncate pr-2" style="color: var(--foreground);">MOYUYO 温和沐浴露</h3>
+              <!-- 状态标签: 活跃 -->
+              <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold shrink-0" style="border-radius: 999px; background-color: var(--state-success-surface); color: var(--state-success);">活跃</span>
+            </div>
+            <p class="mt-0.5 text-xs" style="color: var(--muted-foreground);">500ml</p>
+            <!-- 订阅周期 -->
+            <div class="mt-1.5 flex items-center gap-1.5">
+              <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-play.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-play.svg'); color: var(--icon-500);"></span>
+              <span class="text-xs" style="color: var(--text-500);">每月配送</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 分隔线 -->
+        <div style="height: 1px; margin: 0 14px; background-color: var(--border);"></div>
+
+        <!-- 价格与配送信息 -->
+        <div class="flex items-center justify-between px-3.5 py-3">
+          <div class="flex items-baseline gap-2">
+            <span class="text-base font-bold" style="color: var(--foreground); font-variant-numeric: tabular-nums;">$25.20</span>
+            <span class="text-xs" style="color: var(--muted-foreground); font-variant-numeric: tabular-nums; text-decoration: line-through;">$28.00</span>
+            <span class="inline-flex items-center px-1.5 py-0.5 text-xs font-bold" style="border-radius: 4px; background-color: var(--brand-50); color: var(--primary);">省10%</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--icon-500);"></span>
+            <span class="text-xs" style="color: var(--text-500);">下次 07-15</span>
+          </div>
+        </div>
+
+        <!-- 配送倒计时进度条 -->
+        <div class="px-3.5 pb-2">
+          <div class="flex items-center justify-between text-xs mb-1.5">
+            <span style="color: var(--text-500);">距下次配送</span>
+            <span style="color: var(--text-500);">7 天</span>
+          </div>
+          <div class="w-full h-1.5 rounded-full overflow-hidden" style="background-color: var(--background-200);">
+            <div class="h-full rounded-full" style="width: 70%; background-color: var(--primary);"></div>
+          </div>
+        </div>
+
+        <!-- 分隔线 -->
+        <div style="height: 1px; margin: 0 14px; background-color: var(--border);"></div>
+
+        <!-- 操作按钮行 -->
+        <div class="flex items-center gap-2 px-3.5 py-3">
+          <a href="subscribe-plan.html" data-dom-id="cta-edit-plan" class="flex-1 flex items-center justify-center h-8 text-xs font-semibold" style="border-radius: 999px; border: 1px solid var(--border); color: var(--primary); background-color: transparent;">修改周期</a>
+          <button class="flex-1 flex items-center justify-center h-8 text-xs font-semibold" style="border-radius: 999px; border: 1px solid var(--border); color: var(--foreground); background-color: transparent;">暂停</button>
+          <button class="flex-1 flex items-center justify-center h-8 text-xs font-semibold" style="border-radius: 999px; border: 1px solid var(--border); color: var(--foreground); background-color: transparent;">跳过本次</button>
+          <button class="flex-1 flex items-center justify-center h-8 text-xs font-semibold" style="border-radius: 999px; border: 1px solid var(--border); color: var(--destructive); background-color: transparent;">取消订阅</button>
+        </div>
+      </section>
+
+      <!-- 订阅卡片 2: MOYUYO 宠物零食混合装 -->
+      <section class="mx-4 mt-3" style="border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--card); box-shadow: var(--shadow-xs);">
+        <!-- 商品信息行 -->
+        <div class="flex items-center gap-3 p-3.5">
+          <img src="../assets/product-pet-treats.jpg" alt="MOYUYO 宠物零食混合装" class="h-16 w-16 shrink-0 object-cover" style="border-radius: calc(var(--radius) - 4px);">
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold truncate pr-2" style="color: var(--foreground);">MOYUYO 宠物零食混合装</h3>
+              <!-- 状态标签: 暂停 -->
+              <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold shrink-0" style="border-radius: 999px; background-color: var(--background-100); color: var(--chart-3);">暂停</span>
+            </div>
+            <p class="mt-0.5 text-xs" style="color: var(--muted-foreground);">混合口味 200g</p>
+            <!-- 订阅周期 -->
+            <div class="mt-1.5 flex items-center gap-1.5">
+              <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-pause.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-pause.svg'); color: var(--icon-500);"></span>
+              <span class="text-xs" style="color: var(--text-500);">双月配送</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 分隔线 -->
+        <div style="height: 1px; margin: 0 14px; background-color: var(--border);"></div>
+
+        <!-- 价格与配送信息 -->
+        <div class="flex items-center justify-between px-3.5 py-3">
+          <div class="flex items-baseline gap-2">
+            <span class="text-base font-bold" style="color: var(--foreground); font-variant-numeric: tabular-nums;">$18.00</span>
+            <span class="text-xs" style="color: var(--muted-foreground); font-variant-numeric: tabular-nums; text-decoration: line-through;">$20.00</span>
+            <span class="inline-flex items-center px-1.5 py-0.5 text-xs font-bold" style="border-radius: 4px; background-color: var(--brand-50); color: var(--primary);">省10%</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--icon-500);"></span>
+            <span class="text-xs" style="color: var(--text-500);">下次 08-01</span>
+          </div>
+        </div>
+
+        <!-- 配送倒计时进度条 -->
+        <div class="px-3.5 pb-2">
+          <div class="flex items-center justify-between text-xs mb-1.5">
+            <span style="color: var(--text-500);">距下次配送</span>
+            <span style="color: var(--text-500);">24 天</span>
+          </div>
+          <div class="w-full h-1.5 rounded-full overflow-hidden" style="background-color: var(--background-200);">
+            <div class="h-full rounded-full" style="width: 20%; background-color: var(--chart-3);"></div>
+          </div>
+        </div>
+
+        <!-- 分隔线 -->
+        <div style="height: 1px; margin: 0 14px; background-color: var(--border);"></div>
+
+        <!-- 操作按钮行 -->
+        <div class="flex items-center gap-2 px-3.5 py-3">
+          <a href="subscribe-plan.html" data-dom-id="cta-edit-plan" class="flex-1 flex items-center justify-center h-8 text-xs font-semibold" style="border-radius: 999px; border: 1px solid var(--border); color: var(--primary); background-color: transparent;">修改周期</a>
+          <button class="flex-1 flex items-center justify-center h-8 text-xs font-semibold" style="border-radius: 999px; border: 1px solid var(--border); color: var(--state-success); background-color: transparent;">恢复</button>
+          <button class="flex-1 flex items-center justify-center h-8 text-xs font-semibold" style="border-radius: 999px; border: 1px solid var(--border); color: var(--foreground); background-color: transparent;">跳过本次</button>
+          <button class="flex-1 flex items-center justify-center h-8 text-xs font-semibold" style="border-radius: 999px; border: 1px solid var(--border); color: var(--destructive); background-color: transparent;">取消订阅</button>
+        </div>
+      </section>
+
+      <!-- 历史订阅（折叠区域） -->
+      <section class="mx-4 mt-6">
+        <!-- 折叠区域头部 -->
+        <button id="history-toggle" class="flex items-center justify-between w-full mb-3" aria-expanded="false">
+          <h2 class="text-sm font-semibold" style="color: var(--foreground);">历史订阅</h2>
+          <div class="flex items-center gap-1">
+            <span class="text-xs" style="color: var(--muted-foreground);">1 条记录</span>
+            <i data-lucide="chevron-down" id="history-chevron" class="w-4 h-4 transition-transform duration-200" style="color: var(--icon-500);"></i>
+          </div>
+        </button>
+
+        <!-- 折叠内容（灰化处理） -->
+        <div id="history-content" class="overflow-hidden transition-all duration-300" style="max-height: 0; opacity: 0;">
+          <!-- 已取消订阅记录 -->
+          <div class="opacity-50" style="border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--card);">
+            <div class="flex items-center gap-3 p-3.5">
+              <img src="../assets/product-shampoo-bottle.jpg" alt="MOYUYO 温和沐浴露 500ml" class="h-16 w-16 shrink-0 object-cover" style="border-radius: calc(var(--radius) - 4px);">
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-sm font-semibold truncate pr-2" style="color: var(--foreground);">MOYUYO 温和沐浴露</h3>
+                  <!-- 状态标签: 已取消 -->
+                  <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold shrink-0" style="border-radius: 999px; background-color: var(--background-200); color: var(--text-400);">已取消</span>
+                </div>
+                <p class="mt-0.5 text-xs" style="color: var(--muted-foreground);">500ml / 每月配送</p>
+                <div class="mt-1.5 flex items-center gap-1.5">
+                  <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-400);"></span>
+                  <span class="text-xs" style="color: var(--text-400);">2026-03-01 至 2026-06-01</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 底部提示 -->
+      <section class="mx-4 mt-6 mb-4">
+        <div class="flex items-start gap-2 p-3.5" style="border-radius: var(--radius); background-color: var(--secondary);">
+          <span data-icon class="w-4 h-4 shrink-0 mt-0.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); color: var(--icon-500);"></span>
+          <div class="flex flex-col gap-1">
+            <span class="text-xs" style="color: var(--text-600);">订阅灵活管理：可随时调整周期、暂停或取消，无额外费用。如有疑问请联系客服。</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <script>
+      // 初始化 Lucide 图标
+      lucide.createIcons();
+
+      // 历史订阅折叠/展开交互
+      const historyToggle = document.getElementById('history-toggle');
+      const historyContent = document.getElementById('history-content');
+      const historyChevron = document.getElementById('history-chevron');
+
+      historyToggle.addEventListener('click', function () {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+        if (isExpanded) {
+          // 折叠
+          historyContent.style.maxHeight = '0';
+          historyContent.style.opacity = '0';
+          historyChevron.style.transform = 'rotate(0deg)';
+          this.setAttribute('aria-expanded', 'false');
+        } else {
+          // 展开
+          historyContent.style.maxHeight = '200px';
+          historyContent.style.opacity = '1';
+          historyChevron.style.transform = 'rotate(180deg)';
+          this.setAttribute('aria-expanded', 'true');
+        }
+      });
+    </script>
+</body>
+</html>

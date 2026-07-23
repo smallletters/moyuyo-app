@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Register</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="relative min-h-screen overflow-hidden" style="width: 375px; margin: 0 auto;">
+
+      <!-- Fullscreen background image + overlay -->
+      <img src="../assets/login-bg.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
+      <div class="absolute inset-0" style="background: rgba(0, 0, 0, 0.45);"></div>
+
+      <!-- Page content container -->
+      <div class="relative z-10 min-h-screen flex flex-col">
+
+        <!-- Top nav: back + title -->
+        <header class="flex items-center shrink-0" style="height: 56px; padding: 0 16px;">
+          <button
+            type="button"
+            data-dom-id="back-previous"
+            class="flex items-center justify-center"
+            style="width: 40px; height: 40px; border-radius: 50%; border: none; background: rgba(0,0,0,0.2); color: var(--background-50); cursor: pointer; transition: background-color 0.18s ease;"
+            aria-label="Go back"
+            onmouseover="this.style.background='rgba(0,0,0,0.35)';"
+            onmouseout="this.style.background='rgba(0,0,0,0.2)';"
+          >
+            <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+          </button>
+          <h1 class="flex-1 text-center" style="font-size: 17px; font-weight: 600; color: var(--background-50); letter-spacing: -0.01em;">Register</h1>
+          <!-- Spacer for balance -->
+          <div style="width: 40px;"></div>
+        </header>
+
+        <!-- Scrollable content area -->
+        <div class="flex-1 overflow-y-auto" style="padding: 24px 32px 32px;">
+
+          <!-- Registration card -->
+          <div style="background: var(--background-50); border-radius: calc(var(--radius) * 1.6); padding: 28px 24px 32px; box-shadow: var(--shadow-xl); animation: cardEnter 0.5s cubic-bezier(0.32, 0.72, 0, 1) forwards;">
+
+            <!-- Title -->
+            <h2 style="font-size: 24px; font-weight: 700; color: var(--text-800); text-align: center; margin-bottom: 4px; text-wrap: balance; word-break: keep-all;">Create Account</h2>
+
+            <!-- Registration prompt -->
+            <p class="text-center" style="font-size: 12px; color: var(--text-400); margin-bottom: 24px;">
+              By registering, you agree to the
+              <a href="#" style="color: var(--brand-500); text-decoration: none;">Terms of Service</a>
+              and
+              <a href="#" style="color: var(--brand-500); text-decoration: none;">Privacy Policy</a>
+            </p>
+
+            <!-- Nickname input -->
+            <div style="margin-bottom: 12px;">
+              <input
+                type="text"
+                placeholder="Set nickname"
+                maxlength="20"
+                class="w-full"
+                style="height: 44px; padding: 0 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
+                onfocus="this.style.borderColor='var(--ring)'; this.style.boxShadow='0 0 0 1px var(--ring)';"
+                onblur="this.style.borderColor='var(--input)'; this.style.boxShadow='none';"
+              >
+            </div>
+
+            <!-- Phone/Email registration tab switch -->
+            <div class="flex rounded-lg overflow-hidden" style="height: 36px; background: var(--background-200); margin-bottom: 12px;">
+              <button
+                id="reg-tab-phone"
+                type="button"
+                class="flex-1 flex items-center justify-center transition-colors duration-200"
+                style="font-size: 13px; font-weight: 600; border-radius: calc(var(--radius) * 0.8); background: var(--background-50); color: var(--text-800); box-shadow: var(--shadow-xs); border: none; cursor: pointer;"
+                onclick="switchRegTab('phone')"
+              >
+                Register with Phone
+              </button>
+              <button
+                id="reg-tab-email"
+                type="button"
+                class="flex-1 flex items-center justify-center transition-colors duration-200"
+                style="font-size: 13px; font-weight: 500; border-radius: calc(var(--radius) * 0.8); background: transparent; color: var(--text-400); box-shadow: none; border: none; cursor: pointer;"
+                onclick="switchRegTab('email')"
+              >
+                Register with Email
+              </button>
+            </div>
+
+            <!-- Phone registration form -->
+            <form id="reg-form-phone" onsubmit="return false;" autocomplete="off">
+              <!-- Phone number input -->
+              <div class="flex items-center gap-2" style="margin-bottom: 12px;">
+                <button
+                  type="button"
+                  class="flex items-center justify-center shrink-0"
+                  style="width: 64px; height: 44px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-100); color: var(--text-800); font-size: 14px; font-weight: 500; cursor: pointer;"
+                  aria-label="Select country code"
+                >
+                  +86
+                </button>
+                <input
+                  type="tel"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  placeholder="Phone number"
+                  maxlength="11"
+                  class="flex-1"
+                  style="height: 44px; padding: 0 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
+                  onfocus="this.style.borderColor='var(--ring)'; this.style.boxShadow='0 0 0 1px var(--ring)';"
+                  onblur="this.style.borderColor='var(--input)'; this.style.boxShadow='none';"
+                >
+              </div>
+              <!-- Verification code input -->
+              <div class="flex items-center gap-2" style="margin-bottom: 12px;">
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  placeholder="Verification code"
+                  maxlength="6"
+                  class="flex-1"
+                  style="height: 44px; padding: 0 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
+                  onfocus="this.style.borderColor='var(--ring)'; this.style.boxShadow='0 0 0 1px var(--ring)';"
+                  onblur="this.style.borderColor='var(--input)'; this.style.boxShadow='none';"
+                >
+                <button
+                  type="button"
+                  class="shrink-0"
+                  style="height: 44px; padding: 0 14px; border: none; border-radius: var(--radius); background: transparent; color: var(--brand-500); font-size: 13px; font-weight: 600; font-family: var(--font-sans); cursor: pointer; white-space: nowrap; transition: opacity 0.18s ease;"
+                  onmouseover="this.style.opacity='0.8';"
+                  onmouseout="this.style.opacity='1';"
+                >
+                  Get Code
+                </button>
+              </div>
+            </form>
+
+            <!-- Email registration form (hidden by default) -->
+            <form id="reg-form-email" onsubmit="return false;" autocomplete="off" style="display: none;">
+              <!-- Email input -->
+              <div style="margin-bottom: 12px;">
+                <input
+                  type="email"
+                  placeholder="Email address"
+                  class="w-full"
+                  style="height: 44px; padding: 0 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
+                  onfocus="this.style.borderColor='var(--ring)'; this.style.boxShadow='0 0 0 1px var(--ring)';"
+                  onblur="this.style.borderColor='var(--input)'; this.style.boxShadow='none';"
+                >
+              </div>
+              <!-- Email verification code -->
+              <div class="flex items-center gap-2" style="margin-bottom: 12px;">
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  placeholder="Verification code"
+                  maxlength="6"
+                  class="flex-1"
+                  style="height: 44px; padding: 0 14px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
+                  onfocus="this.style.borderColor='var(--ring)'; this.style.boxShadow='0 0 0 1px var(--ring)';"
+                  onblur="this.style.borderColor='var(--input)'; this.style.boxShadow='none';"
+                >
+                <button
+                  type="button"
+                  class="shrink-0"
+                  style="height: 44px; padding: 0 14px; border: none; border-radius: var(--radius); background: transparent; color: var(--brand-500); font-size: 13px; font-weight: 600; font-family: var(--font-sans); cursor: pointer; white-space: nowrap; transition: opacity 0.18s ease;"
+                  onmouseover="this.style.opacity='0.8';"
+                  onmouseout="this.style.opacity='1';"
+                >
+                  Get Code
+                </button>
+              </div>
+            </form>
+
+            <!-- Password input (shared) -->
+            <div class="relative" style="margin-bottom: 12px;">
+              <input
+                id="reg-password"
+                type="password"
+                placeholder="Set password"
+                class="w-full"
+                style="height: 44px; padding: 0 14px; padding-right: 44px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
+                onfocus="this.style.borderColor='var(--ring)'; this.style.boxShadow='0 0 0 1px var(--ring)';"
+                onblur="this.style.borderColor='var(--input)'; this.style.boxShadow='none';"
+              >
+              <button
+                type="button"
+                class="absolute right-0 top-0 flex items-center justify-center"
+                style="width: 44px; height: 44px; border: none; background: transparent; color: var(--text-400); cursor: pointer;"
+                aria-label="Show password"
+                onclick="toggleRegPassword('reg-password')"
+              >
+                <i data-lucide="eye-off" style="width: 18px; height: 18px;"></i>
+              </button>
+            </div>
+
+            <!-- Confirm password input -->
+            <div class="relative" style="margin-bottom: 20px;">
+              <input
+                id="reg-confirm-password"
+                type="password"
+                placeholder="Confirm password"
+                class="w-full"
+                style="height: 44px; padding: 0 14px; padding-right: 44px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--background-50); color: var(--text-800); font-size: 14px; font-family: var(--font-sans); outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease;"
+                onfocus="this.style.borderColor='var(--ring)'; this.style.boxShadow='0 0 0 1px var(--ring)';"
+                onblur="this.style.borderColor='var(--input)'; this.style.boxShadow='none';"
+              >
+              <button
+                type="button"
+                class="absolute right-0 top-0 flex items-center justify-center"
+                style="width: 44px; height: 44px; border: none; background: transparent; color: var(--text-400); cursor: pointer;"
+                aria-label="Show confirm password"
+                onclick="toggleRegPassword('reg-confirm-password')"
+              >
+                <i data-lucide="eye-off" style="width: 18px; height: 18px;"></i>
+              </button>
+            </div>
+
+            <!-- Pet preference selection -->
+            <div style="margin-bottom: 24px;">
+              <p style="font-size: 13px; font-weight: 600; color: var(--text-800); margin-bottom: 10px;">Select your pet type</p>
+              <div class="flex gap-2">
+                <button
+                  type="button"
+                  class="pet-chip flex items-center justify-center"
+                  data-pet="dog"
+                  data-active="true"
+                  style="flex: 1; height: 36px; border-radius: 999px; border: 1px solid var(--brand-500); background: var(--brand-50); color: var(--brand-500); font-size: 13px; font-weight: 600; font-family: var(--font-sans); cursor: pointer; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;"
+                >
+                  Dog
+                </button>
+                <button
+                  type="button"
+                  class="pet-chip flex items-center justify-center"
+                  data-pet="cat"
+                  style="flex: 1; height: 36px; border-radius: 999px; border: 1px solid var(--input); background: var(--background-50); color: var(--text-500); font-size: 13px; font-weight: 500; font-family: var(--font-sans); cursor: pointer; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;"
+                >
+                  Cat
+                </button>
+                <button
+                  type="button"
+                  class="pet-chip flex items-center justify-center"
+                  data-pet="other"
+                  style="flex: 1; height: 36px; border-radius: 999px; border: 1px solid var(--input); background: var(--background-50); color: var(--text-500); font-size: 13px; font-weight: 500; font-family: var(--font-sans); cursor: pointer; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;"
+                >
+                  Other
+                </button>
+              </div>
+            </div>
+
+            <!-- Register button -->
+            <button
+              type="button"
+              data-dom-id="cta-register"
+              class="w-full flex items-center justify-center"
+              style="height: 48px; border: none; border-radius: 999px; background: var(--brand-500); color: var(--background-50); font-size: 16px; font-weight: 600; font-family: var(--font-sans); letter-spacing: 0.02em; cursor: pointer; transition: filter 0.18s ease, transform 0.18s ease;"
+              onmouseover="this.style.filter='brightness(0.92)';"
+              onmouseout="this.style.filter='none';"
+              onmousedown="this.style.transform='scale(0.98)';"
+              onmouseup="this.style.transform='scale(1)';"
+            >
+              Register
+            </button>
+
+            <!-- Bottom login prompt -->
+            <p class="text-center" style="font-size: 13px; color: var(--text-400); margin-top: 20px;">
+              Already have an account?
+              <a
+                href="#"
+                data-dom-id="link-login"
+                style="color: var(--brand-500); font-weight: 600; text-decoration: none; transition: opacity 0.18s ease;"
+                onmouseover="this.style.opacity='0.8';"
+                onmouseout="this.style.opacity='1';"
+              >Log in</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      var regCurrentTab = 'phone';
+      var regCodeTimer = null;
+
+      function switchRegTab(type) {
+        regCurrentTab = type;
+        var tabPhone = document.getElementById('reg-tab-phone');
+        var tabEmail = document.getElementById('reg-tab-email');
+        var formPhone = document.getElementById('reg-form-phone');
+        var formEmail = document.getElementById('reg-form-email');
+
+        if (type === 'phone') {
+          tabPhone.style.background = 'var(--background-50)';
+          tabPhone.style.color = 'var(--text-800)';
+          tabPhone.style.fontWeight = '600';
+          tabPhone.style.boxShadow = 'var(--shadow-xs)';
+          tabEmail.style.background = 'transparent';
+          tabEmail.style.color = 'var(--text-400)';
+          tabEmail.style.fontWeight = '500';
+          tabEmail.style.boxShadow = 'none';
+          formPhone.style.display = 'block';
+          formEmail.style.display = 'none';
+        } else {
+          tabEmail.style.background = 'var(--background-50)';
+          tabEmail.style.color = 'var(--text-800)';
+          tabEmail.style.fontWeight = '600';
+          tabEmail.style.boxShadow = 'var(--shadow-xs)';
+          tabPhone.style.background = 'transparent';
+          tabPhone.style.color = 'var(--text-400)';
+          tabPhone.style.fontWeight = '500';
+          tabPhone.style.boxShadow = 'none';
+          formPhone.style.display = 'none';
+          formEmail.style.display = 'block';
+        }
+        clearRegError();
+      }
+
+      function toggleRegPassword(inputId) {
+        var pwdInput = document.getElementById(inputId);
+        var btn = pwdInput.parentElement.querySelector('button');
+        if (pwdInput.type === 'password') {
+          pwdInput.type = 'text';
+          btn.innerHTML = '<i data-lucide="eye" style="width: 18px; height: 18px;"></i>';
+        } else {
+          pwdInput.type = 'password';
+          btn.innerHTML = '<i data-lucide="eye-off" style="width: 18px; height: 18px;"></i>';
+        }
+        lucide.createIcons();
+      }
+
+      document.querySelectorAll('.pet-chip').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          var isActive = this.getAttribute('data-active') === 'true';
+          if (isActive) {
+            this.setAttribute('data-active', 'false');
+            this.style.borderColor = 'var(--input)';
+            this.style.background = 'var(--background-50)';
+            this.style.color = 'var(--text-500)';
+            this.style.fontWeight = '500';
+          } else {
+            this.setAttribute('data-active', 'true');
+            this.style.borderColor = 'var(--brand-500)';
+            this.style.background = 'var(--brand-50)';
+            this.style.color = 'var(--brand-500)';
+            this.style.fontWeight = '600';
+          }
+        });
+      });
+
+      function showRegError(msg) {
+        var el = document.getElementById('reg-error');
+        if (!el) {
+          el = document.createElement('p');
+          el.id = 'reg-error';
+          el.style.cssText = 'text-align:center;margin-top:12px;font-size:13px;color:var(--state-error);min-height:20px;';
+          document.querySelector('.pet-chip').parentElement.parentElement.appendChild(el);
+        }
+        el.textContent = msg;
+        el.style.display = 'block';
+      }
+
+      function clearRegError() {
+        var el = document.getElementById('reg-error');
+        if (el) { el.textContent = ''; el.style.display = 'none'; }
+      }
+
+      function setRegLoading(loading) {
+        var btn = document.querySelector('button[data-dom-id="cta-register"]');
+        btn.textContent = loading ? 'Registering...' : 'Register';
+        btn.disabled = loading;
+        btn.style.opacity = loading ? '0.6' : '1';
+      }
+
+      function startRegCodeTimer(btn) {
+        var seconds = 60;
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.textContent = seconds + 's';
+        regCodeTimer = setInterval(function() {
+          seconds--;
+          if (seconds <= 0) {
+            clearInterval(regCodeTimer);
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            btn.textContent = 'Get Code';
+          } else {
+            btn.textContent = seconds + 's';
+          }
+        }, 1000);
+      }
+
+      function checkPasswordStrength(password) {
+        if (!password) return { valid: false, message: 'Please enter a password' };
+        if (password.length < 8) return { valid: false, message: 'Password must be at least 8 characters' };
+        if (!/(?=.*[a-zA-Z])/.test(password)) return { valid: false, message: 'Password must contain letters' };
+        if (!/(?=.*[0-9])/.test(password)) return { valid: false, message: 'Password must contain numbers' };
+        return { valid: true, message: '' };
+      }
+
+      document.querySelector('#reg-form-phone button:last-child').addEventListener('click', async function() {
+        var phoneInput = document.querySelector('#reg-form-phone input[type="tel"]');
+        var phone = phoneInput.value.trim();
+        if (!phone) { showRegError('Please enter your phone number'); return; }
+        if (phone.length !== 11) { showRegError('Please enter an 11-digit phone number'); return; }
+
+        try {
+          await moyuyoAPI.post('/api/v1/user/sms/send', {
+            phone: phone,
+            countryCode: '+86',
+            scene: 'register'
+          }, { skipSign: true });
+          startRegCodeTimer(this);
+          clearRegError();
+        } catch (e) {
+          showRegError('Failed to send verification code');
+        }
+      });
+
+      document.querySelector('#reg-form-email button').addEventListener('click', async function() {
+        var emailInput = document.querySelector('#reg-form-email input[type="email"]');
+        var email = emailInput.value.trim();
+        if (!email) { showRegError('Please enter your email address'); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showRegError('Invalid email format'); return; }
+
+        try {
+          await moyuyoAPI.post('/api/v1/user/email/send', {
+            email: email,
+            scene: 'register'
+          }, { skipSign: true });
+          startRegCodeTimer(this);
+          clearRegError();
+        } catch (e) {
+          showRegError('Failed to send verification code');
+        }
+      });
+
+      document.querySelector('button[data-dom-id="cta-register"]').addEventListener('click', async function() {
+        clearRegError();
+        var nickname = document.querySelector('#reg-form-phone').parentElement.parentElement.querySelector('input[placeholder="Set nickname"]').value.trim();
+        var password = document.getElementById('reg-password').value;
+        var confirmPassword = document.getElementById('reg-confirm-password').value;
+
+        if (!nickname) { showRegError('Please set a nickname'); return; }
+
+        var pwdCheck = checkPasswordStrength(password);
+        if (!pwdCheck.valid) { showRegError(pwdCheck.message); return; }
+
+        if (password !== confirmPassword) { showRegError('Passwords do not match'); return; }
+
+        var selectedPets = [];
+        document.querySelectorAll('.pet-chip[data-active="true"]').forEach(function(chip) {
+          selectedPets.push(chip.getAttribute('data-pet'));
+        });
+        if (selectedPets.length === 0) { showRegError('Please select a pet type'); return; }
+
+        setRegLoading(true);
+
+        try {
+          var registerData = {
+            nickname: nickname,
+            password: password,
+            petTypes: selectedPets,
+            acceptTerms: true,
+            acceptPrivacy: true,
+            country: regCurrentTab === 'phone' ? 'CN' : 'US',
+            locale: regCurrentTab === 'phone' ? 'zh_CN' : 'en_US'
+          };
+
+          if (regCurrentTab === 'phone') {
+            registerData.phone = document.querySelector('#reg-form-phone input[type="tel"]').value.trim();
+            registerData.countryCode = '+86';
+            registerData.code = document.querySelector('#reg-form-phone input[type="text"]').value.trim();
+            if (!registerData.code) { showRegError('Please enter verification code'); setRegLoading(false); return; }
+
+            var res = await moyuyoAPI.post('/api/v1/user/register/phone', registerData, { skipSign: true });
+            handleRegResult(res);
+          } else {
+            registerData.email = document.querySelector('#reg-form-email input[type="email"]').value.trim();
+            registerData.code = document.querySelector('#reg-form-email input[type="text"]').value.trim();
+            if (!registerData.code) { showRegError('Please enter verification code'); setRegLoading(false); return; }
+
+            var res = await moyuyoAPI.post('/api/v1/user/register/email', registerData, { skipSign: true });
+            handleRegResult(res);
+          }
+        } catch (e) {
+          showRegError('Network error, please check your connection');
+        }
+        setRegLoading(false);
+      });
+
+      function handleRegResult(res) {
+        if (res.code === 0 && res.data) {
+          localStorage.setItem('moyuyo_reg_email', res.data.email || '');
+          localStorage.setItem('moyuyo_reg_verify_expire', res.data.verifyEmailExpire || '');
+          showRegError('');
+          alert('Registration successful! Please verify your email and log in.');
+          window.location.href = 'login.html';
+        } else if (res.code === 1101) {
+          showRegError('This email is already registered');
+        } else if (res.code === 1102) {
+          showRegError('Weak password (min. 8 characters, must include letters and numbers)');
+        } else if (res.code === 1103) {
+          showRegError('You do not meet the minimum age requirement');
+        } else if (res.code === 1104) {
+          showRegError('You must agree to the Terms of Service and Privacy Policy');
+        } else {
+          showRegError(res.message || 'Registration failed, please try again');
+        }
+      }
+
+      document.querySelector('a[data-dom-id="link-login"]').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = 'login.html';
+      });
+
+      document.querySelector('button[data-dom-id="back-previous"]').addEventListener('click', function() {
+        window.history.back();
+      });
+    </script>
+
+    <!-- Entrance animation + reduced-motion -->
+    <style>
+      @keyframes cardEnter {
+        from {
+          opacity: 0;
+          transform: translateY(24px) scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

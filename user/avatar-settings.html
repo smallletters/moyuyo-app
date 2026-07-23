@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 头像/昵称设置</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="mx-auto max-w-[393px] min-h-screen" style="background-color: var(--background-200);">
+
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30 flex items-center justify-between px-4" style="height: 44px; background-color: var(--background-50); border-bottom: 1px solid var(--border);">
+        <!-- 返回按钮 -->
+        <a href="profile.html" data-dom-id="cta-back" class="inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 hover:opacity-70" aria-label="返回" style="background-color: transparent;">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--brand-500);"></span>
+        </a>
+        <!-- 标题 -->
+        <h1 class="text-base font-semibold" style="color: var(--text-800); letter-spacing: -0.02em;">编辑资料</h1>
+        <!-- 占位保持标题居中 -->
+        <div class="w-9 h-9"></div>
+      </header>
+
+      <!-- 可滚动内容区 -->
+      <div class="px-4 pt-6 pb-28 flex flex-col gap-6">
+
+        <!-- ===== 头像编辑区域 ===== -->
+        <section class="flex flex-col items-center gap-3" aria-label="头像编辑">
+          <div class="relative">
+            <!-- 120px 圆形渐变占位头像 -->
+            <div class="avatar-placeholder w-[120px] h-[120px] rounded-full overflow-hidden flex items-center justify-center" style="box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+              <span class="text-2xl font-bold" style="color: var(--background-50);">M</span>
+            </div>
+            <!-- 相机图标叠加在右下角 -->
+            <button class="absolute bottom-0 right-0 w-9 h-9 rounded-full flex items-center justify-center transition-transform duration-150 hover:scale-105 active:scale-95" style="background: var(--brand-500); box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3); border: 2.5px solid var(--background-50);" aria-label="更换头像" data-dom-id="cta-change-avatar">
+              <i data-lucide="camera" class="w-4 h-4" style="color: var(--background-50);"></i>
+            </button>
+          </div>
+          <span class="text-xs" style="color: var(--text-400);">点击更换头像</span>
+        </section>
+
+        <!-- ===== 昵称编辑 ===== -->
+        <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);" aria-label="昵称编辑">
+          <div class="px-4 pt-4 pb-1">
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-sm font-medium" style="color: var(--text-800);">昵称</label>
+              <span class="text-xs" style="color: var(--text-400);">2-20 个字符</span>
+            </div>
+            <!-- 当前昵称显示 + 编辑按钮 -->
+            <div id="nickname-display" class="flex items-center justify-between py-2">
+              <span class="text-base" style="color: var(--text-500);">宠物爱好者</span>
+              <button class="inline-flex items-center gap-1 text-sm font-medium transition-opacity duration-150 hover:opacity-70" style="color: var(--brand-500); background: transparent; border: none; cursor: pointer;" data-dom-id="cta-edit-nickname" aria-label="编辑昵称">
+                <i data-lucide="pen-line" class="w-3.5 h-3.5"></i>
+                <span>编辑</span>
+              </button>
+            </div>
+            <!-- 昵称输入框（默认隐藏） -->
+            <div id="nickname-edit" class="hidden">
+              <input type="text" class="settings-input" placeholder="请输入昵称" value="宠物爱好者" maxlength="20" data-dom-id="input-nickname" aria-label="昵称输入">
+              <div class="flex items-center justify-between mt-1">
+                <!-- 昵称可用性提示 -->
+                <div id="nickname-hint" class="name-hint success">
+                  <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg');"></span>
+                  <span>昵称可用</span>
+                </div>
+                <!-- 字数计数 -->
+                <span class="text-xs" style="color: var(--text-400);"><span id="nickname-count">5</span>/20</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== 个人简介编辑 ===== -->
+        <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);" aria-label="个人简介编辑">
+          <div class="px-4 pt-4 pb-3">
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-sm font-medium" style="color: var(--text-800);">个人简介</label>
+              <span class="text-xs" style="color: var(--text-400);">最多 100 字</span>
+            </div>
+            <textarea class="settings-textarea" rows="3" placeholder="介绍一下你和你的宠物吧..." maxlength="100" data-dom-id="input-bio" aria-label="个人简介">热爱生活的铲屎官，有一只叫小橘的猫咪，喜欢记录日常。</textarea>
+            <div class="flex items-center justify-end mt-1">
+              <span class="text-xs" style="color: var(--text-400);"><span id="bio-count">23</span>/100</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== 性别选择 ===== -->
+        <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);" aria-label="性别选择">
+          <div class="px-4 pt-4 pb-4">
+            <label class="text-sm font-medium block mb-3" style="color: var(--text-800);">性别</label>
+            <div class="flex items-center gap-3" id="gender-group">
+              <button class="option-chip" data-value="male" aria-label="男">男</button>
+              <button class="option-chip" data-value="female" aria-label="女">女</button>
+              <button class="option-chip active" data-value="unset" aria-label="不设置" aria-pressed="true">不设置</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== 生日设置 ===== -->
+        <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);" aria-label="生日设置">
+          <div class="flex items-center justify-between px-4" style="height: 52px;">
+            <span class="text-sm font-medium" style="color: var(--text-800);">生日</span>
+            <div class="flex items-center gap-1 cursor-pointer" data-dom-id="cta-birthday">
+              <span class="text-sm" style="color: var(--text-500);">1995-06-15</span>
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--icon-400);"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== 地区设置 ===== -->
+        <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);" aria-label="地区设置">
+          <div class="flex items-center justify-between px-4" style="height: 52px;">
+            <span class="text-sm font-medium" style="color: var(--text-800);">地区</span>
+            <div class="flex items-center gap-1 cursor-pointer" data-dom-id="cta-region">
+              <span class="text-sm" style="color: var(--text-500);">上海市 浦东新区</span>
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--icon-400);"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== IP 偏好设置 ===== -->
+        <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);" aria-label="IP 偏好设置">
+          <div class="px-4 pt-4 pb-4">
+            <div class="flex items-center justify-between mb-3">
+              <label class="text-sm font-medium" style="color: var(--text-800);">IP 偏好</label>
+              <span class="text-xs" style="color: var(--text-400);">可多选</span>
+            </div>
+            <div class="grid grid-cols-4 gap-3" id="ip-group">
+              <!-- MILO -->
+              <div class="ip-card ip-milo active" data-ip="milo" data-dom-id="ip-milo" role="checkbox" aria-checked="true" aria-label="MILO" tabindex="0">
+                <div class="ip-icon-circle">M</div>
+                <span class="ip-name">MILO</span>
+              </div>
+              <!-- LUNA -->
+              <div class="ip-card ip-luna" data-ip="luna" data-dom-id="ip-luna" role="checkbox" aria-checked="false" aria-label="LUNA" tabindex="0">
+                <div class="ip-icon-circle">L</div>
+                <span class="ip-name">LUNA</span>
+              </div>
+              <!-- ATLAS -->
+              <div class="ip-card ip-atlas" data-ip="atlas" data-dom-id="ip-atlas" role="checkbox" aria-checked="false" aria-label="ATLAS" tabindex="0">
+                <div class="ip-icon-circle">A</div>
+                <span class="ip-name">ATLAS</span>
+              </div>
+              <!-- OLIVE -->
+              <div class="ip-card ip-olive active" data-ip="olive" data-dom-id="ip-olive" role="checkbox" aria-checked="true" aria-label="OLIVE" tabindex="0">
+                <div class="ip-icon-circle">O</div>
+                <span class="ip-name">OLIVE</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- 底部固定保存按钮 -->
+    <div class="save-bar">
+      <button class="save-btn" data-dom-id="cta-save">保存</button>
+    </div>
+
+    <!-- 头像更换操作选项（Action Sheet） -->
+    <div class="action-sheet-overlay" id="avatar-action-sheet">
+      <div class="action-sheet">
+        <button class="action-sheet-option" data-dom-id="cta-camera" aria-label="拍照">
+          <i data-lucide="camera" class="w-4 h-4 mr-2" style="color: var(--brand-500);"></i>
+          拍照
+        </button>
+        <div style="height: 1px; background: var(--border);"></div>
+        <button class="action-sheet-option" data-dom-id="cta-gallery" aria-label="从相册选择">
+          <i data-lucide="image" class="w-4 h-4 mr-2" style="color: var(--brand-500);"></i>
+          从相册选择
+        </button>
+        <div style="height: 8px;"></div>
+        <button class="action-sheet-option action-sheet-cancel" data-dom-id="cta-cancel-avatar" aria-label="取消">取消</button>
+      </div>
+    </div>
+
+    <script>
+      // 页面初始化后创建 Lucide 图标
+      lucide.createIcons();
+
+      // ===== 头像更换操作面板 =====
+      const avatarBtn = document.querySelector('[data-dom-id="cta-change-avatar"]');
+      const actionSheet = document.getElementById('avatar-action-sheet');
+      const cancelBtn = document.querySelector('[data-dom-id="cta-cancel-avatar"]');
+
+      avatarBtn.addEventListener('click', function() {
+        actionSheet.classList.add('visible');
+      });
+
+      cancelBtn.addEventListener('click', function() {
+        actionSheet.classList.remove('visible');
+      });
+
+      // 点击遮罩关闭
+      actionSheet.addEventListener('click', function(e) {
+        if (e.target === actionSheet) {
+          actionSheet.classList.remove('visible');
+        }
+      });
+
+      // ===== 昵称编辑切换 =====
+      const nicknameDisplay = document.getElementById('nickname-display');
+      const nicknameEdit = document.getElementById('nickname-edit');
+      const editNicknameBtn = document.querySelector('[data-dom-id="cta-edit-nickname"]');
+      const nicknameInput = document.querySelector('[data-dom-id="input-nickname"]');
+      const nicknameCount = document.getElementById('nickname-count');
+
+      editNicknameBtn.addEventListener('click', function() {
+        nicknameDisplay.classList.add('hidden');
+        nicknameEdit.classList.remove('hidden');
+        nicknameInput.focus();
+        nicknameInput.select();
+      });
+
+      // 昵称字数计数
+      nicknameInput.addEventListener('input', function() {
+        nicknameCount.textContent = this.value.length;
+      });
+
+      // ===== 个人简介字数计数 =====
+      const bioTextarea = document.querySelector('[data-dom-id="input-bio"]');
+      const bioCount = document.getElementById('bio-count');
+
+      bioTextarea.addEventListener('input', function() {
+        bioCount.textContent = this.value.length;
+      });
+
+      // ===== 性别选择切换 =====
+      const genderGroup = document.getElementById('gender-group');
+      const genderChips = genderGroup.querySelectorAll('.option-chip');
+
+      genderChips.forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          genderChips.forEach(function(c) {
+            c.classList.remove('active');
+            c.setAttribute('aria-pressed', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-pressed', 'true');
+        });
+      });
+
+      // ===== IP 偏好多选切换 =====
+      const ipGroup = document.getElementById('ip-group');
+      const ipCards = ipGroup.querySelectorAll('.ip-card');
+
+      ipCards.forEach(function(card) {
+        card.addEventListener('click', function() {
+          this.classList.toggle('active');
+          const isActive = this.classList.contains('active');
+          this.setAttribute('aria-checked', isActive ? 'true' : 'false');
+        });
+        // 键盘支持
+        card.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.click();
+          }
+        });
+      });
+    </script>
+</body>
+</html>

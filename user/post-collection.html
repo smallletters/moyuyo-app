@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Post Collections</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="max-width: 430px; margin: 0 auto;">
+    <main class="pb-24">
+
+      <!-- Top Navigation Bar -->
+      <div class="sticky top-0 z-30" style="background: var(--background-800);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--text-50);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="signal" class="w-4 h-4" style="color: var(--text-50);"></i>
+            <i data-lucide="wifi" class="w-4 h-4" style="color: var(--text-50);"></i>
+            <i data-lucide="battery-full" class="w-4 h-4" style="color: var(--text-50);"></i>
+          </div>
+        </div>
+        <div class="flex items-center justify-between h-12 px-4" style="background: var(--background-800);">
+          <!-- Back Arrow -->
+          <button class="flex items-center justify-center w-9 h-9 rounded-full" style="color: var(--primary);" aria-label="Back">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+          </button>
+          <!-- Page Title -->
+          <h1 class="text-base font-semibold" style="color: var(--text-50);">Post Collections</h1>
+          <!-- Create New Collection Button -->
+          <button class="flex items-center gap-1 px-3 py-1.5 rounded-full" style="background: var(--brand-500); color: var(--primary-foreground);" aria-label="Create New Collection">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span class="text-xs font-semibold">Create</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Official Columns Section -->
+      <section class="px-4 pt-5 pb-2" aria-label="Official Columns">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold" style="color: var(--foreground);">Official Columns</h2>
+          <button class="flex items-center gap-0.5 text-xs font-medium" style="color: var(--primary);" aria-label="View All Columns">
+            <span>View All</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+        <div id="official-collections" class="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-1">
+
+          <!-- Column Card 1: Beginner's Pet Care Guide -->
+          <div class="shrink-0 w-40 snap-start rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="relative h-28" style="background: linear-gradient(135deg, #a8d8ea 0%, #aa96da 50%, #fcbad3 100%);">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <i data-lucide="book-open" class="w-10 h-10" style="color: rgba(255,255,255,0.7);"></i>
+              </div>
+              <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-semibold" style="background: rgba(0,0,0,0.25); color: var(--primary-foreground);">Official</div>
+            </div>
+            <div class="p-3">
+              <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">Beginner's Pet Care Guide</h3>
+              <p class="text-xs mt-1 truncate" style="color: var(--muted-foreground);">A comprehensive pet care handbook from beginner to expert</p>
+              <div class="flex items-center gap-1 mt-2">
+                <i data-lucide="file-text" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                <span class="text-xs" style="color: var(--muted-foreground);">12 posts</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column Card 2: Grooming Encyclopedia -->
+          <div class="shrink-0 w-40 snap-start rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="relative h-28" style="background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <i data-lucide="droplets" class="w-10 h-10" style="color: rgba(255,255,255,0.7);"></i>
+              </div>
+              <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-semibold" style="background: rgba(0,0,0,0.25); color: var(--primary-foreground);">Official</div>
+            </div>
+            <div class="p-3">
+              <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">Grooming Encyclopedia</h3>
+              <p class="text-xs mt-1 truncate" style="color: var(--muted-foreground);">Scientific grooming for healthier pets</p>
+              <div class="flex items-center gap-1 mt-2">
+                <i data-lucide="file-text" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                <span class="text-xs" style="color: var(--muted-foreground);">8 posts</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column Card 3: Training Class -->
+          <div class="shrink-0 w-40 snap-start rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="relative h-28" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <i data-lucide="graduation-cap" class="w-10 h-10" style="color: rgba(255,255,255,0.7);"></i>
+              </div>
+              <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-semibold" style="background: rgba(0,0,0,0.25); color: var(--primary-foreground);">Official</div>
+            </div>
+            <div class="p-3">
+              <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">Training Class</h3>
+              <p class="text-xs mt-1 truncate" style="color: var(--muted-foreground);">Simple and practical training tips</p>
+              <div class="flex items-center gap-1 mt-2">
+                <i data-lucide="file-text" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                <span class="text-xs" style="color: var(--muted-foreground);">6 posts</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="h-2 mt-2" style="background: var(--background-100);"></div>
+
+      <!-- My Collections Section -->
+      <section class="px-4 pt-4" aria-label="My Collections">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold" style="color: var(--foreground);">My Collections</h2>
+          <span id="collection-count" class="text-xs" style="color: var(--muted-foreground);">3 collections</span>
+        </div>
+        <div id="my-collections" class="flex flex-col gap-3">
+
+          <!-- Collection Card 1: Cat Bathing Guide -->
+          <div class="rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="flex">
+              <!-- Cover Image (CSS Gradient) -->
+              <div class="shrink-0 w-28 h-28 relative" style="background: linear-gradient(145deg, #c4b5fd 0%, #818cf8 40%, #6366f1 100%);">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <i data-lucide="cat" class="w-10 h-10" style="color: rgba(255,255,255,0.6);"></i>
+                </div>
+              </div>
+              <!-- Content Info -->
+              <div class="flex flex-col justify-between flex-1 min-w-0 p-3">
+                <div>
+                  <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">Cat Bathing Guide</h3>
+                  <p class="text-xs mt-1 line-clamp-2" style="color: var(--muted-foreground);">From preparation to bathing techniques, a step-by-step guide to bathing your cat</p>
+                </div>
+                <div class="flex items-center gap-3 mt-2">
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="layers" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">5 posts</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="users" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">128 subscribers</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Bottom Action Bar -->
+            <div class="flex items-center justify-between px-3 py-2.5" style="border-top: 1px solid var(--border);">
+              <span class="text-[10px]" style="color: var(--muted-foreground);">Updated 3 days ago</span>
+              <div class="flex items-center gap-3">
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="Share Collection">
+                  <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                  <span class="text-xs">Share</span>
+                </button>
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="Manage Collection">
+                  <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Collection Card 2: Dog Fashion Inspiration -->
+          <div class="rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="flex">
+              <!-- Cover Image (CSS Gradient) -->
+              <div class="shrink-0 w-28 h-28 relative" style="background: linear-gradient(145deg, #fca5a5 0%, #f97316 50%, #fb923c 100%);">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <i data-lucide="dog" class="w-10 h-10" style="color: rgba(255,255,255,0.6);"></i>
+                </div>
+              </div>
+              <!-- Content Info -->
+              <div class="flex flex-col justify-between flex-1 min-w-0 p-3">
+                <div>
+                  <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">Dog Fashion Inspiration</h3>
+                  <p class="text-xs mt-1 line-clamp-2" style="color: var(--muted-foreground);">Seasonal trendy outfits to make your dog a street-style star</p>
+                </div>
+                <div class="flex items-center gap-3 mt-2">
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="layers" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">3 posts</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="users" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">56 subscribers</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Bottom Action Bar -->
+            <div class="flex items-center justify-between px-3 py-2.5" style="border-top: 1px solid var(--border);">
+              <span class="text-[10px]" style="color: var(--muted-foreground);">Updated 1 week ago</span>
+              <div class="flex items-center gap-3">
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="Share Collection">
+                  <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                  <span class="text-xs">Share</span>
+                </button>
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="Manage Collection">
+                  <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Collection Card 3: Healthy Pet Recipes -->
+          <div class="rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="flex">
+              <!-- Cover Image (CSS Gradient) -->
+              <div class="shrink-0 w-28 h-28 relative" style="background: linear-gradient(145deg, #86efac 0%, #22c55e 40%, #16a34a 100%);">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <i data-lucide="salad" class="w-10 h-10" style="color: rgba(255,255,255,0.6);"></i>
+                </div>
+              </div>
+              <!-- Content Info -->
+              <div class="flex flex-col justify-between flex-1 min-w-0 p-3">
+                <div>
+                  <h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">Healthy Pet Recipes</h3>
+                  <p class="text-xs mt-1 line-clamp-2" style="color: var(--muted-foreground);">Homemade nutritious meals for a balanced diet for your furry friend</p>
+                </div>
+                <div class="flex items-center gap-3 mt-2">
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="layers" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">7 posts</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <i data-lucide="users" class="w-3 h-3" style="color: var(--muted-foreground);"></i>
+                    <span class="text-xs" style="color: var(--muted-foreground);">203 subscribers</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Bottom Action Bar -->
+            <div class="flex items-center justify-between px-3 py-2.5" style="border-top: 1px solid var(--border);">
+              <span class="text-[10px]" style="color: var(--muted-foreground);">Updated 5 days ago</span>
+              <div class="flex items-center gap-3">
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="Share Collection">
+                  <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                  <span class="text-xs">Share</span>
+                </button>
+                <button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="Manage Collection">
+                  <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Create Collection Button -->
+    <button class="fixed z-40 flex items-center justify-center shadow-lg" style="bottom: 100px; right: max(calc((100% - 430px)/2 + 20px), 20px); width: 48px; height: 48px; border-radius: 9999px; background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-lg);" aria-label="Create New Collection">
+      <i data-lucide="plus" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Bottom TabBar -->
+    <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="Main Navigation">
+      <div class="flex items-stretch justify-around h-[49px]" style="max-width: 430px; margin: 0 auto; padding-bottom: env(safe-area-inset-bottom, 0px);">
+        <!-- Home -->
+        <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="Home">
+          <i data-lucide="house" class="w-5 h-5"></i>
+          <span class="text-[10px] font-medium">Home</span>
+        </button>
+        <!-- Categories -->
+        <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="Categories">
+          <i data-lucide="layout-grid" class="w-5 h-5"></i>
+          <span class="text-[10px] font-medium">Categories</span>
+        </button>
+        <!-- Pet Hub -->
+        <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="Pet Hub">
+          <i data-lucide="heart" class="w-5 h-5"></i>
+          <span class="text-[10px] font-medium">Pet Hub</span>
+        </button>
+        <!-- Community -->
+        <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--primary);" aria-label="Community" aria-current="page">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+          <span class="text-[10px] font-medium">Community</span>
+        </button>
+        <!-- Profile -->
+        <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="Profile">
+          <i data-lucide="user" class="w-5 h-5"></i>
+          <span class="text-[10px] font-medium">Profile</span>
+        </button>
+      </div>
+      <!-- Safe area -->
+      <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.88);"></div>
+    </nav>
+
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      (function() {
+        var api = window.moyuyoAPI;
+
+        // Cover gradient configurations
+        var coverGradients = {
+          'cat': 'linear-gradient(145deg, #c4b5fd 0%, #818cf8 40%, #6366f1 100%)',
+          'dog': 'linear-gradient(145deg, #fca5a5 0%, #f97316 50%, #fb923c 100%)',
+          'salad': 'linear-gradient(145deg, #86efac 0%, #22c55e 40%, #16a34a 100%)',
+          'book-open': 'linear-gradient(135deg, #a8d8ea 0%, #aa96da 50%, #fcbad3 100%)',
+          'droplets': 'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)',
+          'graduation-cap': 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
+        };
+
+        function formatFollowers(n) {
+          if (n >= 1000) {
+            return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+          }
+          return n.toString();
+        }
+
+        function renderOfficialCollections(official) {
+          var container = document.getElementById('official-collections');
+          if (!container) return;
+          if (!official || official.length === 0) return;
+
+          var html = '';
+          for (var i = 0; i < official.length; i++) {
+            var item = official[i];
+            var grad = coverGradients[item.cover] || '';
+            var icon = item.cover || 'book-open';
+            html += '<div class="shrink-0 w-40 snap-start rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">';
+            html += '<div class="relative h-28" style="background: ' + grad + ';">';
+            html += '<div class="absolute inset-0 flex items-center justify-center">';
+            html += '<i data-lucide="' + icon + '" class="w-10 h-10" style="color: rgba(255,255,255,0.7);"></i>';
+            html += '</div>';
+            html += '<div class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-semibold" style="background: rgba(0,0,0,0.25); color: var(--primary-foreground);">Official</div>';
+            html += '</div>';
+            html += '<div class="p-3">';
+            html += '<h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">' + item.name + '</h3>';
+            html += '<p class="text-xs mt-1 truncate" style="color: var(--muted-foreground);">' + item.desc + '</p>';
+            html += '<div class="flex items-center gap-1 mt-2">';
+            html += '<i data-lucide="file-text" class="w-3 h-3" style="color: var(--muted-foreground);"></i>';
+            html += '<span class="text-xs" style="color: var(--muted-foreground);">' + item.postCount + ' posts</span>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+          }
+          container.innerHTML = html;
+        }
+
+        function renderMyCollections(collections) {
+          var container = document.getElementById('my-collections');
+          if (!container) return;
+          if (!collections || collections.length === 0) return;
+
+          var html = '';
+          for (var i = 0; i < collections.length; i++) {
+            var item = collections[i];
+            var grad = coverGradients[item.cover] || '';
+            var icon = item.cover || 'book-open';
+            html += '<div class="rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">';
+            html += '<div class="flex">';
+            html += '<div class="shrink-0 w-28 h-28 relative" style="background: ' + grad + ';">';
+            html += '<div class="absolute inset-0 flex items-center justify-center">';
+            html += '<i data-lucide="' + icon + '" class="w-10 h-10" style="color: rgba(255,255,255,0.6);"></i>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="flex flex-col justify-between flex-1 min-w-0 p-3">';
+            html += '<div>';
+            html += '<h3 class="text-sm font-semibold truncate" style="color: var(--foreground);">' + item.name + '</h3>';
+            html += '<p class="text-xs mt-1 line-clamp-2" style="color: var(--muted-foreground);">' + item.desc + '</p>';
+            html += '</div>';
+            html += '<div class="flex items-center gap-3 mt-2">';
+            html += '<div class="flex items-center gap-1">';
+            html += '<i data-lucide="layers" class="w-3 h-3" style="color: var(--muted-foreground);"></i>';
+            html += '<span class="text-xs" style="color: var(--muted-foreground);">' + item.postCount + ' posts</span>';
+            html += '</div>';
+            html += '<div class="flex items-center gap-1">';
+            html += '<i data-lucide="users" class="w-3 h-3" style="color: var(--muted-foreground);"></i>';
+            html += '<span class="text-xs" style="color: var(--muted-foreground);">' + formatFollowers(item.followers) + ' subscribers</span>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="flex items-center justify-between px-3 py-2.5" style="border-top: 1px solid var(--border);">';
+            html += '<span class="text-[10px]" style="color: var(--muted-foreground);">Updated ' + item.updatedAt + '</span>';
+            html += '<div class="flex items-center gap-3">';
+            html += '<button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="Share Collection">';
+            html += '<i data-lucide="share-2" class="w-3.5 h-3.5"></i>';
+            html += '<span class="text-xs">Share</span>';
+            html += '</button>';
+            html += '<button class="flex items-center gap-1" style="color: var(--muted-foreground);" aria-label="Manage Collection">';
+            html += '<i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>';
+            html += '</button>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+          }
+          container.innerHTML = html;
+        }
+
+        // === Load Collection Data ===
+        api.get('/api/v1/collection/list')
+          .then(function(res) {
+            if (res.code === 0 && res.data) {
+              var data = res.data;
+              renderOfficialCollections(data.official);
+              renderMyCollections(data.collections);
+              // Update total collection count
+              var countEl = document.getElementById('collection-count');
+              if (countEl) {
+                countEl.textContent = data.total + ' collections';
+              }
+            }
+            // Keep existing HTML as fallback on failure
+          })
+          .catch(function() {
+            // Keep existing HTML as fallback on network error
+          })
+          .finally(function() {
+            lucide.createIcons();
+          });
+
+        // === Back Button ===
+        var backBtn = document.querySelector('button[aria-label="Back"]');
+        if (backBtn) {
+          backBtn.addEventListener('click', function() {
+            window.history.back();
+          });
+        }
+
+        // === Bottom Navigation Links ===
+        var navButtons = document.querySelectorAll('nav[aria-label="Main Navigation"] button');
+        var navLinks = {
+          'Home': 'home.html',
+          'Categories': 'category.html',
+          'Pet Hub': 'pet-hub.html',
+          'Community': 'community.html',
+          'Profile': 'profile.html'
+        };
+        navButtons.forEach(function(btn) {
+          var label = (btn.querySelector('span') || {}).textContent;
+          if (label && navLinks[label]) {
+            btn.addEventListener('click', function() {
+              window.location.href = navLinks[label];
+            });
+          }
+        });
+      })();
+    </script>
+</body>
+</html>

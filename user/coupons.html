@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - My Coupons</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background: var(--background-200); color: var(--text-800); max-width: 375px; margin: 0 auto;">
+
+    <main>
+      <!-- Top Navigation -->
+      <nav style="display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 0 16px; background: var(--background-50); position: sticky; top: 0; z-index: 10;">
+        <button data-dom-id="back-previous" style="display: flex; align-items: center; gap: 4px; background: none; border: none; color: var(--brand-500); font-size: 15px; font-weight: 500; cursor: pointer; padding: 0;" aria-label="Back">
+          <i data-lucide="chevron-left" style="width: 22px; height: 22px;"></i>
+        </button>
+        <span style="font-size: 17px; font-weight: 600; color: var(--text-800); letter-spacing: -0.02em;">My Coupons</span>
+        <a href="#" style="font-size: 13px; font-weight: 500; color: var(--brand-500); text-decoration: none;">Coupon Center</a>
+      </nav>
+
+      <!-- Stats Summary -->
+      <section style="display: flex; justify-content: space-around; padding: 20px 16px; background: var(--background-50); margin: 12px 16px; border-radius: 16px; box-shadow: var(--shadow-sm);">
+        <div style="text-align: center;">
+          <div id="stat-available" style="font-size: 24px; font-weight: 700; color: var(--brand-500); line-height: 1.1; font-variant-numeric: tabular-nums;">0</div>
+          <div style="font-size: 12px; color: var(--text-400); margin-top: 4px;">Available</div>
+        </div>
+        <div style="width: 1px; background: var(--background-300);"></div>
+        <div style="text-align: center;">
+          <div id="stat-used" style="font-size: 24px; font-weight: 700; color: var(--text-400); line-height: 1.1; font-variant-numeric: tabular-nums;">0</div>
+          <div style="font-size: 12px; color: var(--text-400); margin-top: 4px;">Used</div>
+        </div>
+        <div style="width: 1px; background: var(--background-300);"></div>
+        <div style="text-align: center;">
+          <div id="stat-expired" style="font-size: 24px; font-weight: 700; color: var(--text-400); line-height: 1.1; font-variant-numeric: tabular-nums;">0</div>
+          <div style="font-size: 12px; color: var(--text-400); margin-top: 4px;">Expired</div>
+        </div>
+      </section>
+
+      <!-- Tab Bar -->
+      <div style="display: flex; gap: 0; margin: 0 16px; padding: 0; background: var(--background-200); border-radius: 12px; overflow: hidden;" role="tablist">
+        <button role="tab" aria-selected="true" class="coupon-tab coupon-tab-active" style="flex: 1; height: 40px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color .16s ease, color .16s ease;">Available</button>
+        <button role="tab" aria-selected="false" class="coupon-tab" style="flex: 1; height: 40px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; background: transparent; color: var(--text-400); transition: background-color .16s ease, color .16s ease;">Used</button>
+        <button role="tab" aria-selected="false" class="coupon-tab" style="flex: 1; height: 40px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; background: transparent; color: var(--text-400); transition: background-color .16s ease, color .16s ease;">Expired</button>
+      </div>
+
+      <!-- Coupon List -->
+      <div id="coupon-list" style="padding: 16px; display: flex; flex-direction: column; gap: 12px;"></div>
+
+      <!-- Bottom Navigation -->
+      <nav style="display: flex; justify-content: space-around; align-items: center; padding: 10px 0; background: var(--background-50); border-top: 1px solid var(--background-200); position: sticky; bottom: 0; margin-top: 16px;">
+        <a href="home.html" style="display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: var(--text-400); font-size: 11px; font-weight: 500;">
+          <i data-lucide="home" style="width: 22px; height: 22px;"></i>
+          Home
+        </a>
+        <a href="category.html" style="display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: var(--text-400); font-size: 11px; font-weight: 500;">
+          <i data-lucide="grid" style="width: 22px; height: 22px;"></i>
+          Categories
+        </a>
+        <a href="profile.html" style="display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: var(--brand-500); font-size: 11px; font-weight: 600;">
+          <i data-lucide="user" style="width: 22px; height: 22px;"></i>
+          My
+        </a>
+      </nav>
+    </main>
+
+    <style>
+      /* Coupon Tab Styles */
+      .coupon-tab-active {
+        background: var(--background-50);
+        color: var(--brand-500) !important;
+        box-shadow: var(--shadow-sm);
+      }
+      .coupon-tab-active:first-child {
+        border-radius: 12px 0 0 12px;
+      }
+      .coupon-tab-active:last-child {
+        border-radius: 0 12px 12px 0;
+      }
+
+      /* Available coupon button hover */
+      .coupon-card-usable .btn-primary:hover {
+        filter: brightness(0.96);
+      }
+      .coupon-card-usable .btn-primary:active {
+        transform: scale(0.97);
+      }
+
+      /* Disabled card button styles */
+      .coupon-card-disabled {
+        pointer-events: none;
+      }
+    </style>
+
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      var api = window.moyuyoAPI;
+      var couponsData = [];
+
+      function renderCouponList() {
+        api.get('/api/v1/coupon/list').then(function(res) {
+          if (res.code !== 0) return;
+          var data = res.data;
+          couponsData = data.coupons;
+
+          // Update stats
+          document.getElementById('stat-available').textContent = data.stats.available;
+          document.getElementById('stat-used').textContent = data.stats.used;
+          document.getElementById('stat-expired').textContent = data.stats.expired;
+
+          // Render all coupons
+          renderCoupons(couponsData);
+          lucide.createIcons();
+        });
+      }
+
+      function renderCoupons(coupons) {
+        var container = document.getElementById('coupon-list');
+        container.innerHTML = '';
+
+        coupons.forEach(function(coupon) {
+          var isAvailable = coupon.status === 'AVAILABLE';
+          var isUsed = coupon.status === 'USED';
+          var isExpired = coupon.status === 'EXPIRED';
+          var isDisabled = isUsed || isExpired;
+
+          // Format discount display
+          var discountHtml = '';
+          if (coupon.type === 'FULL_REDUCTION') {
+            var amount = (coupon.discount / 100).toFixed(0);
+            discountHtml = '<span style="font-size:16px;font-weight:600;color:' + (isDisabled ? 'var(--text-400)' : 'var(--background-50)') + ';">¥</span><span style="font-size:36px;font-weight:700;color:' + (isDisabled ? 'var(--text-400)' : 'var(--background-50)') + ';line-height:1;font-variant-numeric:tabular-nums;">' + amount + '</span>';
+          } else if (coupon.type === 'PERCENTAGE') {
+            var percent = coupon.discount;
+            discountHtml = '<span style="font-size:28px;font-weight:700;color:' + (isDisabled ? 'var(--text-400)' : 'var(--background-50)') + ';line-height:1;">' + percent + '% OFF</span>';
+          }
+
+          var thresholdText = coupon.threshold === 0 ? 'No minimum' : 'Over ¥' + (coupon.threshold / 100);
+          var leftBg = isDisabled ? 'var(--background-300)' : 'linear-gradient(135deg, var(--brand-500), var(--brand-600))';
+          var thresholdColor = isDisabled ? 'var(--text-300)' : 'var(--brand-100)';
+          var nameColor = isDisabled ? 'var(--text-400)' : 'var(--text-800)';
+          var dateColor = isDisabled ? 'var(--text-300)' : 'var(--text-400)';
+          var opacity = isDisabled ? 'opacity:0.5;' : '';
+          var dashedColor = isDisabled ? 'var(--background-400)' : 'var(--background-300)';
+
+          var statusLabel = '';
+          if (isUsed) {
+            statusLabel = '<span style="align-self:flex-start;display:inline-flex;align-items:center;justify-content:center;height:32px;padding:0 16px;font-size:12px;border-radius:999px;background:var(--background-200);color:var(--text-400);font-weight:600;">Used</span>';
+          } else if (isExpired) {
+            statusLabel = '<span style="align-self:flex-start;display:inline-flex;align-items:center;justify-content:center;height:32px;padding:0 16px;font-size:12px;border-radius:999px;background:var(--background-200);color:var(--text-400);font-weight:600;">Expired</span>';
+          }
+
+          var nameStyle = isExpired ? 'text-decoration:line-through;' : '';
+
+          var card = document.createElement('div');
+          card.className = isDisabled ? 'coupon-card coupon-card-disabled' : 'coupon-card coupon-card-usable';
+          card.style.cssText = 'position:relative;display:flex;background:var(--background-50);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm);' + opacity;
+
+          card.innerHTML =
+            '<div class="coupon-cutout-left" style="position:absolute;left:108px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:var(--background-200);"></div>' +
+            '<div class="coupon-cutout-right" style="position:absolute;right:108px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:var(--background-200);"></div>' +
+            '<div style="width:108px;min-width:108px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 12px;background:' + leftBg + ';">' +
+              '<div style="display:flex;align-items:baseline;gap:1px;">' + discountHtml + '</div>' +
+              '<span style="font-size:11px;color:' + thresholdColor + ';margin-top:4px;">' + thresholdText + '</span>' +
+            '</div>' +
+            '<div style="width:1px;border-left:1.5px dashed ' + dashedColor + ';"></div>' +
+            '<div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:16px;">' +
+              '<div style="font-size:15px;font-weight:600;color:' + nameColor + ';margin-bottom:4px;' + nameStyle + '">' + coupon.name + '</div>' +
+              '<div style="font-size:12px;color:' + dateColor + ';margin-bottom:12px;">Valid until ' + coupon.validTo + '</div>' +
+              (isAvailable ? '<button class="btn btn-primary" style="align-self:flex-start;height:32px;padding:0 16px;font-size:12px;border-radius:999px;">Use Now</button>' : statusLabel) +
+            '</div>';
+
+          container.appendChild(card);
+        });
+      }
+
+      // Back button
+      document.querySelector('[data-dom-id="back-previous"]').addEventListener('click', function() {
+        window.history.back();
+      });
+
+      // Tab switching
+      var tabs = document.querySelectorAll('.coupon-tab');
+      var statusFilters = ['AVAILABLE', 'USED', 'EXPIRED'];
+
+      tabs.forEach(function(tab, index) {
+        tab.addEventListener('click', function() {
+          // Update tab styles
+          tabs.forEach(function(t) {
+            t.classList.remove('coupon-tab-active');
+            t.setAttribute('aria-selected', 'false');
+            t.style.background = 'transparent';
+            t.style.color = 'var(--text-400)';
+            t.style.fontWeight = '500';
+          });
+          tab.classList.add('coupon-tab-active');
+          tab.setAttribute('aria-selected', 'true');
+          tab.style.background = 'var(--background-50)';
+          tab.style.color = 'var(--brand-500)';
+          tab.style.fontWeight = '600';
+          tab.style.boxShadow = 'var(--shadow-sm)';
+
+          // Filter coupons
+          var filterStatus = statusFilters[index];
+          var filtered = couponsData.filter(function(c) { return c.status === filterStatus; });
+          renderCoupons(filtered);
+          lucide.createIcons();
+        });
+      });
+
+      // Initial render
+      renderCouponList();
+    </script>
+</body>
+</html>

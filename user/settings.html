@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Settings</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background-color: var(--background-200);">
+    <main class="mx-auto max-w-[375px] min-h-screen" style="background-color: var(--background-200);">
+
+      <!-- Top Navigation Bar -->
+      <header class="sticky top-0 z-30 flex items-center justify-center px-4" style="height: 44px; background-color: var(--background-50); border-bottom: 1px solid var(--border);">
+        <button data-dom-id="back-previous" class="absolute left-4 inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 hover:opacity-70" aria-label="Back" style="background-color: transparent;">
+          <i data-lucide="chevron-left" class="h-5 w-5" style="color: var(--brand-500);"></i>
+        </button>
+        <h1 class="text-base font-semibold" style="color: var(--text-800); letter-spacing: -0.02em;">Settings</h1>
+      </header>
+
+      <div class="px-4 pt-4 pb-8 flex flex-col gap-3">
+
+        <!-- Account & Security Section -->
+        <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);">
+          <div class="flex items-center justify-between px-4" style="height: 52px;">
+            <div class="flex items-center gap-3">
+              <span data-icon class="w-5 h-5 shrink-0" style="color: var(--icon-600); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Account & Security</span>
+            </div>
+            <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+          </div>
+          <div style="height: 1px; background-color: var(--border); margin-left: 52px;"></div>
+          <div class="flex items-center justify-between px-4" style="height: 52px;">
+            <div class="flex items-center gap-3">
+              <span data-icon class="w-5 h-5 shrink-0" style="color: var(--icon-600); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/pen-line.svg'); mask-image: url('../assets/icons/dl-builtin-apple/pen-line.svg');"></span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Personal Info</span>
+            </div>
+            <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+          </div>
+          <div style="height: 1px; background-color: var(--border); margin-left: 52px;"></div>
+          <div class="flex items-center justify-between px-4" style="height: 52px;">
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-medium" style="color: var(--text-800);">Phone Number</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-sm" style="color: var(--text-500);">138****8888</span>
+              <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+            </div>
+          </div>
+        </section>
+
+        <!-- Preferences Section -->
+        <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);">
+          <!-- Notification Settings -->
+          <div class="flex items-center justify-between px-4" style="height: 52px;">
+            <div class="flex items-center gap-3">
+              <i data-lucide="bell" class="w-5 h-5 shrink-0" style="color: var(--icon-600);"></i>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Notification Settings</span>
+            </div>
+            <!-- Toggle ON -->
+            <div class="relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer rounded-full transition-colors duration-200" style="background-color: var(--brand-500);">
+              <div class="absolute top-[2px] shadow-sm" style="left: 22px; width: 27px; height: 27px; border-radius: 999px; background-color: var(--background-50); transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.15);"></div>
+            </div>
+          </div>
+          <div style="height: 1px; background-color: var(--border); margin-left: 52px;"></div>
+          <!-- Dark Mode -->
+          <div class="flex items-center justify-between px-4" style="height: 52px;">
+            <div class="flex items-center gap-3">
+              <i data-lucide="moon" class="w-5 h-5 shrink-0" style="color: var(--icon-600);"></i>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Dark Mode</span>
+            </div>
+            <!-- Toggle OFF -->
+            <div class="relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer rounded-full transition-colors duration-200" style="background-color: var(--background-300);">
+              <div class="absolute top-[2px]" style="left: 2px; width: 27px; height: 27px; border-radius: 999px; background-color: var(--background-50); transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.15);"></div>
+            </div>
+          </div>
+          <div style="height: 1px; background-color: var(--border); margin-left: 52px;"></div>
+          <!-- Language -->
+          <div class="flex items-center justify-between px-4" style="height: 52px;">
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-medium" style="color: var(--text-800);">Language</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-sm" style="color: var(--text-500);">Simplified Chinese</span>
+              <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+            </div>
+          </div>
+        </section>
+
+        <!-- Support Section -->
+        <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);">
+          <!-- Help Center -->
+          <div class="flex items-center justify-between px-4" style="height: 52px;">
+            <div class="flex items-center gap-3">
+              <span data-icon class="w-5 h-5 shrink-0" style="color: var(--icon-600); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg');"></span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Help Center</span>
+            </div>
+            <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+          </div>
+          <div style="height: 1px; background-color: var(--border); margin-left: 52px;"></div>
+          <!-- Feedback -->
+          <div class="flex items-center justify-between px-4" style="height: 52px;">
+            <div class="flex items-center gap-3">
+              <span data-icon class="w-5 h-5 shrink-0" style="color: var(--icon-600); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">Feedback</span>
+            </div>
+            <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+          </div>
+          <div style="height: 1px; background-color: var(--border); margin-left: 52px;"></div>
+          <!-- About Us -->
+          <div class="flex items-center justify-between px-4" style="height: 52px;">
+            <div class="flex items-center gap-3">
+              <span data-icon class="w-5 h-5 shrink-0" style="color: var(--icon-600); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg');"></span>
+              <span class="text-sm font-medium" style="color: var(--text-800);">About Us</span>
+            </div>
+            <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+          </div>
+        </section>
+
+        <!-- Logout Button -->
+        <button data-dom-id="link-login" class="flex items-center justify-center w-full rounded-xl transition-opacity duration-150 hover:opacity-80 active:opacity-60" style="height: 48px; background-color: var(--background-50); color: var(--state-error);">
+          <span class="text-sm font-semibold">Log Out</span>
+        </button>
+
+        <!-- Version Info -->
+        <p class="pt-4 text-center text-xs" style="color: var(--text-400);">MOYUYO v1.0.0</p>
+
+      </div>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

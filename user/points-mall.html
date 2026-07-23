@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Points Mall</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+
+      <!-- iOS status bar simulation -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--foreground);"></span>
+          </div>
+        </div>
+
+        <!-- Navigation bar -->
+        <div class="flex items-center justify-between h-11 px-4">
+          <a href="javascript:void(0)" class="flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--background-200);" data-dom-id="back" aria-label="Back">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--foreground);"></span>
+          </a>
+          <span class="text-base font-semibold" style="color: var(--foreground);">Points Mall</span>
+          <div class="w-8 h-8"></div>
+        </div>
+      </div>
+
+      <!-- Points balance card -->
+      <section class="px-4 pt-2 pb-4" aria-label="Points Balance">
+        <div class="rounded-[var(--radius)] p-5 relative overflow-hidden" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-700)); box-shadow: var(--shadow-md);">
+          <!-- Decorative circle background -->
+          <div class="absolute -top-6 -right-6 w-28 h-28 rounded-full opacity-20" style="background: var(--brand-200);"></div>
+          <div class="absolute -bottom-4 -left-4 w-20 h-20 rounded-full opacity-15" style="background: var(--brand-100);"></div>
+
+          <div class="relative z-10">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium" style="color: var(--brand-100);">My Points</span>
+              <div class="flex items-center gap-3">
+                <a href="wallet.html" class="text-xs font-medium" style="color: var(--brand-100); text-decoration: underline; text-underline-offset: 2px;" data-dom-id="cta-points-detail">Points Details</a>
+                <span class="text-xs" style="color: var(--brand-200);">|</span>
+                <a href="#" class="text-xs font-medium" style="color: var(--brand-100); text-decoration: underline; text-underline-offset: 2px;">Exchange Rules</a>
+              </div>
+            </div>
+            <!-- Large points number -->
+            <div class="mt-3 mb-1">
+              <span id="points-balance" class="text-4xl font-bold tracking-tight" style="color: var(--background-50); font-variant-numeric: tabular-nums;">2,580</span>
+            </div>
+            <p class="text-xs" style="color: var(--brand-200);">100 Points = $1, points valid for 12 months from date earned</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Category tabs (dynamically rendered) -->
+      <section class="px-4 pb-3" aria-label="Gift Categories">
+        <div id="mall-categories" class="flex gap-2 overflow-x-auto scrollbar-hide" aria-label="Gift Categories"></div>
+      </section>
+
+      <!-- Product/Gift grid (2 columns, dynamically rendered) -->
+      <section class="px-4 pt-3 pb-4" aria-label="Points Gift List">
+        <div id="mall-products" class="grid grid-cols-2 gap-3"></div>
+      </section>
+
+      <!-- Bottom notice -->
+      <section class="px-4 pb-6" aria-label="Points Info">
+        <div class="rounded-[var(--radius)] p-4 flex items-start gap-2.5" style="background: var(--secondary);">
+          <span data-icon class="w-4 h-4 shrink-0 mt-0.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-question-mark.svg'); color: var(--text-500);"></span>
+          <p class="text-xs leading-relaxed" style="color: var(--text-500);">100 Points = $1, points valid for 12 months from date earned. Points are non-transferable, non-withdrawable, and will expire automatically.</p>
+        </div>
+      </section>
+
+      <!-- Bottom TabBar -->
+      <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="Main Navigation">
+        <div class="flex items-stretch justify-around h-[49px]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+          <!-- Home -->
+          <a href="home.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="Home">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
+            <span class="text-[10px] font-medium">Home</span>
+          </a>
+          <!-- Categories -->
+          <a href="category.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-category" aria-label="Categories">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/grip.svg'); mask-image: url('../assets/icons/dl-builtin-apple/grip.svg');"></span>
+            <span class="text-[10px] font-medium">Categories</span>
+          </a>
+          <!-- Pet Hub -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-pet-hub" aria-label="Pet Hub">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+            <span class="text-[10px] font-medium">Pet Hub</span>
+          </button>
+          <!-- Community -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="Community">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+            <span class="text-[10px] font-medium">Community</span>
+          </button>
+          <!-- Profile -->
+          <a href="profile.html" class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--primary);" data-dom-id="nav-profile" aria-label="My Profile" aria-current="page">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
+            <span class="text-[10px] font-medium">Profile</span>
+          </a>
+        </div>
+        <!-- Safe area -->
+        <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.88);"></div>
+      </nav>
+
+    </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+var api = window.moyuyoAPI;
+
+(function () {
+  'use strict';
+
+  var currentCategory = null;
+  var allProducts = [];
+  var allCategories = [];
+
+  function formatNumber(n) {
+    return Number(n).toLocaleString('en-US');
+  }
+
+  function renderCategories(categories) {
+    var container = document.getElementById('mall-categories');
+    if (!container) return;
+
+    var html = '<button class="category-tab flex-shrink-0 px-4 h-9 rounded-full text-sm font-semibold transition-colors" style="background: var(--brand-500); color: #fff;" data-category="">All</button>';
+
+    categories.forEach(function (cat) {
+      html += '<button class="category-tab flex-shrink-0 px-4 h-9 rounded-full text-sm font-medium transition-colors" style="background: var(--background-100); color: var(--text-500);" data-category="' + cat.id + '">' + cat.name + '</button>';
+    });
+
+    container.innerHTML = html;
+
+    container.querySelectorAll('.category-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        currentCategory = this.getAttribute('data-category') || null;
+        container.querySelectorAll('.category-tab').forEach(function (b) {
+          b.style.background = 'var(--background-100)';
+          b.style.color = 'var(--text-500)';
+          b.style.fontWeight = '500';
+        });
+        this.style.background = 'var(--brand-500)';
+        this.style.color = '#fff';
+        this.style.fontWeight = '600';
+        renderProducts();
+      });
+    });
+  }
+
+  function renderProducts() {
+    var container = document.getElementById('mall-products');
+    if (!container) return;
+
+    var filtered = allProducts;
+    if (currentCategory) {
+      filtered = allProducts.filter(function (p) { return p.category === currentCategory; });
+    }
+
+    var html = '';
+    filtered.forEach(function (product) {
+      html += '<div class="rounded-[var(--radius)] overflow-hidden border flex flex-col" style="background: var(--card); border-color: var(--border); box-shadow: var(--shadow-xs);">';
+      html += '<div class="aspect-square flex items-center justify-center overflow-hidden" style="background: var(--background-100);">';
+      html += '<img src="' + product.image + '" alt="' + product.name + '" class="w-full h-full object-cover" loading="lazy" />';
+      html += '</div>';
+      html += '<div class="p-3 flex flex-col gap-1.5">';
+      html += '<h3 class="text-sm font-medium truncate" style="color: var(--foreground);">' + product.name + '</h3>';
+      html += '<span class="text-sm font-bold" style="color: #E8A817; font-variant-numeric: tabular-nums;">' + formatNumber(product.points) + ' Points</span>';
+      html += '<div class="flex items-center justify-between mt-1">';
+      html += '<span class="text-xs" style="color: var(--text-400);">Sold ' + formatNumber(product.sold) + '</span>';
+      html += '<button class="px-3 py-1.5 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">Exchange</button>';
+      html += '</div></div></div>';
+    });
+
+    container.innerHTML = html;
+    lucide.createIcons();
+  }
+
+  function init() {
+    var backBtn = document.querySelector('[data-dom-id="back"]');
+    if (backBtn) {
+      backBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.history.back();
+      });
+    }
+
+    api.get('/api/v1/points/balance').then(function (res) {
+      if (res.code === 0 && res.data) {
+        var balanceEl = document.getElementById('points-balance');
+        if (balanceEl) {
+          balanceEl.textContent = formatNumber(res.data.total);
+        }
+      }
+    }).catch(function (err) {
+      console.error('Failed to fetch points balance:', err);
+    });
+
+    api.get('/api/v1/points/mall').then(function (res) {
+      if (res.code === 0 && res.data) {
+        allCategories = res.data.categories || [];
+        allProducts = res.data.products || [];
+        renderCategories(allCategories);
+        renderProducts();
+      }
+    }).catch(function (err) {
+      console.error('Failed to fetch mall data:', err);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+    </script>
+</body>
+</html>

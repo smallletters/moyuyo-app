@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>预约服务 - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-28">
+
+      <!-- 顶部导航栏 -->
+      <div class="sticky top-0 z-30" style="background: var(--background-800);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--text-50);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--text-50);"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--text-50);"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--text-50);"></span>
+          </div>
+        </div>
+        <!-- 导航栏 -->
+        <div class="flex items-center h-11 px-4 gap-3" style="background: var(--background-800);">
+          <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: rgba(255,255,255,0.12);" aria-label="返回">
+            <i data-lucide="chevron-left" class="w-5 h-5" style="color: var(--text-50);"></i>
+          </button>
+          <h1 class="flex-1 text-center text-base font-semibold" style="color: var(--text-50);">预约服务</h1>
+          <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: rgba(255,255,255,0.12);" aria-label="分享">
+            <i data-lucide="share-2" class="w-4 h-4" style="color: var(--text-50);"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 门店信息卡片 -->
+      <section class="px-4 pt-4">
+        <div class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <div class="flex items-start gap-3">
+            <!-- 门店头像占位 -->
+            <div class="w-14 h-14 shrink-0 rounded-xl" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-300));"></div>
+            <div class="flex-1 min-w-0">
+              <h2 class="text-base font-semibold truncate" style="color: var(--foreground);">Paw Paradise 宠物生活馆</h2>
+              <div class="flex items-center gap-1.5 mt-1">
+                <!-- 评分星星 -->
+                <div class="flex items-center gap-0.5">
+                  <i data-lucide="star" class="w-3.5 h-3.5" style="color: #ff9500; fill: #ff9500;"></i>
+                  <span class="text-sm font-semibold" style="color: var(--foreground);">4.8</span>
+                </div>
+                <span class="text-xs" style="color: var(--text-400);">(326条评价)</span>
+              </div>
+              <div class="flex items-center gap-3 mt-1.5">
+                <div class="flex items-center gap-1">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5" style="color: var(--primary);"></i>
+                  <span class="text-xs" style="color: var(--text-500);">1.2km</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3.5 h-3.5" style="color: var(--state-success);"></i>
+                  <span class="text-xs" style="color: var(--state-success);">营业中</span>
+                </div>
+              </div>
+            </div>
+            <!-- 导航按钮 -->
+            <button class="w-9 h-9 shrink-0 flex items-center justify-center rounded-full" style="background: var(--background-200); border: 1px solid var(--border);" aria-label="导航到店">
+              <i data-lucide="navigation" class="w-4 h-4" style="color: var(--primary);"></i>
+            </button>
+          </div>
+          <!-- 地址 -->
+          <div class="flex items-start gap-1.5 mt-3 pt-3" style="border-top: 1px solid var(--border);">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 mt-0.5 shrink-0" style="color: var(--icon-muted);"></i>
+            <p class="text-xs leading-relaxed" style="color: var(--text-500);">123 Sunset Blvd, Beverly Hills, CA 90210</p>
+          </div>
+          <!-- 营业时间 -->
+          <div class="flex items-center gap-1.5 mt-1.5">
+            <i data-lucide="clock" class="w-3.5 h-3.5 shrink-0" style="color: var(--icon-muted);"></i>
+            <p class="text-xs" style="color: var(--text-500);">营业时间 09:00 - 21:00</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 门店图片轮播区 -->
+      <section class="px-4 pt-4">
+        <div class="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-1">
+          <!-- 图片占位 1 -->
+          <div class="shrink-0 w-56 snap-start rounded-xl overflow-hidden" style="aspect-ratio: 4/3; background: linear-gradient(135deg, var(--brand-50), var(--brand-200)); box-shadow: var(--shadow-sm);">
+            <div class="w-full h-full flex items-center justify-center">
+              <i data-lucide="store" class="w-8 h-8" style="color: var(--brand-400); opacity: 0.5;"></i>
+            </div>
+          </div>
+          <!-- 图片占位 2 -->
+          <div class="shrink-0 w-56 snap-start rounded-xl overflow-hidden" style="aspect-ratio: 4/3; background: linear-gradient(135deg, var(--state-success-surface), var(--brand-100)); box-shadow: var(--shadow-sm);">
+            <div class="w-full h-full flex items-center justify-center">
+              <i data-lucide="scissors" class="w-8 h-8" style="color: var(--state-success); opacity: 0.5;"></i>
+            </div>
+          </div>
+          <!-- 图片占位 3 -->
+          <div class="shrink-0 w-56 snap-start rounded-xl overflow-hidden" style="aspect-ratio: 4/3; background: linear-gradient(135deg, var(--background-200), var(--brand-50)); box-shadow: var(--shadow-sm);">
+            <div class="w-full h-full flex items-center justify-center">
+              <i data-lucide="image" class="w-8 h-8" style="color: var(--icon-400); opacity: 0.5;"></i>
+            </div>
+          </div>
+        </div>
+        <!-- 轮播指示点 -->
+        <div class="flex justify-center gap-1.5 mt-3">
+          <span class="w-5 h-1.5 rounded-full" style="background: var(--primary);"></span>
+          <span class="w-1.5 h-1.5 rounded-full" style="background: var(--background-400);"></span>
+          <span class="w-1.5 h-1.5 rounded-full" style="background: var(--background-400);"></span>
+        </div>
+      </section>
+
+      <!-- 服务类型选择 Tab -->
+      <section class="px-4 pt-5">
+        <div class="flex gap-2 overflow-x-auto no-scrollbar">
+          <button class="shrink-0 h-9 px-5 rounded-full text-sm font-medium" style="background: var(--primary); color: var(--primary-foreground);">美容</button>
+          <button class="shrink-0 h-9 px-5 rounded-full text-sm font-medium" style="background: var(--background-200); color: var(--text-600);">体检</button>
+          <button class="shrink-0 h-9 px-5 rounded-full text-sm font-medium" style="background: var(--background-200); color: var(--text-600);">寄养</button>
+          <button class="shrink-0 h-9 px-5 rounded-full text-sm font-medium" style="background: var(--background-200); color: var(--text-600);">上门服务</button>
+        </div>
+      </section>
+
+      <!-- 服务项目列表 -->
+      <section class="px-4 pt-4" aria-label="服务项目">
+        <div class="flex flex-col gap-3">
+
+          <!-- 服务项目 1 -->
+          <div class="rounded-[var(--radius)] p-4 cursor-pointer" style="background: var(--card); border: 1.5px solid var(--primary); box-shadow: var(--shadow-sm);">
+            <div class="flex items-center justify-between">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <h3 class="text-sm font-semibold" style="color: var(--foreground);">精致洗护</h3>
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-medium" style="background: var(--brand-50); color: var(--primary);">热门</span>
+                </div>
+                <p class="text-xs mt-1" style="color: var(--text-400);">温和洗浴 + 吹毛 + 基础修剪 + 耳道清洁</p>
+                <div class="flex items-center gap-3 mt-2">
+                  <span class="text-xs" style="color: var(--text-500);">
+                    <i data-lucide="clock" class="w-3 h-3 inline-block align-[-2px] mr-0.5" style="color: var(--icon-muted);"></i>
+                    约60分钟
+                  </span>
+                  <span class="text-xs" style="color: var(--text-500);">
+                    <i data-lucide="paw-print" class="w-3 h-3 inline-block align-[-2px] mr-0.5" style="color: var(--icon-muted);"></i>
+                    适用所有体型
+                  </span>
+                </div>
+              </div>
+              <div class="text-right shrink-0 ml-4">
+                <p class="text-lg font-bold" style="color: var(--primary);">$45</p>
+                <p class="text-[10px]" style="color: var(--text-300);">起</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 服务项目 2 -->
+          <div class="rounded-[var(--radius)] p-4 cursor-pointer" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="flex items-center justify-between">
+              <div class="flex-1 min-w-0">
+                <h3 class="text-sm font-semibold" style="color: var(--foreground);">造型设计</h3>
+                <p class="text-xs mt-1" style="color: var(--text-400);">专业造型师定制 + 全套洗护 + 精修造型</p>
+                <div class="flex items-center gap-3 mt-2">
+                  <span class="text-xs" style="color: var(--text-500);">
+                    <i data-lucide="clock" class="w-3 h-3 inline-block align-[-2px] mr-0.5" style="color: var(--icon-muted);"></i>
+                    约90分钟
+                  </span>
+                  <span class="text-xs" style="color: var(--text-500);">
+                    <i data-lucide="sparkles" class="w-3 h-3 inline-block align-[-2px] mr-0.5" style="color: var(--icon-muted);"></i>
+                    高级造型师
+                  </span>
+                </div>
+              </div>
+              <div class="text-right shrink-0 ml-4">
+                <p class="text-lg font-bold" style="color: var(--primary);">$85</p>
+                <p class="text-[10px]" style="color: var(--text-300);">起</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 服务项目 3 -->
+          <div class="rounded-[var(--radius)] p-4 cursor-pointer" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="flex items-center justify-between">
+              <div class="flex-1 min-w-0">
+                <h3 class="text-sm font-semibold" style="color: var(--foreground);">指甲修剪</h3>
+                <p class="text-xs mt-1" style="color: var(--text-400);">专业修甲 + 磨甲 + 脚底毛修剪</p>
+                <div class="flex items-center gap-3 mt-2">
+                  <span class="text-xs" style="color: var(--text-500);">
+                    <i data-lucide="clock" class="w-3 h-3 inline-block align-[-2px] mr-0.5" style="color: var(--icon-muted);"></i>
+                    约20分钟
+                  </span>
+                </div>
+              </div>
+              <div class="text-right shrink-0 ml-4">
+                <p class="text-lg font-bold" style="color: var(--primary);">$18</p>
+                <p class="text-[10px]" style="color: var(--text-300);">起</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 服务项目 4 -->
+          <div class="rounded-[var(--radius)] p-4 cursor-pointer" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="flex items-center justify-between">
+              <div class="flex-1 min-w-0">
+                <h3 class="text-sm font-semibold" style="color: var(--foreground);">SPA舒缓护理</h3>
+                <p class="text-xs mt-1" style="color: var(--text-400);">精油按摩 + 热敷理疗 + 深层清洁 + 营养护毛</p>
+                <div class="flex items-center gap-3 mt-2">
+                  <span class="text-xs" style="color: var(--text-500);">
+                    <i data-lucide="clock" class="w-3 h-3 inline-block align-[-2px] mr-0.5" style="color: var(--icon-muted);"></i>
+                    约120分钟
+                  </span>
+                  <span class="text-xs" style="color: var(--text-500);">
+                    <i data-lucide="heart" class="w-3 h-3 inline-block align-[-2px] mr-0.5" style="color: var(--icon-muted);"></i>
+                    含有机精油
+                  </span>
+                </div>
+              </div>
+              <div class="text-right shrink-0 ml-4">
+                <p class="text-lg font-bold" style="color: var(--primary);">$128</p>
+                <p class="text-[10px]" style="color: var(--text-300);">起</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 日期选择器 -->
+      <section class="px-4 pt-6" aria-label="选择日期">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-sm font-semibold" style="color: var(--foreground);">选择日期</h2>
+          <div class="flex items-center gap-2">
+            <button class="w-7 h-7 flex items-center justify-center rounded-full" style="background: var(--background-200);" aria-label="上个月">
+              <i data-lucide="chevron-left" class="w-4 h-4" style="color: var(--text-600);"></i>
+            </button>
+            <span class="text-sm font-medium" style="color: var(--foreground);">2026年7月</span>
+            <button class="w-7 h-7 flex items-center justify-center rounded-full" style="background: var(--background-200);" aria-label="下个月">
+              <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--text-600);"></i>
+            </button>
+          </div>
+        </div>
+        <!-- 星期标题 -->
+        <div class="grid grid-cols-7 gap-1 mb-1">
+          <span class="text-center text-[11px] font-medium py-1" style="color: var(--text-400);">日</span>
+          <span class="text-center text-[11px] font-medium py-1" style="color: var(--text-400);">一</span>
+          <span class="text-center text-[11px] font-medium py-1" style="color: var(--text-400);">二</span>
+          <span class="text-center text-[11px] font-medium py-1" style="color: var(--text-400);">三</span>
+          <span class="text-center text-[11px] font-medium py-1" style="color: var(--text-400);">四</span>
+          <span class="text-center text-[11px] font-medium py-1" style="color: var(--text-400);">五</span>
+          <span class="text-center text-[11px] font-medium py-1" style="color: var(--text-400);">六</span>
+        </div>
+        <!-- 日历网格 -->
+        <div class="grid grid-cols-7 gap-1">
+          <!-- 上月占位 -->
+          <span class="date-disabled text-center py-2 text-sm rounded-lg">29</span>
+          <span class="date-disabled text-center py-2 text-sm rounded-lg">30</span>
+          <!-- 7月 -->
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">1</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">2</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">3</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">4</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">5</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">6</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">7</button>
+          <!-- 今天 8号 -->
+          <button class="date-today text-center py-2 text-sm rounded-lg font-semibold" style="color: var(--primary);">8</button>
+          <!-- 可预约日期 -->
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">9</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">10</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">11</button>
+          <button class="date-active text-center py-2 text-sm rounded-lg font-semibold">12</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">13</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">14</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">15</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">16</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">17</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">18</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">19</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">20</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">21</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">22</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">23</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">24</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">25</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">26</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">27</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">28</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">29</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">30</button>
+          <button class="text-center py-2 text-sm rounded-lg font-medium" style="color: var(--foreground); background: var(--background-200);">31</button>
+          <!-- 下月占位 -->
+          <span class="date-disabled text-center py-2 text-sm rounded-lg">1</span>
+          <span class="date-disabled text-center py-2 text-sm rounded-lg">2</span>
+        </div>
+      </section>
+
+      <!-- 时段选择网格 -->
+      <section class="px-4 pt-6" aria-label="选择时段">
+        <h2 class="text-sm font-semibold mb-3" style="color: var(--foreground);">选择时段</h2>
+        <div class="grid grid-cols-3 gap-2">
+          <button class="py-2.5 rounded-xl text-sm font-medium text-center" style="background: var(--background-200); color: var(--foreground);">09:00</button>
+          <button class="slot-active py-2.5 rounded-xl text-sm font-semibold text-center">10:00</button>
+          <button class="py-2.5 rounded-xl text-sm font-medium text-center" style="background: var(--background-200); color: var(--foreground);">11:00</button>
+          <button class="slot-disabled py-2.5 rounded-xl text-sm font-medium text-center" style="background: var(--background-200); color: var(--text-300);">12:00</button>
+          <button class="slot-disabled py-2.5 rounded-xl text-sm font-medium text-center" style="background: var(--background-200); color: var(--text-300);">13:00</button>
+          <button class="py-2.5 rounded-xl text-sm font-medium text-center" style="background: var(--background-200); color: var(--foreground);">14:00</button>
+          <button class="py-2.5 rounded-xl text-sm font-medium text-center" style="background: var(--background-200); color: var(--foreground);">15:00</button>
+          <button class="py-2.5 rounded-xl text-sm font-medium text-center" style="background: var(--background-200); color: var(--foreground);">16:00</button>
+          <button class="slot-disabled py-2.5 rounded-xl text-sm font-medium text-center" style="background: var(--background-200); color: var(--text-300);">17:00</button>
+        </div>
+        <!-- 已选时段提示 -->
+        <div class="flex items-center gap-1.5 mt-3">
+          <i data-lucide="info" class="w-3.5 h-3.5" style="color: var(--icon-muted);"></i>
+          <span class="text-xs" style="color: var(--text-400);">已选 7月12日 周日 10:00，服务时长约60分钟</span>
+        </div>
+      </section>
+
+      <!-- 选择宠物区域 -->
+      <section class="px-4 pt-6" aria-label="选择宠物">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-sm font-semibold" style="color: var(--foreground);">选择宠物</h2>
+          <button class="flex items-center gap-1" aria-label="添加宠物">
+            <i data-lucide="plus-circle" class="w-4 h-4" style="color: var(--primary);"></i>
+            <span class="text-xs font-medium" style="color: var(--primary);">添加</span>
+          </button>
+        </div>
+        <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1">
+          <!-- 宠物卡片 1 (选中态) -->
+          <button class="pet-active shrink-0 flex flex-col items-center gap-2 w-20 py-3 rounded-xl" style="background: var(--card); border: 1.5px solid var(--primary); box-shadow: var(--shadow-sm);">
+            <div class="w-12 h-12 rounded-full" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-200));"></div>
+            <span class="text-xs font-medium" style="color: var(--primary);">Lucky</span>
+            <span class="text-[10px]" style="color: var(--text-400);">金毛</span>
+          </button>
+          <!-- 宠物卡片 2 -->
+          <button class="shrink-0 flex flex-col items-center gap-2 w-20 py-3 rounded-xl" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="w-12 h-12 rounded-full" style="background: linear-gradient(135deg, var(--state-success-surface), var(--brand-50));"></div>
+            <span class="text-xs font-medium" style="color: var(--foreground);">Mimi</span>
+            <span class="text-[10px]" style="color: var(--text-400);">英短</span>
+          </button>
+          <!-- 宠物卡片 3 -->
+          <button class="shrink-0 flex flex-col items-center gap-2 w-20 py-3 rounded-xl" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="w-12 h-12 rounded-full" style="background: linear-gradient(135deg, var(--background-200), var(--background-300));"></div>
+            <span class="text-xs font-medium" style="color: var(--foreground);">Coco</span>
+            <span class="text-[10px]" style="color: var(--text-400);">泰迪</span>
+          </button>
+          <!-- 添加宠物占位 -->
+          <button class="shrink-0 flex flex-col items-center justify-center gap-2 w-20 py-3 rounded-xl" style="background: var(--background-200); border: 1.5px dashed var(--background-400);" aria-label="添加新宠物">
+            <i data-lucide="plus" class="w-6 h-6" style="color: var(--icon-muted);"></i>
+            <span class="text-[10px]" style="color: var(--text-400);">添加</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 预约须知 -->
+      <section class="px-4 pt-6 pb-4" aria-label="预约须知">
+        <div class="rounded-[var(--radius)] p-4" style="background: var(--accent); border: 1px solid var(--border);">
+          <div class="flex items-start gap-2">
+            <i data-lucide="info" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--primary);"></i>
+            <div class="flex-1">
+              <h3 class="text-xs font-semibold mb-1.5" style="color: var(--foreground);">预约须知</h3>
+              <ul class="flex flex-col gap-1">
+                <li class="text-[11px] leading-relaxed" style="color: var(--text-500);">- 预约成功后需支付 $10 定金，到店后可抵扣</li>
+                <li class="text-[11px] leading-relaxed" style="color: var(--text-500);">- 提前24小时免费取消，24小时内取消定金不退</li>
+                <li class="text-[11px] leading-relaxed" style="color: var(--text-500);">- 请提前10分钟到店办理登记手续</li>
+                <li class="text-[11px] leading-relaxed" style="color: var(--text-500);">- 实际费用以门店最终确认为准</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 底部固定操作栏 -->
+    <div class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);">
+      <div class="flex items-center justify-between px-4 h-[56px]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+        <!-- 价格汇总 -->
+        <div class="flex items-baseline gap-1">
+          <span class="text-xs" style="color: var(--text-400);">合计</span>
+          <span class="text-xl font-bold" style="color: var(--primary);">$45</span>
+          <span class="text-xs" style="color: var(--text-300);">+ $10定金</span>
+        </div>
+        <!-- 确认预约按钮 -->
+        <button class="h-11 px-8 rounded-full text-sm font-semibold" style="background: var(--primary); color: var(--primary-foreground);">
+          确认预约
+        </button>
+      </div>
+      <!-- Safe area -->
+      <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.92);"></div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

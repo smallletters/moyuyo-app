@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO Prime</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background: var(--background-200);">
+    <main class="pb-24">
+
+      <!-- iOS 状态栏模拟 -->
+      <div class="sticky top-0 z-30" style="background: transparent;">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--text-50);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--text-50);"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--text-50);"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--text-50);"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================ -->
+      <!-- 顶部品牌区域 -->
+      <!-- ============================================ -->
+      <section class="prime-header-bg px-5 pt-6 pb-10" aria-label="Prime 品牌区域">
+        <!-- 返回导航 -->
+        <div class="flex items-center gap-3 mb-6">
+          <button class="w-9 h-9 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.15);" aria-label="返回">
+            <i data-lucide="chevron-left" class="w-5 h-5" style="color: var(--text-50);"></i>
+          </button>
+          <span class="text-sm font-medium" style="color: var(--text-50);">MOYUYO Prime</span>
+        </div>
+        <!-- Logo + 标题 -->
+        <div class="flex items-center gap-4 mb-3">
+          <div class="prime-logo-mark">
+            <!-- 内联 Prime 图标 -->
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <path d="M14 2L17.5 10.5L26 12L20 18L21.5 26.5L14 22.5L6.5 26.5L8 18L2 12L10.5 10.5L14 2Z" fill="white" fill-opacity="0.95"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight" style="color: var(--text-50);">MOYUYO Prime</h1>
+            <p class="text-sm mt-0.5" style="color: rgba(255,255,255,0.8);">专属于你的高端宠物生活</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- 未开通视图（默认展示） -->
+      <!-- ============================================ -->
+      <div id="view-not-activated">
+
+        <!-- 价格对比区域 -->
+        <section class="px-4 -mt-6" aria-label="订阅方案选择">
+          <div class="prime-card p-4">
+
+            <!-- 方案切换 -->
+            <div class="flex gap-3 mb-5">
+              <!-- 月付方案 -->
+              <div class="plan-option flex-1 p-4 relative" id="plan-monthly" onclick="selectPlan('monthly')">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-sm font-semibold" style="color: var(--foreground);">月付</span>
+                </div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-2xl font-bold" style="color: var(--foreground);">$9.99</span>
+                  <span class="text-xs" style="color: var(--text-400);">/月</span>
+                </div>
+              </div>
+              <!-- 年付方案（默认选中） -->
+              <div class="plan-option selected flex-1 p-4 relative" id="plan-yearly" onclick="selectPlan('yearly')">
+                <div class="absolute -top-2.5 right-3">
+                  <span class="recommend-tag">推荐</span>
+                </div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-sm font-semibold" style="color: var(--foreground);">年付</span>
+                  <span class="save-badge">省 $20.88</span>
+                </div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-2xl font-bold" style="color: var(--foreground);">$99</span>
+                  <span class="text-xs" style="color: var(--text-400);">/年</span>
+                </div>
+                <div class="mt-1">
+                  <span class="text-xs" style="color: var(--text-400);">约 $8.25/月</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 立即开通按钮 -->
+            <button class="w-full h-14 rounded-2xl flex items-center justify-center gap-2 text-base font-bold" style="background: var(--primary); color: var(--primary-foreground);" onclick="activatePrime()" aria-label="立即开通 MOYUYO Prime">
+              <i data-lucide="crown" class="w-5 h-5"></i>
+              <span>立即开通</span>
+            </button>
+
+            <!-- 免费试用提示 -->
+            <div class="flex items-center justify-center gap-1.5 mt-3">
+              <i data-lucide="gift" class="w-3.5 h-3.5" style="color: var(--primary);"></i>
+              <span class="text-xs font-medium" style="color: var(--primary);">30天免费试用，随时可取消</span>
+            </div>
+
+            <!-- 合规提示 -->
+            <div class="mt-4 pt-3" style="border-top: 1px solid var(--background-200);">
+              <p class="text-xs leading-relaxed" style="color: var(--text-400);">
+                开通即表示你同意自动续费服务。试用期内免费，试用结束后将按所选方案自动扣费。你可以在「我的 > 订阅管理」中随时取消自动续费，取消后服务将持续至当前周期结束。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- 权益展示列表 -->
+        <!-- ============================================ -->
+        <section class="px-4 mt-5" aria-label="会员权益">
+          <div class="prime-card px-4 py-3">
+            <h2 class="text-base font-bold mb-1" style="color: var(--foreground);">会员专属权益</h2>
+            <p class="text-xs mb-2" style="color: var(--text-400);">开通 Prime 即享全部权益</p>
+
+            <!-- 权益 1: 全场免运费 -->
+            <div class="benefit-row">
+              <div class="benefit-icon-wrap" style="background: var(--brand-50);">
+                <i data-lucide="truck" class="w-[18px] h-[18px]" style="color: var(--primary);"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--foreground);">全场免运费</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">无门槛，全品类包邮</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4 flex-shrink-0" style="color: var(--text-300);"></i>
+            </div>
+
+            <!-- 权益 2: 专属会员价 -->
+            <div class="benefit-row">
+              <div class="benefit-icon-wrap" style="background: var(--state-success-surface);">
+                <i data-lucide="badge-percent" class="w-[18px] h-[18px]" style="color: var(--state-success);"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--foreground);">专属会员价</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">额外 5-10% off 折扣</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4 flex-shrink-0" style="color: var(--text-300);"></i>
+            </div>
+
+            <!-- 权益 3: 优先发货 -->
+            <div class="benefit-row">
+              <div class="benefit-icon-wrap" style="background: var(--brand-50);">
+                <i data-lucide="zap" class="w-[18px] h-[18px]" style="color: var(--brand-600);"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--foreground);">优先发货</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">24小时内极速发货</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4 flex-shrink-0" style="color: var(--text-300);"></i>
+            </div>
+
+            <!-- 权益 4: 免费退换货 -->
+            <div class="benefit-row">
+              <div class="benefit-icon-wrap" style="background: var(--state-success-surface);">
+                <i data-lucide="refresh-cw" class="w-[18px] h-[18px]" style="color: var(--state-success);"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--foreground);">免费退换货</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">退货运费全免</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4 flex-shrink-0" style="color: var(--text-300);"></i>
+            </div>
+
+            <!-- 权益 5: 专属客服 -->
+            <div class="benefit-row">
+              <div class="benefit-icon-wrap" style="background: var(--brand-50);">
+                <i data-lucide="headphones" class="w-[18px] h-[18px]" style="color: var(--primary);"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--foreground);">专属客服</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">1v1 优先响应</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4 flex-shrink-0" style="color: var(--text-300);"></i>
+            </div>
+
+            <!-- 权益 6: Prime Day 专属大促 -->
+            <div class="benefit-row">
+              <div class="benefit-icon-wrap" style="background: var(--state-error-surface);">
+                <i data-lucide="flame" class="w-[18px] h-[18px]" style="color: var(--state-error);"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--foreground);">Prime Day 专属大促</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">会员限定大促专场</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4 flex-shrink-0" style="color: var(--text-300);"></i>
+            </div>
+
+            <!-- 权益 7: 每月赠送积分 -->
+            <div class="benefit-row">
+              <div class="benefit-icon-wrap" style="background: var(--brand-50);">
+                <i data-lucide="coins" class="w-[18px] h-[18px]" style="color: var(--brand-600);"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--foreground);">每月赠送 $10 积分</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">自动到账，购物抵扣</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4 flex-shrink-0" style="color: var(--text-300);"></i>
+            </div>
+
+            <!-- 权益 8: 新品优先购 -->
+            <div class="benefit-row">
+              <div class="benefit-icon-wrap" style="background: var(--state-success-surface);">
+                <i data-lucide="sparkles" class="w-[18px] h-[18px]" style="color: var(--state-success);"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--foreground);">新品优先购</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">抢先体验新品</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4 flex-shrink-0" style="color: var(--text-300);"></i>
+            </div>
+
+            <!-- 权益 9: Pet Hub 全部场景解锁 -->
+            <div class="benefit-row">
+              <div class="benefit-icon-wrap" style="background: var(--brand-50);">
+                <i data-lucide="lock-open" class="w-[18px] h-[18px]" style="color: var(--primary);"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--foreground);">Pet Hub 全部场景解锁</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">健康、社交、护理全场景</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4 flex-shrink-0" style="color: var(--text-300);"></i>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============================================ -->
+      <!-- 已开通视图（条件展示） -->
+      <!-- ============================================ -->
+      <div id="view-activated" style="display: none;">
+
+        <!-- 会员状态卡片 -->
+        <section class="px-4 -mt-6" aria-label="会员状态">
+          <div class="prime-card p-4">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="prime-logo-mark" style="width: 44px; height: 44px; border-radius: 12px;">
+                <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+                  <path d="M14 2L17.5 10.5L26 12L20 18L21.5 26.5L14 22.5L6.5 26.5L8 18L2 12L10.5 10.5L14 2Z" fill="white" fill-opacity="0.95"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-bold" style="color: var(--foreground);">MOYUYO Prime 会员</span>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold" style="background: var(--state-success-surface); color: var(--state-success);">已开通</span>
+                </div>
+                <p class="text-xs mt-1" style="color: var(--text-400);">年付方案 · 自动续费已开启</p>
+              </div>
+            </div>
+
+            <!-- 到期信息 -->
+            <div class="flex items-center justify-between p-3 rounded-xl" style="background: var(--background-200);">
+              <div class="flex items-center gap-2">
+                <i data-lucide="calendar" class="w-4 h-4" style="color: var(--text-400);"></i>
+                <span class="text-sm" style="color: var(--foreground);">到期时间</span>
+              </div>
+              <span class="text-sm font-semibold" style="color: var(--foreground);">2027年7月8日</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 本月权益统计 -->
+        <section class="px-4 mt-4" aria-label="本月权益统计">
+          <div class="prime-card p-4">
+            <h2 class="text-base font-bold mb-3" style="color: var(--foreground);">本月已享权益</h2>
+            <div class="flex gap-3">
+              <!-- 免运费次数 -->
+              <div class="stat-card">
+                <div class="flex items-center justify-center mb-2">
+                  <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
+                    <i data-lucide="truck" class="w-4 h-4" style="color: var(--primary);"></i>
+                  </div>
+                </div>
+                <p class="text-xl font-bold" style="color: var(--foreground);">12</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">免运费次数</p>
+              </div>
+              <!-- 累计节省 -->
+              <div class="stat-card">
+                <div class="flex items-center justify-center mb-2">
+                  <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--state-success-surface);">
+                    <i data-lucide="piggy-bank" class="w-4 h-4" style="color: var(--state-success);"></i>
+                  </div>
+                </div>
+                <p class="text-xl font-bold" style="color: var(--foreground);">¥86</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">累计节省</p>
+              </div>
+              <!-- 优先发货 -->
+              <div class="stat-card">
+                <div class="flex items-center justify-center mb-2">
+                  <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--brand-50);">
+                    <i data-lucide="zap" class="w-4 h-4" style="color: var(--brand-600);"></i>
+                  </div>
+                </div>
+                <p class="text-xl font-bold" style="color: var(--foreground);">8</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">优先发货单</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 管理订阅 -->
+        <section class="px-4 mt-4" aria-label="订阅管理">
+          <div class="prime-card p-4">
+            <div class="flex items-center justify-between py-2" style="cursor: pointer;">
+              <div class="flex items-center gap-3">
+                <i data-lucide="credit-card" class="w-5 h-5" style="color: var(--primary);"></i>
+                <span class="text-sm font-medium" style="color: var(--foreground);">管理订阅</span>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--text-300);"></i>
+            </div>
+            <div class="flex items-center justify-between py-2" style="border-top: 1px solid var(--background-200); cursor: pointer;">
+              <div class="flex items-center gap-3">
+                <i data-lucide="receipt" class="w-5 h-5" style="color: var(--primary);"></i>
+                <span class="text-sm font-medium" style="color: var(--foreground);">查看账单</span>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--text-300);"></i>
+            </div>
+            <div class="flex items-center justify-between py-2" style="border-top: 1px solid var(--background-200); cursor: pointer;">
+              <div class="flex items-center gap-3">
+                <i data-lucide="gift" class="w-5 h-5" style="color: var(--primary);"></i>
+                <span class="text-sm font-medium" style="color: var(--foreground);">赠送积分</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm font-semibold" style="color: var(--primary);">本月 $10</span>
+                <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--text-300);"></i>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 底部占位 -->
+      <div class="h-8"></div>
+
+      <!-- ============================================ -->
+      <!-- 底部 TabBar -->
+      <!-- ============================================ -->
+      <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="主导航">
+        <div class="flex items-stretch justify-around h-[49px]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+          <!-- 首页 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="首页">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
+            <span class="text-[10px] font-medium">首页</span>
+          </button>
+          <!-- 分类 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="分类">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/grip.svg'); mask-image: url('../assets/icons/dl-builtin-apple/grip.svg');"></span>
+            <span class="text-[10px] font-medium">分类</span>
+          </button>
+          <!-- Pet Hub -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="Pet Hub">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+            <span class="text-[10px] font-medium">Pet Hub</span>
+          </button>
+          <!-- 社区 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="社区">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+            <span class="text-[10px] font-medium">社区</span>
+          </button>
+          <!-- 我的 -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="个人中心">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
+            <span class="text-[10px] font-medium">我的</span>
+          </button>
+        </div>
+        <!-- Safe area -->
+        <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.88);"></div>
+      </nav>
+
+    </main>
+
+    <script>
+      // 初始化 Lucide 图标
+      lucide.createIcons();
+
+      // 方案选择逻辑
+      function selectPlan(plan) {
+        const monthlyEl = document.getElementById('plan-monthly');
+        const yearlyEl = document.getElementById('plan-yearly');
+        if (plan === 'monthly') {
+          monthlyEl.classList.add('selected');
+          yearlyEl.classList.remove('selected');
+        } else {
+          yearlyEl.classList.add('selected');
+          monthlyEl.classList.remove('selected');
+        }
+      }
+
+      // 模拟开通 Prime 切换视图
+      function activatePrime() {
+        document.getElementById('view-not-activated').style.display = 'none';
+        document.getElementById('view-activated').style.display = 'block';
+        // 重新渲染新视图中的图标
+        lucide.createIcons();
+      }
+    </script>
+</body>
+</html>

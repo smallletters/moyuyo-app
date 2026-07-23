@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 尺码助手</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="max-width: 430px; margin: 0 auto;">
+    <main class="pb-12">
+
+      <!-- 顶部导航栏（深色） -->
+      <header class="sticky top-0 z-30" style="background: var(--background-800);">
+        <div class="h-12 flex items-center justify-between px-4">
+          <button class="w-9 h-9 flex items-center justify-center rounded-full" style="background: var(--background-700); color: var(--background-100);" aria-label="返回">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+          </button>
+          <h1 class="text-base font-semibold" style="color: var(--background-50);">尺码助手</h1>
+          <div class="w-9 h-9"></div>
+        </div>
+      </header>
+
+      <!-- 步骤指示器 -->
+      <div class="px-6 pt-6 pb-2">
+        <div class="flex items-center justify-center gap-0">
+          <!-- 步骤 1 -->
+          <div class="flex items-center gap-2">
+            <div class="step-dot w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all" id="stepDot1" style="background: var(--primary); color: var(--primary-foreground);">1</div>
+            <span class="step-label text-xs font-medium transition-all" id="stepLabel1" style="color: var(--primary);">选择宠物</span>
+          </div>
+          <!-- 连接线 -->
+          <div class="step-line w-8 h-0.5 mx-2 rounded-full transition-all" id="stepLine1" style="background: var(--background-300);"></div>
+          <!-- 步骤 2 -->
+          <div class="flex items-center gap-2">
+            <div class="step-dot w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all" id="stepDot2" style="background: var(--background-300); color: var(--text-400);">2</div>
+            <span class="step-label text-xs font-medium transition-all" id="stepLabel2" style="color: var(--text-400);">填写数据</span>
+          </div>
+          <!-- 连接线 -->
+          <div class="step-line w-8 h-0.5 mx-2 rounded-full transition-all" id="stepLine2" style="background: var(--background-300);"></div>
+          <!-- 步骤 3 -->
+          <div class="flex items-center gap-2">
+            <div class="step-dot w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all" id="stepDot3" style="background: var(--background-300); color: var(--text-400);">3</div>
+            <span class="step-label text-xs font-medium transition-all" id="stepLabel3" style="color: var(--text-400);">推荐结果</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 第一步：选择宠物 ==================== -->
+      <div class="step-panel active px-4 pt-4 pb-4" id="step1">
+        <!-- 宠物种类切换 Tab -->
+        <div class="rounded-2xl p-1 flex gap-1 mb-5" style="background: var(--background-200);">
+          <button class="pet-type-tab flex-1 h-11 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-all" id="tabDog" onclick="selectPetType('dog')" style="background: var(--primary); color: var(--primary-foreground);">
+            <i data-lucide="dog" class="w-4 h-4"></i>
+            犬类
+          </button>
+          <button class="pet-type-tab flex-1 h-11 rounded-xl text-sm font-medium flex items-center justify-center gap-2 transition-all" id="tabCat" onclick="selectPetType('cat')" style="background: transparent; color: var(--text-400);">
+            <i data-lucide="cat" class="w-4 h-4"></i>
+            猫咪
+          </button>
+        </div>
+
+        <!-- 品种搜索 -->
+        <div class="mb-5">
+          <label class="block text-sm font-semibold mb-2" style="color: var(--foreground);">品种</label>
+          <div class="field" style="min-width: auto; width: 100%;">
+            <i data-lucide="search" class="w-4 h-4 shrink-0" style="color: var(--icon-muted);"></i>
+            <input class="control text-sm" type="text" placeholder="搜索品种，如金毛、柯基..." id="breedInput">
+            <button class="clear text-base leading-none" id="breedClear" style="display: none;" onclick="clearBreed()" aria-label="清除">&times;</button>
+          </div>
+          <!-- 品种推荐标签 -->
+          <div class="flex flex-wrap gap-2 mt-3">
+            <button class="breed-tag px-3 py-1.5 rounded-full text-xs font-medium transition-all" style="background: var(--background-200); color: var(--text-600);" onclick="selectBreed(this)">金毛寻回犬</button>
+            <button class="breed-tag px-3 py-1.5 rounded-full text-xs font-medium transition-all" style="background: var(--background-200); color: var(--text-600);" onclick="selectBreed(this)">柯基</button>
+            <button class="breed-tag px-3 py-1.5 rounded-full text-xs font-medium transition-all" style="background: var(--background-200); color: var(--text-600);" onclick="selectBreed(this)">拉布拉多</button>
+            <button class="breed-tag px-3 py-1.5 rounded-full text-xs font-medium transition-all" style="background: var(--background-200); color: var(--text-600);" onclick="selectBreed(this)">泰迪</button>
+            <button class="breed-tag px-3 py-1.5 rounded-full text-xs font-medium transition-all" style="background: var(--background-200); color: var(--text-600);" onclick="selectBreed(this)">哈士奇</button>
+          </div>
+        </div>
+
+        <!-- 体重滑块 -->
+        <div class="rounded-2xl p-4 mb-5" style="background: var(--background-100); border: 1px solid var(--border);">
+          <div class="flex items-center justify-between mb-3">
+            <label class="text-sm font-semibold" style="color: var(--foreground);">体重</label>
+            <span class="text-sm font-bold px-3 py-1 rounded-lg" id="weightDisplay" style="background: var(--brand-50); color: var(--primary);">15 kg</span>
+          </div>
+          <input type="range" min="1" max="80" value="15" id="weightSlider" oninput="updateWeight(this.value)">
+          <div class="flex justify-between mt-2">
+            <span class="text-xs" style="color: var(--text-400);">1 kg</span>
+            <span class="text-xs" style="color: var(--text-400);">80 kg</span>
+          </div>
+        </div>
+
+        <!-- 提示信息 -->
+        <div class="rounded-2xl p-4 flex gap-3 items-start" style="background: var(--brand-50); border: 1px solid var(--brand-100);">
+          <i data-lucide="info" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--primary);"></i>
+          <p class="text-xs leading-relaxed" style="color: var(--brand-700);">
+            准确的体重和品种信息能帮助我们更精确地推荐尺码。下一步需要填写宠物的身体测量数据。
+          </p>
+        </div>
+
+        <!-- 下一步按钮 -->
+        <button class="btn btn-primary btn-lg w-full mt-6" onclick="goToStep(2)">
+          下一步：填写测量数据
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- ==================== 第二步：填写数据 ==================== -->
+      <div class="step-panel px-4 pt-4 pb-4" id="step2">
+        <!-- 单位切换 -->
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="text-base font-semibold" style="color: var(--foreground);">宠物测量数据</h2>
+          <div class="rounded-full p-0.5 flex gap-0.5" style="background: var(--background-200);">
+            <button class="unit-tab px-3 py-1 rounded-full text-xs font-semibold transition-all" id="unitCm" onclick="switchUnit('cm')" style="background: var(--primary); color: var(--primary-foreground);">cm</button>
+            <button class="unit-tab px-3 py-1 rounded-full text-xs font-medium transition-all" id="unitInch" onclick="switchUnit('inch')" style="color: var(--text-400);">inch</button>
+          </div>
+        </div>
+
+        <!-- 胸围 -->
+        <div class="rounded-2xl p-4 mb-3 flex items-center gap-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="measure-illustration" style="background: linear-gradient(135deg, var(--brand-50), var(--brand-100));">
+            <i data-lucide="circle-dot" class="w-5 h-5" style="color: var(--primary);"></i>
+          </div>
+          <div class="flex-1">
+            <label class="block text-sm font-semibold mb-1.5" style="color: var(--foreground);">胸围</label>
+            <div class="flex items-center gap-2">
+              <input type="number" class="control text-base font-medium w-full" placeholder="0.0" id="chestGirth" style="background: transparent; border: none; outline: none; color: var(--foreground);">
+              <span class="text-sm font-medium shrink-0" id="chestUnit">cm</span>
+            </div>
+            <p class="text-xs mt-1" style="color: var(--text-400);">前肢后方最粗处绕一圈</p>
+          </div>
+        </div>
+
+        <!-- 颈围 -->
+        <div class="rounded-2xl p-4 mb-3 flex items-center gap-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="measure-illustration" style="background: linear-gradient(135deg, var(--brand-50), var(--brand-100));">
+            <i data-lucide="circle" class="w-5 h-5" style="color: var(--primary);"></i>
+          </div>
+          <div class="flex-1">
+            <label class="block text-sm font-semibold mb-1.5" style="color: var(--foreground);">颈围</label>
+            <div class="flex items-center gap-2">
+              <input type="number" class="control text-base font-medium w-full" placeholder="0.0" id="neckGirth" style="background: transparent; border: none; outline: none; color: var(--foreground);">
+              <span class="text-sm font-medium shrink-0" id="neckUnit">cm</span>
+            </div>
+            <p class="text-xs mt-1" style="color: var(--text-400);">颈部最粗处自然绕一圈</p>
+          </div>
+        </div>
+
+        <!-- 身长 -->
+        <div class="rounded-2xl p-4 mb-3 flex items-center gap-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="measure-illustration" style="background: linear-gradient(135deg, var(--brand-50), var(--brand-100));">
+            <i data-lucide="move-horizontal" class="w-5 h-5" style="color: var(--primary);"></i>
+          </div>
+          <div class="flex-1">
+            <label class="block text-sm font-semibold mb-1.5" style="color: var(--foreground);">身长</label>
+            <div class="flex items-center gap-2">
+              <input type="number" class="control text-base font-medium w-full" placeholder="0.0" id="bodyLength" style="background: transparent; border: none; outline: none; color: var(--foreground);">
+              <span class="text-sm font-medium shrink-0" id="bodyUnit">cm</span>
+            </div>
+            <p class="text-xs mt-1" style="color: var(--text-400);">肩部到臀部的直线距离</p>
+          </div>
+        </div>
+
+        <!-- 背长 -->
+        <div class="rounded-2xl p-4 mb-3 flex items-center gap-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="measure-illustration" style="background: linear-gradient(135deg, var(--brand-50), var(--brand-100));">
+            <i data-lucide="ruler" class="w-5 h-5" style="color: var(--primary);"></i>
+          </div>
+          <div class="flex-1">
+            <label class="block text-sm font-semibold mb-1.5" style="color: var(--foreground);">背长</label>
+            <div class="flex items-center gap-2">
+              <input type="number" class="control text-base font-medium w-full" placeholder="0.0" id="backLength" style="background: transparent; border: none; outline: none; color: var(--foreground);">
+              <span class="text-sm font-medium shrink-0" id="backUnit">cm</span>
+            </div>
+            <p class="text-xs mt-1" style="color: var(--text-400);">颈部基点到尾根的背脊长度</p>
+          </div>
+        </div>
+
+        <!-- 测量提示 -->
+        <div class="rounded-2xl p-4 flex gap-3 items-start mt-4" style="background: var(--background-100); border: 1px solid var(--border);">
+          <i data-lucide="lightbulb" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--chart-3);"></i>
+          <div>
+            <p class="text-xs font-semibold mb-1" style="color: var(--foreground);">测量小贴士</p>
+            <p class="text-xs leading-relaxed" style="color: var(--text-500);">
+              使用软尺测量，让宠物自然站立。测量时保持一指的松量，避免过紧或过松，可获得最准确的数据。
+            </p>
+          </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="flex gap-3 mt-6">
+          <button class="btn btn-secondary flex-1" onclick="goToStep(1)">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            上一步
+          </button>
+          <button class="btn btn-primary btn-lg flex-[2]" onclick="goToStep(3)">
+            获取尺码推荐
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- ==================== 第三步：推荐结果 ==================== -->
+      <div class="step-panel px-4 pt-4 pb-4" id="step3">
+        <!-- 推荐尺码卡片 -->
+        <div class="rounded-2xl overflow-hidden mb-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-md);">
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-4">
+              <i data-lucide="check-circle" class="w-5 h-5" style="color: var(--success);"></i>
+              <span class="text-sm font-semibold" style="color: var(--success);">智能推荐</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <!-- 左侧：推荐信息 -->
+              <div>
+                <p class="text-xs mb-1" style="color: var(--text-400);">最适合的尺码</p>
+                <p class="text-3xl font-bold" style="color: var(--foreground);">M 码</p>
+                <p class="text-xs mt-2" style="color: var(--text-500);">基于您的宠物数据与 1.2 万+ 退换货数据综合分析</p>
+              </div>
+              <!-- 右侧：合身度环形进度 -->
+              <div class="fit-ring">
+                <svg width="140" height="140" viewBox="0 0 140 140">
+                  <circle class="fit-ring-bg" cx="70" cy="70" r="60" />
+                  <circle class="fit-ring-progress" cx="70" cy="70" r="60" style="stroke-dashoffset: 30;" />
+                </svg>
+                <div class="fit-ring-label">
+                  <span class="text-2xl font-bold" style="color: var(--primary);">92%</span>
+                  <span class="text-[10px] font-medium" style="color: var(--text-400);">合身度</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 推荐详情条 -->
+          <div class="px-5 py-3 flex items-center gap-2" style="background: var(--brand-50);">
+            <i data-lucide="trending-up" class="w-3.5 h-3.5 shrink-0" style="color: var(--primary);"></i>
+            <p class="text-xs" style="color: var(--brand-700);">M 码在同类犬种中的退换率最低，仅 3.2%</p>
+          </div>
+        </div>
+
+        <!-- 尺码对照表 -->
+        <div class="rounded-2xl overflow-hidden mb-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="px-4 pt-4 pb-2 flex items-center justify-between">
+            <h3 class="text-sm font-semibold" style="color: var(--foreground);">尺码对照表</h3>
+            <span class="text-xs font-medium px-2 py-0.5 rounded-md" style="background: var(--background-200); color: var(--text-400);" id="tableUnitLabel">单位: cm</span>
+          </div>
+          <div class="overflow-x-auto no-scrollbar">
+            <table class="size-table w-full min-w-[320px]">
+              <thead>
+                <tr style="background: var(--background-100);">
+                  <th>尺码</th>
+                  <th>胸围</th>
+                  <th>颈围</th>
+                  <th>身长</th>
+                  <th>背长</th>
+                  <th>体重 (kg)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="inline-flex items-center justify-center w-7 h-7 rounded-lg text-xs font-bold" style="background: var(--background-200); color: var(--text-600);">XS</span></td>
+                  <td>33-40</td>
+                  <td>20-25</td>
+                  <td>22-28</td>
+                  <td>18-22</td>
+                  <td>2-4</td>
+                </tr>
+                <tr>
+                  <td><span class="inline-flex items-center justify-center w-7 h-7 rounded-lg text-xs font-bold" style="background: var(--background-200); color: var(--text-600);">S</span></td>
+                  <td>40-50</td>
+                  <td>25-32</td>
+                  <td>28-35</td>
+                  <td>22-28</td>
+                  <td>4-10</td>
+                </tr>
+                <tr class="recommended">
+                  <td>
+                    <span class="inline-flex items-center justify-center gap-1 w-auto px-2 h-7 rounded-lg text-xs font-bold" style="background: var(--primary); color: var(--primary-foreground);">
+                      M
+                      <i data-lucide="check" class="w-3 h-3"></i>
+                    </span>
+                  </td>
+                  <td>50-62</td>
+                  <td>32-40</td>
+                  <td>35-45</td>
+                  <td>28-36</td>
+                  <td>10-20</td>
+                </tr>
+                <tr>
+                  <td><span class="inline-flex items-center justify-center w-7 h-7 rounded-lg text-xs font-bold" style="background: var(--background-200); color: var(--text-600);">L</span></td>
+                  <td>62-76</td>
+                  <td>40-50</td>
+                  <td>45-56</td>
+                  <td>36-45</td>
+                  <td>20-35</td>
+                </tr>
+                <tr>
+                  <td><span class="inline-flex items-center justify-center w-7 h-7 rounded-lg text-xs font-bold" style="background: var(--background-200); color: var(--text-600);">XL</span></td>
+                  <td>76-90</td>
+                  <td>50-62</td>
+                  <td>56-68</td>
+                  <td>45-55</td>
+                  <td>35-55</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 测量方法说明 -->
+        <div class="rounded-2xl p-4 mb-5" style="background: var(--background-100); border: 1px solid var(--border);">
+          <h3 class="text-sm font-semibold mb-3 flex items-center gap-2" style="color: var(--foreground);">
+            <i data-lucide="book-open" class="w-4 h-4" style="color: var(--primary);"></i>
+            测量方法图示
+          </h3>
+          <div class="grid grid-cols-2 gap-3">
+            <!-- 胸围图示 -->
+            <div class="rounded-xl overflow-hidden" style="border: 1px solid var(--border);">
+              <div class="aspect-square flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%);">
+                <div class="w-16 h-16 rounded-full border-2 border-dashed flex items-center justify-center" style="border-color: var(--primary);">
+                  <i data-lucide="circle-dot" class="w-6 h-6" style="color: var(--primary);"></i>
+                </div>
+              </div>
+              <div class="p-2 text-center">
+                <p class="text-xs font-medium" style="color: var(--foreground);">胸围</p>
+                <p class="text-[10px]" style="color: var(--text-400);">前肢后方绕一圈</p>
+              </div>
+            </div>
+            <!-- 颈围图示 -->
+            <div class="rounded-xl overflow-hidden" style="border: 1px solid var(--border);">
+              <div class="aspect-square flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%);">
+                <div class="w-10 h-14 rounded-full border-2 border-dashed flex items-center justify-center" style="border-color: var(--primary);">
+                  <i data-lucide="circle" class="w-5 h-5" style="color: var(--primary);"></i>
+                </div>
+              </div>
+              <div class="p-2 text-center">
+                <p class="text-xs font-medium" style="color: var(--foreground);">颈围</p>
+                <p class="text-[10px]" style="color: var(--text-400);">颈部最粗处</p>
+              </div>
+            </div>
+            <!-- 身长图示 -->
+            <div class="rounded-xl overflow-hidden" style="border: 1px solid var(--border);">
+              <div class="aspect-square flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%);">
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-1 h-10 rounded-full" style="background: var(--primary); opacity: 0.6;"></div>
+                  <div class="flex items-center gap-1">
+                    <div class="w-1.5 h-1.5 rounded-full" style="background: var(--primary);"></div>
+                    <div class="w-8 h-0.5 rounded-full" style="background: var(--primary);"></div>
+                    <div class="w-1.5 h-1.5 rounded-full" style="background: var(--primary);"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-2 text-center">
+                <p class="text-xs font-medium" style="color: var(--foreground);">身长</p>
+                <p class="text-[10px]" style="color: var(--text-400);">肩部到臀部</p>
+              </div>
+            </div>
+            <!-- 背长图示 -->
+            <div class="rounded-xl overflow-hidden" style="border: 1px solid var(--border);">
+              <div class="aspect-square flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%);">
+                <div class="flex flex-col items-center gap-1">
+                  <i data-lucide="ruler" class="w-8 h-5" style="color: var(--primary);"></i>
+                  <div class="w-10 h-0.5 rounded-full" style="background: var(--primary); opacity: 0.6;"></div>
+                </div>
+              </div>
+              <div class="p-2 text-center">
+                <p class="text-xs font-medium" style="color: var(--foreground);">背长</p>
+                <p class="text-[10px]" style="color: var(--text-400);">颈基到尾根</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 保存宠物数据 -->
+        <div class="rounded-2xl p-4 mb-5 flex items-center gap-3" style="background: var(--background-100); border: 1px solid var(--border);">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-200));">
+            <i data-lucide="heart" class="w-5 h-5" style="color: var(--primary);"></i>
+          </div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold" style="color: var(--foreground);">保存到 Pet Profile</p>
+            <p class="text-xs" style="color: var(--text-400);">下次购物可一键获取推荐尺码</p>
+          </div>
+          <button class="w-10 h-6 rounded-full relative transition-all cursor-pointer" id="saveToggle" onclick="toggleSave()" style="background: var(--background-300);">
+            <div class="absolute top-1 left-1 w-4 h-4 rounded-full transition-all" id="saveToggleKnob" style="background: var(--background-50); box-shadow: var(--shadow-sm);"></div>
+          </button>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="flex gap-3 mb-4">
+          <button class="btn btn-secondary flex-1" onclick="goToStep(2)">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            修改数据
+          </button>
+          <button class="btn btn-primary btn-lg flex-[2]" onclick="applySize()">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            选择 M 码
+          </button>
+        </div>
+
+        <!-- 重新测量 -->
+        <button class="btn btn-text w-full text-sm" style="color: var(--text-400);" onclick="goToStep(1)">
+          <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+          重新开始测量
+        </button>
+      </div>
+
+    </main>
+
+    <script>
+      // ===== 当前状态 =====
+      let currentStep = 1;
+      let currentUnit = 'cm';
+      let currentPetType = 'dog';
+
+      // ===== 步骤切换 =====
+      function goToStep(step) {
+        // 隐藏当前步骤
+        document.getElementById('step' + currentStep).classList.remove('active');
+        // 显示目标步骤
+        document.getElementById('step' + step).classList.add('active');
+        currentStep = step;
+        updateStepIndicator();
+        // 滚动到顶部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // ===== 更新步骤指示器 =====
+      function updateStepIndicator() {
+        for (let i = 1; i <= 3; i++) {
+          const dot = document.getElementById('stepDot' + i);
+          const label = document.getElementById('stepLabel' + i);
+          if (i < currentStep) {
+            // 已完成
+            dot.style.background = 'var(--state-success)';
+            dot.style.color = 'var(--state-success-foreground)';
+            dot.textContent = '';
+            label.style.color = 'var(--state-success)';
+          } else if (i === currentStep) {
+            // 当前
+            dot.style.background = 'var(--primary)';
+            dot.style.color = 'var(--primary-foreground)';
+            dot.textContent = i;
+            label.style.color = 'var(--primary)';
+          } else {
+            // 未到达
+            dot.style.background = 'var(--background-300)';
+            dot.style.color = 'var(--text-400)';
+            dot.textContent = i;
+            label.style.color = 'var(--text-400)';
+          }
+        }
+        // 更新连接线
+        const line1 = document.getElementById('stepLine1');
+        const line2 = document.getElementById('stepLine2');
+        line1.style.background = currentStep > 1 ? 'var(--state-success)' : 'var(--background-300)';
+        line2.style.background = currentStep > 2 ? 'var(--state-success)' : 'var(--background-300)';
+      }
+
+      // ===== 宠物种类切换 =====
+      function selectPetType(type) {
+        currentPetType = type;
+        const tabDog = document.getElementById('tabDog');
+        const tabCat = document.getElementById('tabCat');
+        if (type === 'dog') {
+          tabDog.style.background = 'var(--primary)';
+          tabDog.style.color = 'var(--primary-foreground)';
+          tabDog.style.fontWeight = '600';
+          tabCat.style.background = 'transparent';
+          tabCat.style.color = 'var(--text-400)';
+          tabCat.style.fontWeight = '500';
+        } else {
+          tabCat.style.background = 'var(--primary)';
+          tabCat.style.color = 'var(--primary-foreground)';
+          tabCat.style.fontWeight = '600';
+          tabDog.style.background = 'transparent';
+          tabDog.style.color = 'var(--text-400)';
+          tabDog.style.fontWeight = '500';
+        }
+      }
+
+      // ===== 体重滑块更新 =====
+      function updateWeight(val) {
+        document.getElementById('weightDisplay').textContent = val + ' kg';
+      }
+
+      // ===== 品种选择 =====
+      function selectBreed(el) {
+        // 清除所有标签的选中状态
+        document.querySelectorAll('.breed-tag').forEach(tag => {
+          tag.style.background = 'var(--background-200)';
+          tag.style.color = 'var(--text-600)';
+        });
+        // 设置当前选中
+        el.style.background = 'var(--brand-50)';
+        el.style.color = 'var(--primary)';
+        el.style.border = '1px solid var(--brand-200)';
+        // 同步到输入框
+        document.getElementById('breedInput').value = el.textContent;
+        document.getElementById('breedClear').style.display = 'block';
+      }
+
+      // ===== 清除品种输入 =====
+      function clearBreed() {
+        document.getElementById('breedInput').value = '';
+        document.getElementById('breedClear').style.display = 'none';
+        document.querySelectorAll('.breed-tag').forEach(tag => {
+          tag.style.background = 'var(--background-200)';
+          tag.style.color = 'var(--text-600)';
+          tag.style.border = 'none';
+        });
+      }
+
+      // ===== 单位切换 =====
+      function switchUnit(unit) {
+        currentUnit = unit;
+        const cmTab = document.getElementById('unitCm');
+        const inchTab = document.getElementById('unitInch');
+        const tableLabel = document.getElementById('tableUnitLabel');
+
+        if (unit === 'cm') {
+          cmTab.style.background = 'var(--primary)';
+          cmTab.style.color = 'var(--primary-foreground)';
+          inchTab.style.background = 'transparent';
+          inchTab.style.color = 'var(--text-400)';
+          tableLabel.textContent = '单位: cm';
+        } else {
+          inchTab.style.background = 'var(--primary)';
+          inchTab.style.color = 'var(--primary-foreground)';
+          cmTab.style.background = 'transparent';
+          cmTab.style.color = 'var(--text-400)';
+          tableLabel.textContent = '单位: inch';
+        }
+
+        // 更新所有字段的单位标签
+        const unitLabels = ['chestUnit', 'neckUnit', 'bodyUnit', 'backUnit'];
+        unitLabels.forEach(id => {
+          document.getElementById(id).textContent = unit;
+        });
+      }
+
+      // ===== 保存开关 =====
+      let saveEnabled = false;
+      function toggleSave() {
+        saveEnabled = !saveEnabled;
+        const toggle = document.getElementById('saveToggle');
+        const knob = document.getElementById('saveToggleKnob');
+        if (saveEnabled) {
+          toggle.style.background = 'var(--primary)';
+          knob.style.left = 'calc(100% - 20px)';
+        } else {
+          toggle.style.background = 'var(--background-300)';
+          knob.style.left = '4px';
+        }
+      }
+
+      // ===== 应用尺码（模拟） =====
+      function applySize() {
+        // 在实际 App 中会跳转到商品详情页并预选 M 码
+        alert('已选择 M 码，正在返回商品详情页...');
+      }
+
+      // ===== 品种输入框联动 =====
+      document.getElementById('breedInput').addEventListener('input', function() {
+        document.getElementById('breedClear').style.display = this.value ? 'block' : 'none';
+      });
+    </script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

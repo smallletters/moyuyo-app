@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 充值</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-36">
+
+      <!-- iOS 状态栏模拟 -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--foreground);"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 顶部导航栏 -->
+      <nav class="sticky top-11 z-20 flex items-center h-11 px-4" style="background: var(--background);" aria-label="页面导航">
+        <!-- 返回按钮 -->
+        <a href="wallet.html" class="flex items-center justify-center w-9 h-9 -ml-1 rounded-full" style="color: var(--primary);" data-dom-id="cta-back" aria-label="返回钱包">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+        </a>
+        <!-- 页面标题 -->
+        <h1 class="flex-1 text-center text-base font-semibold" style="color: var(--foreground);">充值</h1>
+        <!-- 右侧占位，保持标题居中 -->
+        <div class="w-9"></div>
+      </nav>
+
+      <!-- 当前余额卡片 -->
+      <section class="px-4 pt-4" aria-label="余额信息">
+        <div class="rounded-[var(--radius)] px-5 py-6 relative overflow-hidden" style="background: var(--primary);">
+          <!-- 装饰背景图案 -->
+          <div class="absolute inset-0 opacity-10">
+            <img src="../assets/wallet-pattern.jpg" alt="" class="w-full h-full object-cover">
+          </div>
+          <div class="relative z-10">
+            <p class="text-xs font-medium tracking-wide" style="color: var(--primary-foreground); opacity: 0.8;">当前余额</p>
+            <p class="text-4xl font-bold mt-1.5 tracking-tight" style="color: var(--primary-foreground);">$128.50</p>
+            <p class="text-xs mt-2" style="color: var(--primary-foreground); opacity: 0.7;">可用余额 + 礼品卡余额</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 充值金额选择 -->
+      <section class="px-4 pt-6" aria-label="充值金额">
+        <h2 class="text-sm font-semibold mb-3" style="color: var(--foreground);">选择充值金额</h2>
+        <div class="grid grid-cols-3 gap-3">
+
+          <!-- $10 -->
+          <button class="amount-option flex flex-col items-center justify-center h-20 rounded-[var(--radius)] border transition-all duration-150" style="background: var(--card); border-color: var(--border);" data-amount="10" aria-label="充值 $10">
+            <span class="text-lg font-semibold" style="color: var(--foreground);">$10</span>
+          </button>
+
+          <!-- $20 -->
+          <button class="amount-option flex flex-col items-center justify-center h-20 rounded-[var(--radius)] border transition-all duration-150" style="background: var(--card); border-color: var(--border);" data-amount="20" aria-label="充值 $20">
+            <span class="text-lg font-semibold" style="color: var(--foreground);">$20</span>
+          </button>
+
+          <!-- $50（推荐，默认选中） -->
+          <button class="amount-option selected flex flex-col items-center justify-center h-20 rounded-[var(--radius)] border transition-all duration-150" style="background: var(--brand-50); border-color: var(--primary);" data-amount="50" aria-label="充值 $50">
+            <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded-full mb-1" style="background: var(--primary); color: var(--primary-foreground);">推荐</span>
+            <span class="text-lg font-semibold" style="color: var(--primary);">$50</span>
+          </button>
+
+          <!-- $100 -->
+          <button class="amount-option flex flex-col items-center justify-center h-20 rounded-[var(--radius)] border transition-all duration-150" style="background: var(--card); border-color: var(--border);" data-amount="100" aria-label="充值 $100">
+            <span class="text-lg font-semibold" style="color: var(--foreground);">$100</span>
+          </button>
+
+          <!-- $200 -->
+          <button class="amount-option flex flex-col items-center justify-center h-20 rounded-[var(--radius)] border transition-all duration-150" style="background: var(--card); border-color: var(--border);" data-amount="200" aria-label="充值 $200">
+            <span class="text-lg font-semibold" style="color: var(--foreground);">$200</span>
+          </button>
+
+          <!-- 自定义 -->
+          <button class="amount-option flex flex-col items-center justify-center h-20 rounded-[var(--radius)] border transition-all duration-150" style="background: var(--card); border-color: var(--border);" data-amount="custom" aria-label="自定义金额">
+            <span class="text-lg font-semibold" style="color: var(--foreground);">自定义</span>
+          </button>
+
+        </div>
+
+        <!-- 自定义金额输入框（隐藏状态） -->
+        <div id="custom-input-wrapper" class="mt-3 hidden">
+          <div class="field small" style="min-width: 0;">
+            <span class="text-sm font-semibold" style="color: var(--text-500);">$</span>
+            <input id="custom-amount-input" class="control text-base font-semibold" type="number" min="1" max="500" placeholder="输入金额" aria-label="自定义充值金额">
+          </div>
+        </div>
+      </section>
+
+      <!-- 支付方式选择 -->
+      <section class="px-4 pt-6" aria-label="支付方式">
+        <h2 class="text-sm font-semibold mb-3" style="color: var(--foreground);">支付方式</h2>
+
+        <!-- iOS 设置列表风格 -->
+        <div class="rounded-[var(--radius)] overflow-hidden border" style="background: var(--card); border-color: var(--border);">
+
+          <!-- Apple Pay（默认选中） -->
+          <label class="payment-option flex items-center gap-3 h-[52px] px-4 cursor-pointer" style="border-bottom: 1px solid var(--border);" data-method="apple-pay">
+            <div class="flex items-center justify-center w-8 h-8 rounded-lg" style="background: var(--background-200);">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--foreground);"></span>
+            </div>
+            <span class="flex-1 text-sm font-medium" style="color: var(--foreground);">Apple Pay</span>
+            <!-- 选中 radio 圆点 -->
+            <div class="radio-dot selected w-[22px] h-[22px] rounded-full flex items-center justify-center" style="background: var(--primary);">
+              <div class="w-2 h-2 rounded-full" style="background: var(--primary-foreground);"></div>
+            </div>
+          </label>
+
+          <!-- 信用卡/借记卡 -->
+          <label class="payment-option flex items-center gap-3 h-[52px] px-4 cursor-pointer" style="border-bottom: 1px solid var(--border);" data-method="credit-card">
+            <div class="flex items-center justify-center w-8 h-8 rounded-lg" style="background: var(--background-200);">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); color: var(--foreground);"></span>
+            </div>
+            <div class="flex-1">
+              <span class="text-sm font-medium block" style="color: var(--foreground);">信用卡/借记卡</span>
+              <span class="text-xs" style="color: var(--text-400);">Visa **** 4242</span>
+            </div>
+            <!-- 未选中 radio 圆点 -->
+            <div class="radio-dot w-[22px] h-[22px] rounded-full flex items-center justify-center" style="border: 2px solid var(--background-400); background: transparent;">
+            </div>
+          </label>
+
+          <!-- PayPal -->
+          <label class="payment-option flex items-center gap-3 h-[52px] px-4 cursor-pointer" data-method="paypal">
+            <div class="flex items-center justify-center w-8 h-8 rounded-lg" style="background: var(--background-200);">
+              <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--foreground);"></span>
+            </div>
+            <span class="flex-1 text-sm font-medium" style="color: var(--foreground);">PayPal</span>
+            <!-- 未选中 radio 圆点 -->
+            <div class="radio-dot w-[22px] h-[22px] rounded-full flex items-center justify-center" style="border: 2px solid var(--background-400); background: transparent;">
+            </div>
+          </label>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 底部固定操作栏 -->
+    <div class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);">
+      <div class="px-4 pt-3 pb-2" style="padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);">
+        <!-- 充值按钮 -->
+        <button class="w-full h-12 rounded-xl text-base font-semibold" style="background: var(--primary); color: var(--primary-foreground); border: none; box-shadow: var(--shadow-sm);" data-dom-id="cta-recharge" aria-label="确认充值">
+          充值 $50.00
+        </button>
+        <!-- 安全提示 -->
+        <p class="text-center text-[11px] mt-2" style="color: var(--text-400);">充值金额不可退款，可用于平台消费</p>
+      </div>
+    </div>
+
+    <script>
+      lucide.createIcons();
+
+      // 金额选择交互逻辑
+      (function() {
+        // 当前选中的金额
+        let selectedAmount = 50;
+        const rechargeBtn = document.querySelector('[data-dom-id="cta-recharge"]');
+
+        // 获取所有金额选项
+        const amountOptions = document.querySelectorAll('.amount-option');
+        const customInputWrapper = document.getElementById('custom-input-wrapper');
+        const customInput = document.getElementById('custom-amount-input');
+
+        // 点击金额选项
+        amountOptions.forEach(function(option) {
+          option.addEventListener('click', function() {
+            const amount = this.getAttribute('data-amount');
+
+            // 重置所有选项样式
+            amountOptions.forEach(function(opt) {
+              opt.style.background = 'var(--card)';
+              opt.style.borderColor = 'var(--border)';
+              opt.classList.remove('selected');
+            });
+
+            // 如果是自定义金额
+            if (amount === 'custom') {
+              customInputWrapper.classList.remove('hidden');
+              this.style.background = 'var(--brand-50)';
+              this.style.borderColor = 'var(--primary)';
+              this.classList.add('selected');
+              selectedAmount = null;
+              customInput.focus();
+              updateRechargeBtn();
+            } else {
+              // 隐藏自定义输入框
+              customInputWrapper.classList.add('hidden');
+              customInput.value = '';
+
+              // 设置选中态
+              this.style.background = 'var(--brand-50)';
+              this.style.borderColor = 'var(--primary)';
+              this.classList.add('selected');
+              selectedAmount = parseInt(amount, 10);
+              updateRechargeBtn();
+            }
+          });
+        });
+
+        // 自定义金额输入
+        customInput.addEventListener('input', function() {
+          updateRechargeBtn();
+        });
+
+        // 更新充值按钮文字
+        function updateRechargeBtn() {
+          var displayAmount;
+          if (selectedAmount !== null) {
+            displayAmount = '$' + selectedAmount.toFixed(2);
+          } else {
+            var customVal = parseFloat(customInput.value);
+            if (!isNaN(customVal) && customVal > 0) {
+              displayAmount = '$' + customVal.toFixed(2);
+            } else {
+              displayAmount = '$0.00';
+            }
+          }
+          rechargeBtn.textContent = '充值 ' + displayAmount;
+        }
+
+        // 支付方式选择交互
+        var paymentOptions = document.querySelectorAll('.payment-option');
+        paymentOptions.forEach(function(option) {
+          option.addEventListener('click', function() {
+            // 重置所有 radio 圆点样式
+            paymentOptions.forEach(function(opt) {
+              var dot = opt.querySelector('.radio-dot');
+              dot.classList.remove('selected');
+              dot.style.background = 'transparent';
+              dot.style.border = '2px solid var(--background-400)';
+              // 移除内部圆点
+              var inner = dot.querySelector('div');
+              if (inner) inner.remove();
+            });
+
+            // 设置选中态
+            var selectedDot = this.querySelector('.radio-dot');
+            selectedDot.classList.add('selected');
+            selectedDot.style.background = 'var(--primary)';
+            selectedDot.style.border = '2px solid var(--primary)';
+            // 添加内部圆点
+            var innerDot = document.createElement('div');
+            innerDot.className = 'w-2 h-2 rounded-full';
+            innerDot.style.background = 'var(--primary-foreground)';
+            selectedDot.appendChild(innerDot);
+          });
+        });
+      })();
+    </script>
+</body>
+</html>

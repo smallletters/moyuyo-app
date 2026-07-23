@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Coupon Center</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background: var(--background-200); max-width: 430px; margin: 0 auto;">
+    <main class="pb-28">
+
+      <!-- Dark top navigation bar -->
+      <nav class="sticky top-0 z-30 flex items-center justify-between h-12 px-4" style="background: var(--background-800);">
+        <button class="flex items-center justify-center w-8 h-8" style="color: var(--background-50);" aria-label="Back">
+          <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <h1 class="text-base font-semibold" style="color: var(--background-50);">Coupon Center</h1>
+        <div class="w-8 h-8"></div>
+      </nav>
+
+      <!-- Flash sale countdown banner -->
+      <section class="mx-4 mt-4 rounded-2xl px-4 py-3 flex items-center justify-between" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-700));">
+        <div class="flex items-center gap-2">
+          <i data-lucide="zap" class="w-4 h-4 countdown-pulse" style="color: var(--background-50);"></i>
+          <span class="text-sm font-semibold" style="color: var(--background-50);">Flash Coupons</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-xs font-medium" style="color: var(--brand-100);">Remaining</span>
+          <div class="flex items-center gap-0.5" id="countdown-display">
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-md text-xs font-bold" style="background: var(--background-900); color: var(--background-50);">02</span>
+            <span class="text-xs font-bold" style="color: var(--background-50);">:</span>
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-md text-xs font-bold" style="background: var(--background-900); color: var(--background-50);">15</span>
+            <span class="text-xs font-bold" style="color: var(--background-50);">:</span>
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-md text-xs font-bold" style="background: var(--background-900); color: var(--background-50);">30</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Coupon category tabs -->
+      <div class="px-4 mt-4 overflow-x-auto no-scrollbar">
+        <div class="flex gap-2" style="min-width: max-content;">
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="all" style="background: var(--primary); color: var(--primary-foreground);">All</button>
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="new" style="background: var(--background-100); color: var(--text-600);">New User</button>
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="category" style="background: var(--background-100); color: var(--text-600);">Category</button>
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="discount" style="background: var(--background-100); color: var(--text-600);">Spend &amp; Save</button>
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="flash" style="background: var(--background-100); color: var(--text-600);">Flash Sale</button>
+          <button class="coupon-tab px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap" data-tab="member" style="background: var(--background-100); color: var(--text-600);">Members Only</button>
+        </div>
+      </div>
+
+      <!-- Coupon list -->
+      <section class="px-4 mt-4 flex flex-col gap-3" aria-label="Available coupons" id="coupon-center-list"></section>
+
+    </main>
+
+    <!-- Bottom summary bar -->
+    <footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full z-30" style="max-width: 430px; background: var(--background-50); border-top: 1px solid var(--border);">
+      <div class="flex items-center justify-between px-5 h-14">
+        <div class="flex items-center gap-2">
+          <i data-lucide="ticket" class="w-4 h-4" style="color: var(--brand-500);"></i>
+          <span class="text-sm font-medium" style="color: var(--foreground);">Claimed <span id="claimed-count" class="font-bold" style="color: var(--brand-500);">1</span> coupons</span>
+        </div>
+        <button class="px-5 py-2 rounded-full text-xs font-semibold" style="background: var(--primary); color: var(--primary-foreground);">Use Now</button>
+      </div>
+    </footer>
+
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      var api = window.moyuyoAPI;
+      var claimableData = [];
+      var claimedTotal = 0;
+
+      // Category mapping for mock data
+      function getCategory(coupon) {
+        var name = coupon.name || '';
+        if (name.indexOf('New User') !== -1) return 'new';
+        if (name.indexOf('Members') !== -1) return 'member';
+        if (coupon.type === 'PERCENTAGE') return 'category';
+        if (coupon.type === 'FULL_REDUCTION') return 'discount';
+        return 'all';
+      }
+
+      function renderCouponCenter() {
+        api.get('/api/v1/coupon/center').then(function(res) {
+          if (res.code !== 0) return;
+          var data = res.data;
+          claimableData = data.claimable;
+          claimedTotal = 0;
+
+          var container = document.getElementById('coupon-center-list');
+          container.innerHTML = '';
+
+          // Today new count
+          var todayNewEl = document.createElement('div');
+          todayNewEl.style.cssText = 'display:flex;align-items:center;gap:6px;padding:0 4px;';
+          todayNewEl.innerHTML =
+            '<i data-lucide="sparkles" style="width:14px;height:14px;color:var(--brand-500);"></i>' +
+            '<span style="font-size:12px;font-weight:500;color:var(--brand-500);">New Today <b id="today-new-count">' + data.todayNew + '</b></span>';
+          container.appendChild(todayNewEl);
+
+          claimableData.forEach(function(coupon) {
+            var category = getCategory(coupon);
+            var discountHtml = '';
+            if (coupon.type === 'FULL_REDUCTION') {
+              discountHtml = '<span style="font-size:10px;font-weight:500;color:var(--brand-500);">¥</span><span style="font-size:22px;font-weight:700;color:var(--brand-500);line-height:1;">' + (coupon.discount / 100) + '</span>';
+            } else if (coupon.type === 'PERCENTAGE') {
+              var percent = (100 - coupon.discount) / 10;
+              discountHtml = '<span style="font-size:22px;font-weight:700;color:var(--brand-500);line-height:1;">' + percent + '</span><span style="font-size:12px;font-weight:700;color:var(--brand-500);">OFF</span>';
+            }
+
+            var thresholdText = coupon.threshold === 0 ? 'No minimum' : 'Over ¥' + (coupon.threshold / 100);
+            var stockText = 'Stock: ' + coupon.stock + ' | Claimed: ' + coupon.claimed;
+            var validText = 'Valid: ' + coupon.validDays + 'd | ' + (coupon.desc || 'Storewide');
+
+            var card = document.createElement('article');
+            card.className = 'coupon-card';
+            card.setAttribute('data-category', category);
+            card.style.cssText = 'background:var(--background-50);border-radius:12px;padding:14px;display:flex;gap:12px;box-shadow:var(--shadow-sm);border:1px solid var(--background-200);';
+
+            card.innerHTML =
+              '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:72px;">' +
+                '<span style="font-size:10px;font-weight:500;color:var(--text-400);">' + coupon.name + '</span>' +
+                '<div style="display:flex;align-items:baseline;gap:2px;margin-top:2px;">' + discountHtml + '</div>' +
+              '</div>' +
+              '<div style="flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0;">' +
+                '<h3 style="font-size:13px;font-weight:600;color:var(--text-800);margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + coupon.name + '</h3>' +
+                '<p style="font-size:11px;color:var(--text-400);margin:4px 0 0;">' + thresholdText + '</p>' +
+                '<p style="font-size:10px;color:var(--text-300);margin:2px 0 0;">' + stockText + '</p>' +
+                '<p style="font-size:10px;color:var(--text-300);margin:2px 0 0;">' + validText + '</p>' +
+              '</div>' +
+              '<div style="display:flex;align-items:center;">' +
+                '<button class="coupon-claim-btn" data-coupon-id="' + coupon.id + '" data-coupon-name="' + coupon.name + '" style="padding:6px 14px;border-radius:999px;font-size:11px;font-weight:600;border:none;cursor:pointer;background:var(--brand-500);color:var(--background-50);">Claim Now</button>' +
+              '</div>';
+
+            container.appendChild(card);
+          });
+
+          // Attach claim button handlers
+          container.querySelectorAll('.coupon-claim-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              var couponId = btn.getAttribute('data-coupon-id');
+              var couponName = btn.getAttribute('data-coupon-name');
+
+              api.post('/api/v1/coupon/claim', { couponId: couponId, couponName: couponName }).then(function(res) {
+                if (res.code === 0 && res.data && res.data.claimed) {
+                  btn.textContent = 'Claimed';
+                  btn.style.background = 'var(--background-300)';
+                  btn.style.color = 'var(--background-600)';
+                  btn.style.cursor = 'not-allowed';
+                  btn.disabled = true;
+
+                  var card = btn.closest('.coupon-card');
+                  card.style.opacity = '0.55';
+
+                  claimedTotal++;
+                  document.getElementById('claimed-count').textContent = claimedTotal;
+                }
+              });
+            });
+          });
+
+          lucide.createIcons();
+        });
+      }
+
+      // Back button
+      var backBtn = document.querySelector('[aria-label="Back"]');
+      if (backBtn) {
+        backBtn.addEventListener('click', function() {
+          window.history.back();
+        });
+      }
+
+      // Tab switching
+      var tabs = document.querySelectorAll('.coupon-tab[data-tab]');
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          tabs.forEach(function(t) {
+            t.style.background = 'var(--background-100)';
+            t.style.color = 'var(--text-600)';
+          });
+          tab.style.background = 'var(--primary)';
+          tab.style.color = 'var(--primary-foreground)';
+
+          var category = tab.getAttribute('data-tab');
+          var cards = document.querySelectorAll('#coupon-center-list [data-category]');
+          cards.forEach(function(card) {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // Countdown
+      var totalSeconds = 2 * 3600 + 15 * 60 + 30;
+      var countdownDisplay = document.getElementById('countdown-display');
+
+      function updateCountdown() {
+        if (totalSeconds <= 0) return;
+        totalSeconds--;
+        var hours = Math.floor(totalSeconds / 3600);
+        var minutes = Math.floor((totalSeconds % 3600) / 60);
+        var seconds = totalSeconds % 60;
+        var timeBlocks = [String(hours).padStart(2, '0'), String(minutes).padStart(2, '0'), String(seconds).padStart(2, '0')];
+        var spans = countdownDisplay.querySelectorAll('span');
+        var blockIndex = 0;
+        spans.forEach(function(span) {
+          if (span.classList.contains('rounded-md')) {
+            span.textContent = timeBlocks[blockIndex];
+            blockIndex++;
+          }
+        });
+      }
+      setInterval(updateCountdown, 1000);
+
+      // Initial render
+      lucide.createIcons();
+      renderCouponCenter();
+    </script>
+</body>
+</html>

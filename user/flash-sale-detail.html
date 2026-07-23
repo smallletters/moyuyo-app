@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Sale - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+
+      <!-- Top navigation bar: back arrow + title -->
+      <nav class="sticky top-0 z-30 flex items-center justify-between h-11 px-4"
+           style="background: var(--background-800);">
+        <button class="flex items-center justify-center w-9 h-9 -ml-1 rounded-full"
+                style="color: var(--background-50);"
+                aria-label="Go back" onclick="history.back()">
+          <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <span class="text-base font-semibold"
+              style="color: var(--background-50);">Flash Sale</span>
+        <button class="flex items-center justify-center w-9 h-9 -mr-1 rounded-full"
+                style="color: var(--background-50);"
+                aria-label="Share">
+          <i data-lucide="share" class="w-5 h-5"></i>
+        </button>
+      </nav>
+
+      <!-- Flash sale countdown banner -->
+      <div class="flex items-center justify-center gap-2 py-3 px-4"
+           style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+        <i data-lucide="clock" class="w-4 h-4" style="color: #ffffff;"></i>
+        <span class="text-sm font-medium" style="color: rgba(255, 255, 255, 0.85);">Ends in</span>
+        <div id="countdownDigits" class="flex items-center gap-1">
+          <span class="countdown-digit">02</span>
+          <span class="text-sm font-bold" style="color: #ffffff;">:</span>
+          <span class="countdown-digit">15</span>
+          <span class="text-sm font-bold" style="color: #ffffff;">:</span>
+          <span class="countdown-digit">30</span>
+        </div>
+      </div>
+
+      <!-- Product main image area (CSS gradient placeholder) -->
+      <div id="productImage" class="w-full aspect-square"
+           style="background: linear-gradient(160deg, var(--brand-50), var(--background-100), var(--brand-100));">
+        <!-- Product tag overlay -->
+        <div class="absolute top-4 left-4">
+          <span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-bold"
+                style="background: var(--state-error); color: var(--state-error-foreground);">
+            50% OFF
+          </span>
+        </div>
+      </div>
+
+      <!-- Price and name area -->
+      <section class="px-4 pt-4 pb-3"
+               style="background: var(--background);">
+        <h1 id="productName" class="text-lg font-bold leading-snug" style="color: var(--text-800);">
+          MOYUYO Comfy Pet Bed Removable Washable Deep Sleep Mat
+        </h1>
+        <p id="productSubtitle" class="mt-1 text-sm" style="color: var(--muted-foreground);">
+          360° Wrap Design / Memory Foam Core / Non-Slip Bottom
+        </p>
+
+        <!-- Flash sale price -->
+        <div class="flex items-end gap-2 mt-3">
+          <span id="flashPrice" class="text-2xl font-extrabold"
+                style="color: var(--state-error);">$19.99</span>
+          <span id="originalPrice" class="text-sm line-through" style="color: var(--muted-foreground);">
+            $39.99
+          </span>
+          <span id="saveBadge" class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-bold"
+                style="background: var(--state-error); color: var(--state-error-foreground);">
+            Save $20.00
+          </span>
+        </div>
+
+        <!-- Flash sale exclusive tags -->
+        <div class="flex items-center gap-2 mt-2">
+          <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-semibold"
+                style="background: var(--brand-100); color: var(--brand-600);">
+            Flash Deal
+          </span>
+          <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-semibold"
+                style="background: var(--state-success-surface); color: var(--state-success);">
+            Authentic
+          </span>
+          <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-semibold"
+                style="background: var(--background-200); color: var(--muted-foreground);">
+           Free Shipping
+          </span>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="h-2" style="background: var(--background-100);"></div>
+
+      <!-- Stock progress bar -->
+      <section class="px-4 py-4" style="background: var(--background);">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm font-semibold" style="color: var(--text-800);">
+            Limited Stock
+          </span>
+          <span id="stockText" class="text-xs font-medium" style="color: var(--state-error);">
+            80% sold, 20 left
+          </span>
+        </div>
+        <div class="w-full h-2 rounded-full overflow-hidden"
+             style="background: var(--background-200);">
+          <div id="stockBar" class="stock-bar-fill h-full rounded-full"
+               style="width: 80%; background: linear-gradient(90deg, var(--state-error), #ff6b5a);"></div>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="h-2" style="background: var(--background-100);"></div>
+
+      <!-- Spec selection area -->
+      <section id="specsContainer" class="px-4 py-4" style="background: var(--background);">
+        <div class="mb-4">
+          <span class="text-sm font-semibold block mb-2.5" style="color: var(--text-800);">
+            Color
+          </span>
+          <div class="flex items-center gap-2.5">
+            <button class="spec-btn active flex items-center gap-2 h-9 px-3.5 rounded-full text-sm font-medium border"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              <span class="w-4 h-4 rounded-full border"
+                    style="background: linear-gradient(135deg, #4a90d9, #007aff); border-color: var(--border);"></span>
+              Blue
+            </button>
+            <button class="spec-btn flex items-center gap-2 h-9 px-3.5 rounded-full text-sm font-medium border"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              <span class="w-4 h-4 rounded-full border"
+                    style="background: linear-gradient(135deg, #f5a0b8, #ff6b8a); border-color: var(--border);"></span>
+              Pink
+            </button>
+            <button class="spec-btn flex items-center gap-2 h-9 px-3.5 rounded-full text-sm font-medium border"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              <span class="w-4 h-4 rounded-full border"
+                    style="background: linear-gradient(135deg, #555555, #1d1d1f); border-color: var(--border);"></span>
+              Black
+            </button>
+          </div>
+        </div>
+
+        <!-- Size selection -->
+        <div>
+          <span class="text-sm font-semibold block mb-2.5" style="color: var(--text-800);">
+            Size
+          </span>
+          <div class="flex items-center gap-2.5">
+            <button class="spec-btn h-9 w-9 rounded-full text-sm font-medium border flex items-center justify-center"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              S
+            </button>
+            <button class="spec-btn active h-9 w-9 rounded-full text-sm font-medium border flex items-center justify-center"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              M
+            </button>
+            <button class="spec-btn h-9 w-9 rounded-full text-sm font-medium border flex items-center justify-center"
+                    style="border-color: var(--border); background: var(--background); color: var(--text-700);">
+              L
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="h-2" style="background: var(--background-100);"></div>
+
+      <!-- Flash sale rules -->
+      <section id="rulesSection" class="px-4 py-4" style="background: var(--background);">
+        <div class="flex items-center gap-2 mb-3">
+          <i data-lucide="info" class="w-4 h-4" style="color: var(--primary);"></i>
+          <span class="text-sm font-semibold" style="color: var(--text-800);">Flash Sale Rules</span>
+        </div>
+        <ul id="rulesList" class="space-y-1.5">
+          <li class="flex items-start gap-2 text-xs" style="color: var(--text-500);">
+            <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
+            Each person is limited to 1 item per flash sale
+          </li>
+          <li class="flex items-start gap-2 text-xs" style="color: var(--text-500);">
+            <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
+            Flash sale prices cannot be combined with other discounts
+          </li>
+          <li class="flex items-start gap-2 text-xs" style="color: var(--text-500);">
+            <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
+            Original price resumes after sellout or event ends
+          </li>
+          <li class="flex items-start gap-2 text-xs" style="color: var(--text-500);">
+            <span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>
+            Orders will be automatically canceled if payment is not made within 15 minutes
+          </li>
+        </ul>
+      </section>
+
+      <!-- Divider -->
+      <div class="h-2" style="background: var(--background-100);"></div>
+
+      <!-- Product details collapsible panel -->
+      <section class="px-4 py-4" style="background: var(--background);">
+        <button class="collapse-toggle flex items-center justify-between w-full" data-collapse="detail">
+          <span class="text-sm font-semibold" style="color: var(--text-800);">
+            Product Details
+          </span>
+          <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300" style="color: var(--icon-muted);"></i>
+        </button>
+        <div class="collapse-content" id="detail">
+          <div class="pt-3 space-y-3">
+            <div class="w-full aspect-video rounded-xl"
+                 style="background: linear-gradient(135deg, var(--brand-50), var(--background-200));"></div>
+            <p class="text-sm leading-relaxed" style="color: var(--text-600);">
+              Made with premium memory foam, providing your pet with ultimate comfort for a restful sleep. The 360° wrap design gives pets a sense of security, while the removable and washable cover makes daily cleaning effortless. The non-slip bottom keeps the bed stable and secure at all times.
+            </p>
+            <ul class="space-y-1.5">
+              <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
+                <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
+                High-density memory foam core with slow rebound support
+              </li>
+              <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
+                <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
+                Waterproof and stain-resistant fabric, easy to clean
+              </li>
+              <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
+                <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
+                Silicone anti-slip particles on the bottom for safety and stability
+              </li>
+              <li class="flex items-start gap-2 text-sm" style="color: var(--text-600);">
+                <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--state-success);"></i>
+                Fully removable and washable design, machine washable
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="h-2" style="background: var(--background-100);"></div>
+
+      <!-- Product review summary -->
+      <section class="px-4 py-4" style="background: var(--background);">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-sm font-semibold" style="color: var(--text-800);">
+            Customer Reviews
+          </span>
+          <div class="flex items-center gap-1">
+            <span class="text-sm font-bold" style="color: var(--brand-500);">98%</span>
+            <span class="text-sm" style="color: var(--muted-foreground);">Positive</span>
+            <span class="mx-1 text-xs" style="color: var(--background-400);">|</span>
+            <span class="text-sm" style="color: var(--muted-foreground);">256 reviews</span>
+            <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--icon-muted);"></i>
+          </div>
+        </div>
+
+        <!-- Review tags -->
+        <div class="flex flex-wrap gap-2 mb-3">
+          <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
+                style="background: var(--brand-50); border-color: var(--brand-200); color: var(--brand-600);">
+            Great Quality (89)
+          </span>
+          <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
+                style="background: var(--brand-50); border-color: var(--brand-200); color: var(--brand-600);">
+            Super Comfortable (76)
+          </span>
+          <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
+                style="background: var(--background-100); border-color: var(--border); color: var(--text-500);">
+            Easy to Clean (63)
+          </span>
+          <span class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border"
+                style="background: var(--background-100); border-color: var(--border); color: var(--text-500);">
+            True Color (45)
+          </span>
+        </div>
+
+        <!-- Single review example -->
+        <div class="rounded-xl p-3" style="background: var(--background-100);">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-8 h-8 rounded-full"
+                 style="background: linear-gradient(135deg, var(--brand-200), var(--brand-100));"></div>
+            <div class="flex-1">
+              <span class="text-sm font-medium" style="color: var(--text-700);">J***n</span>
+              <div class="flex items-center gap-0.5 mt-0.5">
+                <i data-lucide="star" class="w-3 h-3" style="color: #ff9500; fill: #ff9500;"></i>
+                <i data-lucide="star" class="w-3 h-3" style="color: #ff9500; fill: #ff9500;"></i>
+                <i data-lucide="star" class="w-3 h-3" style="color: #ff9500; fill: #ff9500;"></i>
+                <i data-lucide="star" class="w-3 h-3" style="color: #ff9500; fill: #ff9500;"></i>
+                <i data-lucide="star" class="w-3 h-3" style="color: #ff9500; fill: #ff9500;"></i>
+              </div>
+            </div>
+            <span class="text-xs" style="color: var(--muted-foreground);">3 days ago</span>
+          </div>
+          <p class="text-sm leading-relaxed" style="color: var(--text-600);">
+            Super comfortable, my Golden Retriever absolutely loves it! The memory foam bounces back nicely and the fabric feels very soft to the touch. Blue is also great at hiding dirt. Highly recommended.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom fixed action bar -->
+    <footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full z-40"
+            style="max-width: 430px; background: var(--background); border-top: 1px solid var(--border); padding-bottom: env(safe-area-inset-bottom);">
+      <div class="flex items-center gap-3 px-4 py-3">
+        <!-- Customer service button -->
+        <button class="flex flex-col items-center justify-center gap-0.5 w-12 shrink-0"
+                style="background: transparent; border: none; cursor: pointer;"
+                aria-label="Customer Service">
+          <i data-lucide="headphones" class="w-5 h-5" style="color: var(--icon-muted);"></i>
+          <span class="text-xs" style="color: var(--muted-foreground);">Support</span>
+        </button>
+
+        <!-- Favorite button -->
+        <button class="flex flex-col items-center justify-center gap-0.5 w-12 shrink-0"
+                style="background: transparent; border: none; cursor: pointer;"
+                aria-label="Favorite">
+          <i data-lucide="heart" class="w-5 h-5" style="color: var(--icon-muted);"></i>
+          <span class="text-xs" style="color: var(--muted-foreground);">Favorite</span>
+        </button>
+
+        <!-- Buy now button -->
+        <button class="btn btn-primary btn-lg flex-1"
+                style="height: 48px; border-radius: 12px; font-size: 16px; font-weight: 700;"
+                aria-label="Buy Now">
+          Buy Now
+        </button>
+      </div>
+    </footer>
+
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      (function () {
+        var api = window.moyuyoAPI;
+        var productData = null;
+        var countdownTimer = null;
+
+        // Get productId from URL
+        function getProductId() {
+          var params = new URLSearchParams(window.location.search);
+          return params.get('productId') || 'fs-1';
+        }
+
+        // Price formatting (cents to yuan)
+        function formatPrice(cents) {
+          return '¥' + (cents / 100).toFixed(2);
+        }
+
+        // Format countdown
+        function formatCountdown(seconds) {
+          if (seconds <= 0) return { h: '00', m: '00', s: '00' };
+          var h = Math.floor(seconds / 3600);
+          var m = Math.floor((seconds % 3600) / 60);
+          var s = seconds % 60;
+          return {
+            h: String(h).padStart(2, '0'),
+            m: String(m).padStart(2, '0'),
+            s: String(s).padStart(2, '0')
+          };
+        }
+
+        // Render product info
+        function renderProduct(data) {
+          productData = data;
+
+          var nameEl = document.getElementById('productName');
+          if (nameEl) nameEl.textContent = data.name;
+
+          var priceEl = document.getElementById('flashPrice');
+          if (priceEl) priceEl.textContent = formatPrice(data.price);
+
+          var origPriceEl = document.getElementById('originalPrice');
+          if (origPriceEl) origPriceEl.textContent = formatPrice(data.originalPrice);
+
+          var saveBadge = document.getElementById('saveBadge');
+          if (saveBadge) {
+            var save = data.originalPrice - data.price;
+            saveBadge.textContent = 'Save ' + formatPrice(save);
+          }
+
+          // Stock progress
+          var stockText = document.getElementById('stockText');
+          if (stockText) {
+            stockText.textContent = data.progress + '% sold, ' + data.stock + ' left';
+          }
+          var stockBar = document.getElementById('stockBar');
+          if (stockBar) stockBar.style.width = data.progress + '%';
+
+          // Discount tag
+          var discount = Math.round((1 - data.price / data.originalPrice) * 100) / 10;
+          if (discount < 10 && discount > 0) {
+            var badge = document.querySelector('#productImage .absolute span');
+            if (badge) badge.textContent = (discount * 10) + '% OFF';
+          }
+
+          // Product image
+          if (data.images && data.images.length > 0) {
+            var imgContainer = document.getElementById('productImage');
+            if (imgContainer) {
+              imgContainer.style.background = 'none';
+              imgContainer.innerHTML = '<img src="' + data.images[0].url + '" alt="' + data.name + '" class="w-full h-full object-cover">'
+                + '<div class="absolute top-4 left-4"><span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-bold" style="background: var(--state-error); color: var(--state-error-foreground);">' + (discount * 10) + '% OFF</span></div>';
+            }
+          }
+
+          // Render specs
+          if (data.specs && data.specs.length > 0) {
+            renderSpecs(data.specs, data.originalPrice);
+          }
+
+          // Render rules
+          if (data.rules && data.rules.length > 0) {
+            renderRules(data.rules);
+          }
+        }
+
+        // Render specs
+        function renderSpecs(specs, originalPrice) {
+          var container = document.getElementById('specsContainer');
+          if (!container) return;
+          var html = '<div class="mb-4"><span class="text-sm font-semibold block mb-2.5" style="color: var(--text-800);">Spec</span>'
+            + '<div class="flex items-center gap-2.5 flex-wrap">';
+          for (var i = 0; i < specs.length; i++) {
+            var s = specs[i];
+            var activeClass = i === 0 ? ' active' : '';
+            html += '<button class="spec-btn' + activeClass + ' h-9 px-3.5 rounded-full text-sm font-medium border flex items-center justify-center" '
+              + 'style="border-color: var(--border); background: var(--background); color: var(--text-700);" '
+              + 'data-spec-id="' + s.id + '" data-price="' + s.price + '">'
+              + s.name + '</button>';
+          }
+          html += '</div></div>';
+          container.innerHTML = html;
+
+          var btns = container.querySelectorAll('.spec-btn');
+          for (var j = 0; j < btns.length; j++) {
+            btns[j].addEventListener('click', function () {
+              var parent = this.parentElement;
+              var siblings = parent.querySelectorAll('.spec-btn');
+              for (var k = 0; k < siblings.length; k++) {
+                siblings[k].classList.remove('active');
+              }
+              this.classList.add('active');
+
+              var newPrice = parseInt(this.getAttribute('data-price'));
+              var priceEl = document.getElementById('flashPrice');
+              if (priceEl && newPrice) priceEl.textContent = formatPrice(newPrice);
+
+              var saveBadge = document.getElementById('saveBadge');
+              if (saveBadge && originalPrice) {
+                saveBadge.textContent = 'Save ' + formatPrice(originalPrice - newPrice);
+              }
+            });
+          }
+        }
+
+        // Render rules
+        function renderRules(rules) {
+          var ul = document.getElementById('rulesList');
+          if (!ul) return;
+          var html = '';
+          for (var i = 0; i < rules.length; i++) {
+            html += '<li class="flex items-start gap-2 text-xs" style="color: var(--text-500);">'
+              + '<span class="mt-1 shrink-0 w-1 h-1 rounded-full" style="background: var(--muted-foreground);"></span>'
+              + rules[i]
+              + '</li>';
+          }
+          ul.innerHTML = html;
+        }
+
+        // Update countdown
+        function updateCountdown(timeLeft) {
+          if (countdownTimer) clearInterval(countdownTimer);
+          var digits = document.querySelectorAll('#countdownDigits .countdown-digit');
+
+          function tick() {
+            if (timeLeft <= 0) {
+              if (digits.length >= 3) {
+                digits[0].textContent = '00';
+                digits[1].textContent = '00';
+                digits[2].textContent = '00';
+              }
+              clearInterval(countdownTimer);
+              return;
+            }
+            timeLeft--;
+            var t = formatCountdown(timeLeft);
+            if (digits.length >= 3) {
+              digits[0].textContent = t.h;
+              digits[1].textContent = t.m;
+              digits[2].textContent = t.s;
+            }
+          }
+
+          var t = formatCountdown(timeLeft);
+          if (digits.length >= 3) {
+            digits[0].textContent = t.h;
+            digits[1].textContent = t.m;
+            digits[2].textContent = t.s;
+          }
+          countdownTimer = setInterval(tick, 1000);
+        }
+
+        // Collapsible panel
+        function bindCollapse() {
+          var toggles = document.querySelectorAll('.collapse-toggle');
+          for (var i = 0; i < toggles.length; i++) {
+            toggles[i].addEventListener('click', function () {
+              var targetId = this.getAttribute('data-collapse');
+              var content = document.getElementById(targetId);
+              var chevron = this.querySelector('[data-lucide="chevron-down"]');
+              if (content) {
+                content.classList.toggle('open');
+                if (chevron) {
+                  chevron.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+                }
+              }
+            });
+          }
+        }
+
+        // Initialize
+        function init() {
+          var productId = getProductId();
+          api.get('/api/v1/flash-sale/' + productId).then(function (res) {
+            if (res.code === 0 && res.data) {
+              var data = res.data;
+              renderProduct(data);
+              if (data.timeLeft !== undefined) {
+                updateCountdown(data.timeLeft);
+              }
+              bindCollapse();
+              lucide.createIcons();
+            }
+          });
+        }
+
+        init();
+      })();
+    </script>
+</body>
+</html>

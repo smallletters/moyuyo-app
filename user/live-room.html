@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 直播间</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="padding-top: 0;">
+  <main class="relative" style="max-width: 393px; margin: 0 auto;">
+
+    <!-- ===== 全屏直播画面占位区 ===== -->
+    <div class="live-video-area">
+
+      <!-- 左上角：主播信息 -->
+      <div class="absolute top-3 left-3 z-10 flex items-center gap-2">
+        <div class="anchor-avatar"></div>
+        <div class="flex flex-col gap-0.5">
+          <span class="text-xs font-semibold" style="color: var(--text-50);">MOYUYO官方</span>
+          <div class="viewer-count">
+            <span data-icon class="w-3 h-3" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); color: var(--text-50);"></span>
+            <span>3.2k</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右上角：关闭按钮 -->
+      <div class="absolute top-3 right-3 z-10">
+        <button class="overlay-icon-btn" aria-label="关闭直播" data-dom-id="cta-back">
+          <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/x.svg'); mask-image: url('../assets/icons/dl-builtin-apple/x.svg');"></span>
+        </button>
+      </div>
+
+      <!-- 弹幕/评论区域（叠加在直播画面上） -->
+      <div class="danmaku-container">
+        <div class="danmaku-item">小明：这个洗护套装真不错，已下单</div>
+        <div class="danmaku-item">猫奴日记：胸背带有货吗？想要黑色的</div>
+        <div class="danmaku-item">豆豆妈：今天还有什么优惠</div>
+        <div class="danmaku-item">宠物达人小王：主播能介绍下那个外套吗</div>
+        <div class="danmaku-item">新手铲屎官：新用户有专享价吗</div>
+      </div>
+
+      <!-- 左下角：当前商品讲解标签 -->
+      <div class="absolute bottom-3 left-3 z-10">
+        <div class="product-tag-live">
+          <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); mask-image: url('../assets/icons/dl-builtin-apple/tag.svg');"></span>
+          <span>正在讲解：高端宠物洗护套装</span>
+        </div>
+      </div>
+
+      <!-- 右下角：分享按钮 -->
+      <div class="absolute bottom-3 right-3 z-10">
+        <button class="overlay-icon-btn" aria-label="分享直播">
+          <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/share.svg'); mask-image: url('../assets/icons/dl-builtin-apple/share.svg');"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== 直播信息栏 ===== -->
+    <div class="live-info-bar">
+      <!-- 直播状态 -->
+      <div class="live-status-tag live">
+        <span class="pulse-dot"></span>
+        <span>直播中</span>
+      </div>
+      <!-- 点赞数 -->
+      <div class="info-stat">
+        <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--state-error);"></span>
+        <span>1.8w</span>
+      </div>
+      <!-- 粉丝数 -->
+      <div class="info-stat">
+        <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); color: var(--brand-500);"></span>
+        <span>5.6w 粉丝</span>
+      </div>
+    </div>
+
+    <!-- ===== 商品讲解列表（底部半屏，可向上拖动） ===== -->
+    <div class="product-panel-backdrop">
+      <!-- 拖动指示条 -->
+      <div class="drag-indicator"></div>
+
+      <!-- 面板标题 -->
+      <div class="flex items-center justify-between px-4 pb-2">
+        <span class="text-sm font-semibold" style="color: var(--foreground);">直播商品</span>
+        <span class="text-xs" style="color: var(--text-400);">共 5 件</span>
+      </div>
+
+      <!-- 商品列表 -->
+      <div class="overflow-y-auto no-scrollbar" style="max-height: 280px;">
+
+        <!-- 商品1 - 讲解中 -->
+        <div class="live-product-item">
+          <div class="product-thumb-placeholder"></div>
+          <div class="flex-1 min-w-0 flex flex-col gap-1">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium truncate" style="color: var(--foreground);">高端宠物洗护套装</span>
+              <span class="explain-status explaining">讲解中</span>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-sm font-bold" style="color: var(--state-error);">¥189</span>
+              <span class="text-xs line-through" style="color: var(--text-300);">¥259</span>
+              <span class="text-xs font-medium" style="color: var(--state-error);">直播专享</span>
+            </div>
+          </div>
+          <button class="buy-btn-live" data-dom-id="cta-buy">去购买</button>
+        </div>
+
+        <!-- 商品2 - 待讲解 -->
+        <div class="live-product-item">
+          <div class="product-thumb-placeholder"></div>
+          <div class="flex-1 min-w-0 flex flex-col gap-1">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium truncate" style="color: var(--foreground);">舒适胸背带</span>
+              <span class="explain-status pending">待讲解</span>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-sm font-bold" style="color: var(--state-error);">¥129</span>
+              <span class="text-xs line-through" style="color: var(--text-300);">¥168</span>
+              <span class="text-xs font-medium" style="color: var(--state-error);">直播专享</span>
+            </div>
+          </div>
+          <button class="buy-btn-live" data-dom-id="cta-buy">去购买</button>
+        </div>
+
+        <!-- 商品3 - 待讲解 -->
+        <div class="live-product-item">
+          <div class="product-thumb-placeholder"></div>
+          <div class="flex-1 min-w-0 flex flex-col gap-1">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium truncate" style="color: var(--foreground);">互动益智玩具</span>
+              <span class="explain-status pending">待讲解</span>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-sm font-bold" style="color: var(--state-error);">¥69</span>
+              <span class="text-xs line-through" style="color: var(--text-300);">¥99</span>
+              <span class="text-xs font-medium" style="color: var(--state-error);">直播专享</span>
+            </div>
+          </div>
+          <button class="buy-btn-live" data-dom-id="cta-buy">去购买</button>
+        </div>
+
+        <!-- 商品4 - 已讲解 -->
+        <div class="live-product-item">
+          <div class="product-thumb-placeholder"></div>
+          <div class="flex-1 min-w-0 flex flex-col gap-1">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium truncate" style="color: var(--foreground);">宠物潮流外套</span>
+              <span class="explain-status explained">已讲解</span>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-sm font-bold" style="color: var(--state-error);">¥219</span>
+              <span class="text-xs line-through" style="color: var(--text-300);">¥299</span>
+              <span class="text-xs font-medium" style="color: var(--state-error);">直播专享</span>
+            </div>
+          </div>
+          <button class="buy-btn-live" data-dom-id="cta-buy">去购买</button>
+        </div>
+
+        <!-- 商品5 - 已讲解 -->
+        <div class="live-product-item">
+          <div class="product-thumb-placeholder"></div>
+          <div class="flex-1 min-w-0 flex flex-col gap-1">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium truncate" style="color: var(--foreground);">自动喂食器</span>
+              <span class="explain-status explained">已讲解</span>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-sm font-bold" style="color: var(--state-error);">¥399</span>
+              <span class="text-xs line-through" style="color: var(--text-300);">¥529</span>
+              <span class="text-xs font-medium" style="color: var(--state-error);">直播专享</span>
+            </div>
+          </div>
+          <button class="buy-btn-live" data-dom-id="cta-buy">去购买</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== 底部互动栏 ===== -->
+    <div class="live-interaction-bar" style="padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));">
+      <!-- 评论输入框 -->
+      <input class="live-input" type="text" placeholder="说点什么..." aria-label="发送评论">
+      <!-- 发送按钮 -->
+      <button class="interaction-btn" aria-label="发送" style="color: var(--primary);">
+        <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/send-horizontal.svg'); mask-image: url('../assets/icons/dl-builtin-apple/send-horizontal.svg');"></span>
+      </button>
+      <!-- 点赞按钮 -->
+      <button class="interaction-btn" aria-label="点赞">
+        <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+      </button>
+      <!-- 购物袋入口（显示已加购数量） -->
+      <button class="interaction-btn" aria-label="购物袋">
+        <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/shopping-bag.svg'); mask-image: url('../assets/icons/dl-builtin-apple/shopping-bag.svg');"></span>
+        <span class="cart-badge">3</span>
+      </button>
+    </div>
+
+  </main>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

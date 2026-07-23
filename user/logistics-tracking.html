@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - 物流追踪</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <!-- 页面容器：移动端宽度居中 -->
+    <div class="mx-auto max-w-[430px] min-h-screen bg-background">
+
+        <!-- ====== 顶部导航栏 ====== -->
+        <header class="sticky top-0 z-50 flex items-center gap-3 px-4 h-11"
+                style="background: var(--background-800);">
+            <!-- 返回箭头 -->
+            <a href="javascript:history.back()"
+               class="flex items-center justify-center w-9 h-9 -ml-1 rounded-full transition-colors"
+               style="color: var(--primary-foreground);">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </a>
+            <!-- 页面标题 -->
+            <h1 class="flex-1 text-center text-[17px] font-semibold tracking-tight"
+                style="color: var(--primary-foreground);">
+                物流追踪
+            </h1>
+            <!-- 占位，保持标题居中 -->
+            <span class="w-9"></span>
+        </header>
+
+        <main class="px-4 pt-3 pb-28">
+
+            <!-- ====== 物流状态概览卡片 ====== -->
+            <section class="rounded-2xl p-5 text-white"
+                     style="background: linear-gradient(135deg, var(--brand-500), var(--brand-700));">
+                <!-- 状态标签行 -->
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold"
+                          style="background: var(--success); color: var(--success-foreground);">
+                        <i data-lucide="truck" class="w-3 h-3"></i>
+                        派送中
+                    </span>
+                    <span class="text-xs font-medium" style="color: rgba(255,255,255,0.7);">
+                        FedEx Express
+                    </span>
+                </div>
+
+                <!-- 运单号 -->
+                <div class="mb-3">
+                    <p class="text-xs mb-1" style="color: rgba(255,255,255,0.6);">运单号</p>
+                    <p class="text-sm font-mono font-semibold tracking-wide">MOYU2026070800123</p>
+                </div>
+
+                <!-- 承运商 -->
+                <div class="mb-4">
+                    <p class="text-xs mb-1" style="color: rgba(255,255,255,0.6);">承运商</p>
+                    <p class="text-sm font-medium">FedEx Express</p>
+                </div>
+
+                <!-- 预计送达 -->
+                <div class="flex items-center gap-2 pt-3"
+                     style="border-top: 1px solid rgba(255,255,255,0.15);">
+                    <i data-lucide="calendar-clock" class="w-4 h-4" style="color: rgba(255,255,255,0.7);"></i>
+                    <div>
+                        <p class="text-xs" style="color: rgba(255,255,255,0.6);">预计送达</p>
+                        <p class="text-sm font-semibold">2026-07-10</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 包裹切换 Tab ====== -->
+            <div class="flex gap-2 mt-4 p-1 rounded-xl"
+                 style="background: var(--secondary);">
+                <button id="tab-pkg-1"
+                        class="flex-1 flex items-center justify-center gap-1.5 h-9 rounded-lg text-xs font-semibold transition-all"
+                        style="background: var(--card); color: var(--primary); box-shadow: var(--shadow-xs);"
+                        onclick="switchPackage(1)">
+                    <i data-lucide="package" class="w-3.5 h-3.5"></i>
+                    包裹 1
+                </button>
+                <button id="tab-pkg-2"
+                        class="flex-1 flex items-center justify-center gap-1.5 h-9 rounded-lg text-xs font-semibold transition-all"
+                        style="color: var(--muted-foreground);"
+                        onclick="switchPackage(2)">
+                    <i data-lucide="package" class="w-3.5 h-3.5"></i>
+                    包裹 2
+                </button>
+            </div>
+
+            <!-- ====== 包裹信息摘要 ====== -->
+            <div id="pkg-info" class="mt-3 flex items-center gap-3 px-3 py-2.5 rounded-xl"
+                 style="background: var(--accent);">
+                <div class="flex items-center justify-center w-10 h-10 rounded-lg"
+                     style="background: var(--secondary);">
+                    <i data-lucide="box" class="w-5 h-5" style="color: var(--primary);"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium truncate" style="color: var(--foreground);">
+                        MOYUYO 天然有机狗粮 5kg
+                    </p>
+                    <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">
+                        共 1 件商品 / 5.2 kg
+                    </p>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--muted-foreground);"></i>
+            </div>
+
+            <!-- ====== 物流地图区（CSS 渐变模拟） ====== -->
+            <section class="mt-4 rounded-2xl overflow-hidden"
+                     style="border: 1px solid var(--border);">
+                <div class="relative h-48"
+                     style="background:
+                        /* 海洋底色 */
+                        linear-gradient(180deg,
+                            #b3d9f2 0%,
+                            #a8d5ec 40%,
+                            #c2e0f5 100%);
+                        /* 陆地模拟 */
+                        radial-gradient(ellipse 55% 45% at 35% 55%,
+                            #d4e8d0 0%,
+                            #c5ddc0 60%,
+                            transparent 100%),
+                        radial-gradient(ellipse 35% 30% at 70% 40%,
+                            #dce6d4 0%,
+                            #cddbc4 60%,
+                            transparent 100%),
+                        /* 山脉纹理 */
+                        radial-gradient(ellipse 20% 15% at 25% 50%,
+                            #b8ccb0 0%,
+                            transparent 100%),
+                        radial-gradient(ellipse 15% 20% at 65% 35%,
+                            #c2d4b8 0%,
+                            transparent 100%);">
+
+                    <!-- 模拟路线点：旧金山 -->
+                    <div class="absolute flex flex-col items-center gap-1"
+                         style="left: 20%; top: 65%; transform: translate(-50%, -50%);">
+                        <div class="w-3 h-3 rounded-full ring-2 ring-white"
+                             style="background: var(--brand-500);"></div>
+                        <span class="text-[10px] font-semibold text-white drop-shadow-sm">旧金山</span>
+                    </div>
+
+                    <!-- 模拟路线：虚线 -->
+                    <svg class="absolute inset-0 w-full h-full" style="pointer-events: none;">
+                        <line x1="23%" y1="62%"
+                              x2="68%" y2="42%"
+                              stroke="var(--brand-500)"
+                              stroke-width="2"
+                              stroke-dasharray="6 4"
+                              opacity="0.7" />
+                    </svg>
+
+                    <!-- 模拟路线点：洛杉矶 -->
+                    <div class="absolute flex flex-col items-center gap-1"
+                         style="left: 70%; top: 38%; transform: translate(-50%, -50%);">
+                        <div class="w-4 h-4 rounded-full ring-2 ring-white flex items-center justify-center"
+                             style="background: var(--success);">
+                            <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+                        </div>
+                        <span class="text-[10px] font-semibold text-white drop-shadow-sm">洛杉矶</span>
+                    </div>
+
+                    <!-- 地图标注文字 -->
+                    <div class="absolute top-2 left-3 flex items-center gap-1 px-2 py-1 rounded-md"
+                         style="background: rgba(0,0,0,0.06);">
+                        <i data-lucide="map-pin" class="w-3 h-3" style="color: var(--brand-500);"></i>
+                        <span class="text-[10px] font-medium" style="color: var(--text-600);">物流路线示意</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== 物流时间线 ====== -->
+            <section class="mt-4">
+                <h2 class="text-base font-semibold mb-3" style="color: var(--foreground);">
+                    物流详情
+                </h2>
+
+                <div class="relative pl-7">
+                    <!-- 纵向时间线竖线 -->
+                    <div class="absolute left-[9px] top-2 bottom-2 w-px"
+                         style="background: var(--border);"></div>
+
+                    <!-- 节点1：最新状态 - 当前/活跃 -->
+                    <div class="relative pb-5">
+                        <!-- 时间线圆点（活跃态） -->
+                        <div class="absolute -left-7 top-0.5 w-[19px] h-[19px] rounded-full flex items-center justify-center"
+                             style="background: var(--success);">
+                            <div class="w-2 h-2 rounded-full bg-white"></div>
+                        </div>
+                        <div class="rounded-xl p-3.5"
+                             style="background: var(--state-success-surface);">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-semibold" style="color: var(--success);">派送中</span>
+                                <span class="text-[11px] font-medium" style="color: var(--muted-foreground);">7月8日 14:30</span>
+                            </div>
+                            <p class="text-sm font-medium" style="color: var(--foreground);">快递员正在派送中</p>
+                            <p class="text-xs mt-1" style="color: var(--muted-foreground);">洛杉矶分拣中心出库</p>
+                        </div>
+                    </div>
+
+                    <!-- 节点2 -->
+                    <div class="relative pb-5">
+                        <div class="absolute -left-7 top-1 w-[11px] h-[11px] rounded-full ring-2 ring-white"
+                             style="background: var(--brand-300);"></div>
+                        <div class="rounded-xl p-3.5" style="background: var(--card); border: 1px solid var(--border);">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-semibold" style="color: var(--brand-500);">运输中</span>
+                                <span class="text-[11px] font-medium" style="color: var(--muted-foreground);">7月8日 08:00</span>
+                            </div>
+                            <p class="text-sm font-medium" style="color: var(--foreground);">到达洛杉矶分拣中心</p>
+                        </div>
+                    </div>
+
+                    <!-- 节点3 -->
+                    <div class="relative pb-5">
+                        <div class="absolute -left-7 top-1 w-[11px] h-[11px] rounded-full ring-2 ring-white"
+                             style="background: var(--brand-300);"></div>
+                        <div class="rounded-xl p-3.5" style="background: var(--card); border: 1px solid var(--border);">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-semibold" style="color: var(--brand-500);">运输中</span>
+                                <span class="text-[11px] font-medium" style="color: var(--muted-foreground);">7月7日 22:15</span>
+                            </div>
+                            <p class="text-sm font-medium" style="color: var(--foreground);">从旧金山中转站发出</p>
+                        </div>
+                    </div>
+
+                    <!-- 节点4 -->
+                    <div class="relative pb-5">
+                        <div class="absolute -left-7 top-1 w-[11px] h-[11px] rounded-full ring-2 ring-white"
+                             style="background: var(--brand-300);"></div>
+                        <div class="rounded-xl p-3.5" style="background: var(--card); border: 1px solid var(--border);">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-semibold" style="color: var(--brand-500);">运输中</span>
+                                <span class="text-[11px] font-medium" style="color: var(--muted-foreground);">7月7日 10:30</span>
+                            </div>
+                            <p class="text-sm font-medium" style="color: var(--foreground);">到达旧金山中转站</p>
+                        </div>
+                    </div>
+
+                    <!-- 节点5 -->
+                    <div class="relative pb-5">
+                        <div class="absolute -left-7 top-1 w-[11px] h-[11px] rounded-full ring-2 ring-white"
+                             style="background: var(--muted-foreground);"></div>
+                        <div class="rounded-xl p-3.5" style="background: var(--card); border: 1px solid var(--border);">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-semibold" style="color: var(--muted-foreground);">已揽收</span>
+                                <span class="text-[11px] font-medium" style="color: var(--muted-foreground);">7月6日 16:00</span>
+                            </div>
+                            <p class="text-sm font-medium" style="color: var(--foreground);">卖家已发货，快递员已揽收</p>
+                        </div>
+                    </div>
+
+                    <!-- 节点6 -->
+                    <div class="relative">
+                        <div class="absolute -left-7 top-1 w-[11px] h-[11px] rounded-full ring-2 ring-white"
+                             style="background: var(--muted-foreground);"></div>
+                        <div class="rounded-xl p-3.5" style="background: var(--card); border: 1px solid var(--border);">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-semibold" style="color: var(--muted-foreground);">已打包</span>
+                                <span class="text-[11px] font-medium" style="color: var(--muted-foreground);">7月6日 14:00</span>
+                            </div>
+                            <p class="text-sm font-medium" style="color: var(--foreground);">订单已打包完成</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ====== 底部操作栏 ====== -->
+        <footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] px-4 pb-6 pt-3 z-40"
+                style="background: linear-gradient(to top, var(--background) 60%, transparent);">
+            <div class="flex gap-3">
+                <!-- 联系快递员 -->
+                <button class="flex-1 flex items-center justify-center gap-2 h-12 rounded-2xl text-sm font-semibold transition-all"
+                        style="background: var(--card); color: var(--primary); border: 1px solid var(--primary);"
+                        onclick="showCopyToast('contact')">
+                    <i data-lucide="phone" class="w-4 h-4"></i>
+                    联系快递员
+                </button>
+                <!-- 复制运单号 -->
+                <button class="flex-1 flex items-center justify-center gap-2 h-12 rounded-2xl text-sm font-semibold transition-all"
+                        style="background: var(--primary); color: var(--primary-foreground);"
+                        onclick="copyTrackingNumber()">
+                    <i data-lucide="copy" class="w-4 h-4"></i>
+                    复制运单号
+                </button>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Toast 提示 -->
+    <div id="toast"
+         class="fixed top-16 left-1/2 -translate-x-1/2 z-[999] px-4 py-2 rounded-full text-sm font-medium opacity-0 transition-all duration-300 pointer-events-none"
+         style="background: var(--background-800); color: var(--primary-foreground);">
+        已复制运单号
+    </div>
+
+    <script>
+    // 初始化 Lucide 图标
+    lucide.createIcons();
+
+    // 复制运单号
+    function copyTrackingNumber() {
+      var number = 'MOYU2026070800123';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(number).then(function() {
+          showToast('已复制运单号');
+        });
+      } else {
+        // 降级方案
+        var ta = document.createElement('textarea');
+        ta.value = number;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('已复制运单号');
+      }
+    }
+
+    // 显示 Toast
+    function showToast(msg) {
+      var toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translate(-50%, 0)';
+      setTimeout(function() {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translate(-50%, -8px)';
+      }, 1800);
+    }
+
+    // 包裹切换
+    function switchPackage(idx) {
+      var tab1 = document.getElementById('tab-pkg-1');
+      var tab2 = document.getElementById('tab-pkg-2');
+      var pkgInfo = document.getElementById('pkg-info');
+
+      // 重置样式
+      tab1.style.background = 'transparent';
+      tab1.style.color = 'var(--muted-foreground)';
+      tab1.style.boxShadow = 'none';
+      tab2.style.background = 'transparent';
+      tab2.style.color = 'var(--muted-foreground)';
+      tab2.style.boxShadow = 'none';
+
+      if (idx === 1) {
+        tab1.style.background = 'var(--card)';
+        tab1.style.color = 'var(--primary)';
+        tab1.style.boxShadow = 'var(--shadow-xs)';
+        pkgInfo.querySelector('.text-sm.font-medium').textContent = 'MOYUYO 天然有机狗粮 5kg';
+        pkgInfo.querySelector('.text-xs.mt-0\\.5').textContent = '共 1 件商品 / 5.2 kg';
+      } else {
+        tab2.style.background = 'var(--card)';
+        tab2.style.color = 'var(--primary)';
+        tab2.style.boxShadow = 'var(--shadow-xs)';
+        pkgInfo.querySelector('.text-sm.font-medium').textContent = 'MOYUYO 宠物玩具套装';
+        pkgInfo.querySelector('.text-xs.mt-0\\.5').textContent = '共 3 件商品 / 1.8 kg';
+      }
+
+      // 重新渲染图标（Tab 切换后 Lucide 需要重绘）
+      lucide.createIcons();
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常购清单 - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-28">
+
+      <!-- 顶部导航栏：深色背景 + 返回箭头 + 标题 -->
+      <div class="sticky top-0 z-30" style="background: var(--background-800);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--text-50);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--text-50);"></span>
+          </div>
+        </div>
+        <div class="flex items-center h-12 px-4">
+          <button class="flex items-center justify-center w-9 h-9 rounded-full -ml-1" style="color: var(--text-50);" aria-label="返回">
+            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+          </button>
+          <h1 class="flex-1 text-center text-[17px] font-semibold -ml-9" style="color: var(--text-50);">常购清单</h1>
+        </div>
+      </div>
+
+      <!-- 排序切换 Tab -->
+      <div class="px-4 pt-3 pb-2" style="background: var(--background);">
+        <div class="flex gap-0 rounded-lg p-[3px]" style="background: var(--secondary);">
+          <button id="tab-freq" class="flex-1 h-9 flex items-center justify-center text-sm font-semibold rounded-[7px] transition-colors" style="background: var(--primary); color: var(--primary-foreground);" onclick="switchTab('freq')">
+            <i data-lucide="trending-up" class="w-4 h-4 mr-1.5"></i>
+            购买频次
+          </button>
+          <button id="tab-recent" class="flex-1 h-9 flex items-center justify-center text-sm font-medium rounded-[7px] transition-colors" style="color: var(--muted-foreground);" onclick="switchTab('recent')">
+            <i data-lucide="clock" class="w-4 h-4 mr-1.5"></i>
+            最近购买
+          </button>
+        </div>
+      </div>
+
+      <!-- 商品列表 -->
+      <div class="px-4 pt-2 space-y-3" id="product-list">
+
+        <!-- 商品卡片 1 -->
+        <article class="flex items-center gap-3 p-3 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="w-20 h-20 shrink-0 rounded-[calc(var(--radius)-4px)]" style="background: linear-gradient(135deg, var(--brand-50) 0%, var(--brand-200) 100%);"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">皇家猫粮 室内成猫配方</h3>
+            <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">2kg / 鸡肉口味</p>
+            <p class="text-sm font-semibold mt-1.5" style="color: var(--primary);">$42.99</p>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-xs" style="color: var(--text-400);">已购 12 次</span>
+              <span class="w-px h-3" style="background: var(--background-300);"></span>
+              <span class="text-xs" style="color: var(--text-400);">上次购买：2026-06-28</span>
+            </div>
+          </div>
+          <button class="flex items-center justify-center w-10 h-10 shrink-0 rounded-full transition-colors" style="background: var(--brand-50); color: var(--primary);" aria-label="加入购物车" data-dom-id="btn-add-cart">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+        </article>
+
+        <!-- 商品卡片 2 -->
+        <article class="flex items-center gap-3 p-3 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="w-20 h-20 shrink-0 rounded-[calc(var(--radius)-4px)]" style="background: linear-gradient(135deg, var(--state-success-surface) 0%, var(--brand-100) 100%);"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">天然宠物湿粮 金枪鱼拌饭</h3>
+            <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">85g x 12 罐 / 整箱装</p>
+            <p class="text-sm font-semibold mt-1.5" style="color: var(--primary);">$36.50</p>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-xs" style="color: var(--text-400);">已购 10 次</span>
+              <span class="w-px h-3" style="background: var(--background-300);"></span>
+              <span class="text-xs" style="color: var(--text-400);">上次购买：2026-06-25</span>
+            </div>
+          </div>
+          <button class="flex items-center justify-center w-10 h-10 shrink-0 rounded-full transition-colors" style="background: var(--brand-50); color: var(--primary);" aria-label="加入购物车" data-dom-id="btn-add-cart">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+        </article>
+
+        <!-- 商品卡片 3 -->
+        <article class="flex items-center gap-3 p-3 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="w-20 h-20 shrink-0 rounded-[calc(var(--radius)-4px)]" style="background: linear-gradient(135deg, var(--background-100) 0%, var(--brand-50) 100%);"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">宠物猫砂 豆腐混合砂</h3>
+            <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">6.5L / 原味除臭</p>
+            <p class="text-sm font-semibold mt-1.5" style="color: var(--primary);">$18.99</p>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-xs" style="color: var(--text-400);">已购 9 次</span>
+              <span class="w-px h-3" style="background: var(--background-300);"></span>
+              <span class="text-xs" style="color: var(--text-400);">上次购买：2026-06-20</span>
+            </div>
+          </div>
+          <button class="flex items-center justify-center w-10 h-10 shrink-0 rounded-full transition-colors" style="background: var(--brand-50); color: var(--primary);" aria-label="加入购物车" data-dom-id="btn-add-cart">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+        </article>
+
+        <!-- 商品卡片 4 -->
+        <article class="flex items-center gap-3 p-3 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="w-20 h-20 shrink-0 rounded-[calc(var(--radius)-4px)]" style="background: linear-gradient(135deg, var(--brand-100) 0%, var(--brand-300) 100%);"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">高端宠物洗护套装</h3>
+            <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">500ml / 温和低敏配方</p>
+            <p class="text-sm font-semibold mt-1.5" style="color: var(--primary);">$28.50</p>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-xs" style="color: var(--text-400);">已购 8 次</span>
+              <span class="w-px h-3" style="background: var(--background-300);"></span>
+              <span class="text-xs" style="color: var(--text-400);">上次购买：2026-06-15</span>
+            </div>
+          </div>
+          <button class="flex items-center justify-center w-10 h-10 shrink-0 rounded-full transition-colors" style="background: var(--brand-50); color: var(--primary);" aria-label="加入购物车" data-dom-id="btn-add-cart">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+        </article>
+
+        <!-- 商品卡片 5 -->
+        <article class="flex items-center gap-3 p-3 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="w-20 h-20 shrink-0 rounded-[calc(var(--radius)-4px)]" style="background: linear-gradient(135deg, var(--background-200) 0%, var(--brand-50) 100%);"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">猫抓板 瓦楞纸组合</h3>
+            <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">大号 / 多层可替换</p>
+            <p class="text-sm font-semibold mt-1.5" style="color: var(--primary);">$15.99</p>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-xs" style="color: var(--text-400);">已购 7 次</span>
+              <span class="w-px h-3" style="background: var(--background-300);"></span>
+              <span class="text-xs" style="color: var(--text-400);">上次购买：2026-06-10</span>
+            </div>
+          </div>
+          <button class="flex items-center justify-center w-10 h-10 shrink-0 rounded-full transition-colors" style="background: var(--brand-50); color: var(--primary);" aria-label="加入购物车" data-dom-id="btn-add-cart">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+        </article>
+
+        <!-- 商品卡片 6 -->
+        <article class="flex items-center gap-3 p-3 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="w-20 h-20 shrink-0 rounded-[calc(var(--radius)-4px)]" style="background: linear-gradient(135deg, var(--brand-50) 0%, var(--background-100) 100%);"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">宠物营养膏 维生素补充</h3>
+            <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">120g / 离乳期适用</p>
+            <p class="text-sm font-semibold mt-1.5" style="color: var(--primary);">$12.99</p>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-xs" style="color: var(--text-400);">已购 6 次</span>
+              <span class="w-px h-3" style="background: var(--background-300);"></span>
+              <span class="text-xs" style="color: var(--text-400);">上次购买：2026-06-05</span>
+            </div>
+          </div>
+          <button class="flex items-center justify-center w-10 h-10 shrink-0 rounded-full transition-colors" style="background: var(--brand-50); color: var(--primary);" aria-label="加入购物车" data-dom-id="btn-add-cart">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+        </article>
+
+        <!-- 商品卡片 7 -->
+        <article class="flex items-center gap-3 p-3 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="w-20 h-20 shrink-0 rounded-[calc(var(--radius)-4px)]" style="background: linear-gradient(135deg, var(--brand-200) 0%, var(--brand-50) 100%);"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">舒适胸背带 透气款</h3>
+            <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">M码 / 黑色</p>
+            <p class="text-sm font-semibold mt-1.5" style="color: var(--primary);">$24.99</p>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-xs" style="color: var(--text-400);">已购 5 次</span>
+              <span class="w-px h-3" style="background: var(--background-300);"></span>
+              <span class="text-xs" style="color: var(--text-400);">上次购买：2026-05-30</span>
+            </div>
+          </div>
+          <button class="flex items-center justify-center w-10 h-10 shrink-0 rounded-full transition-colors" style="background: var(--brand-50); color: var(--primary);" aria-label="加入购物车" data-dom-id="btn-add-cart">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+        </article>
+
+        <!-- 商品卡片 8 -->
+        <article class="flex items-center gap-3 p-3 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="w-20 h-20 shrink-0 rounded-[calc(var(--radius)-4px)]" style="background: linear-gradient(135deg, var(--background-100) 0%, var(--brand-100) 100%);"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">互动益智玩具 漏食球</h3>
+            <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">直径7cm / 食品级硅胶</p>
+            <p class="text-sm font-semibold mt-1.5" style="color: var(--primary);">$9.99</p>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-xs" style="color: var(--text-400);">已购 4 次</span>
+              <span class="w-px h-3" style="background: var(--background-300);"></span>
+              <span class="text-xs" style="color: var(--text-400);">上次购买：2026-05-22</span>
+            </div>
+          </div>
+          <button class="flex items-center justify-center w-10 h-10 shrink-0 rounded-full transition-colors" style="background: var(--brand-50); color: var(--primary);" aria-label="加入购物车" data-dom-id="btn-add-cart">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+        </article>
+
+        <!-- 商品卡片 9 -->
+        <article class="flex items-center gap-3 p-3 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="w-20 h-20 shrink-0 rounded-[calc(var(--radius)-4px)]" style="background: linear-gradient(135deg, var(--brand-50) 0%, var(--background-200) 100%);"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">宠物自动饮水机</h3>
+            <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">2L / 静音循环过滤</p>
+            <p class="text-sm font-semibold mt-1.5" style="color: var(--primary);">$39.99</p>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-xs" style="color: var(--text-400);">已购 3 次</span>
+              <span class="w-px h-3" style="background: var(--background-300);"></span>
+              <span class="text-xs" style="color: var(--text-400);">上次购买：2026-05-10</span>
+            </div>
+          </div>
+          <button class="flex items-center justify-center w-10 h-10 shrink-0 rounded-full transition-colors" style="background: var(--brand-50); color: var(--primary);" aria-label="加入购物车" data-dom-id="btn-add-cart">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+        </article>
+
+        <!-- 商品卡片 10 -->
+        <article class="flex items-center gap-3 p-3 rounded-[var(--radius)]" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-xs);">
+          <div class="w-20 h-20 shrink-0 rounded-[calc(var(--radius)-4px)]" style="background: linear-gradient(135deg, var(--brand-100) 0%, var(--background-100) 100%);"></div>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm font-medium truncate" style="color: var(--foreground);">宠物航空箱 便携出行</h3>
+            <p class="text-xs mt-0.5 truncate" style="color: var(--text-400);">M码 / 透气网格</p>
+            <p class="text-sm font-semibold mt-1.5" style="color: var(--primary);">$55.00</p>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-xs" style="color: var(--text-400);">已购 2 次</span>
+              <span class="w-px h-3" style="background: var(--background-300);"></span>
+              <span class="text-xs" style="color: var(--text-400);">上次购买：2026-04-18</span>
+            </div>
+          </div>
+          <button class="flex items-center justify-center w-10 h-10 shrink-0 rounded-full transition-colors" style="background: var(--brand-50); color: var(--primary);" aria-label="加入购物车" data-dom-id="btn-add-cart">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+        </article>
+
+      </div>
+
+      <!-- 底部固定操作栏 -->
+      <div class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);">
+        <div class="flex items-center gap-4 px-4 h-14" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+          <span class="text-sm" style="color: var(--text-400);" id="selected-count">已选 0 件</span>
+          <button class="flex-1 h-11 flex items-center justify-center rounded-full text-[15px] font-semibold transition-opacity" style="background: var(--primary); color: var(--primary-foreground);" data-dom-id="btn-add-all-cart">
+            <i data-lucide="shopping-cart" class="w-4 h-4 mr-2"></i>
+            一键加入购物车
+          </button>
+        </div>
+        <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.92);"></div>
+      </div>
+
+    </main>
+
+    <script>
+      // 初始化 Lucide 图标
+      lucide.createIcons();
+
+      // 选中状态管理
+      let selectedCount = 0;
+
+      // 排序 Tab 切换逻辑
+      function switchTab(tab) {
+        const tabFreq = document.getElementById('tab-freq');
+        const tabRecent = document.getElementById('tab-recent');
+
+        if (tab === 'freq') {
+          tabFreq.style.background = 'var(--primary)';
+          tabFreq.style.color = 'var(--primary-foreground)';
+          tabFreq.classList.remove('font-medium');
+          tabFreq.classList.add('font-semibold');
+          tabRecent.style.background = 'transparent';
+          tabRecent.style.color = 'var(--muted-foreground)';
+          tabRecent.classList.remove('font-semibold');
+          tabRecent.classList.add('font-medium');
+        } else {
+          tabRecent.style.background = 'var(--primary)';
+          tabRecent.style.color = 'var(--primary-foreground)';
+          tabRecent.classList.remove('font-medium');
+          tabRecent.classList.add('font-semibold');
+          tabFreq.style.background = 'transparent';
+          tabFreq.style.color = 'var(--muted-foreground)';
+          tabFreq.classList.remove('font-semibold');
+          tabFreq.classList.add('font-medium');
+        }
+      }
+
+      // 为所有加购按钮绑定事件
+      document.querySelectorAll('[data-dom-id="btn-add-cart"]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const icon = this.querySelector('svg');
+          if (this.dataset.selected === 'true') {
+            // 取消选中
+            this.dataset.selected = 'false';
+            this.style.background = 'var(--brand-50)';
+            this.style.color = 'var(--primary)';
+            if (icon) icon.style.transform = 'rotate(0deg)';
+            selectedCount = Math.max(0, selectedCount - 1);
+          } else {
+            // 选中
+            this.dataset.selected = 'true';
+            this.style.background = 'var(--primary)';
+            this.style.color = 'var(--primary-foreground)';
+            if (icon) icon.style.transform = 'rotate(45deg)';
+            selectedCount++;
+          }
+          document.getElementById('selected-count').textContent = '已选 ' + selectedCount + ' 件';
+        });
+      });
+
+      // 一键加入购物车按钮
+      document.querySelector('[data-dom-id="btn-add-all-cart"]').addEventListener('click', function() {
+        if (selectedCount === 0) {
+          // 未选择任何商品时的提示
+          const countEl = document.getElementById('selected-count');
+          countEl.style.color = 'var(--destructive)';
+          countEl.textContent = '请先选择商品';
+          setTimeout(function() {
+            countEl.style.color = 'var(--text-400)';
+            countEl.textContent = '已选 0 件';
+          }, 1500);
+          return;
+        }
+        // 模拟加购成功
+        const originalText = this.innerHTML;
+        this.innerHTML = '<span style="display:inline-flex;align-items:center;gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>已加入购物车</span>';
+        this.style.background = 'var(--success)';
+        setTimeout(function() {
+          this.innerHTML = originalText;
+          this.style.background = 'var(--primary)';
+          // 重置所有选中状态
+          selectedCount = 0;
+          document.getElementById('selected-count').textContent = '已选 0 件';
+          document.querySelectorAll('[data-dom-id="btn-add-cart"]').forEach(function(btn) {
+            btn.dataset.selected = 'false';
+            btn.style.background = 'var(--brand-50)';
+            btn.style.color = 'var(--primary)';
+            var icon = btn.querySelector('svg');
+            if (icon) icon.style.transform = 'rotate(0deg)';
+          });
+          lucide.createIcons();
+        }.bind(this), 1200);
+      });
+    </script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - After-Sales Policy</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="max-w-[375px] mx-auto min-h-screen pb-24" style="background: var(--background);">
+
+      <!-- Top Navigation Bar -->
+      <nav class="sticky top-0 z-50 flex items-center justify-center h-[44px] px-4" style="background: var(--background);">
+        <!-- Back Button -->
+        <button data-dom-id="cta-back" class="absolute left-4 flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--secondary);" aria-label="Back">
+          <i data-lucide="arrow-left" class="w-[18px] h-[18px]" style="color: var(--foreground);"></i>
+        </button>
+        <!-- Page Title -->
+        <span class="text-[17px] font-semibold" style="color: var(--foreground);">After-Sales Policy</span>
+        <!-- Share Button -->
+        <button data-dom-id="cta-share" class="absolute right-4 flex items-center justify-center w-8 h-8 rounded-full" style="background: var(--secondary);" aria-label="Share Policy Page">
+          <i data-lucide="share" class="w-[18px] h-[18px]" style="color: var(--foreground);"></i>
+        </button>
+      </nav>
+
+      <div class="px-4 pt-3 flex flex-col gap-3">
+
+        <!-- Last Updated Notice -->
+        <div class="flex items-center gap-2 py-2">
+          <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/file.svg'); mask-image: url('../assets/icons/dl-builtin-apple/file.svg'); color: var(--text-400);"></span>
+          <span class="text-[12px]" style="color: var(--text-400);">Policy updated on 2026-07-01</span>
+        </div>
+
+        <!-- FAQ Collapsible Sections -->
+        <div class="flex flex-col gap-3">
+
+          <!-- 1. Return Policy -->
+          <details class="group rounded-[19.2px] overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <summary class="flex items-center justify-between px-4 py-3.5 cursor-pointer select-none list-none">
+              <span class="text-[15px] font-semibold" style="color: var(--foreground);">Return Policy</span>
+              <i data-lucide="chevron-down" class="w-[18px] h-[18px] transition-transform duration-200 group-open:rotate-180" style="color: var(--icon-muted);"></i>
+            </summary>
+            <div class="px-4 pb-4 flex flex-col gap-3">
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">7-Day No-Questions-Asked Return</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">Within 7 calendar days of receipt, if the product is intact and resalable, you may apply for a no-questions-asked return.</p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">Return Conditions</h4>
+                <ul class="flex flex-col gap-1.5 pl-1">
+                  <li class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                    <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--state-success);"></span>
+                    Product is unused, unwashed, and unopened (for sealed products)
+                  </li>
+                  <li class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                    <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--state-success);"></span>
+                    Original packaging, tags, manuals, free gifts, and other accessories are complete
+                  </li>
+                  <li class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                    <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/check.svg'); color: var(--state-success);"></span>
+                    Retain the original purchase receipt or electronic order record
+                  </li>
+                </ul>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--destructive);">Not Eligible Cases</h4>
+                <ul class="flex flex-col gap-1.5 pl-1">
+                  <li class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                    <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--destructive);"></span>
+                    Exceeds the 7-day return window
+                  </li>
+                  <li class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                    <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); color: var(--destructive);"></span>
+                    Product has been used or washed
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </details>
+
+          <!-- 2. Refund Policy -->
+          <details class="group rounded-[19.2px] overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <summary class="flex items-center justify-between px-4 py-3.5 cursor-pointer select-none list-none">
+              <span class="text-[15px] font-semibold" style="color: var(--foreground);">Refund Policy</span>
+              <i data-lucide="chevron-down" class="w-[18px] h-[18px] transition-transform duration-200 group-open:rotate-180" style="color: var(--icon-muted);"></i>
+            </summary>
+            <div class="px-4 pb-4 flex flex-col gap-3">
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">Refund Timeline</h4>
+                <div class="flex flex-col gap-1.5 pl-1">
+                  <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">Stripe Payment: Refunds will be returned to the original payment method within 3-5 business days after approval.</p>
+                  <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">PayPal Payment: Refunds will be returned to the original payment method within 1-3 business days after approval.</p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">Refund Method</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">All refunds are returned via the original payment method. Changing the refund channel is not supported. The actual arrival time depends on the processing speed of each payment institution.</p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">Price Protection</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">If the product price drops within 7 calendar days after purchase, you may apply for price protection to receive a refund of the price difference. The difference will be returned to the original payment account, with the same refund timeline as above.</p>
+              </div>
+            </div>
+          </details>
+
+          <!-- 3. Exchange Policy -->
+          <details class="group rounded-[19.2px] overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <summary class="flex items-center justify-between px-4 py-3.5 cursor-pointer select-none list-none">
+              <span class="text-[15px] font-semibold" style="color: var(--foreground);">Exchange Policy</span>
+              <i data-lucide="chevron-down" class="w-[18px] h-[18px] transition-transform duration-200 group-open:rotate-180" style="color: var(--icon-muted);"></i>
+            </summary>
+            <div class="px-4 pb-4 flex flex-col gap-3">
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">Same Product, Different Variant Exchange</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">Within 7 calendar days of receipt, you may apply to exchange for the same product in a different color or size. The product must be intact, unused, and with complete original packaging.</p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">Exchange Process</h4>
+                <div class="flex flex-col gap-2 pl-1">
+                  <div class="flex items-start gap-2.5">
+                    <span class="flex items-center justify-center w-5 h-5 rounded-full text-[11px] font-bold shrink-0" style="background: var(--primary); color: var(--primary-foreground);">1</span>
+                    <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">Submit an exchange request on the order details page and select the desired variant</p>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="flex items-center justify-center w-5 h-5 rounded-full text-[11px] font-bold shrink-0" style="background: var(--primary); color: var(--primary-foreground);">2</span>
+                    <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">After customer service approval, send back the original product</p>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="flex items-center justify-center w-5 h-5 rounded-full text-[11px] font-bold shrink-0" style="background: var(--primary); color: var(--primary-foreground);">3</span>
+                    <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">After the warehouse receives and confirms the product is intact, the new variant will be shipped</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- 4. Shipping Fee Policy -->
+          <details class="group rounded-[19.2px] overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <summary class="flex items-center justify-between px-4 py-3.5 cursor-pointer select-none list-none">
+              <span class="text-[15px] font-semibold" style="color: var(--foreground);">Shipping Fee Policy</span>
+              <i data-lucide="chevron-down" class="w-[18px] h-[18px] transition-transform duration-200 group-open:rotate-180" style="color: var(--icon-muted);"></i>
+            </summary>
+            <div class="px-4 pb-4 flex flex-col gap-3">
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">Merchant Responsibility</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">For returns or exchanges due to merchant reasons such as product quality issues or incorrect shipments, both-way shipping fees are fully covered by MOYUYO.</p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">Customer Responsibility</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">For returns or exchanges due to non-merchant reasons such as personal preference or incorrect size, the return shipping fee is borne by the customer. For exchanges, the shipping fee for the new product is covered by the merchant.</p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h4 class="text-[13px] font-semibold" style="color: var(--foreground);">Shipping Insurance</h4>
+                <p class="text-[13px] leading-relaxed" style="color: var(--text-500);">Some products come with shipping insurance, which can be used to offset return shipping fees. Please refer to the product detail page and insurance company rules for specifics.</p>
+              </div>
+            </div>
+          </details>
+
+          <!-- 5. Non-Returnable & Non-Exchangeable Items -->
+          <details class="group rounded-[19.2px] overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <summary class="flex items-center justify-between px-4 py-3.5 cursor-pointer select-none list-none">
+              <span class="text-[15px] font-semibold" style="color: var(--foreground);">Non-Returnable &amp; Non-Exchangeable Items</span>
+              <i data-lucide="chevron-down" class="w-[18px] h-[18px] transition-transform duration-200 group-open:rotate-180" style="color: var(--icon-muted);"></i>
+            </summary>
+            <div class="px-4 pb-4 flex flex-col gap-2.5 pl-1">
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                Grooming products that have been washed, used, or opened
+              </div>
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                Customized products, including engraved/embroidered personalized items
+              </div>
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                Intimate or hygiene products such as underwear, pet beds (after opening)
+              </div>
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                Consumable products such as food, treats, and supplements (after opening)
+              </div>
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                Promotional free gifts, samples, and other non-sale items
+              </div>
+              <div class="flex items-start gap-2 text-[13px] leading-relaxed" style="color: var(--text-500);">
+                <span data-icon class="w-3 h-3 mt-[3px] shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-minus.svg'); color: var(--icon-muted);"></span>
+                Products beyond the return/exchange window
+              </div>
+            </div>
+          </details>
+
+        </div>
+      </div>
+
+      <!-- Bottom "Contact Customer Service" Button -->
+      <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[375px] z-50 flex flex-col items-center gap-2 pb-6 pt-3 px-4" style="background: linear-gradient(to top, var(--background) 70%, transparent);">
+        <button data-dom-id="cta-contact-cs" class="w-full h-[48px] rounded-full text-[16px] font-semibold flex items-center justify-center gap-2" style="background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-sm);">
+          <i data-lucide="headphones" class="w-[18px] h-[18px]"></i>
+          <span>Contact Customer Service</span>
+        </button>
+      </div>
+
+    </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

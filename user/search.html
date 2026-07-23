@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Search</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="min-h-screen bg-[var(--background)]">
+      <!-- Search Bar -->
+      <div class="sticky top-0 z-20 bg-[var(--background)]/95 backdrop-blur-sm px-4 pt-3 pb-2">
+        <div class="flex items-center gap-3">
+          <div class="field flex-1" style="min-width:0;height:40px;">
+            <span data-icon class="w-4 h-4 shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/funnel.svg'); mask-image: url('../assets/icons/dl-builtin-apple/funnel.svg');"></span>
+            <input class="control text-sm" placeholder="Search pet supplies, brands, IP" autofocus aria-label="Search pet supplies, brands, IP">
+          </div>
+          <button class="shrink-0 text-sm font-medium whitespace-nowrap" style="color: var(--brand-500); background: transparent; border: none; cursor: pointer;" data-dom-id="back-previous">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Search History -->
+      <section class="px-4 pt-4 pb-2">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold" style="color: var(--text-800);">Search History</h2>
+          <button class="inline-flex items-center gap-1 text-xs whitespace-nowrap" style="color: var(--text-500); background: transparent; border: none; cursor: pointer;" aria-label="Clear search history">
+            <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/trash-2.svg'); mask-image: url('../assets/icons/dl-builtin-apple/trash-2.svg');"></span>
+            <span>Clear</span>
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="inline-flex items-center justify-center px-3 py-1.5 text-sm whitespace-nowrap" style="background: var(--background-200); color: var(--text-600); border-radius: var(--radius);">Pet Shampoo</span>
+          <span class="inline-flex items-center justify-center px-3 py-1.5 text-sm whitespace-nowrap" style="background: var(--background-200); color: var(--text-600); border-radius: var(--radius);">Leash</span>
+          <span class="inline-flex items-center justify-center px-3 py-1.5 text-sm whitespace-nowrap" style="background: var(--background-200); color: var(--text-600); border-radius: var(--radius);">Cat Food</span>
+          <span class="inline-flex items-center justify-center px-3 py-1.5 text-sm whitespace-nowrap" style="background: var(--background-200); color: var(--text-600); border-radius: var(--radius);">Pet Toys</span>
+          <span class="inline-flex items-center justify-center px-3 py-1.5 text-sm whitespace-nowrap" style="background: var(--background-200); color: var(--text-600); border-radius: var(--radius);">Dog Clothes</span>
+          <span class="inline-flex items-center justify-center px-3 py-1.5 text-sm whitespace-nowrap" style="background: var(--background-200); color: var(--text-600); border-radius: var(--radius);">Pet Treats</span>
+        </div>
+      </section>
+
+      <div class="mx-4 my-1" style="height: 1px; background: var(--border);"></div>
+
+      <!-- Trending Searches -->
+      <section class="px-4 pt-3 pb-2">
+        <h2 class="text-base font-semibold mb-3" style="color: var(--text-800);">Trending</h2>
+        <ul class="flex flex-col gap-0" style="list-style: none; margin: 0; padding: 0;">
+          <!-- Top 1-3: Brand blue numbers -->
+          <li class="flex items-center gap-3 py-2.5" style="border-bottom: 1px solid var(--border);">
+            <span class="w-5 text-center text-sm font-bold" style="color: var(--brand-500);">1</span>
+            <span class="flex-1 min-w-0 text-sm truncate" style="color: var(--text-800);">Pet Deworming</span>
+            <span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap" style="background: var(--state-error); color: var(--state-error-foreground); border-radius: 4px;">Hot</span>
+          </li>
+          <li class="flex items-center gap-3 py-2.5" style="border-bottom: 1px solid var(--border);">
+            <span class="w-5 text-center text-sm font-bold" style="color: var(--brand-500);">2</span>
+            <span class="flex-1 min-w-0 text-sm truncate" style="color: var(--text-800);">Summer Care</span>
+            <span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap" style="background: var(--brand-500); color: var(--primary-foreground); border-radius: 4px;">New</span>
+          </li>
+          <li class="flex items-center gap-3 py-2.5" style="border-bottom: 1px solid var(--border);">
+            <span class="w-5 text-center text-sm font-bold" style="color: var(--brand-500);">3</span>
+            <span class="flex-1 min-w-0 text-sm truncate" style="color: var(--text-800);">Cat Tree</span>
+            <span></span>
+          </li>
+          <!-- Top 4-10: Regular numbers -->
+          <li class="flex items-center gap-3 py-2.5" style="border-bottom: 1px solid var(--border);">
+            <span class="w-5 text-center text-sm font-medium" style="color: var(--text-400);">4</span>
+            <span class="flex-1 min-w-0 text-sm truncate" style="color: var(--text-800);">Dog Treats</span>
+            <span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap" style="background: var(--state-error); color: var(--state-error-foreground); border-radius: 4px;">Hot</span>
+          </li>
+          <li class="flex items-center gap-3 py-2.5" style="border-bottom: 1px solid var(--border);">
+            <span class="w-5 text-center text-sm font-medium" style="color: var(--text-400);">5</span>
+            <span class="flex-1 min-w-0 text-sm truncate" style="color: var(--text-800);">Pet Bed</span>
+            <span></span>
+          </li>
+          <li class="flex items-center gap-3 py-2.5" style="border-bottom: 1px solid var(--border);">
+            <span class="w-5 text-center text-sm font-medium" style="color: var(--text-400);">6</span>
+            <span class="flex-1 min-w-0 text-sm truncate" style="color: var(--text-800);">Pet Stroller</span>
+            <span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap" style="background: var(--brand-500); color: var(--primary-foreground); border-radius: 4px;">New</span>
+          </li>
+          <li class="flex items-center gap-3 py-2.5" style="border-bottom: 1px solid var(--border);">
+            <span class="w-5 text-center text-sm font-medium" style="color: var(--text-400);">7</span>
+            <span class="flex-1 min-w-0 text-sm truncate" style="color: var(--text-800);">Cat Litter</span>
+            <span></span>
+          </li>
+          <li class="flex items-center gap-3 py-2.5" style="border-bottom: 1px solid var(--border);">
+            <span class="w-5 text-center text-sm font-medium" style="color: var(--text-400);">8</span>
+            <span class="flex-1 min-w-0 text-sm truncate" style="color: var(--text-800);">Dog Clothes</span>
+            <span></span>
+          </li>
+          <li class="flex items-center gap-3 py-2.5" style="border-bottom: 1px solid var(--border);">
+            <span class="w-5 text-center text-sm font-medium" style="color: var(--text-400);">9</span>
+            <span class="flex-1 min-w-0 text-sm truncate" style="color: var(--text-800);">Pet Bowl</span>
+            <span></span>
+          </li>
+          <li class="flex items-center gap-3 py-2.5">
+            <span class="w-5 text-center text-sm font-medium" style="color: var(--text-400);">10</span>
+            <span class="flex-1 min-w-0 text-sm truncate" style="color: var(--text-800);">Pet GPS</span>
+            <span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap" style="background: var(--brand-500); color: var(--primary-foreground); border-radius: 4px;">New</span>
+          </li>
+        </ul>
+      </section>
+
+      <div class="mx-4 my-1" style="height: 1px; background: var(--border);"></div>
+
+      <!-- Discover -->
+      <section class="px-4 pt-3 pb-6">
+        <h2 class="text-base font-semibold mb-3" style="color: var(--text-800);">Discover</h2>
+        <!-- Horizontal scroll cards -->
+        <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1" style="-webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory;">
+          <!-- Card 1: Pet Fashion (with image background) -->
+          <div class="shrink-0 w-[140px] h-[88px] relative overflow-hidden" style="border-radius: var(--radius); scroll-snap-align: start;">
+            <img src="../assets/treats-category-header.jpg" alt="Pet Fashion" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);"></div>
+            <span class="absolute bottom-2 left-3 text-white text-sm font-semibold">Pet Fashion</span>
+          </div>
+          <!-- Card 2: Summer Care (with image background) -->
+          <div class="shrink-0 w-[140px] h-[88px] relative overflow-hidden" style="border-radius: var(--radius); scroll-snap-align: start;">
+            <img src="../assets/pet-care-grooming.jpg" alt="Summer Care" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);"></div>
+            <span class="absolute bottom-2 left-3 text-white text-sm font-semibold">Summer Care</span>
+          </div>
+          <!-- Card 3: New Arrivals (solid background) -->
+          <div class="shrink-0 w-[140px] h-[88px] relative overflow-hidden flex items-end" style="border-radius: var(--radius); background: var(--brand-50); scroll-snap-align: start;">
+            <span class="pb-3 pl-3 text-sm font-semibold" style="color: var(--brand-600);">New Arrivals</span>
+          </div>
+          <!-- Card 4: Cat Zone (solid background) -->
+          <div class="shrink-0 w-[140px] h-[88px] relative overflow-hidden flex items-end" style="border-radius: var(--radius); background: var(--background-200); scroll-snap-align: start;">
+            <span class="pb-3 pl-3 text-sm font-semibold" style="color: var(--text-600);">Cat Zone</span>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      (function() {
+        var searchInput = document.querySelector('input[placeholder="Search pet supplies, brands, IP"]');
+        var historyContainer = document.querySelector('.flex.flex-wrap.gap-2');
+        var hotListContainer = document.querySelector('ul.flex.flex-col.gap-0');
+        var clearBtn = document.querySelector('button[aria-label="Clear search history"]');
+        var cancelBtn = document.querySelector('[data-dom-id="back-previous"]');
+
+        function getSearchHistory() {
+          try {
+            var raw = localStorage.getItem('moyuyo_search_history');
+            return raw ? JSON.parse(raw) : [];
+          } catch (e) { return []; }
+        }
+
+        function saveSearchHistory(history) {
+          localStorage.setItem('moyuyo_search_history', JSON.stringify(history.slice(0, 10)));
+        }
+
+        function renderHistory() {
+          if (!historyContainer) return;
+          var history = getSearchHistory();
+          if (!history.length) {
+            historyContainer.innerHTML = '<span style="color:var(--text-400);font-size:13px;">No search history</span>';
+            return;
+          }
+          historyContainer.innerHTML = '';
+          history.forEach(function(keyword) {
+            var span = document.createElement('span');
+            span.className = 'inline-flex items-center justify-center px-3 py-1.5 text-sm whitespace-nowrap cursor-pointer';
+            span.style.cssText = 'background:var(--background-200);color:var(--text-600);border-radius:var(--radius)';
+            span.textContent = keyword;
+            span.addEventListener('click', function() {
+              searchInput.value = keyword;
+              doSearch(keyword);
+            });
+            historyContainer.appendChild(span);
+          });
+        }
+
+        async function loadHotSearch() {
+          if (!hotListContainer) return;
+          try {
+            var res = await moyuyoAPI.get('/api/v1/goods/search/hot', { skipSign: true });
+            if (res.code === 0 && res.data && res.data.list) {
+              hotListContainer.innerHTML = '';
+              res.data.list.forEach(function(item, index) {
+                var li = document.createElement('li');
+                li.className = 'flex items-center gap-3 py-2.5';
+                li.style.cssText = 'border-bottom:1px solid var(--border);cursor:pointer;';
+                var rankColor = index < 3 ? 'var(--brand-500)' : 'var(--text-400)';
+                var rankWeight = index < 3 ? 'bold' : 'medium';
+                var tagHtml = '';
+                if (item.tag === 'Hot') {
+                  tagHtml = '<span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap" style="background:var(--state-error);color:var(--state-error-foreground);border-radius:4px;">Hot</span>';
+                } else if (item.tag === 'New') {
+                  tagHtml = '<span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap" style="background:var(--brand-500);color:var(--primary-foreground);border-radius:4px;">New</span>';
+                }
+                li.innerHTML =
+                  '<span class="w-5 text-center text-sm font-' + rankWeight + '" style="color:' + rankColor + '">' + (index + 1) + '</span>' +
+                  '<span class="flex-1 min-w-0 text-sm truncate" style="color:var(--text-800)">' + item.keyword + '</span>' +
+                  tagHtml;
+                li.addEventListener('click', function() {
+                  searchInput.value = item.keyword;
+                  doSearch(item.keyword);
+                });
+                hotListContainer.appendChild(li);
+              });
+            }
+          } catch (e) {
+            console.log('[MOYUYO] Hot search unavailable');
+          }
+        }
+
+        function doSearch(keyword) {
+          if (!keyword || !keyword.trim()) return;
+          keyword = keyword.trim();
+          var history = getSearchHistory();
+          var idx = history.indexOf(keyword);
+          if (idx !== -1) history.splice(idx, 1);
+          history.unshift(keyword);
+          saveSearchHistory(history);
+          window.location.href = 'search-result.html?keyword=' + encodeURIComponent(keyword);
+        }
+
+        if (searchInput) {
+          searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+              doSearch(searchInput.value);
+            }
+          });
+        }
+
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function() {
+            localStorage.removeItem('moyuyo_search_history');
+            renderHistory();
+          });
+        }
+
+        if (cancelBtn) {
+          cancelBtn.addEventListener('click', function() {
+            window.history.back();
+          });
+        }
+
+        renderHistory();
+        loadHotSearch();
+      })();
+    </script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

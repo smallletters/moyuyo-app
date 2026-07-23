@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 慈善捐赠</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background: var(--background-100);">
+  <!-- 页面容器，移动端居中 -->
+  <div class="mx-auto" style="max-width: 375px; min-height: 100vh; background: var(--background);">
+
+    <!-- 顶部导航栏 -->
+    <nav class="sticky top-0 z-30 flex items-center justify-between px-4" style="height: 44px; background: var(--background-800);">
+      <button class="flex items-center justify-center" style="width: 32px; height: 32px; color: var(--primary-foreground);" aria-label="返回">
+        <i data-icon="chevron-left" style="width: 24px; height: 24px;"></i>
+      </button>
+      <h1 class="text-base font-semibold" style="color: var(--background-50);">为流浪动物献爱心</h1>
+      <div style="width: 32px;"></div>
+    </nav>
+
+    <main class="px-4 pt-4 pb-28">
+
+      <!-- 爱心横幅卡片 -->
+      <div class="charity-banner rounded-2xl p-5 mb-4" style="border-radius: calc(var(--radius) * 1.5);">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="flex items-center justify-center rounded-full" style="width: 36px; height: 36px; background: linear-gradient(135deg, #FF8C42, #FF6B35);">
+            <i data-icon="heart" style="width: 20px; height: 20px; color: white;"></i>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold" style="color: var(--text-800);">每一份爱，都不算少</h2>
+          </div>
+        </div>
+        <p class="text-sm leading-relaxed" style="color: var(--text-600);">
+          您的每一笔微小捐赠，都能为流浪动物带来温暖与希望。MOYUYO 将 100% 捐赠金额直接转交合作救助机构。
+        </p>
+      </div>
+
+      <!-- 当前订单信息 -->
+      <div class="rounded-2xl p-4 mb-4" style="background: var(--card); border: 1px solid var(--border); border-radius: calc(var(--radius) * 1.5);">
+        <div class="flex items-center gap-2 mb-3">
+          <i data-icon="shopping-bag" style="width: 18px; height: 18px; color: var(--icon-muted);"></i>
+          <span class="text-sm font-medium" style="color: var(--foreground);">当前订单</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm" style="color: var(--muted-foreground);">已选商品 3 件</p>
+          </div>
+          <span class="text-xl font-bold" style="color: var(--foreground);">$67.30</span>
+        </div>
+      </div>
+
+      <!-- 捐赠方式选择 -->
+      <div class="mb-4">
+        <h3 class="text-sm font-semibold mb-3" style="color: var(--foreground);">选择捐赠方式</h3>
+
+        <!-- 凑整捐赠（推荐，默认选中） -->
+        <div id="option-roundup" class="donation-card donation-card-selected rounded-2xl p-4 mb-3 cursor-pointer" style="background: var(--brand-50); border: 2px solid var(--primary); border-radius: calc(var(--radius) * 1.5);" onclick="selectDonationOption('roundup')">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="flex items-center justify-center rounded-full" style="width: 40px; height: 40px; background: linear-gradient(135deg, #C2E0FF, #A8D0FF);">
+                <i data-icon="arrow-up-circle" style="width: 22px; height: 22px; color: var(--primary);"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-semibold" style="color: var(--foreground);">凑整捐赠</span>
+                  <span class="text-xs font-medium px-1.5 py-0.5 rounded-full" style="background: var(--primary); color: var(--primary-foreground);">推荐</span>
+                </div>
+                <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">Round up to the next dollar</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-lg font-bold" style="color: var(--primary);">$0.70</span>
+              <p class="text-xs" style="color: var(--muted-foreground);">凑整至 $68.00</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 固定金额 -->
+        <div id="option-fixed" class="donation-card rounded-2xl p-4 mb-3 cursor-pointer" style="background: var(--card); border: 2px solid var(--border); border-radius: calc(var(--radius) * 1.5);" onclick="selectDonationOption('fixed')">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="flex items-center justify-center rounded-full" style="width: 40px; height: 40px; background: var(--secondary);">
+              <i data-icon="coins" style="width: 22px; height: 22px; color: var(--icon-muted);"></i>
+            </div>
+            <span class="text-sm font-semibold" style="color: var(--foreground);">固定金额</span>
+          </div>
+          <div class="flex gap-2">
+            <button class="amount-btn flex-1 h-10 rounded-xl text-sm font-semibold transition-all" style="border: 1.5px solid var(--border); background: var(--background); color: var(--foreground);" onclick="selectFixedAmount(1, event)">$1</button>
+            <button class="amount-btn flex-1 h-10 rounded-xl text-sm font-semibold transition-all" style="border: 1.5px solid var(--border); background: var(--background); color: var(--foreground);" onclick="selectFixedAmount(3, event)">$3</button>
+            <button class="amount-btn flex-1 h-10 rounded-xl text-sm font-semibold transition-all" style="border: 1.5px solid var(--border); background: var(--background); color: var(--foreground);" onclick="selectFixedAmount(5, event)">$5</button>
+          </div>
+        </div>
+
+        <!-- 自定义金额 -->
+        <div id="option-custom" class="donation-card rounded-2xl p-4 mb-1 cursor-pointer" style="background: var(--card); border: 2px solid var(--border); border-radius: calc(var(--radius) * 1.5);" onclick="selectDonationOption('custom')">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="flex items-center justify-center rounded-full" style="width: 40px; height: 40px; background: var(--secondary);">
+              <i data-icon="pencil-line" style="width: 22px; height: 22px; color: var(--icon-muted);"></i>
+            </div>
+            <span class="text-sm font-semibold" style="color: var(--foreground);">自定义金额</span>
+          </div>
+          <div class="flex items-center rounded-xl" style="height: 44px; border: 1.5px solid var(--border); background: var(--background); padding: 0 14px;">
+            <span class="text-base font-semibold mr-1" style="color: var(--muted-foreground);">$</span>
+            <input type="number" class="flex-1 bg-transparent border-none outline-none text-base font-semibold" style="color: var(--foreground);" placeholder="输入金额" min="0.01" step="0.01" oninput="onCustomAmountInput(this)">
+          </div>
+        </div>
+      </div>
+
+      <!-- 每次自动凑整捐赠开关 -->
+      <div class="rounded-2xl p-4 mb-4 flex items-center justify-between" style="background: var(--card); border: 1px solid var(--border); border-radius: calc(var(--radius) * 1.5);">
+        <div class="flex items-center gap-2.5">
+          <i data-icon="repeat" style="width: 18px; height: 18px; color: var(--icon-muted);"></i>
+          <div>
+            <p class="text-sm font-medium" style="color: var(--foreground);">每次自动凑整捐赠</p>
+            <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">开启后后续下单自动凑整</p>
+          </div>
+        </div>
+        <div id="auto-toggle" class="toggle-switch" onclick="toggleAutoRoundup()"></div>
+      </div>
+
+      <!-- 合作机构展示 -->
+      <div class="mb-4">
+        <h3 class="text-sm font-semibold mb-3" style="color: var(--foreground);">合作救助机构</h3>
+        <div class="space-y-3">
+          <!-- ASPCA -->
+          <div class="rounded-2xl p-4 flex items-center gap-3" style="background: var(--card); border: 1px solid var(--border); border-radius: calc(var(--radius) * 1.5);">
+            <div class="org-icon-ascpa flex items-center justify-center rounded-xl flex-shrink-0" style="width: 48px; height: 48px;">
+              <i data-icon="shield" style="width: 24px; height: 24px; color: white;"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold" style="color: var(--foreground);">ASPCA</p>
+              <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">美国防止虐待动物协会</p>
+            </div>
+            <i data-icon="external-link" style="width: 16px; height: 16px; color: var(--icon-muted); flex-shrink: 0;"></i>
+          </div>
+          <!-- RSPCA -->
+          <div class="rounded-2xl p-4 flex items-center gap-3" style="background: var(--card); border: 1px solid var(--border); border-radius: calc(var(--radius) * 1.5);">
+            <div class="org-icon-rspca flex items-center justify-center rounded-xl flex-shrink-0" style="width: 48px; height: 48px;">
+              <i data-icon="heart-handshake" style="width: 24px; height: 24px; color: white;"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold" style="color: var(--foreground);">RSPCA</p>
+              <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">英国皇家防止虐待动物协会</p>
+            </div>
+            <i data-icon="external-link" style="width: 16px; height: 16px; color: var(--icon-muted); flex-shrink: 0;"></i>
+          </div>
+          <!-- 当地动物救助组织 -->
+          <div class="rounded-2xl p-4 flex items-center gap-3" style="background: var(--card); border: 1px solid var(--border); border-radius: calc(var(--radius) * 1.5);">
+            <div class="org-icon-local flex items-center justify-center rounded-xl flex-shrink-0" style="width: 48px; height: 48px;">
+              <i data-icon="map-pin" style="width: 24px; height: 24px; color: white;"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold" style="color: var(--foreground);">当地动物救助组织</p>
+              <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">支持您所在社区的救助站</p>
+            </div>
+            <i data-icon="external-link" style="width: 16px; height: 16px; color: var(--icon-muted); flex-shrink: 0;"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- 累计捐赠信息 -->
+      <div class="rounded-2xl p-4 mb-4" style="background: linear-gradient(135deg, #FFF9F5, #FFF0E8); border: 1px solid #FFE0CC; border-radius: calc(var(--radius) * 1.5);">
+        <div class="flex items-center gap-2 mb-2">
+          <i data-icon="award" style="width: 18px; height: 18px; color: #FF8C42;"></i>
+          <span class="text-sm font-semibold" style="color: var(--text-700);">您的爱心记录</span>
+        </div>
+        <p class="text-sm leading-relaxed" style="color: var(--text-600);">
+          您已累计捐赠 <span class="font-bold" style="color: var(--text-800);">$23.70</span>，帮助了 <span class="font-bold" style="color: var(--text-800);">5</span> 只流浪动物
+        </p>
+        <p class="text-xs mt-2" style="color: var(--muted-foreground);">
+          捐赠完成后可获取电子收据，可用于抵税
+        </p>
+      </div>
+
+      <!-- 捐赠说明 -->
+      <div class="rounded-2xl p-4" style="background: var(--card); border: 1px solid var(--border); border-radius: calc(var(--radius) * 1.5);">
+        <div class="flex items-start gap-2">
+          <i data-icon="info" style="width: 16px; height: 16px; color: var(--icon-muted); flex-shrink: 0; margin-top: 2px;"></i>
+          <div>
+            <p class="text-xs leading-relaxed" style="color: var(--muted-foreground);">
+              捐赠金额将与订单一并支付。捐赠证书（电子收据）将在支付完成后发送至您的邮箱，可作为税务抵扣凭证。MOYUYO 承诺将 100% 捐赠金额转交合作机构。
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- 底部操作按钮（固定定位） -->
+    <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full px-4 pb-6 pt-3" style="max-width: 375px; background: linear-gradient(to top, var(--background) 60%, transparent);">
+      <div class="flex items-center justify-between mb-2 px-1">
+        <span class="text-xs" style="color: var(--muted-foreground);">捐赠 + 订单总额</span>
+        <span id="total-amount" class="text-lg font-bold" style="color: var(--foreground);">$68.00</span>
+      </div>
+      <button id="confirm-btn" class="w-full h-12 rounded-2xl text-base font-semibold flex items-center justify-center gap-2 transition-all" style="background: var(--primary); color: var(--primary-foreground); box-shadow: 0 4px 14px rgba(0, 122, 255, 0.3);">
+        <i data-icon="heart" style="width: 18px; height: 18px;"></i>
+        <span>确认捐赠并继续结算</span>
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    // 当前状态
+    var currentOption = 'roundup';
+    var currentDonation = 0.70;
+    var currentFixedAmount = 0;
+    var currentCustomAmount = 0;
+    var autoRoundup = false;
+    var orderAmount = 67.30;
+
+    // 选择捐赠方式
+    function selectDonationOption(option) {
+      currentOption = option;
+      var cards = document.querySelectorAll('.donation-card');
+      cards.forEach(function(card) {
+        card.classList.remove('donation-card-selected');
+        card.style.background = 'var(--card)';
+        card.style.borderColor = 'var(--border)';
+      });
+      var selectedCard = document.getElementById('option-' + option);
+      selectedCard.classList.add('donation-card-selected');
+      selectedCard.style.background = 'var(--brand-50)';
+      selectedCard.style.borderColor = 'var(--primary)';
+
+      // 更新捐赠金额
+      if (option === 'roundup') {
+        currentDonation = 0.70;
+      } else if (option === 'fixed') {
+        currentDonation = currentFixedAmount;
+      } else if (option === 'custom') {
+        currentDonation = currentCustomAmount;
+      }
+      updateTotal();
+    }
+
+    // 选择固定金额
+    function selectFixedAmount(amount, event) {
+      event.stopPropagation();
+      currentFixedAmount = amount;
+      currentDonation = amount;
+      // 更新按钮样式
+      var btns = document.querySelectorAll('.amount-btn');
+      btns.forEach(function(btn) {
+        btn.classList.remove('amount-btn-selected');
+        btn.style.background = 'var(--background)';
+        btn.style.color = 'var(--foreground)';
+        btn.style.borderColor = 'var(--border)';
+      });
+      event.target.classList.add('amount-btn-selected');
+      event.target.style.background = 'var(--primary)';
+      event.target.style.color = 'var(--primary-foreground)';
+      event.target.style.borderColor = 'var(--primary)';
+      updateTotal();
+    }
+
+    // 自定义金额输入
+    function onCustomAmountInput(input) {
+      var val = parseFloat(input.value);
+      currentCustomAmount = isNaN(val) || val < 0 ? 0 : val;
+      currentDonation = currentCustomAmount;
+      updateTotal();
+    }
+
+    // 更新总额显示
+    function updateTotal() {
+      var total = orderAmount + currentDonation;
+      var donationText = currentDonation > 0 ? '$' + currentDonation.toFixed(2) : '$0.00';
+      document.getElementById('total-amount').textContent = '$' + total.toFixed(2);
+    }
+
+    // 切换自动凑整开关
+    function toggleAutoRoundup() {
+      autoRoundup = !autoRoundup;
+      var toggle = document.getElementById('auto-toggle');
+      if (autoRoundup) {
+        toggle.classList.add('active');
+      } else {
+        toggle.classList.remove('active');
+      }
+    }
+
+    // 初始化 Lucide 图标
+    lucide.createIcons();
+  </script>
+</body>
+</html>

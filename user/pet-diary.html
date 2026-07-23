@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growth Diary - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen antialiased" style="font-family: 'DM Sans', -apple-system, sans-serif;">
+    <main class="pb-24">
+
+      <!-- iOS Status Bar Simulation -->
+      <div class="sticky top-0 z-30" style="background: var(--background);">
+        <div class="h-11 flex items-center justify-between px-5">
+          <span class="text-sm font-semibold" style="color: var(--foreground);">9:41</span>
+          <div class="flex items-center gap-1.5">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg');"></span>
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); mask-image: url('../assets/icons/dl-builtin-apple/box.svg');"></span>
+            <span class="w-6 h-3 rounded-sm" style="background: var(--foreground);"></span>
+          </div>
+        </div>
+
+        <!-- Top Navigation Bar -->
+        <div class="h-12 flex items-center justify-between px-4" style="border-bottom: 1px solid var(--border);">
+          <button class="flex items-center justify-center w-9 h-9 rounded-full" style="background: var(--background-200);" data-dom-id="cta-back" aria-label="Back">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--foreground);"></span>
+          </button>
+          <h1 class="text-base font-semibold" style="color: var(--foreground);">Growth Diary</h1>
+          <button class="flex items-center justify-center w-9 h-9 rounded-full" style="background: var(--primary);" aria-label="New Diary" data-dom-id="cta-new-diary">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/pen-line.svg'); mask-image: url('../assets/icons/dl-builtin-apple/pen-line.svg'); color: var(--primary-foreground);"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pet Info Summary Card -->
+      <section class="px-4 pt-4 pb-2" aria-label="Pet Info">
+        <div class="rounded-[var(--radius)] p-4 flex items-center gap-3.5" style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+          <!-- Circular Pet Avatar Placeholder -->
+          <div class="w-14 h-14 rounded-full shrink-0 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-100), var(--brand-200)); border: 2px solid var(--brand-300);">
+            <span data-icon class="w-7 h-7" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--brand-500);"></span>
+          </div>
+          <!-- Pet Basic Info -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-semibold truncate" style="color: var(--foreground);" data-dom-id="pet-name">Mochi</h2>
+              <span class="text-xs px-2 py-0.5 rounded-full" style="background: var(--brand-50); color: var(--brand-600); font-weight: 600;" data-dom-id="pet-breed">Golden Retriever</span>
+            </div>
+            <div class="flex items-center gap-3 mt-1.5">
+              <div class="flex items-center gap-1">
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--text-400);"></span>
+                <span class="text-xs" style="color: var(--text-500);" data-dom-id="pet-age">2yr 3mo</span>
+              </div>
+              <div class="w-px h-3" style="background: var(--background-300);"></div>
+              <div class="flex items-center gap-1">
+                <span class="text-xs font-medium" style="color: var(--text-800);" data-dom-id="pet-weight">28.5 kg</span>
+              </div>
+            </div>
+          </div>
+          <!-- Right Arrow -->
+          <span data-icon class="w-4 h-4 shrink-0" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg'); color: var(--text-300);"></span>
+        </div>
+      </section>
+
+      <!-- Diary Timeline -->
+      <section class="px-4 pt-3" aria-label="Growth Diary Timeline" id="diary-timeline">
+        <!-- Dynamic Rendering Area -->
+      </section>
+
+      <!-- Floating New Diary Button -->
+      <div class="fixed bottom-20 right-5 z-30">
+        <button class="w-14 h-14 rounded-full flex items-center justify-center" style="background: var(--primary); box-shadow: 0 4px 16px rgba(0,122,255,0.35);" aria-label="New Diary" data-dom-id="cta-fab-new">
+          <span data-icon class="w-6 h-6" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/pen-line.svg'); mask-image: url('../assets/icons/dl-builtin-apple/pen-line.svg'); color: var(--primary-foreground);"></span>
+        </button>
+      </div>
+
+      <!-- Bottom TabBar -->
+      <nav class="fixed bottom-0 inset-x-0 z-40" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border);" aria-label="Main Navigation">
+        <div class="flex items-stretch justify-around h-[49px]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+          <!-- Home -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-home" aria-label="Home">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
+            <span class="text-[10px] font-medium">Home</span>
+          </button>
+          <!-- Categories -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-category" aria-label="Categories">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/grip.svg'); mask-image: url('../assets/icons/dl-builtin-apple/grip.svg');"></span>
+            <span class="text-[10px] font-medium">Categories</span>
+          </button>
+          <!-- Pet Hub (active) -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--primary);" aria-label="Pet Hub" aria-current="page">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+            <span class="text-[10px] font-medium">Pet Hub</span>
+          </button>
+          <!-- Community -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" aria-label="Community">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+            <span class="text-[10px] font-medium">Community</span>
+          </button>
+          <!-- Profile -->
+          <button class="flex flex-col items-center justify-center gap-0.5 flex-1 min-w-0" style="color: var(--text-400);" data-dom-id="nav-profile" aria-label="Profile">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
+            <span class="text-[10px] font-medium">Profile</span>
+          </button>
+        </div>
+        <!-- Safe area -->
+        <div class="h-[env(safe-area-inset-bottom,0px)]" style="background: rgba(255,255,255,0.88);"></div>
+      </nav>
+
+    </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      (function() {
+        'use strict';
+
+        var api = window.moyuyoAPI;
+
+        // Tag color mapping
+        var TAG_COLORS = {
+          'Daily': 'brand',
+          'Checkup': 'brand',
+          'Weight': 'success',
+          'Vaccine': 'warning',
+          'Deworming': 'warning',
+          'Outdoor': 'success',
+          'Grooming': 'success',
+          'Styling': 'brand',
+          'New Toy': 'warning'
+        };
+
+        var TAG_BG = {
+          'brand': 'var(--brand-50)',
+          'success': 'var(--state-success-surface)',
+          'warning': 'rgba(255,149,0,0.12)'
+        };
+
+        var TAG_TEXT = {
+          'brand': 'var(--brand-600)',
+          'success': 'var(--state-success)',
+          'warning': 'var(--state-warning)'
+        };
+
+        function getTagColor(tag) {
+          return TAG_COLORS[tag] || 'brand';
+        }
+
+        function getDotColor(tags) {
+          if (!tags || !tags.length) return 'var(--brand-500)';
+          var color = getTagColor(tags[0]);
+          if (color === 'brand') return 'var(--brand-500)';
+          if (color === 'success') return 'var(--state-success)';
+          if (color === 'warning') return 'var(--state-warning)';
+          return 'var(--brand-500)';
+        }
+
+        function getPhotoGradients(count) {
+          var gradients = [
+            'linear-gradient(135deg, var(--brand-50), var(--background-100))',
+            'linear-gradient(135deg, var(--background-100), var(--background-200))',
+            'linear-gradient(135deg, var(--brand-50), var(--background-200))',
+            'linear-gradient(135deg, var(--state-success-surface), var(--brand-50))',
+            'linear-gradient(135deg, var(--background-100), var(--state-success-surface))'
+          ];
+          var result = [];
+          for (var i = 0; i < count; i++) {
+            result.push(gradients[i % gradients.length]);
+          }
+          return result;
+        }
+
+        function getDotBgColor(tags) {
+          if (!tags || !tags.length) return 'linear-gradient(135deg, var(--brand-100), var(--brand-200))';
+          var color = getTagColor(tags[0]);
+          if (color === 'success') return 'linear-gradient(135deg, var(--state-success-surface), var(--brand-50))';
+          if (color === 'warning') return 'linear-gradient(135deg, rgba(255,149,0,0.15), rgba(255,149,0,0.08))';
+          return 'linear-gradient(135deg, var(--brand-100), var(--brand-200))';
+        }
+
+        function getDotIconColor(tags) {
+          if (!tags || !tags.length) return 'var(--brand-500)';
+          var color = getTagColor(tags[0]);
+          if (color === 'success') return 'var(--state-success)';
+          if (color === 'warning') return 'var(--state-warning)';
+          return 'var(--brand-500)';
+        }
+
+        function renderWeightCard(weight) {
+          var trend = weight.trend || 'down';
+          var isUp = trend === 'up';
+          var colorVar = isUp ? 'var(--state-warning)' : 'var(--state-success)';
+          var bgVar = isUp ? 'rgba(255,149,0,0.12)' : 'var(--state-success-surface)';
+          var arrowIcon = isUp ? 'arrow-up' : 'arrow-down';
+
+          return '<div class="flex items-center gap-3 p-3 rounded-xl mb-3" style="background: var(--background-200);">' +
+            '<div class="flex items-center justify-center w-8 h-8 rounded-full" style="background: ' + bgVar + ';">' +
+              '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/star.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/star.svg\'); color: ' + colorVar + ';"></span>' +
+            '</div>' +
+            '<div class="flex-1">' +
+              '<span class="text-xs" style="color: var(--text-500);">Weight Record</span>' +
+              '<div class="flex items-center gap-1.5 mt-0.5">' +
+                '<span class="text-sm font-semibold" style="color: var(--text-800);">' + weight.value + ' ' + weight.unit + '</span>' +
+                '<span class="flex items-center gap-0.5 text-xs font-medium px-1.5 py-0.5 rounded-full" style="background: ' + bgVar + '; color: ' + colorVar + ';">' +
+                  '<span data-icon class="w-3 h-3" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/' + arrowIcon + '.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/' + arrowIcon + '.svg\');"></span>' +
+                  Math.abs(weight.change) +
+                '</span>' +
+              '</div>' +
+            '</div>' +
+            '<span class="text-xs" style="color: var(--text-400);">vs last</span>' +
+          '</div>';
+        }
+
+        function renderPhotoPlaceholders(count) {
+          if (!count || count === 0) return '';
+          var gradients = getPhotoGradients(count);
+          var html = '<div class="flex gap-2 mb-3">';
+          for (var i = 0; i < count; i++) {
+            html += '<div class="photo-placeholder flex-1 h-24" style="background: ' + gradients[i] + ';"></div>';
+          }
+          html += '</div>';
+          return html;
+        }
+
+        function renderTags(tags) {
+          if (!tags || !tags.length) return '';
+          var html = '<div class="flex flex-wrap gap-1.5 mb-3">';
+          for (var i = 0; i < tags.length; i++) {
+            var color = getTagColor(tags[i]);
+            html += '<span class="text-xs px-2 py-1 rounded-full" style="background: ' + TAG_BG[color] + '; color: ' + TAG_TEXT[color] + '; font-weight: 500;">#' + tags[i] + '</span>';
+          }
+          html += '</div>';
+          return html;
+        }
+
+        function renderLikesComments(likes, comments) {
+          var likeColor = likes > 10 ? 'var(--brand-500)' : 'var(--text-400)';
+          return '<div class="flex items-center gap-4 pt-2.5" style="border-top: 1px solid var(--border);">' +
+            '<button class="flex items-center gap-1.5" aria-label="Like">' +
+              '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/thumbs-up.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/thumbs-up.svg\'); color: ' + likeColor + ';"></span>' +
+              '<span class="text-xs" style="color: ' + likeColor + ';">' + likes + '</span>' +
+            '</button>' +
+            '<button class="flex items-center gap-1.5" aria-label="Comment">' +
+              '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/message-circle-more.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/message-circle-more.svg\'); color: var(--text-400);"></span>' +
+              '<span class="text-xs" style="color: var(--text-400);">' + comments + '</span>' +
+            '</button>' +
+          '</div>';
+        }
+
+        function renderEntry(entry, isLast) {
+          var pb = isLast ? 'pb-2' : 'pb-5';
+          var dotColor = getDotColor(entry.tags);
+          var dotBg = getDotBgColor(entry.tags);
+          var dotIconColor = getDotIconColor(entry.tags);
+
+          // Parse date format: 2026-07-08 → Jul 8
+          var dateParts = entry.date.split('-');
+          var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          var dateStr = monthNames[parseInt(dateParts[1], 10) - 1] + ' ' + parseInt(dateParts[2], 10) + ', ' + entry.weekday;
+
+          var html = '<div class="relative ' + pb + '">' +
+            '<div class="timeline-dot" style="background: ' + dotColor + ';"></div>' +
+            '<div class="rounded-[var(--radius)] p-4" style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">' +
+              '<div class="flex items-center justify-between mb-2.5">' +
+                '<div class="flex items-center gap-2.5">' +
+                  '<div class="w-9 h-9 rounded-full shrink-0 flex items-center justify-center" style="background: ' + dotBg + ';">' +
+                    '<span data-icon class="w-4.5 h-4.5" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/heart.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/heart.svg\'); color: ' + dotIconColor + ';"></span>' +
+                  '</div>' +
+                  '<div>' +
+                    '<span class="text-xs font-medium" style="color: var(--text-800);">' + dateStr + '</span>' +
+                  '</div>' +
+                '</div>' +
+                '<button class="w-7 h-7 rounded-full flex items-center justify-center" style="background: var(--background-200);" aria-label="More Actions">' +
+                  '<span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/chevron-down.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/chevron-down.svg\'); color: var(--text-400);"></span>' +
+                '</button>' +
+              '</div>' +
+              '<p class="text-sm leading-relaxed mb-3" style="color: var(--text-600);">' + entry.content + '</p>';
+
+          // Weight record card
+          if (entry.weight) {
+            html += renderWeightCard(entry.weight);
+          }
+
+          // Attachment photo placeholders
+          html += renderPhotoPlaceholders(entry.photos);
+
+          // Tags
+          html += renderTags(entry.tags);
+
+          // Likes/Comments
+          html += renderLikesComments(entry.likes, entry.comments);
+
+          html += '</div></div>';
+          return html;
+        }
+
+        function renderMonthBlock(page) {
+          var html = '<div class="mb-6">' +
+            '<div class="flex items-center gap-2 mb-3">' +
+              '<span class="text-sm font-semibold" style="color: var(--foreground);">' + page.month + '</span>' +
+              '<span class="text-xs px-2 py-0.5 rounded-full" style="background: var(--secondary); color: var(--muted-foreground); font-weight: 500;">' + page.count + ' posts</span>' +
+            '</div>' +
+            '<div class="relative pl-12">' +
+              '<div class="timeline-line"></div>';
+
+          var entries = page.entries || [];
+          for (var i = 0; i < entries.length; i++) {
+            html += renderEntry(entries[i], i === entries.length - 1);
+          }
+
+          html += '</div></div>';
+          return html;
+        }
+
+        function renderTimeline(pages) {
+          var container = document.getElementById('diary-timeline');
+          if (!container) return;
+          var html = '';
+          for (var i = 0; i < pages.length; i++) {
+            html += renderMonthBlock(pages[i]);
+          }
+          container.innerHTML = html;
+        }
+
+        function updatePetInfo(pet) {
+          var elName = document.querySelector('[data-dom-id="pet-name"]');
+          var elBreed = document.querySelector('[data-dom-id="pet-breed"]');
+          var elAge = document.querySelector('[data-dom-id="pet-age"]');
+          var elWeight = document.querySelector('[data-dom-id="pet-weight"]');
+
+          if (elName) elName.textContent = pet.name;
+          if (elBreed) elBreed.textContent = pet.breed;
+          if (elAge) elAge.textContent = pet.age;
+          if (elWeight) elWeight.textContent = pet.weight + ' kg';
+        }
+
+        function bindEvents() {
+          // Back button
+          var btnBack = document.querySelector('[data-dom-id="cta-back"]');
+          if (btnBack) {
+            btnBack.addEventListener('click', function() {
+              window.history.back();
+            });
+          }
+
+          // Navigation links
+          var navMap = {
+            'nav-home': 'home.html',
+            'nav-category': 'category.html',
+            'nav-profile': 'profile.html'
+          };
+          Object.keys(navMap).forEach(function(domId) {
+            var el = document.querySelector('[data-dom-id="' + domId + '"]');
+            if (el) {
+              el.addEventListener('click', function() {
+                window.location.href = navMap[domId];
+              });
+            }
+          });
+        }
+
+        function getPetIdFromUrl() {
+          var params = new URLSearchParams(window.location.search);
+          return params.get('petId') || 'pet-2';
+        }
+
+        async function loadData() {
+          var petId = getPetIdFromUrl();
+
+          try {
+            // Load pet info and diary data in parallel
+            var petRes = await api.get('/api/v1/pet/' + petId);
+            var diaryRes = await api.get('/api/v1/pet/' + petId + '/diary');
+
+            if (petRes.code === 0 && petRes.data) {
+              updatePetInfo(petRes.data);
+            }
+
+            if (diaryRes.code === 0 && diaryRes.data && diaryRes.data.pages) {
+              renderTimeline(diaryRes.data.pages);
+            }
+          } catch (e) {
+            console.error('[Pet Diary] Data loading failed:', e);
+          }
+
+          // Ensure icons refresh after dynamic rendering
+          if (window.lucide && window.lucide.createIcons) {
+            lucide.createIcons();
+          }
+        }
+
+        // Bind events always after DOM is ready
+        bindEvents();
+
+        // Load data
+        loadData();
+      })();
+    </script>
+</body>
+</html>

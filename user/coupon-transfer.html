@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>转赠优惠券 - MOYUYO</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <!-- 移动端容器 -->
+    <div class="mx-auto min-h-screen flex flex-col" style="max-width: 430px; width: 100%;">
+
+        <!-- 顶部导航栏 -->
+        <nav class="sticky top-0 z-30 flex items-center justify-between h-12 px-4" style="background: var(--background-800);">
+            <!-- 返回按钮 -->
+            <button class="flex items-center justify-center w-9 h-9 rounded-full" style="background: var(--background-700);" aria-label="返回">
+                <i data-lucide="chevron-left" class="w-5 h-5" style="color: var(--text-50);"></i>
+            </button>
+            <!-- 页面标题 -->
+            <span class="text-base font-semibold" style="color: var(--text-50);">转赠优惠券</span>
+            <!-- 占位保持居中 -->
+            <div class="w-9 h-9"></div>
+        </nav>
+
+        <!-- 主内容区 -->
+        <main class="flex-1 overflow-y-auto px-4 pt-5 pb-8" style="background: var(--background-100);">
+
+            <!-- 转赠的优惠券卡片 -->
+            <section class="rounded-2xl overflow-hidden mb-5" style="background: var(--card); box-shadow: var(--shadow-md);">
+                <div class="flex">
+                    <!-- 左侧色带 + 面额 -->
+                    <div class="coupon-gradient flex flex-col items-center justify-center px-5 py-6" style="min-width: 110px;">
+                        <span class="text-xs font-semibold tracking-wide uppercase" style="color: var(--background-50); opacity: 0.85;">MOYUYO</span>
+                        <span class="text-3xl font-bold mt-1" style="color: var(--background-50);">$10</span>
+                        <span class="text-sm font-bold" style="color: var(--background-50); opacity: 0.9;">OFF</span>
+                    </div>
+                    <!-- 右侧虚线分割 + 券详情 -->
+                    <div class="coupon-divider flex-1 px-5 py-6 flex flex-col justify-between">
+                        <div>
+                            <h2 class="text-base font-semibold leading-tight" style="color: var(--text-800);">CARE 洗护专场满减券</h2>
+                            <p class="text-xs mt-1.5" style="color: var(--muted-foreground);">满 $50 可用</p>
+                        </div>
+                        <div class="flex items-center gap-2 mt-3">
+                            <i data-lucide="clock" class="w-3.5 h-3.5" style="color: var(--muted-foreground);"></i>
+                            <span class="text-xs" style="color: var(--muted-foreground);">有效期至 2026-07-15</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 转赠方式选择区标题 -->
+            <h3 class="text-sm font-semibold mb-3 px-1" style="color: var(--text-700);">选择转赠方式</h3>
+
+            <!-- 方式一：App 内好友 -->
+            <section class="transfer-option active rounded-2xl p-4 mb-3" style="background: var(--card); border: 1.5px solid var(--border);">
+                <div class="flex items-center gap-3 mb-3.5">
+                    <div class="flex items-center justify-center w-9 h-9 rounded-xl" style="background: var(--brand-50);">
+                        <i data-lucide="users" class="w-4.5 h-4.5" style="color: var(--brand-500);"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-semibold" style="color: var(--text-800);">App 内好友</p>
+                        <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">选择好友直接转赠</p>
+                    </div>
+                    <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center" style="border-color: var(--brand-500);">
+                        <div class="w-2.5 h-2.5 rounded-full" style="background: var(--brand-500);"></div>
+                    </div>
+                </div>
+
+                <!-- 搜索好友 -->
+                <div class="field mb-3" style="min-width: auto; height: 40px; border-radius: 10px; background: var(--background-100);">
+                    <i data-lucide="search" class="w-4 h-4 shrink-0" style="color: var(--icon-500);"></i>
+                    <input class="control text-sm" type="text" placeholder="搜索好友昵称" aria-label="搜索好友">
+                </div>
+
+                <!-- 最近互动好友列表 -->
+                <div class="flex items-center gap-3 overflow-x-auto no-scrollbar py-1">
+                    <!-- 好友 1 -->
+                    <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer">
+                        <div class="avatar-placeholder w-12 h-12 rounded-full" style="background: linear-gradient(135deg, #ff9a9e, #fecfef);"></div>
+                        <span class="text-xs truncate max-w-14 text-center" style="color: var(--text-600);">小糯米</span>
+                    </div>
+                    <!-- 好友 2 -->
+                    <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer">
+                        <div class="avatar-placeholder w-12 h-12 rounded-full" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb);"></div>
+                        <span class="text-xs truncate max-w-14 text-center" style="color: var(--text-600);">柴柴爸</span>
+                    </div>
+                    <!-- 好友 3 -->
+                    <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer">
+                        <div class="avatar-placeholder w-12 h-12 rounded-full" style="background: linear-gradient(135deg, #84fab0, #8fd3f4);"></div>
+                        <span class="text-xs truncate max-w-14 text-center" style="color: var(--text-600);">猫咪酱</span>
+                    </div>
+                    <!-- 添加更多好友按钮 -->
+                    <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer">
+                        <div class="flex items-center justify-center w-12 h-12 rounded-full" style="border: 1.5px dashed var(--background-400); background: var(--background-50);">
+                            <i data-lucide="plus" class="w-5 h-5" style="color: var(--muted-foreground);"></i>
+                        </div>
+                        <span class="text-xs" style="color: var(--muted-foreground);">更多</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 方式二：分享链接 -->
+            <section class="transfer-option rounded-2xl p-4 mb-3" style="background: var(--card); border: 1.5px solid var(--border);">
+                <div class="flex items-center gap-3 mb-3.5">
+                    <div class="flex items-center justify-center w-9 h-9 rounded-xl" style="background: var(--brand-50);">
+                        <i data-lucide="link" class="w-4.5 h-4.5" style="color: var(--brand-500);"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-semibold" style="color: var(--text-800);">分享链接</p>
+                        <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">生成链接，发送给好友领取</p>
+                    </div>
+                    <div class="w-5 h-5 rounded-full border-2" style="border-color: var(--background-400);"></div>
+                </div>
+
+                <!-- 链接展示区域 -->
+                <div class="flex items-center gap-2 rounded-xl px-3.5 h-10" style="background: var(--background-100); border: 1px solid var(--border);">
+                    <i data-lucide="copy" class="w-4 h-4 shrink-0" style="color: var(--icon-500);"></i>
+                    <span class="text-xs truncate flex-1" style="color: var(--text-500);">https://moyuyo.com/c/clm/X9k2F</span>
+                    <button class="text-xs font-semibold shrink-0 px-2.5 py-1 rounded-lg" style="color: var(--brand-500); background: var(--brand-50);">复制</button>
+                </div>
+            </section>
+
+            <!-- 方式三：二维码 -->
+            <section class="transfer-option rounded-2xl p-4 mb-6" style="background: var(--card); border: 1.5px solid var(--border);">
+                <div class="flex items-center gap-3 mb-3.5">
+                    <div class="flex items-center justify-center w-9 h-9 rounded-xl" style="background: var(--brand-50);">
+                        <i data-lucide="qr-code" class="w-4.5 h-4.5" style="color: var(--brand-500);"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-semibold" style="color: var(--text-800);">二维码</p>
+                        <p class="text-xs mt-0.5" style="color: var(--muted-foreground);">好友扫码即可领取优惠券</p>
+                    </div>
+                    <div class="w-5 h-5 rounded-full border-2" style="border-color: var(--background-400);"></div>
+                </div>
+
+                <!-- 二维码展示区域 -->
+                <div class="flex flex-col items-center py-3">
+                    <!-- CSS 模拟二维码占位 -->
+                    <div class="qr-placeholder">
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <p class="text-xs mt-3" style="color: var(--muted-foreground);">MOYUYO 优惠券领取码</p>
+                </div>
+            </section>
+
+            <!-- 底部提示 -->
+            <div class="flex items-start gap-2 px-1 mb-6">
+                <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5" style="color: var(--muted-foreground);"></i>
+                <p class="text-xs leading-relaxed" style="color: var(--muted-foreground);">受赠人需在 24 小时内领取，逾期自动退回至您的账户</p>
+            </div>
+
+        </main>
+
+        <!-- 底部操作按钮 -->
+        <div class="sticky bottom-0 z-20 px-4 pb-6 pt-3" style="background: linear-gradient(to top, var(--background-100) 60%, transparent);">
+            <button class="btn btn-primary btn-lg w-full rounded-2xl text-base font-semibold" style="height: 52px;">
+                确认转赠
+            </button>
+        </div>
+
+    </div>
+
+    <!-- 初始化 Lucide 图标 -->
+    <script>
+      lucide.createIcons();
+    </script>
+</body>
+</html>

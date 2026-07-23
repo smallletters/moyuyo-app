@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Membership</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-8" style="max-width: 375px; margin: 0 auto;">
+
+      <!-- Top Navigation Bar -->
+      <header class="sticky top-0 z-30 flex h-11 items-center px-4 border-b border-[var(--background-300)]" style="background: var(--background-50);">
+        <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center" style="border-radius: var(--radius);" aria-label="Back">
+          <span data-icon class="w-5 h-5" style="mask-image: url('../assets/icons/dl-builtin-apple/arrow-left.svg'); color: var(--text-800);"></span>
+        </button>
+        <h1 class="flex-1 text-center text-base font-semibold tracking-[-0.02em]" style="color: var(--text-800);">MOYUYO+</h1>
+        <div class="w-8"></div>
+      </header>
+
+      <!-- Hero Membership Card Area -->
+      <section class="relative overflow-hidden" style="min-height: 260px;">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+          <img src="../assets/membership-hero.jpg" alt="Membership background" class="h-full w-full object-cover">
+          <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%);"></div>
+        </div>
+
+        <!-- Membership Info -->
+        <div class="relative z-10 flex flex-col items-center px-6 pt-8 pb-6">
+          <div class="mb-3">
+            <img src="../assets/pet-avatar-cat.jpg" alt="User avatar" class="h-16 w-16 rounded-full object-cover" style="border: 2px solid var(--background-50); box-shadow: 0 2px 12px rgba(0,0,0,0.2);">
+          </div>
+          <p class="text-base font-semibold" style="color: var(--background-50);">Pet Expert Xiaoya</p>
+          <span class="mt-1.5 inline-flex items-center px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap" style="border-radius: 999px; background: color-mix(in srgb, var(--brand-500) 20%, transparent); color: var(--background-50);">Gold Member</span>
+
+          <!-- Growth Progress -->
+          <div class="mt-5 w-full" style="max-width: 280px;">
+            <div class="flex items-center justify-between mb-1.5">
+              <p class="text-xs" style="color: rgba(255,255,255,0.75);">2,200 Growth Points to Platinum</p>
+              <p class="text-xs font-semibold" style="color: var(--background-50);">56%</p>
+            </div>
+            <div class="w-full h-1.5 rounded-full overflow-hidden" style="background: rgba(255,255,255,0.2);">
+              <div class="h-full rounded-full" style="width: 56%; background: linear-gradient(90deg, var(--brand-400), var(--brand-500)); transition: width 0.6s cubic-bezier(0.32, 0.72, 0, 1);"></div>
+            </div>
+          </div>
+
+          <!-- Upgrade CTA -->
+          <button data-dom-id="cta-join-prime" class="mt-5 inline-flex items-center justify-center whitespace-nowrap font-semibold text-sm" style="height: 44px; padding: 0 28px; border-radius: 999px; background: linear-gradient(135deg, color-mix(in srgb, var(--brand-500) 85%, #f5a623), var(--brand-500)); color: var(--background-50); box-shadow: 0 4px 16px rgba(0,122,255,0.3); transition: filter 0.18s ease, transform 0.18s ease;" onmouseenter="this.style.filter='brightness(1.08)'" onmouseleave="this.style.filter='brightness(1)'" onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'">
+            Upgrade Now ¥99/yr
+          </button>
+        </div>
+      </section>
+
+      <!-- Membership Tier Benefits Comparison -->
+      <section class="px-4 pt-6 pb-2">
+        <h2 class="text-lg font-semibold tracking-[-0.01em] mb-4" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">Membership Tier Benefits</h2>
+
+        <!-- Comparison Card (Simplified Card Format) -->
+        <div class="overflow-x-auto no-scrollbar -mx-4 px-4">
+          <div class="min-w-[560px]">
+            <!-- Table Header -->
+            <div class="grid grid-cols-4 mb-1">
+              <div class="px-2 py-2">
+                <p class="text-xs font-medium" style="color: var(--text-500);">Benefits</p>
+              </div>
+              <div class="px-2 py-2 text-center" style="background: var(--brand-100); border-radius: var(--radius) var(--radius) 0 0;">
+                <p class="text-xs font-semibold" style="color: var(--brand-700);">Gold</p>
+                <p class="text-[10px] mt-0.5" style="color: var(--text-500);">Current</p>
+              </div>
+              <div class="px-2 py-2 text-center" style="border-radius: var(--radius) var(--radius) 0 0;">
+                <p class="text-xs font-semibold" style="color: var(--text-800);">Platinum</p>
+              </div>
+              <div class="px-2 py-2 text-center" style="border-radius: var(--radius) var(--radius) 0 0;">
+                <p class="text-xs font-semibold" style="color: var(--text-800);">Black Diamond</p>
+              </div>
+            </div>
+
+            <!-- Data Rows -->
+            <div class="space-y-px">
+              <!-- Points Boost -->
+              <div class="grid grid-cols-4 items-center" style="border-bottom: 1px solid var(--background-200);">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">Points Boost</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800);">1.2x</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">1.5x</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800);">2x</div>
+              </div>
+              <!-- Exclusive Discount -->
+              <div class="grid grid-cols-4 items-center" style="border-bottom: 1px solid var(--background-200);">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">Exclusive Discount</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800);">5% off</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">10% off</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800);">15% off</div>
+              </div>
+              <!-- Free Returns -->
+              <div class="grid grid-cols-4 items-center" style="border-bottom: 1px solid var(--background-200);">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">Free Returns</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800);">2/yr</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">4/yr</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800);">Unlimited</div>
+              </div>
+              <!-- Birthday Gift -->
+              <div class="grid grid-cols-4 items-center" style="border-bottom: 1px solid var(--background-200);">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">Birthday Gift</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800);">Yes</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">Yes + Priority</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800);">Yes + Custom</div>
+              </div>
+              <!-- Dedicated Support -->
+              <div class="grid grid-cols-4 items-center" style="border-bottom: 1px solid var(--background-200);">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">Dedicated Support</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800);">Online</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">Dedicated</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800);">1-on-1</div>
+              </div>
+              <!-- Annual Delivery Vouchers -->
+              <div class="grid grid-cols-4 items-center">
+                <div class="px-2 py-2.5"><p class="text-xs" style="color: var(--text-600);">Annual Delivery Vouchers</p></div>
+                <div class="px-2 py-2.5 text-center text-xs font-medium" style="background: var(--brand-100); color: var(--text-800); border-radius: 0 0 0 var(--radius);">4</div>
+                <div class="px-2 py-2.5 text-center text-xs" style="color: var(--text-800);">8</div>
+                <div class="px-2 py-2.5 text-center text-xs font-semibold" style="color: var(--text-800); border-radius: 0 0 var(--radius) 0;">12</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Member Exclusive Privileges -->
+      <section class="pt-6 pb-2">
+        <h2 class="px-4 text-lg font-semibold tracking-[-0.01em] mb-4" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">Member Exclusive Privileges</h2>
+
+        <div class="flex gap-3 overflow-x-auto no-scrollbar px-4 pb-2">
+          <!-- New Arrivals Early Access -->
+          <div class="shrink-0 flex flex-col justify-between" style="width: 140px; min-height: 160px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--background-50); box-shadow: var(--shadow-sm);">
+            <div>
+              <div class="inline-flex items-center justify-center mb-3" style="width: 36px; height: 36px; border-radius: var(--radius); background: var(--background-200);">
+                <span data-icon class="w-5 h-5" style="mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); color: var(--brand-500);"></span>
+              </div>
+              <p class="text-sm font-semibold mb-1" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">New Arrivals Early Access</p>
+            </div>
+            <p class="text-xs leading-relaxed" style="color: var(--text-500);">48-hour early access to new arrivals</p>
+          </div>
+
+          <!-- Member Day Deals -->
+          <div class="shrink-0 flex flex-col justify-between" style="width: 140px; min-height: 160px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--background-50); box-shadow: var(--shadow-sm);">
+            <div>
+              <div class="inline-flex items-center justify-center mb-3" style="width: 36px; height: 36px; border-radius: var(--radius); background: var(--background-200);">
+                <span data-icon class="w-5 h-5" style="mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); color: var(--brand-500);"></span>
+              </div>
+              <p class="text-sm font-semibold mb-1" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">Member Day Deals</p>
+            </div>
+            <p class="text-xs leading-relaxed" style="color: var(--text-500);">Exclusive member discounts on the 8th of each month</p>
+          </div>
+
+          <!-- Free Pet Checkup -->
+          <div class="shrink-0 flex flex-col justify-between" style="width: 140px; min-height: 160px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--background-50); box-shadow: var(--shadow-sm);">
+            <div>
+              <div class="inline-flex items-center justify-center mb-3" style="width: 36px; height: 36px; border-radius: var(--radius); background: var(--background-200);">
+                <span data-icon class="w-5 h-5" style="mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); color: var(--brand-500);"></span>
+              </div>
+              <p class="text-sm font-semibold mb-1" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">Free Pet Checkup</p>
+            </div>
+            <p class="text-xs leading-relaxed" style="color: var(--text-500);">Annual basic health checkup</p>
+          </div>
+
+          <!-- Exclusive IP Merchandise -->
+          <div class="shrink-0 flex flex-col justify-between" style="width: 140px; min-height: 160px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--background-50); box-shadow: var(--shadow-sm);">
+            <div>
+              <div class="inline-flex items-center justify-center mb-3" style="width: 36px; height: 36px; border-radius: var(--radius); background: var(--background-200);">
+                <span data-icon class="w-5 h-5" style="mask-image: url('../assets/icons/dl-builtin-apple/box.svg'); color: var(--brand-500);"></span>
+              </div>
+              <p class="text-sm font-semibold mb-1" style="color: var(--text-800); text-wrap: balance; word-break: keep-all;">Exclusive IP Merchandise</p>
+            </div>
+            <p class="text-xs leading-relaxed" style="color: var(--text-500);">MOYUYO IP limited merchandise</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer Links -->
+      <section class="px-4 pt-6">
+        <div class="flex items-center justify-center gap-6 py-4" style="border-top: 1px solid var(--background-300);">
+          <a href="#" class="inline-flex items-center gap-1 text-xs font-medium whitespace-nowrap" style="color: var(--brand-500); transition: opacity 0.18s ease;" onmouseenter="this.style.opacity='0.7'" onmouseleave="this.style.opacity='1'">
+            Membership Rules
+            <span data-icon class="w-3.5 h-3.5" style="mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg');"></span>
+          </a>
+          <span class="w-px h-3" style="background: var(--background-300);"></span>
+          <a href="#" class="inline-flex items-center gap-1 text-xs font-medium whitespace-nowrap" style="color: var(--brand-500); transition: opacity 0.18s ease;" onmouseenter="this.style.opacity='0.7'" onmouseleave="this.style.opacity='1'">
+            Points Details
+            <span data-icon class="w-3.5 h-3.5" style="mask-image: url('../assets/icons/dl-builtin-apple/chevron-right.svg');"></span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script><script>lucide.createIcons();</script>
+  <script>
+    (function () {
+      async function loadMember() {
+        try {
+          var res = await moyuyoAPI.get('/api/v1/member/info');
+          if (res.code === 0 && res.data) {
+            var data = res.data;
+            // Update membership level
+            var levelSpan = document.querySelector('span[style*="border-radius: 999px"]');
+            if (levelSpan && data.levelName) {
+              levelSpan.textContent = data.levelName;
+            }
+            // Update nickname
+            var nameEl = document.querySelector('.text-base.font-semibold');
+            if (nameEl && data.nickname) nameEl.textContent = data.nickname;
+            // Update avatar
+            var avatarEl = document.querySelector('img[alt="User avatar"]');
+            if (avatarEl && data.avatar) avatarEl.src = data.avatar;
+            // Update growth progress
+            if (data.levelProgress != null) {
+              var progressBar = document.querySelector('.h-1\\.5.rounded-full div');
+              if (progressBar) progressBar.style.width = data.levelProgress + '%';
+              var progressText = document.querySelector('.text-xs.font-semibold');
+              if (progressText) progressText.textContent = data.levelProgress + '%';
+            }
+            // Update distance to next level
+            if (data.pointsToNext != null) {
+              var nextEl = document.querySelector('.text-xs[style*="rgba(255,255,255,0.75)"]');
+              var nextName = (data.nextLevels && data.nextLevels[0]) ? data.nextLevels[0].name : 'next level';
+              if (nextEl) nextEl.textContent = Number(data.pointsToNext).toLocaleString() + ' Growth Points to ' + nextName;
+            }
+          }
+        } catch (e) {
+          console.log('[MOYUYO] Member info unavailable, showing static content');
+        }
+      }
+
+      loadMember();
+    })();
+  </script>
+</body>
+</html>

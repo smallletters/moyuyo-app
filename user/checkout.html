@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Confirm Order</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+      <!-- Top Navigation -->
+      <header class="sticky top-0 z-30 flex h-11 items-center border-b px-4" style="background:var(--background);border-color:var(--border)">
+        <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="background:var(--background)" aria-label="Back">
+          <span data-icon class="h-5 w-5" style="-webkit-mask-image:url('../assets/icons/dl-builtin-apple/chevron-left.svg');mask-image:url('../assets/icons/dl-builtin-apple/chevron-left.svg')"></span>
+        </button>
+        <h1 class="min-w-0 flex-1 text-center text-base font-semibold truncate" style="color:var(--text-800)">Confirm Order</h1>
+        <div class="w-8"></div>
+      </header>
+
+      <!-- Shipping Address -->
+      <section class="mx-4 mt-3 rounded-xl p-3 border" style="background:var(--background);border-color:var(--border)">
+        <div class="flex items-start gap-3">
+          <span data-icon class="mt-0.5 h-5 w-5 shrink-0" style="-webkit-mask-image:url('../assets/icons/dl-builtin-apple/map-pin.svg');mask-image:url('../assets/icons/dl-builtin-apple/map-pin.svg');background-color:var(--brand-500)"></span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-semibold" style="color:var(--text-800)">Xiaoya</span>
+              <span class="text-xs" style="color:var(--text-500)">138****6789</span>
+            </div>
+            <p class="mt-1 text-xs leading-relaxed" style="color:var(--text-500)">1088 Lujiazui Ring Road, Pudong New Area, Shanghai</p>
+          </div>
+          <span data-icon class="mt-0.5 h-4 w-4 shrink-0" style="-webkit-mask-image:url('../assets/icons/dl-builtin-apple/chevron-right.svg');mask-image:url('../assets/icons/dl-builtin-apple/chevron-right.svg');background-color:var(--text-400)"></span>
+        </div>
+      </section>
+
+      <!-- Order Items -->
+      <section class="mx-4 mt-3 rounded-xl border overflow-hidden" id="checkout-items" style="background:var(--background);border-color:var(--border)">
+        <div class="px-3 pt-3 pb-1">
+          <h2 class="text-sm font-semibold" style="color:var(--text-800)">Order Items</h2>
+        </div>
+        <!-- Items rendered dynamically by API; static placeholder shown when no data -->
+        <div class="flex items-center gap-3 px-3 py-3 border-b" style="border-color:var(--border)">
+          <img src="../assets/product-shampoo-bottle.jpg" alt="Pet Shampoo" class="h-16 w-16 shrink-0 rounded-lg object-cover border" style="border-color:var(--border)">
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-medium truncate" style="color:var(--text-800)">Pet Shampoo 500ml</p>
+            <p class="mt-0.5 text-xs" style="color:var(--text-400)">Fresh Floral / 500ml</p>
+            <div class="mt-1 flex items-center justify-between">
+              <span class="text-xs" style="color:var(--text-500)">x1</span>
+              <span class="text-sm font-semibold" style="color:var(--text-800)">¥128.00</span>
+            </div>
+          </div>
+        </div>
+        <!-- Product 2 -->
+        <div class="flex items-center gap-3 px-3 py-3">
+          <img src="../assets/product-harness-gear.jpg" alt="Outdoor Harness" class="h-16 w-16 shrink-0 rounded-lg object-cover border" style="border-color:var(--border)">
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-medium truncate" style="color:var(--text-800)">Breathable Outdoor Harness</p>
+            <p class="mt-0.5 text-xs" style="color:var(--text-400)">Camo Green / Size M</p>
+            <div class="mt-1 flex items-center justify-between">
+              <span class="text-xs" style="color:var(--text-500)">x1</span>
+              <span class="text-sm font-semibold" style="color:var(--text-800)">¥89.00</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shipping Method -->
+      <section class="mx-4 mt-3 rounded-xl border p-3" style="background:var(--background);border-color:var(--border)">
+        <h2 class="mb-2 text-sm font-semibold" style="color:var(--text-800)">Shipping Method</h2>
+        <div class="flex gap-2">
+          <label class="flex flex-1 cursor-pointer items-center gap-2 rounded-lg border p-2.5 transition-colors duration-150" style="border-color:var(--brand-500);background:var(--brand-50)">
+            <div class="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2" style="border-color:var(--brand-500)">
+              <div class="h-2 w-2 rounded-full" style="background:var(--brand-500)"></div>
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-xs font-medium" style="color:var(--text-800)">Standard Shipping</p>
+              <p class="text-xs" style="color:var(--text-400)">3-5 business days</p>
+            </div>
+            <span class="text-xs font-semibold" style="color:var(--brand-500)">Free</span>
+          </label>
+          <label class="flex flex-1 cursor-pointer items-center gap-2 rounded-lg border p-2.5 transition-colors duration-150" style="border-color:var(--border);background:var(--background)">
+            <div class="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2" style="border-color:var(--background-400)">
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-xs font-medium" style="color:var(--text-800)">Express Shipping</p>
+              <p class="text-xs" style="color:var(--text-400)">Next Day Delivery</p>
+            </div>
+            <span class="text-xs font-semibold" style="color:var(--text-800)">¥12.00</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Payment Method -->
+      <section class="mx-4 mt-3 rounded-xl border p-3" style="background:var(--background);border-color:var(--border)">
+        <h2 class="mb-2 text-sm font-semibold" style="color:var(--text-800)">Payment Method</h2>
+        <div class="flex gap-2 overflow-x-auto no-scrollbar" id="payment-methods">
+          <button class="flex shrink-0 flex-col items-center gap-1 rounded-lg border p-2.5 transition-colors duration-150" style="border-color:var(--brand-500);background:var(--brand-50);min-width:68px" data-payment="stripe">
+            <span class="text-lg font-bold" style="color:var(--brand-500)">S</span>
+            <span class="text-xs font-medium whitespace-nowrap" style="color:var(--brand-500)">Stripe</span>
+          </button>
+          <button class="flex shrink-0 flex-col items-center gap-1 rounded-lg border p-2.5 transition-colors duration-150 hover:opacity-80" style="border-color:var(--border);background:var(--background);min-width:68px" data-payment="paypal">
+            <span class="text-lg font-bold" style="color:var(--text-500)">P</span>
+            <span class="text-xs font-medium whitespace-nowrap" style="color:var(--text-500)">PayPal</span>
+          </button>
+          <button class="flex shrink-0 flex-col items-center gap-1 rounded-lg border p-2.5 transition-colors duration-150 hover:opacity-80" style="border-color:var(--border);background:var(--background);min-width:68px" data-payment="apple_pay">
+            <span class="text-lg font-bold" style="color:var(--text-500)">A</span>
+            <span class="text-xs font-medium whitespace-nowrap" style="color:var(--text-500)">Apple Pay</span>
+          </button>
+          <button class="flex shrink-0 flex-col items-center gap-1 rounded-lg border p-2.5 transition-colors duration-150 hover:opacity-80" style="border-color:var(--border);background:var(--background);min-width:68px" data-payment="google_pay">
+            <span class="text-lg font-bold" style="color:var(--text-500)">G</span>
+            <span class="text-xs font-medium whitespace-nowrap" style="color:var(--text-500)">Google Pay</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Coupon -->
+      <section class="mx-4 mt-3 flex items-center justify-between rounded-xl border px-3 py-3" style="background:var(--background);border-color:var(--border)">
+        <span class="text-sm font-medium" style="color:var(--text-800)">Coupon</span>
+        <div class="flex items-center gap-1">
+          <span class="text-sm font-semibold" style="color:var(--state-error)">-¥20.00</span>
+          <span data-icon class="h-4 w-4" style="-webkit-mask-image:url('../assets/icons/dl-builtin-apple/chevron-right.svg');mask-image:url('../assets/icons/dl-builtin-apple/chevron-right.svg');background-color:var(--text-400)"></span>
+        </div>
+      </section>
+
+      <!-- Order Note -->
+      <section class="mx-4 mt-3 rounded-xl border p-3" style="background:var(--background);border-color:var(--border)">
+        <h2 class="mb-2 text-sm font-semibold" style="color:var(--text-800)">Order Note</h2>
+        <input type="text" placeholder="Optional: Note (e.g. special delivery instructions)" class="field small w-full" style="height:40px;font-size:13px">
+      </section>
+
+      <!-- Price Summary -->
+      <section class="mx-4 mt-3 rounded-xl border p-3" style="background:var(--background);border-color:var(--border)">
+        <div class="flex items-center justify-between py-1">
+          <span class="text-xs" style="color:var(--text-500)">Subtotal</span>
+          <span class="text-xs" style="color:var(--text-800)">¥217.00</span>
+        </div>
+        <div class="flex items-center justify-between py-1">
+          <span class="text-xs" style="color:var(--text-500)">Shipping</span>
+          <span class="text-xs" style="color:var(--text-800)">¥0.00</span>
+        </div>
+        <div class="flex items-center justify-between py-1">
+          <span class="text-xs" style="color:var(--text-500)">Discount</span>
+          <span class="text-xs" style="color:var(--state-error)">-¥20.00</span>
+        </div>
+        <div class="my-2 border-t" style="border-color:var(--border)"></div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-semibold" style="color:var(--text-800)">Total</span>
+          <a data-dom-id="link-order-detail" href="#" class="text-lg font-semibold" style="color:var(--text-800);text-decoration:none">¥197.00</a>
+        </div>
+      </section>
+
+      <!-- Fixed Bottom Submit Bar -->
+      <div class="fixed bottom-0 left-0 right-0 z-40 border-t px-4 pb-6 pt-3" style="background:var(--background);border-color:var(--border)">
+        <button data-dom-id="cta-submit-order" class="btn btn-primary w-full" style="height:48px;border-radius:calc(var(--radius)*2);font-size:16px">
+          Submit Order
+        </button>
+      </div>
+    </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+  <script>lucide.createIcons();</script>
+  <script>
+    (function () {
+      var itemsSection = document.getElementById('checkout-items');
+      var btnSubmit = document.querySelector('[data-dom-id="cta-submit-order"]');
+      var paymentMethods = document.getElementById('payment-methods');
+      var selectedPayment = 'stripe';
+      var orderData = null;
+
+      // Payment method switching
+      if (paymentMethods) {
+        paymentMethods.addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-payment]');
+          if (!btn) return;
+          selectedPayment = btn.getAttribute('data-payment');
+          var buttons = paymentMethods.querySelectorAll('[data-payment]');
+          buttons.forEach(function (b) {
+            b.style.borderColor = 'var(--border)';
+            b.style.background = 'var(--background)';
+            b.querySelector('span').style.color = 'var(--text-500)';
+          });
+          btn.style.borderColor = 'var(--brand-500)';
+          btn.style.background = 'var(--brand-50)';
+          btn.querySelector('span').style.color = 'var(--brand-500)';
+        });
+      }
+
+      // Order item template
+      function itemRow(item, isLast) {
+        var div = document.createElement('div');
+        div.className = 'flex items-center gap-3 px-3 py-3' + (isLast ? '' : ' border-b');
+        div.style.borderColor = 'var(--border)';
+        div.innerHTML =
+          '<img src="' + (item.image || item.coverImage || '../assets/product-placeholder.jpg') + '" alt="' + (item.name || '') + '" class="h-16 w-16 shrink-0 rounded-lg object-cover border" style="border-color:var(--border)" onerror="this.src=\'../assets/product-placeholder.jpg\'">' +
+          '<div class="min-w-0 flex-1">' +
+          '<p class="text-sm font-medium truncate" style="color:var(--text-800)">' + (item.name || item.title || '') + '</p>' +
+          '<p class="mt-0.5 text-xs" style="color:var(--text-400)">' + (item.spec || item.sku || '') + '</p>' +
+          '<div class="mt-1 flex items-center justify-between">' +
+          '<span class="text-xs" style="color:var(--text-500)">x' + (item.quantity || item.qty || 1) + '</span>' +
+          '<span class="text-sm font-semibold" style="color:var(--text-800)">¥' + ((item.price || 0) / 100).toFixed(2) + '</span>' +
+          '</div></div>';
+        return div;
+      }
+
+      function updatePriceSummary(data) {
+        var subtotal = document.querySelector('#checkout-items ~ section:nth-of-type(4) .flex .text-xs:last-child');
+        var shipping = document.querySelector('#checkout-items ~ section:nth-of-type(4) .flex:nth-child(2) .text-xs:last-child');
+        var discount = document.querySelector('#checkout-items ~ section:nth-of-type(4) .flex:nth-child(3) .text-xs:last-child');
+        var total = document.querySelector('#checkout-items ~ section:nth-of-type(4) .text-lg');
+        // Simplified: use data attributes for positioning
+        if (data) {
+          var t = 0;
+          (data.items || []).forEach(function (item) {
+            t += (item.price || 0) * (item.quantity || item.qty || 1);
+          });
+          t += data.shippingFee || 0;
+          t -= data.discount || 0;
+          if (total) total.textContent = '¥' + (t / 100).toFixed(2);
+        }
+      }
+
+      async function loadCheckout() {
+        if (!itemsSection) return;
+        try {
+          var res = await moyuyoAPI.get('/api/v1/cart/preview');
+          if (res.code === 0 && res.data) {
+            orderData = res.data;
+            var items = orderData.items || orderData.list || [];
+            if (items.length > 0) {
+              // Clear static placeholder (keep title)
+              var title = itemsSection.querySelector('.px-3.pt-3');
+              itemsSection.innerHTML = '';
+              if (title) itemsSection.appendChild(title);
+              items.forEach(function (item, i) {
+                itemsSection.appendChild(itemRow(item, i === items.length - 1));
+              });
+              updatePriceSummary(orderData);
+            }
+          }
+        } catch (e) {
+          console.log('[MOYUYO] Checkout preview unavailable, showing static content');
+        }
+      }
+
+      // Submit order
+      if (btnSubmit) {
+        btnSubmit.addEventListener('click', async function () {
+          if (!moyuyoAPI.isLoggedIn) {
+            window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.pathname);
+            return;
+          }
+          btnSubmit.textContent = 'Submitting...';
+          btnSubmit.disabled = true;
+
+          try {
+            var body = {
+              addressId: (orderData && orderData.addressId) || 'default',
+              paymentMethod: selectedPayment.toUpperCase(),
+              remark: document.querySelector('.field.small.w-full')?.value || '',
+              couponCode: orderData?.couponCode || '',
+              shippingMethod: 'standard',
+            };
+            var res = await moyuyoAPI.post('/api/v1/order', body);
+            if (res.code === 0 && res.data) {
+              // Trigger WooCommerce sync
+              if (res.data.orderNo) {
+                moyuyoAPI.post('/api/v1/order/' + res.data.orderNo + '/sync-to-woocommerce', {}, { skipSign: false })
+                  .catch(function () {});
+              }
+              window.location.href = 'payment-success.html?orderNo=' + (res.data.orderNo || '');
+            } else {
+              alert(res.message || 'Order submission failed');
+            }
+          } catch (e) {
+            alert('Network error. Please try again.');
+          }
+          btnSubmit.textContent = 'Submit Order';
+          btnSubmit.disabled = false;
+        });
+      }
+
+      loadCheckout();
+    })();
+  </script>
+</body>
+</html>

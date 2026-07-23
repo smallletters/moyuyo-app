@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Create Post</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="mx-auto max-w-[375px] min-h-screen pb-24" style="background: var(--background);">
+
+      <!-- Top Navigation Bar -->
+      <header class="sticky top-0 z-30 flex items-center justify-between px-4 h-11" style="background: var(--background);">
+        <button data-dom-id="back-previous" class="inline-flex items-center justify-center h-8 w-8 rounded-lg transition-colors duration-150 hover:opacity-70 active:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2" style="color: var(--text-400); outline-color: var(--ring);" aria-label="Cancel">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+          <span class="text-sm font-normal">Cancel</span>
+        </button>
+        <h1 class="text-base font-semibold" style="color: var(--text-800); letter-spacing: -0.02em;">Create Post</h1>
+        <button data-dom-id="cta-publish" class="text-sm font-semibold transition-colors duration-150 hover:opacity-80 active:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2" style="color: var(--brand-500); outline-color: var(--ring);" aria-label="Publish Post">Publish</button>
+      </header>
+
+      <!-- Content Area -->
+      <div class="px-4 pt-3">
+
+        <!-- Title Input -->
+        <input
+          type="text"
+          placeholder="Add a title to get more views"
+          class="w-full bg-transparent border-none outline-none text-xl font-semibold placeholder:font-normal"
+          style="color: var(--text-800); letter-spacing: -0.02em;"
+          aria-label="Post Title"
+          maxlength="50"
+        >
+
+        <!-- Post Content -->
+        <div class="mt-3">
+          <textarea
+            placeholder="Share your wonderful life with your pet..."
+            rows="6"
+            class="w-full bg-transparent border-none outline-none resize-none text-sm leading-relaxed placeholder:font-normal"
+            style="color: var(--text-800);"
+            aria-label="Post Body"
+            maxlength="2000"
+          ></textarea>
+          <div class="flex justify-end mt-1">
+            <span class="text-xs" style="color: var(--text-400);">0/2000</span>
+          </div>
+        </div>
+
+        <!-- Image Upload Grid -->
+        <div class="mt-4 grid grid-cols-3 gap-2">
+          <!-- First large image placeholder (2:1 space) -->
+          <div class="col-span-2 row-span-2 flex flex-col items-center justify-center rounded-xl border border-dashed cursor-pointer transition-colors duration-150 hover:border-solid min-h-[160px]" style="border-color: var(--background-300); background: var(--background-200);" aria-label="Add Image or Video">
+            <span data-icon class="w-8 h-8 mb-2" style="color: var(--text-400); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg');"></span>
+            <span class="text-xs font-medium" style="color: var(--text-500);">Add Image/Video</span>
+          </div>
+          <!-- 8 empty placeholder slots -->
+          <div class="aspect-square flex items-center justify-center rounded-lg border border-dashed cursor-pointer transition-colors duration-150 hover:border-solid" style="border-color: var(--background-300); background: var(--background-200);">
+            <span data-icon class="w-5 h-5" style="color: var(--text-300); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg');"></span>
+          </div>
+          <div class="aspect-square flex items-center justify-center rounded-lg border border-dashed cursor-pointer transition-colors duration-150 hover:border-solid" style="border-color: var(--background-300); background: var(--background-200);">
+            <span data-icon class="w-5 h-5" style="color: var(--text-300); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg');"></span>
+          </div>
+          <div class="aspect-square flex items-center justify-center rounded-lg border border-dashed cursor-pointer transition-colors duration-150 hover:border-solid" style="border-color: var(--background-300); background: var(--background-200);">
+            <span data-icon class="w-5 h-5" style="color: var(--text-300); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg');"></span>
+          </div>
+          <div class="aspect-square flex items-center justify-center rounded-lg border border-dashed cursor-pointer transition-colors duration-150 hover:border-solid" style="border-color: var(--background-300); background: var(--background-200);">
+            <span data-icon class="w-5 h-5" style="color: var(--text-300); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg');"></span>
+          </div>
+          <div class="aspect-square flex items-center justify-center rounded-lg border border-dashed cursor-pointer transition-colors duration-150 hover:border-solid" style="border-color: var(--background-300); background: var(--background-200);">
+            <span data-icon class="w-5 h-5" style="color: var(--text-300); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg');"></span>
+          </div>
+          <div class="aspect-square flex items-center justify-center rounded-lg border border-dashed cursor-pointer transition-colors duration-150 hover:border-solid" style="border-color: var(--background-300); background: var(--background-200);">
+            <span data-icon class="w-5 h-5" style="color: var(--text-300); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg');"></span>
+          </div>
+          <div class="aspect-square flex items-center justify-center rounded-lg border border-dashed cursor-pointer transition-colors duration-150 hover:border-solid" style="border-color: var(--background-300); background: var(--background-200);">
+            <span data-icon class="w-5 h-5" style="color: var(--text-300); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg');"></span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-4 h-px" style="background: var(--background-300);"></div>
+
+        <!-- Topic Tags Section -->
+        <div class="flex items-center gap-3 py-3 cursor-pointer group">
+          <span class="text-base font-semibold" style="color: var(--text-800);">#</span>
+          <div class="flex items-center gap-2 flex-1 min-w-0">
+            <i data-lucide="hash" class="w-4 h-4 shrink-0" style="color: var(--text-400);"></i>
+            <span class="text-sm truncate" style="color: var(--text-400);">Search topics</span>
+          </div>
+          <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">Add topic</span>
+        </div>
+
+        <!-- Product Association Section -->
+        <div class="flex items-center gap-3 py-3 cursor-pointer group">
+          <span data-icon class="w-4 h-4 shrink-0" style="color: var(--text-500); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/tag.svg'); mask-image: url('../assets/icons/dl-builtin-apple/tag.svg');"></span>
+          <div class="flex-1 min-w-0">
+            <span class="text-sm truncate" style="color: var(--text-400);">Search products to get product links</span>
+            <p class="text-xs mt-1" style="color: var(--text-500);">Linking products may get extra recommendations</p>
+          </div>
+          <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">Link product</span>
+        </div>
+
+        <!-- Divider -->
+        <div class="h-px" style="background: var(--background-300);"></div>
+
+        <!-- Location Section -->
+        <div class="flex items-center gap-3 py-3 cursor-pointer group">
+          <span data-icon class="w-4 h-4 shrink-0" style="color: var(--text-500); -webkit-mask-image: url('../assets/icons/dl-builtin-apple/map-pin.svg'); mask-image: url('../assets/icons/dl-builtin-apple/map-pin.svg');"></span>
+          <span class="text-sm truncate flex-1 min-w-0" style="color: var(--text-400);">Location</span>
+          <span class="text-xs whitespace-nowrap" style="color: var(--text-500);">Add location</span>
+        </div>
+
+      </div>
+
+      <!-- Bottom Fixed Action Bar -->
+      <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[375px] flex items-center gap-3 px-4 pt-2 pb-3 border-t z-30" style="background: var(--background); border-color: var(--background-300);">
+        <!-- Visibility Selector -->
+        <div class="flex items-center gap-1.5 shrink-0">
+          <i data-lucide="globe" class="w-4 h-4" style="color: var(--text-500);"></i>
+          <span class="text-sm" style="color: var(--text-800);">Public</span>
+          <i data-lucide="chevron-down" class="w-3 h-3" style="color: var(--text-500);"></i>
+        </div>
+        <!-- Publish Button -->
+        <button data-dom-id="cta-publish" class="flex-1 h-11 rounded-full text-sm font-semibold text-center transition-all duration-150 hover:brightness-95 active:brightness-90 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2" style="background: var(--brand-500); color: var(--primary-foreground); outline-color: var(--ring);">
+          Publish
+        </button>
+      </div>
+
+      <!-- Bottom Safe Area -->
+      <div class="h-[env(safe-area-inset-bottom,0px)]"></div>
+
+    </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      (function() {
+        var api = window.moyuyoAPI;
+
+        // === Character Count ===
+        var textarea = document.querySelector('textarea');
+        var countSpan = document.querySelector('span.text-xs');
+        if (textarea && countSpan) {
+          textarea.addEventListener('input', function() {
+            var len = textarea.value.length;
+            countSpan.textContent = len + '/2000';
+          });
+        }
+
+        // === Cancel Button ===
+        var backBtn = document.querySelector('[data-dom-id="back-previous"]');
+        if (backBtn) {
+          backBtn.addEventListener('click', function() {
+            window.history.back();
+          });
+        }
+
+        // === Publish Button ===
+        var publishBtns = document.querySelectorAll('[data-dom-id="cta-publish"]');
+        publishBtns.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var titleInput = document.querySelector('input[aria-label="Post Title"]');
+            var title = titleInput ? titleInput.value.trim() : '';
+            var content = textarea ? textarea.value.trim() : '';
+
+            if (!title && !content) {
+              alert('Please enter a title or content');
+              return;
+            }
+
+            // Disable buttons to prevent duplicate clicks
+            publishBtns.forEach(function(b) { b.disabled = true; });
+
+            api.post('/api/v1/post/create', { title: title, content: content })
+              .then(function(res) {
+                if (res.code === 0) {
+                  // Show toast
+                  var toast = document.createElement('div');
+                  toast.textContent = 'Post published successfully!';
+                  toast.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:rgba(0,0,0,0.75);color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;pointer-events:none;';
+                  document.body.appendChild(toast);
+                  setTimeout(function() {
+                    window.location.href = 'community.html';
+                  }, 1500);
+                } else {
+                  alert(res.message || 'Failed to publish, please try again');
+                  publishBtns.forEach(function(b) { b.disabled = false; });
+                }
+              })
+              .catch(function() {
+                alert('Network error, please try again');
+                publishBtns.forEach(function(b) { b.disabled = false; });
+              });
+          });
+        });
+
+        // Ensure lucide icons refresh after dynamic rendering
+        lucide.createIcons();
+      })();
+    </script>
+</body>
+</html>

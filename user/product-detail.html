@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Product Details</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background-color: var(--background-200);">
+    <main class="pb-20">
+
+      <!-- Top Navigation Bar -->
+      <header class="sticky top-0 z-40 flex items-center justify-between px-4" style="height: 44px; background-color: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);">
+        <button class="inline-flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--border); background: var(--background-50); color: var(--foreground);" data-dom-id="back-previous" aria-label="Back">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+        </button>
+        <div class="flex items-center gap-2">
+          <button class="inline-flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--border); background: var(--background-50); color: var(--foreground);" aria-label="Share">
+            <i data-lucide="share-2" class="w-4 h-4"></i>
+          </button>
+          <button class="inline-flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--border); background: var(--background-50); color: var(--foreground);" aria-label="Favorite">
+            <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Product Image Carousel -->
+      <section class="relative" id="product-gallery" style="background-color: var(--background-50);">
+        <div class="flex gap-2 overflow-x-auto no-scrollbar px-4 pt-4 pb-2">
+          <div class="shrink-0 w-full" style="aspect-ratio: 1/1; max-width: 375px;">
+            <img src="../assets/product-shampoo-bottle.jpg" alt="MOYUYO Gentle Plant-Based Pet Wash &amp; Care Set" class="w-full h-full object-cover" style="border-radius: var(--radius);">
+          </div>
+        </div>
+        <!-- Page Indicator -->
+        <div class="flex items-center justify-center gap-1.5 pb-3">
+          <span class="inline-block" style="width: 6px; height: 6px; border-radius: 999px; background-color: var(--brand-500);"></span>
+          <span class="inline-block" style="width: 6px; height: 6px; border-radius: 999px; background-color: var(--background-400);"></span>
+          <span class="inline-block" style="width: 6px; height: 6px; border-radius: 999px; background-color: var(--background-400);"></span>
+          <span class="inline-block" style="width: 6px; height: 6px; border-radius: 999px; background-color: var(--background-400);"></span>
+        </div>
+        <!-- Thumbnail Row -->
+        <div class="flex gap-2 overflow-x-auto no-scrollbar px-4 pb-4">
+          <div class="shrink-0" style="width: 56px; height: 56px; border-radius: calc(var(--radius) * 0.5); overflow: hidden; border: 2px solid var(--brand-500);">
+            <img src="../assets/product-shampoo-bottle.jpg" alt="Thumbnail 1" class="w-full h-full object-cover">
+          </div>
+          <div class="shrink-0" style="width: 56px; height: 56px; border-radius: calc(var(--radius) * 0.5); overflow: hidden; border: 2px solid var(--border);">
+            <img src="../assets/product-harness-gear.jpg" alt="Thumbnail 2" class="w-full h-full object-cover">
+          </div>
+          <div class="shrink-0" style="width: 56px; height: 56px; border-radius: calc(var(--radius) * 0.5); overflow: hidden; border: 2px solid var(--border);">
+            <img src="../assets/pet-care-grooming.jpg" alt="Thumbnail 3" class="w-full h-full object-cover">
+          </div>
+          <div class="shrink-0" style="width: 56px; height: 56px; border-radius: calc(var(--radius) * 0.5); overflow: hidden; border: 2px solid var(--border);">
+            <img src="../assets/product-shampoo-bottle.jpg" alt="Thumbnail 4" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </section>
+
+      <!-- Product Info Section -->
+      <section class="px-4 pb-4" id="product-info" style="background-color: var(--background-50);">
+        <p class="text-xs font-medium tracking-wide uppercase" style="color: var(--text-500); letter-spacing: 0.08em;">MOYUYO CARE</p>
+        <h1 class="mt-1 text-lg font-semibold leading-tight truncate" style="color: var(--text-800); word-break: keep-all; text-wrap: balance;">Gentle Plant-Based Pet Wash &amp; Care Set</h1>
+        <div class="mt-2 flex items-baseline gap-2">
+          <span class="text-2xl font-semibold" style="color: var(--brand-500); font-variant-numeric: tabular-nums;">¥128</span>
+          <span class="text-sm line-through" style="color: var(--text-400); font-variant-numeric: tabular-nums;">¥198</span>
+          <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold whitespace-nowrap" style="border-radius: 999px; background-color: var(--brand-50); color: var(--brand-500);">Member Price ¥109</span>
+        </div>
+      </section>
+
+      <!-- Spec Selection -->
+      <section class="px-4 pb-4 mt-2" id="product-sku" style="background-color: var(--background-50);">
+        <!-- Color Selection -->
+        <div class="mb-4">
+          <h3 class="text-sm font-semibold mb-2" style="color: var(--text-800);">Color</h3>
+          <div class="flex gap-2">
+            <button class="inline-flex items-center justify-center px-4 h-9 text-sm font-medium whitespace-nowrap" style="border-radius: 999px; background-color: var(--brand-500); color: var(--primary-foreground); border: 1px solid var(--brand-500);">Vanilla White</button>
+            <button class="inline-flex items-center justify-center px-4 h-9 text-sm font-medium whitespace-nowrap" style="border-radius: 999px; background-color: var(--background-50); color: var(--text-800); border: 1px solid var(--border);">Fresh Green</button>
+          </div>
+        </div>
+        <!-- Size Selection -->
+        <div>
+          <h3 class="text-sm font-semibold mb-2" style="color: var(--text-800);">Size</h3>
+          <div class="flex gap-2">
+            <button class="inline-flex items-center justify-center px-4 h-9 text-sm font-medium whitespace-nowrap" style="border-radius: 999px; background-color: var(--background-50); color: var(--text-800); border: 1px solid var(--border);">250ml</button>
+            <button class="inline-flex items-center justify-center px-4 h-9 text-sm font-medium whitespace-nowrap" style="border-radius: 999px; background-color: var(--brand-500); color: var(--primary-foreground); border: 1px solid var(--brand-500);">500ml</button>
+            <button class="inline-flex items-center justify-center px-4 h-9 text-sm font-medium whitespace-nowrap" style="border-radius: 999px; background-color: var(--background-50); color: var(--text-800); border: 1px solid var(--border);">1L</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div style="height: 8px; background-color: var(--background-200);"></div>
+
+      <!-- Tab Navigation -->
+      <div class="flex" style="background-color: var(--background-50); border-bottom: 1px solid var(--border);">
+        <button class="flex-1 flex items-center justify-center h-11 text-sm font-semibold whitespace-nowrap" style="color: var(--brand-500); border-bottom: 2px solid var(--brand-500);">Description</button>
+        <button class="flex-1 flex items-center justify-center h-11 text-sm font-medium whitespace-nowrap" style="color: var(--text-400);">Specifications</button>
+        <button class="flex-1 flex items-center justify-center h-11 text-sm font-medium whitespace-nowrap" style="color: var(--text-400);">Reviews</button>
+      </div>
+
+      <!-- Product Description Content -->
+      <section style="background-color: var(--background-50);">
+        <img src="../assets/pet-care-grooming.jpg" alt="Pet Care Scene" class="w-full" style="aspect-ratio: 4/3; object-fit: cover;">
+        <div class="px-4 py-4">
+          <h2 class="text-base font-semibold mb-2" style="color: var(--text-800);">Natural Botanicals, Gentle Cleansing</h2>
+          <p class="text-sm leading-relaxed" style="color: var(--text-500);">Carefully selected aloe vera, chamomile, tea tree essential oil and other natural botanical ingredients effectively cleanse while caring for your pet&#39;s sensitive skin. pH 6.5 mildly acidic formula matches the natural pH balance of pet skin, leaving the coat glossy and smooth after washing.</p>
+        </div>
+        <img src="../assets/product-shampoo-bottle.jpg" alt="Product Details" class="w-full" style="aspect-ratio: 16/9; object-fit: cover;">
+        <div class="px-4 py-4">
+          <h2 class="text-base font-semibold mb-2" style="color: var(--text-800);">Safe Ingredients, Lab Tested</h2>
+          <p class="text-sm leading-relaxed" style="color: var(--text-500);">Free from sulfates, artificial colors, preservatives and other irritating chemicals. Tested by third-party authoritative agencies, safe for pregnant and young pets.</p>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div style="height: 8px; background-color: var(--background-200);"></div>
+
+      <!-- Reviews Section -->
+      <section class="px-4 pt-4 pb-6" id="product-reviews" style="background-color: var(--background-50);">
+        <!-- Review Overview -->
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold" style="color: var(--text-800);">Customer Reviews</h2>
+          <span class="text-xs font-medium whitespace-nowrap" style="color: var(--text-500);">View All ›</span>
+        </div>
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-xl font-semibold" style="color: var(--brand-500); font-variant-numeric: tabular-nums;">98%</span>
+          <span class="text-sm" style="color: var(--text-500);">Positive Rating</span>
+          <span class="text-xs" style="color: var(--text-400);">· 2,386 reviews</span>
+        </div>
+        <!-- Review Tags -->
+        <div class="flex gap-2 overflow-x-auto no-scrollbar mb-4">
+          <span class="shrink-0 inline-flex items-center px-3 py-1 text-xs font-medium whitespace-nowrap" style="border-radius: 999px; background-color: var(--background-200); color: var(--text-600);">Gentle &amp; Non-Irritating (856)</span>
+          <span class="shrink-0 inline-flex items-center px-3 py-1 text-xs font-medium whitespace-nowrap" style="border-radius: 999px; background-color: var(--background-200); color: var(--text-600);">Great Scent (632)</span>
+          <span class="shrink-0 inline-flex items-center px-3 py-1 text-xs font-medium whitespace-nowrap" style="border-radius: 999px; background-color: var(--background-200); color: var(--text-600);">Smooth Coat (518)</span>
+          <span class="shrink-0 inline-flex items-center px-3 py-1 text-xs font-medium whitespace-nowrap" style="border-radius: 999px; background-color: var(--background-200); color: var(--text-600);">Rich Lather (401)</span>
+        </div>
+        <!-- Review List -->
+        <div class="flex flex-col gap-3">
+          <!-- Review Card 1 -->
+          <div class="flex gap-3">
+            <img src="../assets/pet-avatar-dog.jpg" alt="User Avatar" class="shrink-0" style="width: 36px; height: 36px; border-radius: 999px; object-fit: cover;">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium truncate" style="color: var(--text-800);">Xiao Wang, Golden Retriever Owner</span>
+                <span class="text-xs whitespace-nowrap" style="color: var(--text-400);">3 days ago</span>
+              </div>
+              <div class="flex gap-0.5 mt-0.5">
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+              </div>
+              <p class="mt-1.5 text-sm leading-relaxed line-clamp-3" style="color: var(--text-600);">My Golden Retriever has sensitive skin. We tried many brands before and they all caused itching. After using this one, no more itching, and the coat is really smooth. The scent is light and naturally fresh. Very satisfied!</p>
+            </div>
+          </div>
+          <!-- Review Card 2 -->
+          <div class="flex gap-3">
+            <img src="../assets/pet-avatar-cat.jpg" alt="User Avatar" class="shrink-0" style="width: 36px; height: 36px; border-radius: 999px; object-fit: cover;">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium truncate" style="color: var(--text-800);">Ragdoll Cat Mom</span>
+                <span class="text-xs whitespace-nowrap" style="color: var(--text-400);">1 week ago</span>
+              </div>
+              <div class="flex gap-0.5 mt-0.5">
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+              </div>
+              <p class="mt-1.5 text-sm leading-relaxed line-clamp-3" style="color: var(--text-600);">The lather is rich and creamy, and my cat is more cooperative during baths. The 500ml size is generous and great value for money. Will definitely repurchase.</p>
+            </div>
+          </div>
+          <!-- Review Card 3 -->
+          <div class="flex gap-3">
+            <img src="../assets/pet-avatar-dog.jpg" alt="User Avatar" class="shrink-0" style="width: 36px; height: 36px; border-radius: 999px; object-fit: cover;">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium truncate" style="color: var(--text-800);">Corgi Poop Scooper</span>
+                <span class="text-xs whitespace-nowrap" style="color: var(--text-400);">2 weeks ago</span>
+              </div>
+              <div class="flex gap-0.5 mt-0.5">
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--background-400);"></span>
+              </div>
+              <p class="mt-1.5 text-sm leading-relaxed line-clamp-3" style="color: var(--text-600);">Overall pretty good, gentle and non-irritating. The shipping was just a bit slow. The Vanilla White scent smells great, and my dog loves it.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Fixed Bottom Action Bar -->
+    <div class="fixed bottom-0 inset-x-0 z-50 flex items-center gap-2 px-4" style="height: 60px; padding-bottom: env(safe-area-inset-bottom, 8px); background-color: rgba(255,255,255,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--border);">
+      <!-- Customer Service Icon -->
+      <button class="shrink-0 flex flex-col items-center justify-center" style="width: 44px; height: 44px; color: var(--text-500);" aria-label="Contact Customer Service">
+        <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+        <span class="text-[10px] mt-0.5">Support</span>
+      </button>
+      <!-- Favorite Icon -->
+      <button id="btn-favorite" class="shrink-0 flex flex-col items-center justify-center" style="width: 44px; height: 44px; color: var(--text-500);" aria-label="Favorite">
+        <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+        <span class="text-[10px] mt-0.5">Favorite</span>
+      </button>
+      <!-- Add to Cart -->
+      <button id="btn-add-cart" class="btn btn-secondary shrink-0 flex-1" style="height: 40px; border-radius: 999px; border: 1px solid var(--brand-500); background: var(--background-50); color: var(--brand-500); font-size: 13px; font-weight: 600;" data-dom-id="cta-cart">Add to Cart</button>
+      <!-- Buy Now -->
+      <button id="btn-buy-now" class="btn btn-primary shrink-0 flex-1" style="height: 40px; border-radius: 999px; font-size: 13px; font-weight: 600;">Buy Now</button>
+    </div>
+
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+  <script>lucide.createIcons();</script>
+  <script>
+    (function () {
+      // Get slug from URL
+      var params = new URLSearchParams(window.location.search);
+      var slug = params.get('slug') || '';
+
+      var info = document.getElementById('product-info');
+      var gallery = document.getElementById('product-gallery');
+      var sku = document.getElementById('product-sku');
+      var reviews = document.getElementById('product-reviews');
+      var btnAddCart = document.getElementById('btn-add-cart');
+      var btnBuyNow = document.getElementById('btn-buy-now');
+      var btnFavorite = document.getElementById('btn-favorite');
+
+      var productData = null;
+      var selectedSkuId = null;
+      var selectedQuantity = 1;
+
+      // Image Gallery
+      function renderGallery(images) {
+        if (!gallery || !images || !images.length) return;
+        var urls = (images.length > 0 ? images : [{ url: '../assets/product-placeholder.jpg', alt: 'Product' }]);
+        var mainImg = urls[0].url || urls[0];
+        var dots = urls.map(function (_, i) {
+          return '<span class="inline-block" style="width:6px;height:6px;border-radius:999px;background-color:' + (i === 0 ? 'var(--brand-500)' : 'var(--background-400)') + '"></span>';
+        }).join('');
+        var thumbs = urls.map(function (img, i) {
+          var src = img.url || img;
+          return '<div class="shrink-0" style="width:56px;height:56px;border-radius:calc(var(--radius)*0.5);overflow:hidden;border:2px solid ' + (i === 0 ? 'var(--brand-500)' : 'var(--border)') + '"><img src="' + src + '" alt="' + (img.alt || '') + '" class="w-full h-full object-cover" onerror="this.src=\'../assets/product-placeholder.jpg\'"></div>';
+        }).join('');
+
+        gallery.innerHTML =
+          '<div class="flex gap-2 overflow-x-auto no-scrollbar px-4 pt-4 pb-2">' +
+          '<div class="shrink-0 w-full" style="aspect-ratio:1/1;max-width:375px"><img src="' + (typeof mainImg === 'string' ? mainImg : mainImg) + '" alt="' + (productData ? productData.name : '') + '" class="w-full h-full object-cover" style="border-radius:var(--radius)" onerror="this.src=\'../assets/product-placeholder.jpg\'"></div>' +
+          '</div>' +
+          '<div class="flex items-center justify-center gap-1.5 pb-3">' + dots + '</div>' +
+          '<div class="flex gap-2 overflow-x-auto no-scrollbar px-4 pb-4">' + thumbs + '</div>';
+      }
+
+      // Product Info
+      function renderInfo(product) {
+        if (!info) return;
+        var brand = product.brand || product.brandName || '';
+        var name = product.name || product.title || '';
+        var price = product.price != null ? '¥' + (product.price / 100).toFixed(0) : '';
+        var originalPrice = product.originalPrice != null ? '¥' + (product.originalPrice / 100).toFixed(0) : '';
+        var memberPrice = product.memberPrice || product.vipPrice || '';
+        if (memberPrice) memberPrice = '¥' + (memberPrice / 100).toFixed(0);
+
+        info.innerHTML =
+          (brand ? '<p class="text-xs font-medium tracking-wide uppercase" style="color:var(--text-500);letter-spacing:0.08em">' + brand + '</p>' : '') +
+          '<h1 class="mt-1 text-lg font-semibold leading-tight" style="color:var(--text-800);text-wrap:balance">' + name + '</h1>' +
+          '<div class="mt-2 flex items-baseline gap-2">' +
+          '<span class="text-2xl font-semibold" style="color:var(--brand-500);font-variant-numeric:tabular-nums">' + price + '</span>' +
+          (originalPrice ? '<span class="text-sm line-through" style="color:var(--text-400);font-variant-numeric:tabular-nums">' + originalPrice + '</span>' : '') +
+          (memberPrice ? '<span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold whitespace-nowrap" style="border-radius:999px;background-color:var(--brand-50);color:var(--brand-500)">Member Price ' + memberPrice + '</span>' : '') +
+          '</div>';
+      }
+
+      // SKU Selection
+      function renderSku(skus) {
+        if (!sku || !skus || !skus.length) return;
+        // Group by attributes
+        var groups = {};
+        skus.forEach(function (s) {
+          var attrs = s.attributes || s.specs || {};
+          Object.keys(attrs).forEach(function (key) {
+            if (!groups[key]) groups[key] = [];
+            if (groups[key].indexOf(attrs[key]) === -1) groups[key].push(attrs[key]);
+          });
+        });
+        var html = '';
+        var first = true;
+        Object.keys(groups).forEach(function (key) {
+          html += '<div class="' + (first ? '' : 'mt-4') + '">';
+          html += '<h3 class="text-sm font-semibold mb-2" style="color:var(--text-800)">' + key + '</h3>';
+          html += '<div class="flex gap-2 flex-wrap">';
+          groups[key].forEach(function (val, vi) {
+            var active = vi === 0;
+            html += '<button class="sku-option inline-flex items-center justify-center px-4 h-9 text-sm font-medium whitespace-nowrap" style="border-radius:999px;' +
+              (active ? 'background-color:var(--brand-500);color:var(--primary-foreground);border:1px solid var(--brand-500)' : 'background-color:var(--background-50);color:var(--text-800);border:1px solid var(--border)') +
+              '" data-value="' + val + '">' + val + '</button>';
+          });
+          html += '</div></div>';
+          first = false;
+        });
+        sku.innerHTML = html;
+
+        // SKU click toggle
+        sku.addEventListener('click', function (e) {
+          var btn = e.target.closest('.sku-option');
+          if (!btn) return;
+          var parent = btn.parentElement;
+          parent.querySelectorAll('.sku-option').forEach(function (b) {
+            b.style.background = 'var(--background-50)';
+            b.style.color = 'var(--text-800)';
+            b.style.borderColor = 'var(--border)';
+          });
+          btn.style.background = 'var(--brand-500)';
+          btn.style.color = 'var(--primary-foreground)';
+          btn.style.borderColor = 'var(--brand-500)';
+          updateSelectedSku();
+        });
+      }
+
+      function updateSelectedSku() {
+        var selected = {};
+        sku.querySelectorAll('.sku-option').forEach(function (b) {
+          if (b.style.background === 'var(--brand-500)' || b.style.backgroundColor === 'rgb(176, 138, 96)') {
+            var key = b.closest('.mb-4, .mt-4, div')?.querySelector('h3')?.textContent || '';
+            selected[key] = b.getAttribute('data-value');
+          }
+        });
+        // Match SKU
+        if (productData && productData.skus) {
+          var match = productData.skus.find(function (s) {
+            var attrs = s.attributes || s.specs || {};
+            return Object.keys(selected).every(function (k) { return attrs[k] === selected[k]; });
+          });
+          if (match) {
+            selectedSkuId = match.id || match.skuId;
+            if (match.price != null) {
+              var priceEl = info.querySelector('.text-2xl');
+              if (priceEl) priceEl.textContent = '¥' + (match.price / 100).toFixed(0);
+            }
+          }
+        }
+      }
+
+      // Reviews
+      function renderReviews(reviewData) {
+        if (!reviews) return;
+        var list = reviewData.list || reviewData.reviews || reviewData.items || [];
+        if (!list.length) return;
+        var rating = reviewData.avgRating || reviewData.rating || '98%';
+        var count = reviewData.total || reviewData.count || 0;
+        var tags = (reviewData.tags || []).slice(0, 4);
+        var reviewsHtml = list.slice(0, 3).map(function (r) {
+          var stars = '';
+          for (var i = 0; i < 5; i++) {
+            stars += '<span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image:url(\'../assets/icons/dl-builtin-apple/star.svg\');mask-image:url(\'../assets/icons/dl-builtin-apple/star.svg\');background-color:' + (i < (r.rating || r.star || 5) ? 'var(--brand-500)' : 'var(--background-400)') + '"></span>';
+          }
+          return '<div class="flex gap-3">' +
+            '<img src="' + (r.avatar || '../assets/pet-avatar-dog.jpg') + '" alt="" class="shrink-0" style="width:36px;height:36px;border-radius:999px;object-fit:cover" onerror="this.src=\'../assets/pet-avatar-dog.jpg\'">' +
+            '<div class="flex-1 min-w-0">' +
+            '<div class="flex items-center justify-between"><span class="text-sm font-medium truncate" style="color:var(--text-800)">' + (r.userName || r.nickname || '') + '</span><span class="text-xs whitespace-nowrap" style="color:var(--text-400)">' + (r.createTime || r.createdAt || '').substring(0, 10) + '</span></div>' +
+            '<div class="flex gap-0.5 mt-0.5">' + stars + '</div>' +
+            '<p class="mt-1.5 text-sm leading-relaxed line-clamp-3" style="color:var(--text-600)">' + (r.content || r.comment || '') + '</p>' +
+            '</div></div>';
+        }).join('');
+
+        reviews.innerHTML =
+          '<div class="flex items-center justify-between mb-3"><h2 class="text-base font-semibold" style="color:var(--text-800)">Customer Reviews</h2><span class="text-xs font-medium whitespace-nowrap" style="color:var(--text-500)">View All ›</span></div>' +
+          '<div class="flex items-center gap-2 mb-3"><span class="text-xl font-semibold" style="color:var(--brand-500);font-variant-numeric:tabular-nums">' + rating + '</span><span class="text-sm" style="color:var(--text-500)">Positive Rating</span><span class="text-xs" style="color:var(--text-400)">· ' + count + ' reviews</span></div>' +
+          '<div class="flex gap-2 overflow-x-auto no-scrollbar mb-4">' + tags.map(function (t) { return '<span class="shrink-0 inline-flex items-center px-3 py-1 text-xs font-medium whitespace-nowrap" style="border-radius:999px;background-color:var(--background-200);color:var(--text-600)">' + t + '</span>'; }).join('') + '</div>' +
+          '<div class="flex flex-col gap-3">' + reviewsHtml + '</div>';
+      }
+
+      // Load product details
+      async function loadProduct() {
+        if (!slug) return;
+        try {
+          var res = await moyuyoAPI.get('/api/v1/goods/' + encodeURIComponent(slug), { skipSign: true });
+          if (res.code === 0 && res.data) {
+            productData = res.data;
+            renderInfo(productData);
+            renderGallery(productData.images || productData.gallery);
+            renderSku(productData.skus || productData.specs);
+            selectedSkuId = (productData.skus && productData.skus[0]) ? (productData.skus[0].id || productData.skus[0].skuId) : null;
+          }
+        } catch (e) {
+          console.log('[MOYUYO] Product detail unavailable, showing static content');
+        }
+
+        // Load reviews
+        try {
+          var revRes = await moyuyoAPI.get('/api/v1/goods/' + encodeURIComponent(slug) + '/reviews?page=1&pageSize=3', { skipSign: true });
+          if (revRes.code === 0 && revRes.data) {
+            renderReviews(revRes.data);
+          }
+        } catch (e) {
+          console.log('[MOYUYO] Reviews unavailable, showing static content');
+        }
+      }
+
+      // Add to cart
+      if (btnAddCart) {
+        btnAddCart.addEventListener('click', async function () {
+          if (!moyuyoAPI.isLoggedIn) { window.location.href = 'login.html'; return; }
+          try {
+            btnAddCart.textContent = 'Adding...';
+            btnAddCart.disabled = true;
+            var res = await moyuyoAPI.post('/api/v1/cart/add', {
+              skuId: selectedSkuId || (productData && productData.id),
+              quantity: 1
+            });
+            if (res.code === 0) {
+              btnAddCart.textContent = 'Added ✓';
+              btnAddCart.style.color = 'var(--state-success)';
+              btnAddCart.style.borderColor = 'var(--state-success)';
+              setTimeout(function () {
+                btnAddCart.textContent = 'Add to Cart';
+                btnAddCart.style.color = 'var(--brand-500)';
+                btnAddCart.style.borderColor = 'var(--brand-500)';
+              }, 2000);
+            } else {
+              alert(res.message || 'Failed to add to cart');
+              btnAddCart.textContent = 'Add to Cart';
+            }
+          } catch (e) {
+            btnAddCart.textContent = 'Add to Cart';
+          }
+          btnAddCart.disabled = false;
+        });
+      }
+
+      // Buy Now
+      if (btnBuyNow) {
+        btnBuyNow.addEventListener('click', async function () {
+          if (!moyuyoAPI.isLoggedIn) { window.location.href = 'login.html'; return; }
+          try {
+            btnBuyNow.textContent = 'Processing...';
+            btnBuyNow.disabled = true;
+            var res = await moyuyoAPI.post('/api/v1/cart/add', {
+              skuId: selectedSkuId || (productData && productData.id),
+              quantity: 1
+            });
+            if (res.code === 0) {
+              window.location.href = 'checkout.html';
+            } else {
+              alert(res.message || 'Failed');
+            }
+          } catch (e) {
+            // ignore
+          }
+          btnBuyNow.textContent = 'Buy Now';
+          btnBuyNow.disabled = false;
+        });
+      }
+
+      // Favorite
+      if (btnFavorite) {
+        btnFavorite.addEventListener('click', async function () {
+          var heart = btnFavorite.querySelector('[data-icon]');
+          if (!moyuyoAPI.isLoggedIn) { window.location.href = 'login.html'; return; }
+          try {
+            var res = await moyuyoAPI.post('/api/v1/favorites/toggle', {
+              goodsId: productData && productData.id,
+              skuId: selectedSkuId
+            });
+            if (res.code === 0) {
+              var isFav = res.data && res.data.isFavorite;
+              heart.style.background = isFav ? 'var(--state-error)' : 'var(--text-500)';
+              btnFavorite.querySelector('span:last-child').textContent = isFav ? 'Favorited' : 'Favorite';
+            }
+          } catch (e) { /* ignore */ }
+        });
+      }
+
+      loadProduct();
+    })();
+  </script>
+</body>
+</html>

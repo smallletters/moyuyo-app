@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO 编辑资料</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background-color: var(--background-200);">
+    <main class="mx-auto max-w-[375px] min-h-screen" style="background-color: var(--background-200);">
+
+      <!-- 顶部导航栏 -->
+      <header class="sticky top-0 z-30 flex items-center justify-between px-4" style="height: 44px; background-color: var(--background-50); border-bottom: 1px solid var(--border);">
+        <!-- 返回按钮 -->
+        <a href="profile.html" data-dom-id="cta-back" class="inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150 hover:opacity-70" aria-label="返回个人中心" style="background-color: transparent;">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); color: var(--brand-500);"></span>
+        </a>
+        <!-- 标题 -->
+        <h1 class="text-base font-semibold" style="color: var(--text-800); letter-spacing: -0.02em;">编辑资料</h1>
+        <!-- 保存按钮 -->
+        <a href="#" data-dom-id="cta-save" class="text-sm font-semibold transition-opacity duration-150 hover:opacity-70" style="color: var(--brand-500);">保存</a>
+      </header>
+
+      <div class="px-4 pt-6 pb-8 flex flex-col gap-6">
+
+        <!-- 头像区域 -->
+        <div class="flex flex-col items-center gap-3">
+          <div class="w-20 h-20 rounded-full overflow-hidden" style="border: 3px solid var(--background-300);">
+            <img src="../assets/pet-avatar-dog.jpg" alt="用户头像" class="w-full h-full object-cover">
+          </div>
+          <button class="text-sm font-medium transition-opacity duration-150 hover:opacity-70" style="color: var(--brand-500); background: transparent; border: none; cursor: pointer;">
+            更换头像
+          </button>
+        </div>
+
+        <!-- 基本信息 -->
+        <div>
+          <h2 class="text-xs font-medium uppercase tracking-wide px-1 pb-2" style="color: var(--text-500); letter-spacing: 0.06em;">基本信息</h2>
+          <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);">
+            <!-- 昵称 -->
+            <div class="flex items-center justify-between px-4" style="height: 52px;">
+              <span class="text-sm font-medium" style="color: var(--text-800);">昵称</span>
+              <div class="flex items-center gap-1">
+                <span class="text-sm" style="color: var(--text-500);">宠物爱好者</span>
+                <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+              </div>
+            </div>
+            <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
+            <!-- 性别 -->
+            <div class="flex items-center justify-between px-4" style="height: 52px;">
+              <span class="text-sm font-medium" style="color: var(--text-800);">性别</span>
+              <div class="flex items-center gap-1">
+                <!-- 三选一：男/女/保密，当前选中"保密" -->
+                <div class="flex items-center gap-2">
+                  <span class="text-sm" style="color: var(--text-400);">男</span>
+                  <span class="text-sm" style="color: var(--text-400);">女</span>
+                  <span class="text-sm font-medium" style="color: var(--brand-500);">保密</span>
+                </div>
+                <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+              </div>
+            </div>
+            <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
+            <!-- 生日 -->
+            <div class="flex items-center justify-between px-4" style="height: 52px;">
+              <span class="text-sm font-medium" style="color: var(--text-800);">生日</span>
+              <div class="flex items-center gap-1">
+                <span class="text-sm" style="color: var(--text-500);">1995-06-15</span>
+                <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+              </div>
+            </div>
+            <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
+            <!-- 个人简介 -->
+            <div class="flex items-center justify-between px-4" style="height: 52px;">
+              <span class="text-sm font-medium" style="color: var(--text-800);">个人简介</span>
+              <div class="flex items-center gap-1">
+                <span class="text-sm truncate max-w-[140px]" style="color: var(--text-500);">热爱生活的铲屎官</span>
+                <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- 联系方式 -->
+        <div>
+          <h2 class="text-xs font-medium uppercase tracking-wide px-1 pb-2" style="color: var(--text-500); letter-spacing: 0.06em;">联系方式</h2>
+          <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);">
+            <!-- 邮箱 -->
+            <div class="flex items-center justify-between px-4" style="height: 52px;">
+              <span class="text-sm font-medium" style="color: var(--text-800);">邮箱</span>
+              <div class="flex items-center gap-2">
+                <span class="text-sm" style="color: var(--text-500);">m***@gmail.com</span>
+                <!-- 已验证标签 -->
+                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold" style="background-color: var(--state-success-surface); color: var(--state-success);">
+                  <span data-icon class="w-2.5 h-2.5 mr-0.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); color: var(--state-success);"></span>
+                  已验证
+                </span>
+              </div>
+            </div>
+            <div style="height: 1px; background-color: var(--border); margin-left: 16px;"></div>
+            <!-- 手机号 -->
+            <div class="flex items-center justify-between px-4" style="height: 52px;">
+              <span class="text-sm font-medium" style="color: var(--text-800);">手机号</span>
+              <div class="flex items-center gap-1">
+                <span class="text-sm" style="color: var(--text-500);">+1 ***-***-5678</span>
+                <i data-lucide="chevron-right" class="h-4 w-4 shrink-0" style="color: var(--icon-400);"></i>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- 偏好设置 -->
+        <div>
+          <h2 class="text-xs font-medium uppercase tracking-wide px-1 pb-2" style="color: var(--text-500); letter-spacing: 0.06em;">偏好设置</h2>
+          <section class="rounded-xl overflow-hidden" style="background-color: var(--background-50);">
+            <!-- 宠物偏好：多选标签 -->
+            <div class="flex items-center justify-between px-4" style="min-height: 52px; padding-top: 12px; padding-bottom: 12px;">
+              <span class="text-sm font-medium" style="color: var(--text-800);">宠物偏好</span>
+              <div class="flex items-center gap-2">
+                <!-- 猫 - 已选中 -->
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" style="background-color: var(--brand-500); color: var(--primary-foreground);">猫</span>
+                <!-- 狗 - 已选中 -->
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" style="background-color: var(--brand-500); color: var(--primary-foreground);">狗</span>
+                <!-- 其他 - 未选中 -->
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" style="background-color: var(--background-200); color: var(--text-500); border: 1px solid var(--border);">其他</span>
+                <i data-lucide="chevron-right" class="h-4 w-4 shrink-0 ml-0.5" style="color: var(--icon-400);"></i>
+              </div>
+            </div>
+          </section>
+        </div>
+
+      </div>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

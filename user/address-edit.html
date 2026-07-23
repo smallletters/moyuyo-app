@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Edit Address</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --radius-sm: var(--radius);
+    --radius-md: var(--radius);
+    --radius-lg: var(--radius);
+    --radius-xl: var(--radius);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="min-h-screen" style="background-color: var(--background-200);">
+
+      <!-- Top Navigation Bar -->
+      <header class="sticky top-0 z-30 border-b" style="border-color: var(--border); background-color: var(--background-50);">
+        <div class="flex h-11 items-center px-4">
+          <!-- Back Button -->
+          <a href="address-list.html" data-dom-id="cta-back" class="inline-flex h-8 w-8 items-center justify-center" style="border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--background-50); color: var(--foreground); cursor: pointer; transition: background-color 0.16s ease;" aria-label="Back" onmouseover="this.style.backgroundColor='var(--secondary)'" onmouseout="this.style.backgroundColor='var(--background-50)'">
+            <i data-lucide="chevron-left" class="h-4 w-4"></i>
+          </a>
+          <!-- Centered Title -->
+          <div class="min-w-0 flex-1 text-center text-base font-semibold" style="color: var(--text-800); letter-spacing: -0.02em;">
+            Edit Address
+          </div>
+          <!-- Right Spacer -->
+          <div class="w-8"></div>
+        </div>
+      </header>
+
+      <!-- Form Area -->
+      <div class="flex flex-col gap-4 p-4">
+
+        <!-- Recipient Information Group -->
+        <section class="overflow-hidden" style="background-color: var(--background-50); border-radius: var(--radius);">
+          <!-- Group Title -->
+          <div class="px-4 pt-4 pb-2">
+            <span class="text-xs font-semibold tracking-wide uppercase" style="color: var(--text-400);">Recipient Information</span>
+          </div>
+          <!-- Name -->
+          <div class="flex items-center border-b px-4" style="height: 48px; border-color: var(--background-300);">
+            <label class="w-20 shrink-0 text-sm" style="color: var(--text-800);">Recipient</label>
+            <input type="text" class="flex-1 bg-transparent text-sm outline-none" style="color: var(--text-800);" placeholder="Enter recipient name">
+          </div>
+          <!-- Phone Number -->
+          <div class="flex items-center px-4" style="height: 48px;">
+            <label class="w-20 shrink-0 text-sm" style="color: var(--text-800);">Phone</label>
+            <div class="flex flex-1 items-center gap-1.5">
+              <span class="text-sm font-medium" style="color: var(--text-500);">+1</span>
+              <span class="text-sm" style="color: var(--background-400);">|</span>
+              <input type="tel" class="flex-1 bg-transparent text-sm outline-none" style="color: var(--text-800);" placeholder="Enter phone number">
+            </div>
+          </div>
+        </section>
+
+        <!-- Address Information Group -->
+        <section class="overflow-hidden" style="background-color: var(--background-50); border-radius: var(--radius);">
+          <!-- Group Title -->
+          <div class="px-4 pt-4 pb-2">
+            <span class="text-xs font-semibold tracking-wide uppercase" style="color: var(--text-400);">Address Information</span>
+          </div>
+          <!-- Country/Region -->
+          <div class="flex items-center border-b px-4" style="height: 48px; border-color: var(--background-300);">
+            <label class="w-24 shrink-0 text-sm" style="color: var(--text-800);">Country/Region</label>
+            <div class="flex flex-1 items-center justify-between">
+              <select class="flex-1 bg-transparent text-sm outline-none appearance-none cursor-pointer" style="color: var(--text-800);">
+                <option value="US" selected>United States</option>
+              </select>
+              <i data-lucide="chevron-down" class="h-4 w-4 shrink-0" style="color: var(--text-400);"></i>
+            </div>
+          </div>
+          <!-- State/Province -->
+          <div class="flex items-center border-b px-4" style="height: 48px; border-color: var(--background-300);">
+            <label class="w-24 shrink-0 text-sm" style="color: var(--text-800);">State/Province</label>
+            <input type="text" class="flex-1 bg-transparent text-sm outline-none" style="color: var(--text-800);" placeholder="California">
+          </div>
+          <!-- City -->
+          <div class="flex items-center border-b px-4" style="height: 48px; border-color: var(--background-300);">
+            <label class="w-24 shrink-0 text-sm" style="color: var(--text-800);">City</label>
+            <input type="text" class="flex-1 bg-transparent text-sm outline-none" style="color: var(--text-800);" placeholder="Los Angeles">
+          </div>
+          <!-- Street Address -->
+          <div class="border-b px-4" style="border-color: var(--background-300);">
+            <label class="block pt-3 pb-1.5 text-sm" style="color: var(--text-800);">Street Address</label>
+            <textarea rows="2" class="w-full resize-none bg-transparent text-sm outline-none pb-3" style="color: var(--text-800); line-height: 1.5;" placeholder="Enter detailed address"></textarea>
+          </div>
+          <!-- ZIP Code -->
+          <div class="flex items-center border-b px-4" style="height: 48px; border-color: var(--background-300);">
+            <label class="w-24 shrink-0 text-sm" style="color: var(--text-800);">ZIP Code</label>
+            <input type="text" class="flex-1 bg-transparent text-sm outline-none" style="color: var(--text-800);" placeholder="90001">
+          </div>
+          <!-- Company (Optional) -->
+          <div class="flex items-center px-4" style="height: 48px;">
+            <label class="w-24 shrink-0 text-sm" style="color: var(--text-500);">Company<span class="ml-1 text-xs" style="color: var(--text-400);">Optional</span></label>
+            <input type="text" class="flex-1 bg-transparent text-sm outline-none" style="color: var(--text-800);" placeholder="">
+          </div>
+        </section>
+
+        <!-- Address Tag Group -->
+        <section class="overflow-hidden" style="background-color: var(--background-50); border-radius: var(--radius);">
+          <div class="px-4 pt-4 pb-2">
+            <span class="text-xs font-semibold tracking-wide uppercase" style="color: var(--text-400);">Address Tag</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2.5 px-4 pb-4">
+            <!-- Home - Selected -->
+            <button type="button" class="address-tag inline-flex items-center justify-center px-4 text-sm font-medium transition-colors" style="height: 36px; border-radius: 999px; background-color: var(--brand-500); color: var(--primary-foreground); border: none; cursor: pointer;">
+              <i data-lucide="home" class="mr-1.5 h-3.5 w-3.5"></i>
+              Home
+            </button>
+            <!-- Work -->
+            <button type="button" class="address-tag inline-flex items-center justify-center px-4 text-sm font-medium transition-colors" style="height: 36px; border-radius: 999px; background-color: var(--background-200); color: var(--text-600); border: none; cursor: pointer;">
+              <i data-lucide="briefcase" class="mr-1.5 h-3.5 w-3.5"></i>
+              Work
+            </button>
+            <!-- School -->
+            <button type="button" class="address-tag inline-flex items-center justify-center px-4 text-sm font-medium transition-colors" style="height: 36px; border-radius: 999px; background-color: var(--background-200); color: var(--text-600); border: none; cursor: pointer;">
+              <i data-lucide="graduation-cap" class="mr-1.5 h-3.5 w-3.5"></i>
+              School
+            </button>
+            <!-- Other -->
+            <button type="button" class="address-tag inline-flex items-center justify-center px-4 text-sm font-medium transition-colors" style="height: 36px; border-radius: 999px; background-color: var(--background-200); color: var(--text-600); border: none; cursor: pointer;">
+              <i data-lucide="map-pin" class="mr-1.5 h-3.5 w-3.5"></i>
+              Other
+            </button>
+          </div>
+        </section>
+
+        <!-- Set as Default Address -->
+        <div class="flex items-center justify-between px-1">
+          <span class="text-sm" style="color: var(--text-800);">Set as default address</span>
+          <!-- iOS Style Toggle Switch -->
+          <label class="relative inline-flex cursor-pointer" style="width: 51px; height: 31px;">
+            <input type="checkbox" class="sr-only peer" checked>
+            <span class="block rounded-full transition-colors" style="width: 51px; height: 31px; background-color: var(--background-400); transition: background-color 0.2s ease;" ></span>
+            <span class="absolute left-0.5 top-0.5 block rounded-full transition-all" style="width: 27px; height: 27px; background-color: var(--background-50); box-shadow: 0 2px 4px rgba(0,0,0,0.15); transition: transform 0.2s ease;"></span>
+          </label>
+        </div>
+
+        <!-- Save Address Button -->
+        <div class="pt-2">
+          <button data-dom-id="cta-save" class="flex w-full items-center justify-center whitespace-nowrap" style="height: 50px; border: none; border-radius: 999px; background-color: var(--primary); color: var(--primary-foreground); font-size: 16px; font-weight: 600; cursor: pointer; transition: filter 0.18s ease;" onmouseover="this.style.filter='brightness(0.96)'" onmouseout="this.style.filter='none'" onfocus="this.style.outline='2px solid var(--ring)'; this.style.outlineOffset='2px'" onblur="this.style.outline='none'">
+            Save Address
+          </button>
+        </div>
+
+        <!-- Delete Address Button (visible in edit mode) -->
+        <div class="pt-1 pb-6">
+          <button data-dom-id="cta-delete" class="flex w-full items-center justify-center whitespace-nowrap" style="height: 44px; border: none; border-radius: 999px; background: transparent; color: var(--state-error); font-size: 15px; font-weight: 500; cursor: pointer; transition: opacity 0.18s ease;" onmouseover="this.style.opacity='0.72'" onmouseout="this.style.opacity='1'">
+            Delete Address
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+    <script src="shared/api.js"></script>
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Toast notification
+      function showToast(msg) {
+        var t = document.createElement('div');
+        t.textContent = msg;
+        Object.assign(t.style, {
+          position: 'fixed', bottom: '80px', left: '50%', transform: 'translateX(-50%)',
+          background: 'rgba(0,0,0,0.8)', color: '#fff', padding: '10px 24px',
+          borderRadius: '999px', fontSize: '14px', zIndex: '9999',
+          transition: 'opacity 0.3s ease', opacity: '0'
+        });
+        document.body.appendChild(t);
+        requestAnimationFrame(function() { t.style.opacity = '1'; });
+        setTimeout(function() { t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 2000);
+      }
+
+      // ===== Address Data Management =====
+      function getAddresses() {
+        try { return JSON.parse(localStorage.getItem('moyuyo_addresses')) || []; } catch(e) { return []; }
+      }
+      function saveAddresses(arr) {
+        localStorage.setItem('moyuyo_addresses', JSON.stringify(arr));
+      }
+
+      // ===== Determine Edit/Add Mode =====
+      var urlParams = new URLSearchParams(window.location.search);
+      var editId = urlParams.get('id');
+      var editingAddress = null;
+      var isEditMode = false;
+
+      if (editId) {
+        var list = getAddresses();
+        for (var i = 0; i < list.length; i++) {
+          if (list[i].id === editId) {
+            editingAddress = list[i];
+            isEditMode = true;
+            break;
+          }
+        }
+      }
+
+      // ===== Edit Mode Data Backfill =====
+      if (isEditMode && editingAddress) {
+        // Change title to "Edit Address"
+        document.querySelector('.text-center.text-base.font-semibold').textContent = 'Edit Address';
+
+        // Backfill form fields
+        var inputs = document.querySelectorAll('input[type="text"], input[type="tel"], textarea, select');
+        var addr = editingAddress;
+        if (inputs.length >= 5) {
+          inputs[0].value = addr.name || '';
+          // Phone field special handling - remove country code prefix
+          inputs[1].value = (addr.phone || '').replace(/^\+1\s*/, '');
+          inputs[2].value = addr.state || '';
+          inputs[3].value = addr.city || '';
+          if (inputs[4]) { // textarea
+            inputs[4].value = addr.street || '';
+          }
+          if (inputs[5]) {
+            inputs[5].value = addr.zip || '';
+          }
+          if (inputs[6]) {
+            inputs[6].value = addr.company || '';
+          }
+        }
+
+        // Backfill address tags
+        var tag = (addr.tag || '').toLowerCase();
+        document.querySelectorAll('.address-tag').forEach(function(t) {
+          var tTag = t.textContent.trim().toLowerCase();
+          if (tTag === tag) {
+            t.style.backgroundColor = 'var(--brand-500)';
+            t.style.color = 'var(--primary-foreground)';
+          } else {
+            t.style.backgroundColor = 'var(--background-200)';
+            t.style.color = 'var(--text-600)';
+          }
+        });
+
+        // Backfill default address toggle
+        var defaultCheckbox = document.querySelector('input[type="checkbox"].sr-only');
+        if (defaultCheckbox) {
+          defaultCheckbox.checked = !!addr.isDefault;
+          // Trigger toggle update
+          var evt = document.createEvent('Event');
+          evt.initEvent('change', true, false);
+          defaultCheckbox.dispatchEvent(evt);
+        }
+
+        // Show delete button (edit mode)
+        document.querySelector('[data-dom-id="cta-delete"]').style.display = 'flex';
+      } else {
+        // Hide delete button in add mode
+        document.querySelector('[data-dom-id="cta-delete"]').style.display = 'none';
+      }
+
+      // ===== iOS Style Toggle Switch Interaction Logic =====
+      document.querySelectorAll('input[type="checkbox"].sr-only').forEach(function(checkbox) {
+        var track = checkbox.nextElementSibling;
+        var thumb = track.nextElementSibling;
+
+        function updateToggle() {
+          if (checkbox.checked) {
+            track.style.backgroundColor = 'var(--state-success)';
+            thumb.style.transform = 'translateX(20px)';
+          } else {
+            track.style.backgroundColor = 'var(--background-400)';
+            thumb.style.transform = 'translateX(0)';
+          }
+        }
+        updateToggle();
+        checkbox.addEventListener('change', updateToggle);
+      });
+
+      // ===== Address Tag Toggle Logic =====
+      document.querySelectorAll('.address-tag').forEach(function(tag) {
+        tag.addEventListener('click', function() {
+          document.querySelectorAll('.address-tag').forEach(function(t) {
+            t.style.backgroundColor = 'var(--background-200)';
+            t.style.color = 'var(--text-600)';
+          });
+          tag.style.backgroundColor = 'var(--brand-500)';
+          tag.style.color = 'var(--primary-foreground)';
+        });
+      });
+
+      // ===== Get Selected Address Tag =====
+      function getSelectedTag() {
+        var selected = '';
+        document.querySelectorAll('.address-tag').forEach(function(t) {
+          if (t.style.backgroundColor === 'var(--brand-500)' || t.style.backgroundColor === '#007aff') {
+            selected = t.textContent.trim();
+          }
+        });
+        return selected;
+      }
+
+      // ===== Save Address =====
+      document.querySelector('[data-dom-id="cta-save"]').addEventListener('click', function() {
+        var inputs = document.querySelectorAll('input[type="text"], input[type="tel"], textarea, select');
+        var name = inputs[0] ? inputs[0].value.trim() : '';
+        var phone = inputs[1] ? inputs[1].value.trim() : '';
+        var state = inputs[2] ? inputs[2].value.trim() : '';
+        var city = inputs[3] ? inputs[3].value.trim() : '';
+        var street = inputs[4] ? inputs[4].value.trim() : '';
+        var zip = inputs[5] ? inputs[5].value.trim() : '';
+        var company = inputs[6] ? inputs[6].value.trim() : '';
+        var tag = getSelectedTag();
+        var isDefault = document.querySelector('input[type="checkbox"].sr-only').checked;
+
+        // Form validation
+        if (!name) { showToast('Please enter recipient name'); return; }
+        if (!phone) { showToast('Please enter phone number'); return; }
+        if (!phone.match(/^[\d\-+\s()]{7,20}$/)) { showToast('Please enter a valid phone number'); return; }
+        if (!street) { showToast('Please enter street address'); return; }
+
+        var fullAddress = [street, city, state, zip].filter(Boolean).join(', ');
+
+        var list = getAddresses();
+
+        if (isEditMode && editingAddress) {
+          // Update existing address
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].id === editId) {
+              list[i].name = name;
+              list[i].phone = phone;
+              list[i].state = state;
+              list[i].city = city;
+              list[i].street = street;
+              list[i].zip = zip;
+              list[i].company = company;
+              list[i].tag = tag || 'Home';
+              list[i].fullAddress = fullAddress;
+              list[i].isDefault = isDefault;
+              break;
+            }
+          }
+          // If set as default, unset other addresses
+          if (isDefault) {
+            for (var i = 0; i < list.length; i++) {
+              if (list[i].id !== editId) list[i].isDefault = false;
+            }
+          }
+          saveAddresses(list);
+          showToast('Address updated');
+        } else {
+          // Add new address
+          var newAddr = {
+            id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+            name: name,
+            phone: phone,
+            state: state,
+            city: city,
+            street: street,
+            zip: zip,
+            company: company,
+            tag: tag || 'Home',
+            fullAddress: fullAddress,
+            isDefault: isDefault
+          };
+          // If set as default, unset other addresses
+          if (isDefault) {
+            for (var i = 0; i < list.length; i++) list[i].isDefault = false;
+          }
+          list.push(newAddr);
+          saveAddresses(list);
+          showToast('Address added');
+        }
+
+        // Return to address list after delay
+        setTimeout(function() {
+          window.location.href = 'address-list.html';
+        }, 800);
+      });
+
+      // ===== Delete Address =====
+      document.querySelector('[data-dom-id="cta-delete"]').addEventListener('click', function() {
+        if (!isEditMode || !editId) return;
+        if (confirm('Are you sure you want to delete this address?')) {
+          var list = getAddresses();
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].id === editId) {
+              list.splice(i, 1);
+              break;
+            }
+          }
+          saveAddresses(list);
+          showToast('Address deleted');
+          setTimeout(function() {
+            window.location.href = 'address-list.html';
+          }, 800);
+        }
+      });
+
+      // ===== Back Button =====
+      document.querySelector('[data-dom-id="cta-back"]').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = 'address-list.html';
+      });
+    </script>
+</body>
+</html>

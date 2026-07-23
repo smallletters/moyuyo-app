@@ -1,0 +1,432 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO Pet Hub</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-20">
+      <!-- Top navigation bar -->
+      <header class="sticky top-0 z-30 flex h-14 items-center justify-between px-4 border-b" style="border-color: var(--border); background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
+        <h1 class="text-lg font-semibold tracking-tight" style="color: var(--text-800);">Pet Hub</h1>
+        <button class="inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors duration-150 hover:bg-[var(--background-200)]" aria-label="Settings" data-dom-id="settings-btn">
+          <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/grip.svg'); mask-image: url('../assets/icons/dl-builtin-apple/grip.svg');"></span>
+        </button>
+      </header>
+
+      <div class="px-4 pt-4 space-y-5" id="pet-hub-content">
+
+        <!-- MOYUYO Companions — Four IP Characters -->
+        <section>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-semibold tracking-tight" style="color: var(--text-800);">MOYUYO Companions</h3>
+            <span class="text-xs font-medium" style="color: var(--text-400);">By your side every day</span>
+          </div>
+          <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1">
+            <!-- Atlas — The Guardian -->
+            <a href="pet-hub-3d.html?companion=atlas" class="shrink-0 w-36 rounded-2xl p-3.5 transition-transform duration-200 hover:-translate-y-1" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+              <div class="flex items-center gap-2.5 mb-2.5">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--accent-green-100);">
+                  <span class="text-lg">🛡</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold" style="color: var(--text-800);">Atlas</p>
+                  <p class="text-[10px] uppercase tracking-wide" style="color: var(--accent-green-500);">The Guardian</p>
+                </div>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-500);">Protects your pet's health with never-miss care reminders</p>
+            </a>
+            <!-- Noma — The Healer -->
+            <a href="pet-hub-3d.html?companion=noma" class="shrink-0 w-36 rounded-2xl p-3.5 transition-transform duration-200 hover:-translate-y-1" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+              <div class="flex items-center gap-2.5 mb-2.5">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--brand-100);">
+                  <span class="text-lg">✨</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold" style="color: var(--text-800);">Noma</p>
+                  <p class="text-[10px] uppercase tracking-wide" style="color: var(--brand-500);">The Healer</p>
+                </div>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-500);">Gentle healing with allergy profiles and a caring health calendar</p>
+            </a>
+            <!-- Mira — The Explorer -->
+            <a href="pet-hub-3d.html?companion=mira" class="shrink-0 w-36 rounded-2xl p-3.5 transition-transform duration-200 hover:-translate-y-1" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+              <div class="flex items-center gap-2.5 mb-2.5">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: #fdf3e0;">
+                  <span class="text-lg">🧭</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold" style="color: var(--text-800);">Mira</p>
+                  <p class="text-[10px] uppercase tracking-wide" style="color: #c49a6c;">The Explorer</p>
+                </div>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-500);">Explores new worlds, capturing every wonderful moment in a growth diary</p>
+            </a>
+            <!-- Luno — The Dreamer -->
+            <a href="pet-hub-3d.html?companion=luno" class="shrink-0 w-36 rounded-2xl p-3.5 transition-transform duration-200 hover:-translate-y-1" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+              <div class="flex items-center gap-2.5 mb-2.5">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: #e8ecf4;">
+                  <span class="text-lg">🌙</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold" style="color: var(--text-800);">Luno</p>
+                  <p class="text-[10px] uppercase tracking-wide" style="color: #5b6e8a;">The Dreamer</p>
+                </div>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-500);">Dream album with 3D outfits and achievement badges to light up your magical journey</p>
+            </a>
+          </div>
+        </section>
+
+        <!-- Pet Profile Card -->
+        <section class="relative overflow-hidden rounded-2xl" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <!-- Background image -->
+          <div class="absolute inset-0 opacity-15">
+            <img src="../assets/pet-hub-card-bg.jpg" alt="" class="h-full w-full object-cover" aria-hidden="true">
+          </div>
+          <!-- Content -->
+          <div class="relative p-5 pb-4">
+            <!-- Avatar + Basic info -->
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="w-20 h-20 rounded-full p-0.5" style="background: var(--primary);">
+                  <img src="../assets/pet-avatar-dog.jpg" alt="Wang Cai's avatar" class="h-full w-full rounded-full object-cover border-2" style="border-color: var(--background-50);">
+                </div>
+              </div>
+              <div class="flex-1 min-w-0 pt-1">
+                <h2 class="text-xl font-semibold tracking-tight" style="color: var(--text-800);">Wang Cai</h2>
+                <p class="mt-0.5 text-sm" style="color: var(--text-500);">Golden Retriever</p>
+                <div class="mt-2 flex items-center gap-3 text-xs" style="color: var(--text-400);">
+                  <span class="inline-flex items-center gap-1">
+                    <span style="color: var(--primary);">♂</span> Male
+                  </span>
+                  <span>3 years</span>
+                  <span>28.5kg</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick action buttons -->
+            <div class="mt-4 flex gap-2">
+              <button class="flex-1 inline-flex items-center justify-center gap-1.5 h-9 rounded-xl text-xs font-medium transition-colors duration-150 whitespace-nowrap" style="background: var(--primary); color: var(--primary-foreground);" data-dom-id="add-pet-btn">
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-plus.svg');"></span>
+                Add Pet
+              </button>
+              <button class="flex-1 inline-flex items-center justify-center gap-1.5 h-9 rounded-xl text-xs font-medium transition-colors duration-150 whitespace-nowrap" style="background: var(--background-200); color: var(--text-800);">
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/pen-line.svg'); mask-image: url('../assets/icons/dl-builtin-apple/pen-line.svg');"></span>
+                Edit Profile
+              </button>
+              <button class="flex-1 inline-flex items-center justify-center gap-1.5 h-9 rounded-xl text-xs font-medium transition-colors duration-150 whitespace-nowrap" style="background: var(--background-200); color: var(--text-800);">
+                <span data-icon class="w-3.5 h-3.5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg'); mask-image: url('../assets/icons/dl-builtin-apple/external-link.svg');"></span>
+                Share
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Care Reminders -->
+        <section>
+          <h3 class="text-base font-semibold tracking-tight mb-3" style="color: var(--text-800);">Care Reminders</h3>
+          <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1">
+            <!-- Deworming reminder -->
+            <div class="shrink-0 w-32 p-3.5 rounded-2xl" style="background: var(--card); border: 1px solid var(--border);">
+              <div class="flex items-center justify-between mb-2">
+                <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="background: var(--brand-100);">
+                  <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); background-color: var(--brand-500);"></span>
+                </span>
+                <span class="text-xs font-semibold" style="color: var(--text-400);">12 days</span>
+              </div>
+              <p class="text-sm font-semibold" style="color: var(--text-800);">Deworming</p>
+              <p class="text-xs mt-0.5" style="color: var(--text-400);">Next deworming reminder</p>
+            </div>
+
+            <!-- Vaccine reminder -->
+            <div class="shrink-0 w-32 p-3.5 rounded-2xl" style="background: var(--card); border: 1px solid var(--border);">
+              <div class="flex items-center justify-between mb-2">
+                <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="background: var(--state-success-surface);">
+                  <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); background-color: var(--state-success);"></span>
+                </span>
+                <span class="text-xs font-semibold" style="color: var(--text-400);">25 days</span>
+              </div>
+              <p class="text-sm font-semibold" style="color: var(--text-800);">Vaccine</p>
+              <p class="text-xs mt-0.5" style="color: var(--text-400);">Next vaccine reminder</p>
+            </div>
+
+            <!-- Bath reminder -->
+            <div class="shrink-0 w-32 p-3.5 rounded-2xl" style="background: var(--card); border: 1px solid var(--border);">
+              <div class="flex items-center justify-between mb-2">
+                <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="background: var(--brand-100);">
+                  <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                </span>
+                <span class="text-xs font-semibold" style="color: var(--brand-500);">3 days</span>
+              </div>
+              <p class="text-sm font-semibold" style="color: var(--text-800);">Bath</p>
+              <p class="text-xs mt-0.5" style="color: var(--text-400);">Next bath reminder</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Health Trends -->
+        <section>
+          <h3 class="text-base font-semibold tracking-tight mb-3" style="color: var(--text-800);">Health Trends</h3>
+          <div class="rounded-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div class="p-4 pb-2">
+              <div class="flex items-center justify-between mb-2">
+                <p class="text-sm font-semibold" style="color: var(--text-800);">Weight Trend</p>
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs font-medium" style="background: var(--state-success-surface); color: var(--state-success);">
+                  <span data-icon class="w-3 h-3" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); background-color: var(--state-success);"></span>
+                  +0.3kg
+                </span>
+              </div>
+            </div>
+            <img src="../assets/pet-weight-chart.jpg" alt="Wang Cai's 30-day weight trend chart" class="w-full h-36 object-cover object-top">
+            <div class="px-4 py-3">
+              <p class="text-xs leading-relaxed" style="color: var(--text-400);">Weight change over the past 30 days: +0.3kg, within healthy range</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Growth Records -->
+        <section>
+          <h3 class="text-base font-semibold tracking-tight mb-3" style="color: var(--text-800);">Growth Records</h3>
+          <div class="space-y-0">
+            <!-- Timeline entry 1: Bath -->
+            <div class="flex gap-3">
+              <div class="flex flex-col items-center">
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style="background: var(--brand-100);">
+                  <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); mask-image: url('../assets/icons/dl-builtin-apple/star.svg'); background-color: var(--brand-500);"></span>
+                </div>
+                <div class="w-px flex-1 mt-1" style="background: var(--border);"></div>
+              </div>
+              <div class="pb-4 flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--text-800);">Bath</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">Jun 28 · Pet Grooming Center</p>
+              </div>
+              <div class="flex items-start">
+                <img src="../assets/pet-care-grooming.jpg" alt="Bath and grooming" class="h-12 w-12 rounded-lg object-cover">
+              </div>
+            </div>
+
+            <!-- Timeline entry 2: Deworming -->
+            <div class="flex gap-3">
+              <div class="flex flex-col items-center">
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style="background: var(--state-success-surface);">
+                  <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); background-color: var(--state-success);"></span>
+                </div>
+                <div class="w-px flex-1 mt-1" style="background: var(--border);"></div>
+              </div>
+              <div class="pb-4 flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--text-800);">Deworming</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">Jun 15 · Internal deworming</p>
+              </div>
+            </div>
+
+            <!-- Timeline entry 3: Vaccine -->
+            <div class="flex gap-3">
+              <div class="flex flex-col items-center">
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style="background: var(--brand-100);">
+                  <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); mask-image: url('../assets/icons/dl-builtin-apple/triangle-alert.svg'); background-color: var(--brand-500);"></span>
+                </div>
+                <div class="w-px flex-1 mt-1" style="background: var(--border);"></div>
+              </div>
+              <div class="pb-4 flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--text-800);">Vaccine</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">May 20 · Rabies vaccine</p>
+              </div>
+            </div>
+
+            <!-- Timeline entry 4: Checkup -->
+            <div class="flex gap-3">
+              <div class="flex flex-col items-center">
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style="background: var(--state-success-surface);">
+                  <span data-icon class="w-4 h-4" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); mask-image: url('../assets/icons/dl-builtin-apple/circle-check.svg'); background-color: var(--state-success);"></span>
+                </div>
+              </div>
+              <div class="pb-2 flex-1 min-w-0">
+                <p class="text-sm font-semibold" style="color: var(--text-800);">Checkup</p>
+                <p class="text-xs mt-0.5" style="color: var(--text-400);">Apr 10 · Annual checkup</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Bottom TabBar -->
+      <nav class="fixed bottom-0 inset-x-0 z-40 border-t" style="border-color: var(--border); background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding-bottom: env(safe-area-inset-bottom, 0px);">
+        <div class="flex items-center justify-around h-14">
+          <a href="#" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-full transition-colors duration-150" style="color: var(--text-400);" data-dom-id="nav-home" aria-label="Home">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/house.svg'); mask-image: url('../assets/icons/dl-builtin-apple/house.svg');"></span>
+            <span class="text-[10px]">Home</span>
+          </a>
+          <a href="#" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-full transition-colors duration-150" style="color: var(--text-400);" data-dom-id="nav-category" aria-label="Category">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/folder.svg'); mask-image: url('../assets/icons/dl-builtin-apple/folder.svg');"></span>
+            <span class="text-[10px]">Category</span>
+          </a>
+          <a href="#" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-full transition-colors duration-150" style="color: var(--primary);" aria-label="Pet Hub" data-active="true">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/heart.svg'); mask-image: url('../assets/icons/dl-builtin-apple/heart.svg');"></span>
+            <span class="text-[10px] font-semibold">Pet Hub</span>
+          </a>
+          <a href="#" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-full transition-colors duration-150" style="color: var(--text-400);">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg'); mask-image: url('../assets/icons/dl-builtin-apple/message-circle-more.svg');"></span>
+            <span class="text-[10px]">Community</span>
+          </a>
+          <a href="#" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-full transition-colors duration-150" style="color: var(--text-400);" data-dom-id="nav-profile" aria-label="My">
+            <span data-icon class="w-5 h-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/user.svg'); mask-image: url('../assets/icons/dl-builtin-apple/user.svg');"></span>
+            <span class="text-[10px]">My</span>
+          </a>
+        </div>
+      </nav>
+    </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      // ========== Pet Hub API Integration ==========
+      (function() {
+        'use strict';
+        var api = window.moyuyoAPI;
+
+        function genderLabel(g) {
+          if (g === 'MALE') return 'Male';
+          if (g === 'FEMALE') return 'Female';
+          return g;
+        }
+
+        // Load pet list and render first pet card
+        function loadPets() {
+          api.get('/api/v1/pet/list').then(function(res) {
+            if (res.code !== 0) return;
+            var pets = res.data;
+            if (!pets.length) return;
+            var pet = pets[0];
+
+            // Update pet card
+            var avatar = document.querySelector('#pet-hub-content section:nth-of-type(2) img');
+            var nameEl = document.querySelector('#pet-hub-content section:nth-of-type(2) h2');
+            var breedEl = document.querySelector('#pet-hub-content section:nth-of-type(2) p.text-sm');
+            var infoEls = document.querySelectorAll('#pet-hub-content section:nth-of-type(2) .flex.items-center.gap-3 span');
+
+            if (avatar) avatar.src = pet.avatar || avatar.src;
+            if (nameEl) nameEl.textContent = pet.name;
+            if (breedEl) breedEl.textContent = pet.breed;
+            if (infoEls.length >= 3) {
+              infoEls[0].innerHTML = '<span style="color: var(--primary);">' + (pet.gender === 'MALE' ? '♂' : '♀') + '</span> ' + genderLabel(pet.gender);
+              infoEls[1].textContent = pet.age;
+              infoEls[2].textContent = pet.weight + 'kg';
+            }
+          });
+        }
+
+        // Load care reminders
+        function loadReminders() {
+          api.get('/api/v1/pet/pet-1/health/reminders').then(function(res) {
+            if (res.code !== 0) return;
+            var list = res.data.list;
+            var container = document.querySelector('#pet-hub-content section:nth-of-type(3) .flex.gap-3');
+            if (!container) return;
+            container.innerHTML = '';
+
+            var iconMap = {
+              BATH: 'star', VACCINE: 'circle-check', DEWORM: 'triangle-alert', CHECKUP: 'circle-check'
+            };
+            var bgMap = {
+              BATH: 'var(--brand-100)', VACCINE: 'var(--state-success-surface)', DEWORM: 'var(--brand-100)', CHECKUP: 'var(--state-success-surface)'
+            };
+            var iconColorMap = {
+              BATH: 'var(--brand-500)', VACCINE: 'var(--state-success)', DEWORM: 'var(--brand-500)', CHECKUP: 'var(--state-success)'
+            };
+
+            list.forEach(function(item) {
+              var daysText = item.status === 'OVERDUE' ? 'Overdue' : item.remaining + ' days';
+              var daysColor = item.status === 'OVERDUE' ? 'var(--state-error)' : (item.remaining <= 7 ? 'var(--brand-500)' : 'var(--text-400)');
+              var card = '<div class="shrink-0 w-32 p-3.5 rounded-2xl" style="background: var(--card); border: 1px solid var(--border);">' +
+                '<div class="flex items-center justify-between mb-2">' +
+                '<span class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="background: ' + (bgMap[item.type] || 'var(--brand-100)') + ';">' +
+                '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/' + (iconMap[item.type] || 'star') + '.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/' + (iconMap[item.type] || 'star') + '.svg\'); background-color: ' + (iconColorMap[item.type] || 'var(--brand-500)') + ';"></span>' +
+                '</span><span class="text-xs font-semibold" style="color: ' + daysColor + ';">' + daysText + '</span></div>' +
+                '<p class="text-sm font-semibold" style="color: var(--text-800);">' + item.title + '</p>' +
+                '<p class="text-xs mt-0.5" style="color: var(--text-400);">' + item.desc + '</p></div>';
+              container.innerHTML += card;
+            });
+          });
+        }
+
+        // Load weight trend
+        function loadWeight() {
+          api.get('/api/v1/pet/pet-1/weight').then(function(res) {
+            if (res.code !== 0) return;
+            var stats = res.data.stats;
+            var trendEl = document.querySelector('#pet-hub-content section:nth-of-type(4) .text-xs.leading-relaxed');
+            if (trendEl) {
+              trendEl.textContent = 'Weight change over the past 30 days: ' + (stats.change > 0 ? '+' : '') + stats.change + 'kg, within healthy range';
+            }
+            var changeEl = document.querySelector('#pet-hub-content section:nth-of-type(4) .px-2.py-0\\\\.5');
+            if (changeEl) {
+              changeEl.innerHTML = '<span data-icon class="w-3 h-3" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/arrow-up.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/arrow-up.svg\'); background-color: var(--state-success);"></span>+' + stats.change + 'kg';
+            }
+          });
+        }
+
+        // Load growth records
+        function loadTimeline() {
+          api.get('/api/v1/pet/pet-1/diary').then(function(res) {
+            if (res.code !== 0) return;
+            var pages = res.data.pages;
+            var container = document.querySelector('#pet-hub-content section:nth-of-type(5) .space-y-0');
+            if (!container) return;
+            container.innerHTML = '';
+
+            // Get the latest 5 diary entries
+            var entries = [];
+            pages.forEach(function(page) {
+              page.entries.forEach(function(e) { entries.push(e); });
+            });
+            entries = entries.slice(0, 5);
+
+            entries.forEach(function(entry, idx) {
+              var isLast = idx === entries.length - 1;
+              var line = isLast ? '' : '<div class="w-px flex-1 mt-1" style="background: var(--border);"></div>';
+              var dateStr = entry.date.substring(5);
+              var card = '<div class="flex gap-3">' +
+                '<div class="flex flex-col items-center">' +
+                '<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style="background: var(--brand-100);">' +
+                '<span data-icon class="w-4 h-4" style="-webkit-mask-image: url(\'../assets/icons/dl-builtin-apple/star.svg\'); mask-image: url(\'../assets/icons/dl-builtin-apple/star.svg\'); background-color: var(--brand-500);"></span>' +
+                '</div>' + line + '</div>' +
+                '<div class="' + (isLast ? 'pb-2' : 'pb-4') + ' flex-1 min-w-0">' +
+                '<p class="text-sm font-semibold" style="color: var(--text-800);">' + (entry.tags[0] || 'Diary') + '</p>' +
+                '<p class="text-xs mt-0.5" style="color: var(--text-400);">' + dateStr + ' · ' + entry.content.substring(0, 15) + '...</p></div></div>';
+              container.innerHTML += card;
+            });
+          });
+        }
+
+        // Navigation links
+        var navHome = document.querySelector('[data-dom-id="nav-home"]');
+        var navCategory = document.querySelector('[data-dom-id="nav-category"]');
+        var navProfile = document.querySelector('[data-dom-id="nav-profile"]');
+        if (navHome) navHome.href = 'home.html';
+        if (navCategory) navCategory.href = 'category.html';
+        if (navProfile) navProfile.href = 'profile.html';
+
+        loadPets();
+        loadReminders();
+        loadWeight();
+        loadTimeline();
+      })();
+    </script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

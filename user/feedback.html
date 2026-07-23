@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOYUYO - Feedback &amp; Suggestions</title>
+    <link rel="stylesheet" href="shared/moyuyo-tokens.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--card-foreground);
+  }
+  @layer base {
+    body { background: var(--card-background); color: var(--card-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-24">
+      <!-- Top Navigation Bar -->
+      <header class="sticky top-0 z-30 flex h-11 items-center border-b border-[var(--border)] bg-[var(--background)]/95 px-4 backdrop-blur">
+        <button data-dom-id="back-previous" class="inline-flex h-8 w-8 items-center justify-center rounded-lg" aria-label="Back">
+          <span data-icon class="h-5 w-5" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg'); mask-image: url('../assets/icons/dl-builtin-apple/chevron-left.svg');"></span>
+        </button>
+        <h1 class="min-w-0 flex-1 text-center text-[16px] font-semibold tracking-[-0.02em] text-[var(--foreground)]">Feedback &amp; Suggestions</h1>
+        <div class="w-8"></div>
+      </header>
+
+      <!-- Page Content Area -->
+      <div class="px-4 pt-5">
+
+        <!-- Feedback Type Selection -->
+        <section id="feedback-type-section" class="mb-5">
+          <h2 class="mb-3 text-[15px] font-semibold text-[var(--foreground)]">Feedback Type</h2>
+          <div class="flex flex-wrap gap-2">
+            <button data-type="Bug Report" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--primary)] px-3 text-[13px] font-medium text-[var(--primary-foreground)] transition-colors duration-150">Bug Report</button>
+            <button data-type="Suggestion" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">Suggestion</button>
+            <button data-type="Product Issue" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">Product Issue</button>
+            <button data-type="Shipping Issue" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">Shipping Issue</button>
+            <button data-type="Other" class="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]">Other</button>
+          </div>
+        </section>
+
+        <!-- Issue Description -->
+        <section class="mb-5">
+          <div class="rounded-xl border border-[var(--border)] bg-[var(--card)]">
+            <textarea id="feedback-content" class="w-full resize-none bg-transparent px-3 py-3 text-[14px] leading-[1.6] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]" rows="6" placeholder="Please describe your issue or suggestion in detail..." maxlength="500"></textarea>
+            <div class="flex justify-end border-t border-[var(--border)] px-3 py-2">
+              <span id="feedback-char-count" class="text-[12px] text-[var(--muted-foreground)]">0/500</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Upload Screenshots -->
+        <section class="mb-5">
+          <h2 class="mb-3 text-[15px] font-semibold text-[var(--foreground)]">Upload Screenshots (optional, up to 3)</h2>
+          <div class="flex gap-3">
+            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="Upload screenshot">
+              <span data-icon class="h-6 w-6 text-[var(--muted-foreground)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg');"></span>
+              <span class="text-[11px] text-[var(--muted-foreground)]">Add</span>
+            </button>
+            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="Upload screenshot">
+              <span data-icon class="h-6 w-6 text-[var(--muted-foreground)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg');"></span>
+              <span class="text-[11px] text-[var(--muted-foreground)]">Add</span>
+            </button>
+            <button class="flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[var(--border)] bg-[var(--background)] transition-colors duration-150 hover:bg-[var(--secondary)]" aria-label="Upload screenshot">
+              <span data-icon class="h-6 w-6 text-[var(--muted-foreground)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg'); mask-image: url('../assets/icons/dl-builtin-apple/arrow-up.svg');"></span>
+              <span class="text-[11px] text-[var(--muted-foreground)]">Add</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="mb-6">
+          <div class="flex h-11 items-center rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 transition-colors duration-150 focus-within:border-[var(--ring)] focus-within:shadow-[0_0_0_1px_var(--ring)]">
+            <span data-icon class="mr-2 h-4 w-4 shrink-0 text-[var(--icon-muted)]" style="-webkit-mask-image: url('../assets/icons/dl-builtin-apple/mail.svg'); mask-image: url('../assets/icons/dl-builtin-apple/mail.svg');"></span>
+            <input id="feedback-contact" class="min-w-0 flex-1 border-0 bg-transparent text-[14px] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]" placeholder="Contact (optional: phone/email, so we can get back to you)" />
+          </div>
+        </section>
+
+        <!-- Feedback History -->
+        <section>
+          <div class="mb-3 flex items-center justify-between">
+            <h2 class="text-[15px] font-semibold text-[var(--foreground)]">Feedback History</h2>
+            <a href="#" class="text-[13px] font-medium text-[var(--primary)] transition-opacity duration-150 hover:opacity-70">View All</a>
+          </div>
+          <div id="feedback-history-list" class="space-y-3">
+            <!-- Dynamically rendered -->
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Bottom Fixed Submit Bar -->
+      <div class="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--border)] bg-[var(--background)]/95 px-4 pb-[env(safe-area-inset-bottom,16px)] pt-3 backdrop-blur">
+        <button data-dom-id="cta-submit-feedback" class="btn btn-primary flex h-11 w-full items-center justify-center rounded-full px-6 text-[15px] font-semibold transition-transform duration-150 active:scale-[0.98]">Submit Feedback</button>
+      </div>
+    </main>
+    <script src="shared/mock-api.js"></script>
+    <script src="shared/api.js"></script>
+    <script>
+      (function () {
+        var api = window.moyuyoAPI;
+
+        // Feedback type selection
+        var typeButtons = document.querySelectorAll('#feedback-type-section [data-type]');
+        var selectedType = 'Bug Report';
+
+        typeButtons.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            typeButtons.forEach(function (b) {
+              b.className = 'inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-150 hover:bg-[var(--secondary)]';
+            });
+            btn.className = 'inline-flex h-8 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--primary)] px-3 text-[13px] font-medium text-[var(--primary-foreground)] transition-colors duration-150';
+            selectedType = btn.getAttribute('data-type');
+          });
+        });
+
+        // Character count
+        var textarea = document.getElementById('feedback-content');
+        var charCount = document.getElementById('feedback-char-count');
+
+        textarea.addEventListener('input', function () {
+          charCount.textContent = textarea.value.length + '/500';
+        });
+
+        // Toast notification
+        function showToast(message) {
+          var toast = document.createElement('div');
+          toast.textContent = message;
+          toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);z-index:9999;background:var(--foreground);color:var(--background);padding:10px 24px;border-radius:999px;font-size:14px;font-weight:500;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,0.15);';
+          document.body.appendChild(toast);
+          setTimeout(function () {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s';
+            setTimeout(function () {
+              if (toast.parentNode) {
+                document.body.removeChild(toast);
+              }
+            }, 300);
+          }, 2000);
+        }
+
+        // Load feedback history
+        function loadFeedbackHistory() {
+          var listContainer = document.getElementById('feedback-history-list');
+          api.get('/api/v1/feedback/list').then(function (res) {
+            if (res.code === 0 && res.data && res.data.items) {
+              var items = res.data.items;
+              var html = '';
+              items.forEach(function (item) {
+                var statusClass = '';
+                if (item.status === 'PENDING') {
+                  statusClass = 'bg-[var(--brand-100)] text-[var(--brand-500)]';
+                } else if (item.status === 'REPLIED') {
+                  statusClass = 'bg-[var(--state-success-surface)] text-[var(--state-success)]';
+                } else {
+                  statusClass = 'bg-[var(--secondary)] text-[var(--muted-foreground)]';
+                }
+                html += '<div class="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">' +
+                  '<div class="mb-2 flex items-center justify-between gap-2">' +
+                  '<span class="min-w-0 truncate text-[14px] font-medium text-[var(--foreground)]">' + item.title + '</span>' +
+                  '<span class="shrink-0 rounded-md px-2 py-0.5 text-[11px] font-medium ' + statusClass + '">' + item.statusName + '</span>' +
+                  '</div>' +
+                  '<span class="text-[12px] text-[var(--muted-foreground)]">' + item.date + '</span>' +
+                  '</div>';
+              });
+              listContainer.innerHTML = html;
+              lucide.createIcons();
+            }
+          }).catch(function (err) {
+            console.error('Failed to load feedback list:', err);
+          });
+        }
+
+        loadFeedbackHistory();
+
+        // Submit feedback
+        var submitBtn = document.querySelector('[data-dom-id="cta-submit-feedback"]');
+        var contactInput = document.getElementById('feedback-contact');
+
+        submitBtn.addEventListener('click', function () {
+          var content = textarea.value.trim();
+          if (!content) {
+            showToast('Please enter your feedback');
+            return;
+          }
+          var contact = contactInput.value.trim();
+          api.post('/api/v1/feedback/submit', {
+            type: selectedType,
+            content: content,
+            contact: contact
+          }).then(function (res) {
+            if (res.code === 0 && res.data) {
+              showToast(res.data.message || 'Feedback submitted');
+              textarea.value = '';
+              charCount.textContent = '0/500';
+              contactInput.value = '';
+              loadFeedbackHistory();
+            }
+          }).catch(function (err) {
+            console.error('Failed to submit feedback:', err);
+          });
+        });
+
+        // Back button
+        var backBtn = document.querySelector('[data-dom-id="back-previous"]');
+        backBtn.addEventListener('click', function () {
+          window.history.back();
+        });
+      })();
+    </script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
